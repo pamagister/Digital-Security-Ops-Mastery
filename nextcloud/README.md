@@ -33,7 +33,6 @@ For syncing with your own PC, there is also Nextcloud PC client software to sync
 1. **OpenTasks**: A task manager app, allowing you to categorise your todo list by urgency, state, timeframe etc.. Tasks can be synchronised with a CalDAV server 
 1. **Collabora**: Alternative to GoogleDocs. View and edit documents that are synchronized via Nextcloud, for example.
 Collabora Office is a text editor, spreadsheet and presentation program based on LibreOffice, the world's most popular Open Source office suite.
-1. ****: 
 
 ## Configure Nextcloud server
 1. set up the Nextcloud service, e.g. at Hosting.de. 
