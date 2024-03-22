@@ -27,9 +27,9 @@ A limited, but nevertheless recommendable and free Nextcloud is offered by https
 For syncing with your own PC, there is also Nextcloud PC client software to synchronize the files between Nextcloud, the phone and the PC.
 
 ## Install the required apps on the mobile device
-1. ![fdroid.png](../de-googled-phone/img/fdroid.png) **F-Droid**: Alternative Playstore with generally secure open source apps
-1. ![fdroid.png](../de-googled-phone/img/nextcloud.png) **Nextcloud**: Synchronization client for the Nextcloud app, basis for syncing files, contacts, calendars, tasks, etc.
-1. ![fdroid.png](../de-googled-phone/img/dav5x.png) **DAVx⁵**: DAVx⁵ is a CalDAV/CardDAV management and synchronization app for Android that integrates seamlessly with calendar and contacts apps. With DAVx⁵ you have your contacts, appointments and tasks on your own server or a trusted CalDAV/CardDAV service under your own control.
+1. ![app_image](../de-googled-phone/img/fdroid.png) **F-Droid**: Alternative Playstore with generally secure open source apps
+1. ![app_image](../de-googled-phone/img/nextcloud.png) **Nextcloud**: Synchronization client for the Nextcloud app, basis for syncing files, contacts, calendars, tasks, etc.
+1. ![app_image](../de-googled-phone/img/davx5.png) **DAVx⁵**: DAVx⁵ is a CalDAV/CardDAV management and synchronization app for Android that integrates seamlessly with calendar and contacts apps. With DAVx⁵ you have your contacts, appointments and tasks on your own server or a trusted CalDAV/CardDAV service under your own control.
 
 ## Configure Nextcloud server
 1. set up the Nextcloud service, e.g. at Hosting.de. 
