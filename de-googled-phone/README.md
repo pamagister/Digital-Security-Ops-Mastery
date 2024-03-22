@@ -8,26 +8,26 @@ Flashing a custom open-source ROM and de-Googling your mobile phone grants you u
 
 ## Recommended apps
 ### App Stores
-- ![app_image](img/fdroid.ico) **F-Droid**: The app store that respects freedom and privacy
-- ![app_image](img/aurora.ico) **Aurora Store**: Aurora Store is an unofficial FOSS client for Google Play with an elegant design. Aurora Store allows users to download, update and search for apps like the Play Store 
+- ![app_image](../res/ico/fdroid.ico) **F-Droid**: The app store that respects freedom and privacy
+- ![app_image](../res/ico/aurora.ico) **Aurora Store**: Aurora Store is an unofficial FOSS client for Google Play with an elegant design. Aurora Store allows users to download, update and search for apps like the Play Store 
 
 ### Communication
-- ![app_image](img/k9mail.ico) **K-9 Mail**: is an open source email client focused on making it easy to chew through large volumes of email.
-- ![app_image](img/conversations.ico) **Conversations**: An encrypted, user friendly XMPP instant messaging client optimized for mobile.
+- ![app_image](../res/ico/k9mail.ico) **K-9 Mail**: is an open source email client focused on making it easy to chew through large volumes of email.
+- ![app_image](../res/ico/conversations.ico) **Conversations**: An encrypted, user friendly XMPP instant messaging client optimized for mobile.
 
 ### Synchronization
-- ![app_image](img/nextcloud.ico) **Nextcloud**: Synchronization client for the NextCloud app, basis for syncing files, contacts, calendars, tasks, etc.
-- ![app_image](img/acalendar.ico) **aCalendar**: Nice calendar display and widget, better handling than the standard calendar
-- ![app_image](img/nextcloudnotes.ico) **Nextcloud Notes**: View and edit notes on Nextcloud
-- ![app_image](img/opentasks.ico) **OpenTasks**: A task manager app, allowing you to categorize your todo list by urgency, state, timeframe etc.
-- ![app_image](img/davx5.ico) **DAVx5**: DAVx⁵ is a CalDAV/CardDAV management and synchronization app for Android that integrates seamlessly with calendar and contacts apps.
+- ![app_image](../res/ico/nextcloud.ico) **Nextcloud**: Synchronization client for the NextCloud app, basis for syncing files, contacts, calendars, tasks, etc.
+- ![app_image](../res/ico/acalendar.ico) **aCalendar**: Nice calendar display and widget, better handling than the standard calendar
+- ![app_image](../res/ico/nextcloudnotes.ico) **Nextcloud Notes**: View and edit notes on Nextcloud
+- ![app_image](../res/ico/opentasks.ico) **OpenTasks**: A task manager app, allowing you to categorize your todo list by urgency, state, timeframe etc.
+- ![app_image](../res/ico/davx5.ico) **DAVx5**: DAVx⁵ is a CalDAV/CardDAV management and synchronization app for Android that integrates seamlessly with calendar and contacts apps.
 
 ### Productivity
-- ![app_image](img/aegis.ico) **Aegis Authenticator**: Free, secure and open source 2FA app to manage tokens for your online services.
-- ![app_image](img/keepassdx.ico) **KeePassDX**: Secure and open source password manager compatible with KeePass files. 
-- ![app_image](img/osmand.ico) **OsmAnd**: Global map and navigation application for offline and online OSM maps Alternative to Google Maps
-- ![app_image](img/openoffice.ico) **LibreOffice & OpenOffice document reader**: Read and edit documents created with LibreOffice or OpenOffice on the go with OpenDocument Reader
-- ![app_image](img/collabora.ico) **Collabora**: Alternative to GoogleDocs. View and edit documents that are synchronized via Nextcloud, for example.
+- ![app_image](../res/ico/aegis.ico) **Aegis Authenticator**: Free, secure and open source 2FA app to manage tokens for your online services.
+- ![app_image](../res/ico/keepassdx.ico) **KeePassDX**: Secure and open source password manager compatible with KeePass files. 
+- ![app_image](../res/ico/osmand.ico) **OsmAnd**: Global map and navigation application for offline and online OSM maps Alternative to Google Maps
+- ![app_image](../res/ico/openoffice.ico) **LibreOffice & OpenOffice document reader**: Read and edit documents created with LibreOffice or OpenOffice on the go with OpenDocument Reader
+- ![app_image](../res/ico/collabora.ico) **Collabora**: Alternative to GoogleDocs. View and edit documents that are synchronized via Nextcloud, for example.
 Collabora Office is a text editor, spreadsheet and presentation program based on LibreOffice, the world's most popular Open Source office suite.
 
 
