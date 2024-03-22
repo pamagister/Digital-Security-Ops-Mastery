@@ -45,7 +45,7 @@ The Find my Device app must be installed on the cell phone that is to be located
 In addition, all devices that are to have permission to locate the device via SMS must first be authorized on the device to be located.
 All settings must therefore be made on the device to be located, e.g. the child's phone. 
 
-Die App stellt eine intuitive Menüführung für die Einrichtung bereit. 
+The app provides intuitive menu navigation for setup.
 
 ## Further links
 - AdAway: [Comprehensive description of the functionality (german)](https://www.kuketz-blog.de/adaway-werbe-und-trackingfrei-im-android-universum/)
