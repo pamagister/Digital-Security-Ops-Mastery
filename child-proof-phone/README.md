@@ -30,8 +30,22 @@ The settings menu can also be secured via this app to prevent the lock app from 
 It can also be used to protect harmless apps that require a special configuration (e.g. nextcloud) that should not be changed by the child.
 
 ### Set up content blocker
+First, get the required ad-blocker App [AdAway](https://f-droid.org/de/packages/org.adaway/). 
+For more details, refer to a detailled explanation in this [blog post](https://www.kuketz-blog.de/adaway-werbe-und-trackingfrei-im-android-universum/) (german).
 
+Most devices will not have root permissions, which means that you have to rely on the VPN-based ad blocker.
 
+In addition to the already preset blocked hosts, further special hosts can be [found here](https://github.com/StevenBlack/hosts#list-of-all-hosts-file-variants).
+The list of **Unified hosts** is often already pre-set so that specific categories like [gambling and porn](https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/gambling-porn-only/hosts) can be added for children. 
+
+Don't forget to update the sources and check the desired function of the ad blocker.
+
+### Set up Find my Device
+The Find my Device app must be installed on the cell phone that is to be located, e.g. in the event of loss.
+In addition, all devices that are to have permission to locate the device via SMS must first be authorized on the device to be located.
+All settings must therefore be made on the device to be located, e.g. the child's phone. 
+
+Die App stellt eine intuitive Menüführung für die Einrichtung bereit. 
 
 ## Further links
-- AdAway: [Comprehensive description of the functionality](https://www.kuketz-blog.de/adaway-werbe-und-trackingfrei-im-android-universum/)
+- AdAway: [Comprehensive description of the functionality (german)](https://www.kuketz-blog.de/adaway-werbe-und-trackingfrei-im-android-universum/)
