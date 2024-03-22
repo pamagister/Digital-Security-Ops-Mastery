@@ -15,3 +15,4 @@ Enhance your digital security expertise with Digital Security Ops Mastery and em
 
 1. [Nextcloud](nextcloud/README.md)
 1. [de-googled-phone](de-googled-phone/README.md)
+1. [child-proof phone](child-proof-phone/README.md)

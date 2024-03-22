@@ -13,7 +13,6 @@ The focus is on ensuring the following features:
 - ![app_image](../res/ico/applock.ico) **App Lock**: AppLock easily secures apps and protects your private data with one click. Protect your phone with a PIN, pattern or fingerprint
 - ![app_image](../res/ico/adaway.ico) **AdAway**: A free and open-source ad blocker for Android
 - ![app_image](../res/ico/findmydevice.ico) **Find My Device (FMD)**: Locate and control your device remotely
-Gerät einrichten
 
 ## Set up device
 
@@ -35,4 +34,4 @@ It can also be used to protect harmless apps that require a special configuratio
 
 
 ## Further links
-AdAway: Umfassende Beschreibung der Funktionalität: https://www.kuketz-blog.de/adaway-werbe-und-trackingfrei-im-android-universum/
+- AdAway: [Comprehensive description of the functionality](https://www.kuketz-blog.de/adaway-werbe-und-trackingfrei-im-android-universum/)
