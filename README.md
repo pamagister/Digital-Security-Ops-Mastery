@@ -1,6 +1,5 @@
 # Digital-Security-Ops-Mastery
 
-Welcome to the Digital Security Ops Mastery repository, your go-to resource for mastering digital security operations. 
 Enhance your digital security expertise with Digital Security Ops Mastery and empower yourself to navigate the ever-evolving landscape of digital operations confidently.
 
 # Topics
