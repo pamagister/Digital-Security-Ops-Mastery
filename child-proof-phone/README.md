@@ -9,10 +9,10 @@ The focus is on ensuring the following features:
 
 ## Recommended apps
 
-- ![app_image](../res/ico/stayfree.ico) **StayFree**: Screen time tracker & app usage limit is an app for self-control, more productivity and to combat cell phone addiction
-- ![app_image](../res/ico/applock.ico) **App Lock**: AppLock easily secures apps and protects your private data with one click. Protect your phone with a PIN, pattern or fingerprint
-- ![app_image](../res/ico/adaway.ico) **AdAway**: A free and open-source ad blocker for Android
-- ![app_image](../res/ico/findmydevice.ico) **Find My Device (FMD)**: Locate and control your device remotely
+- ![app_image](../res/ico/stayfree.ico) **[StayFree](https://stayfreeapps.com/)**: Screen time tracker & app usage limit is an app for self-control, more productivity and to combat cell phone addiction
+- ![app_image](../res/ico/applock.ico) **[App Lock](https://play.google.com/store/apps/details?id=applock.lockapps.fingerprint.password.lockit)**: AppLock easily secures apps and protects your private data with one click. Protect your phone with a PIN, pattern or fingerprint
+- ![app_image](../res/ico/adaway.ico) **[AdAway](https://f-droid.org/de/packages/org.adaway/)**: A free and open-source ad blocker for Android
+- ![app_image](../res/ico/findmydevice.ico) **[Find My Device (FMD)](https://f-droid.org/de/packages/de.nulide.findmydevice/)**: Locate and control your device remotely
 
 ## Set up device
 
