@@ -26,6 +26,10 @@ Flashing a custom open-source ROM and de-Googling your mobile phone grants you u
 - ![app_image](img/aegis.png) **Aegis Authenticator**: Free, secure and open source 2FA app to manage tokens for your online services.
 - ![app_image](img/keepass.png) **KeePassDX**: Secure and open source password manager compatible with KeePass files. 
 - ![app_image](img/osmand.png) **OsmAnd**: Global map and navigation application for offline and online OSM maps Alternative to Google Maps
+- ![fdroid.png](img/openoffice.png) **LibreOffice & OpenOffice document reader**: Read and edit documents created with LibreOffice or OpenOffice on the go with OpenDocument Reader
+- ![fdroid.png](img/collabora.png) **Collabora**: Alternative to GoogleDocs. View and edit documents that are synchronized via Nextcloud, for example.
+Collabora Office is a text editor, spreadsheet and presentation program based on LibreOffice, the world's most popular Open Source office suite.
+
 
 ## Further links
 - Digital self-defense: https://digitalcourage.de/digitale-selbstverteidigung

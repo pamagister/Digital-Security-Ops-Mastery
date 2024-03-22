@@ -27,12 +27,9 @@ A limited, but nevertheless recommendable and free Nextcloud is offered by https
 For syncing with your own PC, there is also Nextcloud PC client software to synchronize the files between Nextcloud, the phone and the PC.
 
 ## Install the required apps on the mobile device
-1. **F-Droid**: Alternative Playstore with generally secure open source apps
-1. **Nextcloud**: Synchronization client for the Nextcloud app, basis for syncing files, contacts, calendars, tasks, etc.
-1. **DAVx⁵**: DAVx⁵ is a CalDAV/CardDAV management and synchronization app for Android that integrates seamlessly with calendar and contacts apps. With DAVx⁵ you have your contacts, appointments and tasks on your own server or a trusted CalDAV/CardDAV service under your own control.
-1. **OpenTasks**: A task manager app, allowing you to categorise your todo list by urgency, state, timeframe etc.. Tasks can be synchronised with a CalDAV server 
-1. **Collabora**: Alternative to GoogleDocs. View and edit documents that are synchronized via Nextcloud, for example.
-Collabora Office is a text editor, spreadsheet and presentation program based on LibreOffice, the world's most popular Open Source office suite.
+1. ![fdroid.png](../de-googled-phone/img/fdroid.png) **F-Droid**: Alternative Playstore with generally secure open source apps
+1. ![fdroid.png](../de-googled-phone/img/nextcloud.png) **Nextcloud**: Synchronization client for the Nextcloud app, basis for syncing files, contacts, calendars, tasks, etc.
+1. ![fdroid.png](../de-googled-phone/img/dav5x.png) **DAVx⁵**: DAVx⁵ is a CalDAV/CardDAV management and synchronization app for Android that integrates seamlessly with calendar and contacts apps. With DAVx⁵ you have your contacts, appointments and tasks on your own server or a trusted CalDAV/CardDAV service under your own control.
 
 ## Configure Nextcloud server
 1. set up the Nextcloud service, e.g. at Hosting.de. 
