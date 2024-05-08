@@ -38,17 +38,15 @@ Most devices will not have root permissions, which means that you have to rely o
 In addition to the already preset blocked hosts, further special hosts can be [found here](https://github.com/StevenBlack/hosts#list-of-all-hosts-file-variants).
 The list of **Unified hosts** is often already pre-set so that specific categories like [gambling and porn](https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/gambling-porn-only/hosts) or further hosts from [Stephen Black Hosts](https://github.com/StevenBlack/hosts) can be added for children. 
 
+Don't forget to update the sources and check the desired function of the ad blocker.
+
 #### Build individual block lists
-In some cases it will be necessary to block additional pages individually. 
+In some cases it will be necessary to block additional pages individually, like **online games**. 
 Further information on this can be found in the [AdAway Wiki](https://github.com/AdAway/AdAway/wiki/HostsSources).
 
-An additional host list has been created here in this repository to block online games. 
+An additional [host list to block online games](https://raw.githubusercontent.com/pamagister/Digital-Security-Ops-Mastery/main/child-proof-phone/online-games-hosts-blocklist/hosts) has been created here in this repository using AdAway. 
 This is based on the AdBlock-compatible list from [IREK-szef](https://raw.githubusercontent.com/IREK-szef/games-blocklist/main/lists/Adblock-dns/games.txt), which is adapted to the AdAway format and has been slightly expanded.
 
-
-
-
-Don't forget to update the sources and check the desired function of the ad blocker.
 
 ### Set up Find my Device
 The Find my Device app must be installed on the cell phone that is to be located, e.g. in the event of loss.
