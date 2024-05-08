@@ -36,7 +36,17 @@ For more details, refer to a detailled explanation in this [blog post](https://w
 Most devices will not have root permissions, which means that you have to rely on the VPN-based ad blocker.
 
 In addition to the already preset blocked hosts, further special hosts can be [found here](https://github.com/StevenBlack/hosts#list-of-all-hosts-file-variants).
-The list of **Unified hosts** is often already pre-set so that specific categories like [gambling and porn](https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/gambling-porn-only/hosts) can be added for children. 
+The list of **Unified hosts** is often already pre-set so that specific categories like [gambling and porn](https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/gambling-porn-only/hosts) or further hosts from [Stephen Black Hosts](https://github.com/StevenBlack/hosts) can be added for children. 
+
+#### Build individual block lists
+In some cases it will be necessary to block additional pages individually. 
+Further information on this can be found in the [AdAway Wiki](https://github.com/AdAway/AdAway/wiki/HostsSources).
+
+An additional host list has been created here in this repository to block online games. 
+This is based on the AdBlock-compatible list from [IREK-szef](https://raw.githubusercontent.com/IREK-szef/games-blocklist/main/lists/Adblock-dns/games.txt), which is adapted to the AdAway format and has been slightly expanded.
+
+
+
 
 Don't forget to update the sources and check the desired function of the ad blocker.
 
