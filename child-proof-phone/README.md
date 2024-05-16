@@ -7,6 +7,7 @@ The focus is on ensuring the following features:
 - Protection against inappropriate content
 - Localization of the phone in case of loss or to determine the location of the child
 
+<a name="recommended" />
 ## Recommended apps
 
 - ![app_image](../res/ico/stayfree.ico) **[StayFree](https://stayfreeapps.com/)**: Screen time tracker & app usage limit is an app for self-control, more productivity and to combat cell phone addiction
@@ -16,36 +17,72 @@ The focus is on ensuring the following features:
 
 ## Set up device
 
-### Set up scree time limit
+### Set up screen time limit app
 To set up the screen time limit, individual apps can be grouped into categories using the app mentioned above.
 An individual time limit can be set for each of these categories.
 
 One problem is that the display time limit is more of a self-control mechanism. Although a pin can be set up, it is very easy to bypass.
 
 ### Set up App locker
-To prevent the above-mentioned app from being deactivated or even uninstalled, App Lock can be used to set up an access lock for certain apps.
+⚡ Quick start ⚡
+1. Install the required App [as mentioned above](#recommended)
+2. Grant the necessary authorizations
+3. Block at least the following apps:
+   * AdAway Content Blocker (to prevent deletions of host block lists)
+   * Screen time limit app (Even if the time limiter app has its own security, this increases security against unwanted manipulation)
+   * Settings (this prevents uninstallation)
+4. Adjust App Settings
+   * 🔴 **[off]** Use fingerprint (would allow unlocking with children fingerprint)
+   * 🟢 **[on]** Lock new app
+   * 🟢 **[on]** Set a passwort or pin that differs from children pin
+   * 🔴 **[off]** Battery optimization (this might cause the app to run inactively in the background)
+   * 🟢 **[on]** Symbol camouflage
+   * 🟢 **[on]** Uninstall protection
+   
+<details>
+<summary>Tips and Details about App Locker</summary>
 
-The settings menu can also be secured via this app to prevent the lock app from being uninstalled. A recovery email must be set up for this.
+* To prevent the above-mentioned app from being deactivated or even uninstalled, App Lock can be used to set up an access lock for certain apps.
+* The settings menu can also be secured via this app to prevent the lock app from being uninstalled. A recovery email must be set up for this.
+* It can also be used to protect harmless apps that require a special configuration (e.g. nextcloud) that should not be changed by the child.
 
-It can also be used to protect harmless apps that require a special configuration (e.g. nextcloud) that should not be changed by the child.
+</details>
 
 ### Set up content blocker
-First, get the required ad-blocker App [AdAway](https://f-droid.org/de/packages/org.adaway/). 
-For more details, refer to a detailled explanation in this [blog post](https://www.kuketz-blog.de/adaway-werbe-und-trackingfrei-im-android-universum/) (german).
+⚡ Quick start ⚡
+1. Install the required ad-blocker App [as mentioned above](#recommended)
+2. Add some individual block lists as required:
+   * StevenBlack Unified hosts: https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts
+   * StevenBlack fakenews-gambling-porn: https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/fakenews-gambling-porn-only/hosts
+   * Online Gaming: https://raw.githubusercontent.com/pamagister/Digital-Security-Ops-Mastery/main/child-proof-phone/online-games-hosts-blocklist/hosts
 
-Most devices will not have root permissions, which means that you have to rely on the VPN-based ad blocker.
+<details>
+<summary>Tips and Details about content blocker</summary>
+
+* For more details, refer to a detailed explanation in this [blog post](https://www.kuketz-blog.de/adaway-werbe-und-trackingfrei-im-android-universum/) (german).
+* Most devices will not have root permissions, which means that you have to rely on the VPN-based ad blocker.
+* Don't forget to update the sources regularly and check the desired function of the ad blocker.
+
+</details>
+
+<details>
+<summary>Using unified blocked hosts</summary>
 
 In addition to the already preset blocked hosts, further special hosts can be [found here](https://github.com/StevenBlack/hosts#list-of-all-hosts-file-variants).
 The list of **Unified hosts** is often already pre-set so that specific categories like [gambling and porn](https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/gambling-porn-only/hosts) or further hosts from [Stephen Black Hosts](https://github.com/StevenBlack/hosts) can be added for children. 
 
-Don't forget to update the sources and check the desired function of the ad blocker.
+</details>
 
-#### Build individual block lists
+<details>
+<summary>Build individual block lists</summary>
+
 In some cases it will be necessary to block additional pages individually, like **online games**. 
 Further information on this can be found in the [AdAway Wiki](https://github.com/AdAway/AdAway/wiki/HostsSources).
 
 An additional [host list to block online games](https://raw.githubusercontent.com/pamagister/Digital-Security-Ops-Mastery/main/child-proof-phone/online-games-hosts-blocklist/hosts) has been created here in this repository using AdAway. 
 This is based on the AdBlock-compatible list from [IREK-szef](https://raw.githubusercontent.com/IREK-szef/games-blocklist/main/lists/Adblock-dns/games.txt), which is adapted to the AdAway format and has been slightly expanded.
+
+</details>
 
 
 ### Set up Find my Device
