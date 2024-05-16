@@ -32,6 +32,11 @@
 0.0.0.0 playhop.com
 0.0.0.0 spielaffe.de
 0.0.0.0 toggo.de
+0.0.0.0 kikaninchen.de/index.html
+0.0.0.0 kikaninchen.de*
+0.0.0.0 kikaninchen.de^^
+0.0.0.0 www.kikaninchen.de
+
 
 # ====== End of custom host records. ======
 
