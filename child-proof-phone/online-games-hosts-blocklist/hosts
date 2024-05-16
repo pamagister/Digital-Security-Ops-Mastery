@@ -35,7 +35,11 @@
 0.0.0.0 kikaninchen.de/index.html
 0.0.0.0 kikaninchen.de*
 0.0.0.0 kikaninchen.de^^
-0.0.0.0 www.kikaninchen.de
+0.0.0.0 https://www.kikaninchen.de
+0.0.0.0 https://www.1001spiele.de
+0.0.0.0 www.1001spiele.de
+0.0.0.0 www.1001spiele.de/
+0.0.0.0 admeen.org
 
 
 # ====== End of custom host records. ======
