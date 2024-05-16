@@ -10,41 +10,34 @@ The focus is on ensuring the following features:
 <a name="recommended" />
 ## Recommended apps
 
+- ![app_image](../res/ico/timelimit.ico) **[TimeLimit](https://timelimit.io/)** on [f-droid](https://f-droid.org/packages/io.timelimit.android.aosp.direct/): Flexibly limit the period of use 
 - ![app_image](../res/ico/stayfree.ico) **[StayFree](https://stayfreeapps.com/)**: Screen time tracker & app usage limit is an app for self-control, more productivity and to combat cell phone addiction
 - ![app_image](../res/ico/applock.ico) **[App Lock](https://play.google.com/store/apps/details?id=applock.lockapps.fingerprint.password.lockit)**: AppLock easily secures apps and protects your private data with one click. Protect your phone with a PIN, pattern or fingerprint
-- ![app_image](../res/ico/adaway.ico) **[AdAway](https://f-droid.org/de/packages/org.adaway/)**: A free and open-source ad blocker for Android
+- ![app_image](../res/ico/adaway.ico) **[AdAway](https://adaway.org/)** on [f-droid](https://f-droid.org/de/packages/org.adaway/): A free and open-source ad blocker for Android
 - ![app_image](../res/ico/findmydevice.ico) **[Find My Device (FMD)](https://f-droid.org/de/packages/de.nulide.findmydevice/)**: Locate and control your device remotely
 
 ## Set up device
 
 ### Set up screen time limit app
+⚡ Quick start ⚡
+1. Install the required TimeLimit App [as mentioned above](#recommended)
+2. Grant the necessary authorizations
+3. Add at least the following apps as explicitly allowed apps so that these apps can work unhindered:
+   * AdAway content blocker
+   * App Lock
+4. Block these apps completely (time limit 0)
+   * Settings (This increases security against unauthorized uninstallation)
+5. Set time limits as required
+
+<details>
+<summary>ℹ️ Tips and Details about screen time limit app</summary>
+
 To set up the screen time limit, individual apps can be grouped into categories using the app mentioned above.
 An individual time limit can be set for each of these categories.
 
-One problem is that the display time limit is more of a self-control mechanism. Although a pin can be set up, it is very easy to bypass.
-
-### Set up App locker
-⚡ Quick start ⚡
-1. Install the required App [as mentioned above](#recommended)
-2. Grant the necessary authorizations
-3. Block at least the following apps:
-   * AdAway Content Blocker (to prevent deletions of host block lists)
-   * Screen time limit app (Even if the time limiter app has its own security, this increases security against unwanted manipulation)
-   * Settings (this prevents uninstallation)
-4. Adjust App Settings
-   * 🔴 **[off]** Use fingerprint (would allow unlocking with children fingerprint)
-   * 🟢 **[on]** Lock new app
-   * 🟢 **[on]** Set a passwort or pin that differs from children pin
-   * 🔴 **[off]** Battery optimization (this might cause the app to run inactively in the background)
-   * 🟢 **[on]** Symbol camouflage
-   * 🟢 **[on]** Uninstall protection
-   
-<details>
-<summary>Tips and Details about App Locker</summary>
-
-* To prevent the above-mentioned app from being deactivated or even uninstalled, App Lock can be used to set up an access lock for certain apps.
-* The settings menu can also be secured via this app to prevent the lock app from being uninstalled. A recovery email must be set up for this.
-* It can also be used to protect harmless apps that require a special configuration (e.g. nextcloud) that should not be changed by the child.
+One problem is that the display time limit is more of a self-control mechanism. 
+Although a pin can be set up, it is very easy to bypass, for example by uninstalling or deactivating the app. 
+It is therefore necessary to combine the time limit app with an app for generally blocking other apps, see below.
 
 </details>
 
@@ -57,7 +50,7 @@ One problem is that the display time limit is more of a self-control mechanism. 
    * Online Gaming: https://raw.githubusercontent.com/pamagister/Digital-Security-Ops-Mastery/main/child-proof-phone/online-games-hosts-blocklist/hosts
 
 <details>
-<summary>Tips and Details about content blocker</summary>
+<summary>ℹ️ Tips and Details about content blocker</summary>
 
 * For more details, refer to a detailed explanation in this [blog post](https://www.kuketz-blog.de/adaway-werbe-und-trackingfrei-im-android-universum/) (german).
 * Most devices will not have root permissions, which means that you have to rely on the VPN-based ad blocker.
@@ -81,6 +74,31 @@ Further information on this can be found in the [AdAway Wiki](https://github.com
 
 An additional [host list to block online games](https://raw.githubusercontent.com/pamagister/Digital-Security-Ops-Mastery/main/child-proof-phone/online-games-hosts-blocklist/hosts) has been created here in this repository using AdAway. 
 This is based on the AdBlock-compatible list from [IREK-szef](https://raw.githubusercontent.com/IREK-szef/games-blocklist/main/lists/Adblock-dns/games.txt), which is adapted to the AdAway format and has been slightly expanded.
+
+</details>
+
+### Set up App locker
+⚡ Quick start ⚡
+1. Install the required App [as mentioned above](#recommended)
+2. Grant the necessary authorizations
+3. Block at least the following apps:
+   * AdAway Content Blocker (to prevent deletions of host block lists)
+   * Screen time limit app (Even if the time limiter app has its own security, this increases security against unwanted manipulation)
+   * Settings (this prevents uninstallation)
+4. Adjust App Settings
+   * 🔴 **[off]** Use fingerprint (would allow unlocking with children fingerprint)
+   * 🟢 **[on]** Lock new app
+   * 🟢 **[on]** Set a passwort or pin that differs from children pin
+   * 🔴 **[off]** Battery optimization (this might cause the app to run inactively in the background)
+   * 🟢 **[on]** Symbol camouflage
+   * 🟢 **[on]** Uninstall protection
+   
+<details>
+<summary>ℹ️ Tips and Details about App Locker</summary>
+
+* To prevent the above-mentioned app from being deactivated or even uninstalled, App Lock can be used to set up an access lock for certain apps.
+* The settings menu can also be secured via this app to prevent the lock app from being uninstalled. A recovery email must be set up for this.
+* It can also be used to protect harmless apps that require a special configuration (e.g. nextcloud) that should not be changed by the child.
 
 </details>
 
