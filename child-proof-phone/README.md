@@ -1,4 +1,4 @@
-[:uk: English](README.md) [:de: Deutsch](README_de.md) 
+[:uk: English](README.md) | [:de: Deutsch](README_de.md) 
 
 # Setting up a child-proof phone
 The aim of this chapter is to set up a mobile phone that can be used safely by children.
@@ -25,13 +25,13 @@ The focus is on ensuring the following features:
 ### Set up screen time limit app
 ⚡ Quick start ⚡
 1. Install the required TimeLimit App [as mentioned above](#recommended)
-2. Grant the necessary authorizations
-3. Add at least the following apps as explicitly allowed apps so that these apps can work unhindered:
+1. Grant the necessary authorizations
+1. Add at least the following apps as explicitly allowed apps so that these apps can work unhindered:
    * AdAway content blocker
    * App Lock
-4. Block these apps completely (time limit 0)
+1. Block these apps completely (time limit 0)
    * Settings (This increases security against unauthorized uninstallation)
-5. Set time limits as required
+1. Set time limits as required
 
 <details>
 <summary>ℹ️ Tips and Details about screen time limit app</summary>
@@ -47,7 +47,7 @@ It is therefore necessary to combine the time limit app with an app for generall
 ### Set up content blocker
 ⚡ Quick start ⚡
 1. Install the required ad-blocker App [as mentioned above](#recommended)
-2. Add some individual block lists as required:
+1. Add some individual block lists as required:
    * StevenBlack Unified hosts: https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts
    * StevenBlack fakenews-gambling-porn: https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/fakenews-gambling-porn-only/hosts
    * Online Gaming: https://raw.githubusercontent.com/pamagister/Digital-Security-Ops-Mastery/main/child-proof-phone/online-games-hosts-blocklist/hosts
@@ -84,12 +84,12 @@ This is based on the AdBlock-compatible list from [IREK-szef](https://raw.github
 ### Set up App locker
 ⚡ Quick start ⚡
 1. Install the required App [as mentioned above](#recommended)
-2. Grant the necessary authorizations
-3. Block at least the following apps:
+1. Grant the necessary authorizations
+1. Block at least the following apps:
    * AdAway Content Blocker (to prevent deletions of host block lists)
    * Screen time limit app (Even if the time limiter app has its own security, this increases security against unwanted manipulation)
    * Settings (this prevents uninstallation)
-4. Adjust App Settings
+1. Adjust App Settings
    * 🔴 **[off]** Use fingerprint (would allow unlocking with children fingerprint)
    * 🟢 **[on]** Lock new app
    * 🟢 **[on]** Set a passwort or pin that differs from children pin

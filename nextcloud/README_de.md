@@ -1,4 +1,4 @@
-[:uk: English](README.md) [:de: Deutsch](README_de.md) 
+[:uk: English](README.md) | [:de: Deutsch](README_de.md) 
 
 # Einführung
 
@@ -37,20 +37,20 @@ Für die Synchronisation mit dem eigenen PC gibt es auch die Nextcloud PC Client
 
 ## Nextcloud-Server konfigurieren
 1. Richten Sie den Nextcloud-Dienst ein, z.B. bei Hosting.de. 
-2. Nextcloud so konfigurieren, dass die entsprechenden Funktionen des Dienstes zur Verfügung stehen. Aktivieren Sie dazu die Nextcloud-Funktion online bei hosting.de und die entsprechenden Apps im App Center (Kalender, Kontakte, Notizen, Aufgaben, etc.).
-3. Notieren Sie sich die Serveradresse zusammen mit dem Passwort (am besten in einer Passwortverwaltung wie KeePass auf dem PC gespeichert). Das ist etwa so: https://xxxxxxxxxxxxxxxxxxxx.Nextcloud.hosting.zone 
-4. Tipp: Um die (hoffentlich langen und damit sicheren) Passwörter leichter zur Hand zu haben, empfiehlt es sich, den Passwort-Container KeePass.kdbx an dieser Stelle per USB vom PC auf das Telefon zu übertragen und dann mit KeePassDX zu verwenden.
-5. Richten Sie die Nextcloud-App ein: Öffnen Sie die Nextcloud-App und melden Sie sich mit der Serveradresse an. → Dann "Mit dem Konto verbinden", indem man die hosting.de-Zugangsdaten über "Login" eingibt. → Schließlich muss der Nextcloud-App die Berechtigung zum Zugriff auf das Dateisystem des Telefons erteilt werden. 
-6. DAVx5 einrichten: Öffnen Sie die DAVx5-App → Berechtigungen erteilen → Konto hinzufügen mit "URL und Benutzername" (geben Sie hier wieder die Serveradresse, den hosting.de-Benutzernamen und das Passwort ein. Nun können Sie die gewünschten CARDDAV-Kontakte und CALDAV-Kalender auswählen, die synchronisiert werden sollen. Die Integration in die nativen Android-Apps wie Kalender und Kontakte erfolgt automatisch. Die OpenTasks-App wird nun ebenfalls synchronisiert.
-7. Installieren Sie ggf. Collabora, um die Dokumente in der Nextcloud öffnen und bearbeiten zu können.
+1. Nextcloud so konfigurieren, dass die entsprechenden Funktionen des Dienstes zur Verfügung stehen. Aktivieren Sie dazu die Nextcloud-Funktion online bei hosting.de und die entsprechenden Apps im App Center (Kalender, Kontakte, Notizen, Aufgaben, etc.).
+1. Notieren Sie sich die Serveradresse zusammen mit dem Passwort (am besten in einer Passwortverwaltung wie KeePass auf dem PC gespeichert). Das ist etwa so: https://xxxxxxxxxxxxxxxxxxxx.Nextcloud.hosting.zone 
+1. Tipp: Um die (hoffentlich langen und damit sicheren) Passwörter leichter zur Hand zu haben, empfiehlt es sich, den Passwort-Container KeePass.kdbx an dieser Stelle per USB vom PC auf das Telefon zu übertragen und dann mit KeePassDX zu verwenden.
+1. Richten Sie die Nextcloud-App ein: Öffnen Sie die Nextcloud-App und melden Sie sich mit der Serveradresse an. → Dann "Mit dem Konto verbinden", indem man die hosting.de-Zugangsdaten über "Login" eingibt. → Schließlich muss der Nextcloud-App die Berechtigung zum Zugriff auf das Dateisystem des Telefons erteilt werden. 
+1. DAVx5 einrichten: Öffnen Sie die DAVx5-App → Berechtigungen erteilen → Konto hinzufügen mit "URL und Benutzername" (geben Sie hier wieder die Serveradresse, den hosting.de-Benutzernamen und das Passwort ein. Nun können Sie die gewünschten CARDDAV-Kontakte und CALDAV-Kalender auswählen, die synchronisiert werden sollen. Die Integration in die nativen Android-Apps wie Kalender und Kontakte erfolgt automatisch. Die OpenTasks-App wird nun ebenfalls synchronisiert.
+1. Installieren Sie ggf. Collabora, um die Dokumente in der Nextcloud öffnen und bearbeiten zu können.
 
 ## Kontakte synchronisieren
 Die Synchronisierung der Kontakte ist anfangs etwas knifflig. Hier ist eine kleine Anleitung zum Vorgehen
 1. Kontakte im bestehenden System (z.B. google) ordentlich vorbereiten und ggf. gruppieren, so dass sie auch in "eigene Kontakte" und "mit Partner/Familie geteilte Kontakte" etc. unterteilt werden können.
-2. Kontakte aus google als VCF-Datei(en) exportieren
-3. Erstellen Sie die entsprechenden Gruppen für die Kontakte über DAVx5. Achtung - der Name der Gruppe und der Beschreibungstext können später nicht mehr geändert werden. Klicken Sie in DAVx5 erneut auf Synchronisieren
-4. Kopieren Sie die VCF-Dateien auf das Telefon oder synchronisieren Sie sie über Nextcloud mit dem Telefon
-5. nun in der regulären Kalender-App über Einstellungen → Importieren die Kontakte aus der VCF in die jeweilige Kontaktgruppe
+1. Kontakte aus google als VCF-Datei(en) exportieren
+1. Erstellen Sie die entsprechenden Gruppen für die Kontakte über DAVx5. Achtung - der Name der Gruppe und der Beschreibungstext können später nicht mehr geändert werden. Klicken Sie in DAVx5 erneut auf Synchronisieren
+1. Kopieren Sie die VCF-Dateien auf das Telefon oder synchronisieren Sie sie über Nextcloud mit dem Telefon
+1. nun in der regulären Kalender-App über Einstellungen → Importieren die Kontakte aus der VCF in die jeweilige Kontaktgruppe
 
 ## Weitere Tipps zu Nextcloud
 * Der kostenlose Tarif der Managed Nextcloud von hosting.de erlaubt nur einen Nutzer. Es können jedoch mehrere Kalender und Kontaktgruppen angelegt werden, die dann jeweils nur von einem Partner genutzt werden können (also für die Synchronisation gedacht sind) oder gemeinsam genutzt werden können, z.B. für einen Familienkalender. Sie teilen sich dann ein einziges Nextcloud-Konto und können praktisch alle Kalender und Kontakte einsehen, aber nur die abonnieren, zu denen Sie auf Vertrauensbasis berechtigt sind.

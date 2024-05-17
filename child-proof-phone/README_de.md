@@ -1,4 +1,4 @@
-[:uk: English](README.md) [:de: Deutsch](README_de.md) 
+[:uk: English](README.md) | [:de: Deutsch](README_de.md) 
 
 # Einrichten eines kindersicheren Telefons
 In diesem Kapitel geht es darum, ein Mobiltelefon einzurichten, das von Kindern sicher benutzt werden kann.
@@ -24,15 +24,14 @@ Der Schwerpunkt liegt dabei auf der Gewährleistung der folgenden Funktionen:
 
 ### App zur Begrenzung der Bildschirmzeit einrichten
 ⚡ Schnellstart ⚡ 
-
 1. Installieren Sie die erforderliche TimeLimit App [wie oben erwähnt](#empfohlen)
-2. Erteilen Sie die notwendigen Berechtigungen
-3. Fügen Sie mindestens die folgenden Apps als explizit erlaubte Apps hinzu, damit diese Apps ungehindert arbeiten können:
+1. Erteilen Sie die notwendigen Berechtigungen
+1. Fügen Sie mindestens die folgenden Apps als explizit erlaubte Apps hinzu, damit diese Apps ungehindert arbeiten können:
    * AdAway-Inhaltsblocker
    * App-Sperre
-4. Sperren Sie diese Apps vollständig (Zeitlimit 0)
+1. Sperren Sie diese Apps vollständig (Zeitlimit 0)
    * Einstellungen (Dies erhöht die Sicherheit gegen unautorisierte Deinstallationen)
-5. Setzen Sie nach Bedarf Zeitlimits
+1. Setzen Sie nach Bedarf Zeitlimits
 
 <Details>
 <summary>ℹ️ Tipps und Details zur Bildschirmzeitbegrenzungs-App</summary>
@@ -48,7 +47,7 @@ Daher ist es notwendig, die Zeitlimit-App mit einer App zur generellen Sperrung 
 ### Inhaltsblocker einrichten
 ⚡ Schnellstart ⚡
 1. Installieren Sie die erforderliche Ad-Blocker-App [wie oben erwähnt](#empfohlen)
-2. Fügen Sie bei Bedarf einige individuelle Blocklisten hinzu:
+1. Fügen Sie bei Bedarf einige individuelle Blocklisten hinzu:
    * StevenBlack Unified hosts: https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts
    * StevenBlack Fakenews-Glücksspiel-Porno: https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/fakenews-gambling-porn-only/hosts
    * Online Gaming: https://raw.githubusercontent.com/pamagister/Digital-Security-Ops-Mastery/main/child-proof-phone/online-games-hosts-blocklist/hosts
@@ -85,17 +84,17 @@ Diese basiert auf der AdBlock-kompatiblen Liste von [IREK-szef](https://raw.gith
 ### App Locker einrichten
 ⚡ Schnellstart ⚡.
 1. Installieren Sie die gewünschte App [wie oben erwähnt](#empfohlen)
-2. Erteilen Sie die notwendigen Berechtigungen
-3. Sperren Sie mindestens die folgenden Apps:
+1. Erteilen Sie die notwendigen Berechtigungen
+1. Sperren Sie mindestens die folgenden Apps:
 
    * AdAway Content Blocker (zur Verhinderung von Löschungen von Hostblocklisten)
    * App zur Begrenzung der Bildschirmzeit (auch wenn die App zur Begrenzung der Bildschirmzeit ihre eigene Sicherheit hat, erhöht dies die Sicherheit gegen unerwünschte Manipulationen)
    * Einstellungen (dies verhindert die Deinstallation)
-4. App-Einstellungen anpassen
+1. App-Einstellungen anpassen
    * 🔴 **[aus]** Fingerabdruck verwenden (würde das Entsperren mit dem Fingerabdruck der Kinder ermöglichen)
    * 🟢 **[ein]** Neue App sperren
    * 🟢 **[ein]** Passwort oder Pin festlegen, die sich von der Pin der Kinder unterscheidet
-   * 🔴 **[off]** Batterieoptimierung (dies kann dazu führen, dass die App im Hintergrund inaktiv läuft)
+   * 🔴 **[aus]** Batterieoptimierung (dies kann dazu führen, dass die App im Hintergrund inaktiv läuft)
    * 🟢 **[ein]** Symboltarnung
    * 🟢 **[ein]** Deinstallationsschutz
 

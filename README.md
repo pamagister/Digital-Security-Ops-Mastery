@@ -1,4 +1,4 @@
-[:uk: English](README.md) [:de: Deutsch](README_de.md) 
+[:uk: English](README.md) | [:de: Deutsch](README_de.md) 
 
 # Digital-Security-Ops-Mastery
 

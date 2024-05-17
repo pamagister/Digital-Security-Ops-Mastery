@@ -1,4 +1,4 @@
-[:uk: English](README.md) [:de: Deutsch](README_de.md) 
+[:uk: English](README.md) | [:de: Deutsch](README_de.md) 
 
 # De-Googled Phone einrichten
 Das Flashen einer benutzerdefinierten Open-Source-ROM und das De-Googeln Ihres Mobiltelefons geben Ihnen eine beispiellose Kontrolle über Ihr Gerät und Ihre Privatsphäre. Durch diesen Schritt erhalten Sie die Kontrolle über Ihr Smartphone zurück, frei von aufdringlicher Datenerfassung. Open-Source-ROMs bieten erweiterte Anpassungs-, Leistungsoptimierungs- und Sicherheitsfunktionen und ermöglichen es Ihnen, Ihr Gerät an Ihre Vorlieben anzupassen. De-Googling sorgt dafür, dass Ihr digitaler Fußabdruck Ihr eigener bleibt, und fördert so ein datenschutzfreundliches mobiles Erlebnis. Übernehmen Sie die Kontrolle über Ihr Smartphone, befreien Sie sich von der Kontrolle der Unternehmen und genießen Sie ein befreites, personalisiertes und datenschutzorientiertes mobiles Erlebnis.

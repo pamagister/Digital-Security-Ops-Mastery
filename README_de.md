@@ -1,4 +1,4 @@
-[:uk: English](README.md) [:de: Deutsch](README_de.md) 
+[:uk: English](README.md) | [:de: Deutsch](README_de.md) 
 
 # Digital-Security-Ops-Mastery
 
@@ -14,7 +14,7 @@ Nextcloud-Einrichtung: Schritt-für-Schritt-Anleitungen zur Einrichtung und Opti
 
 Entdecken Sie die Möglichkeiten von De-Googled-Phones, einem Weg zu unvergleichlicher Kontrolle über Ihr Gerät. Entdecken Sie datenschutzfreundliche Google-freie Betriebssysteme und Open-Source-Anwendungen.
 
-## ![app_image](/res/ico/adaway.ico) [Kindersicheres Telefon](kindersicheres-telefon/README_de.md)
+## ![app_image](/res/ico/adaway.ico) [Kindersicheres Telefon](child-proof-phone/README_de.md)
 
 Der Leitfaden umfasst Schritte zur Einrichtung von Bildschirmzeitbegrenzungen, App-Sperren, Inhaltssperren und Geräteverfolgung, um ein sicheres und kinderfreundliches mobiles Erlebnis zu gewährleisten.
 
