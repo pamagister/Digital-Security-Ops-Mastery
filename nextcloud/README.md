@@ -1,3 +1,5 @@
+[:uk: English](README.md) [:de: Deutsch](README_de.md) 
+
 # Introduction
 
 ## Why Nextcloud?
