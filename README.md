@@ -1,3 +1,5 @@
+[:uk: English](README.md) [:de: Deutsch](README_de.md) 
+
 # Digital-Security-Ops-Mastery
 
 Enhance your digital security expertise with Digital Security Ops Mastery and empower yourself to navigate the ever-evolving landscape of digital operations confidently.
