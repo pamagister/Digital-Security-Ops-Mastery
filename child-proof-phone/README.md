@@ -1,3 +1,5 @@
+[:uk: English](README.md) [:de: Deutsch](README_de.md) 
+
 # Setting up a child-proof phone
 The aim of this chapter is to set up a mobile phone that can be used safely by children.
 The focus is on ensuring the following features:
