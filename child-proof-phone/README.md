@@ -109,10 +109,20 @@ This is based on the AdBlock-compatible list from [IREK-szef](https://raw.github
 
 ### Set up Find my Device
 The Find my Device app must be installed on the cell phone that is to be located, e.g. in the event of loss.
-In addition, all devices that are to have permission to locate the device via SMS must first be authorized on the device to be located.
+In addition, all devices that have permission to locate the device via SMS must first be authorized on the device to be located.
 All settings must therefore be made on the device to be located, e.g. the child's phone. 
 
-The app provides intuitive menu navigation for setup.
+On the previously authorized device on which the information about the location of the lost device is required, the corresponding command must be sent via SMS:
+
+```
+fmd locate - sends the current GPS location
+fmd ring - triggers the phone to ring
+fmd lock - locks the phone
+fmd stats - sends device details
+fmd delete - resets the phone to factory settings
+fmd camera (back/front) - captures a photo (using front or back camera) and sends it to the server
+```
 
 ## Further links
 - AdAway: [Comprehensive description of the functionality (german)](https://www.kuketz-blog.de/adaway-werbe-und-trackingfrei-im-android-universum/)
+- FindMyDevice: [github Wiki](https://github.com/ColoursofOSINT/findmydevice/tree/main)
