@@ -113,9 +113,17 @@ Die App Find my Device muss auf dem Handy installiert sein, das z.B. im Falle ei
 Außerdem müssen alle Geräte, die die Erlaubnis haben sollen, das Gerät per SMS zu orten, zunächst auf dem zu ortenden Gerät autorisiert werden.
 Alle Einstellungen müssen also auf dem zu ortenden Gerät vorgenommen werden, z.B. die Telefonnummer des Kindes.
 
+Auf dem zuvor autorisierten Gerät, auf dem die Information über den Standort des verlorenen Gerätes benötigt wird, muss der entsprechende Befehl per SMS gesendet werden:
 
-
-Die App bietet eine intuitive Menüführung für die Einrichtung.
+```
+fmd locate - sendet den aktuellen GPS-Standort
+fmd ring - löst ein Klingeln des Telefons aus
+fmd lock - sperrt das Telefon
+fmd stats - sendet Gerätedetails
+fmd delete - setzt das Telefon auf die Werkseinstellungen zurück
+fmd camera (back/front) - nimmt ein Foto auf (mit der Front- oder Rückkamera) und sendet es an den Server
+```
 
 ## Weitere Links
 - AdAway: [Ausführliche Beschreibung der Funktionalität (deutsch)](https://www.kuketz-blog.de/adaway-werbe-und-trackingfrei-im-android-universum/)
+- FindMyDevice: [github Wiki](https://github.com/ColoursofOSINT/findmydevice/tree/main)
