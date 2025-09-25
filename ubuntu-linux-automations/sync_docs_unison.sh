@@ -4,35 +4,42 @@
 # - bevorzugt Passwort aus /etc/samba/credentials_sync_docs
 # - init gocryptfs automatisch falls nötig (versucht Passwort aus CRED_FILE)
 # - mount, run unison between LOCAL_ENCRYPTED and NAS_TARGET, unmount
-# - optional: --restore-local (restore decrypted files into LOCAL_DOCS)
+# - optional: --restore (restore decrypted files into LOCAL_DOCS)
 # - optional: --reset (reset current mounts, does not affect LOCAL_DOCS)
 #
 # WICHTIG: Dieses Script löscht NIE ungefragt Dateien in LOCAL_DOCS.
 #         Unison behandelt Konflikte interaktiv (fragt den Nutzer).
 #
 # Script ausführbar machen: >> chmod +x ~/sync_docs_unison.sh
-# Script ausführen, z.B.:   >> sudo ./sync_docs_unison.sh --restore-local
+# Script ausführen, z.B.:   >> sudo ./sync_docs_unison.sh --restore
 
 
 # Manuelles Retten:
 # 1. Nas-Ziel setzen:
 # >> NAS_TARGET="/mnt/nas/data/Backups/encrypted_documents"
 # 2. Mountpoint vorbereiten:
-# >> mkdir -p ~/nas_decrypted
+# >> mkdir -p tmp/nas_decrypted
 # 3. gocryptfs direkt starten (mit Passwortabfrage read-only zur Sicherheit):
-# >> gocryptfs -ro "$NAS_TARGET" ~/nas_decrypted
+# >> gocryptfs -ro "$NAS_TARGET" user/NAME/nas_decrypted
 # 4. Unmount, wenn fertig
-# >> umount ~/nas_decrypted
+# >> umount tmp/nas_decrypted
 
 set -u
 set -o pipefail
 
+# never use root dir, allways determine real user home directory
+if [ -n "$SUDO_USER" ]; then
+    USER_HOME=$(eval echo "~$SUDO_USER")
+else
+    USER_HOME="$HOME"
+fi
+
 # ============================
 # =  Konfiguration (Variablen)
 # ============================
-LOCAL_DOCS="$HOME/Dokumente/testdir/"
-LOCAL_ENCRYPTED="$HOME/.encrypted_docs"
-LOCAL_DECRYPTED="$HOME/.decrypted_docs"
+LOCAL_DOCS="$USER_HOME/testdir/"
+LOCAL_ENCRYPTED="$USER_HOME/.encrypted_docs"
+LOCAL_DECRYPTED="$USER_HOME/.decrypted_docs"
 NAS_TARGET="/mnt/nas/data/Backups/encrypted_documents_paul_test"
 CRED_FILE="/etc/samba/credentials_sync_docs"
 LOGDIR="/var/log/sync_docs_unison"     # bitte ggf. anpassen, kann root-Rechte benötigen
@@ -69,22 +76,11 @@ read_password_from_credfile() {
         log "Suche in $CRED_FILE nach Passwort"
         pw=$(grep -m1 -E '^[^#[:space:]]' "$CRED_FILE" 2>/dev/null | sed -E 's/^password=//')
         if [ -n "$pw" ]; then
-            echo "$pw"
+            echo "Passwort erfolgreich gelesen"
             return 0
         fi
     fi
     return 1
-}
-
-make_extpass_script() {
-    # erzeugt ein kleines Script, das das Passwort ausgibt, für gocryptfs --extpass.
-    # erwartet Passwort als ersten Parameter
-    local pw="$1"
-    cat > "$TMP_EXTPASS_SCRIPT" <<EOF
-#!/bin/sh
-printf '%s' '$pw'
-EOF
-    chmod 700 "$TMP_EXTPASS_SCRIPT"
 }
 
 check_programs() {
@@ -114,7 +110,7 @@ mount_gocryptfs() {
     # Versuche Passwort aus CRED_FILE
     if (read_password_from_credfile); then
         log "Mount: Passwort aus $CRED_FILE wird verwendet"
-        # make_extpass_script "$pw"
+
         # --nonempty falls verschlüss. Ordner nicht leer ist; keine interactive Passworteingabe.
         gocryptfs -passfile "$CRED_FILE" "$LOCAL_ENCRYPTED" "$LOCAL_DECRYPTED" 2>&1 | tee -a "$LOGFILE"
         rc=${PIPESTATUS[0]}
@@ -162,10 +158,13 @@ init_gocryptfs_if_needed() {
         # Achtung: Damit Passwort nicht in ps angezeigt wird, vermeiden wir Befehlszeilen-Parameter.
         # Wir verwenden ein expect-ähnliches HereDoc — gocryptfs akzeptiert stdin für -init.
         # (Falls auf deiner Version nicht funktioniert, wird interaktiv gefragt.)
-        printf '%s\n%s\n' "$pw" "$pw" | gocryptfs -init "$LOCAL_ENCRYPTED" 2>&1 | tee -a "$LOGFILE"
+
+        gocryptfs -init -passfile "$CRED_FILE" "$LOCAL_ENCRYPTED" 2>&1 | tee -a "$LOGFILE"
         rc=${PIPESTATUS[0]}
         if [ $rc -ne 0 ]; then
             fatal "gocryptfs -init fehlgeschlagen (rc=$rc)."
+        else
+            log "gocryptfs -init erfolgreich"
         fi
     else
         # Interaktive Init
@@ -327,14 +326,14 @@ check_programs
 # ============================
 RESTORE_LOCAL=false
 RESET_ALL=false
-# optionaler Parameter: --restore-local
+# optionaler Parameter: --restore
 if [ "${#@}" -gt 0 ]; then
     for a in "$@"; do
         case "$a" in
-            --restore-local) RESTORE_LOCAL=true ;;
+            --restore) RESTORE_LOCAL=true ;;
             --reset) RESET_ALL=true ;;
-            --help|-h) echo "Usage: $0 [--restore-local] [--reset]"; exit 0 ;;
-            *) echo "Unbekannter Parameter: $a"; echo "Usage: $0 [--restore-local] [--reset]"; exit 1 ;;
+            --help|-h) echo "Usage: $0 [--restore] [--reset]"; exit 0 ;;
+            *) echo "Unbekannter Parameter: $a"; echo "Usage: $0 [--restore] [--reset]"; exit 1 ;;
         esac
     done
 fi
@@ -357,11 +356,13 @@ if [ ! -d "$NAS_TARGET" ]; then
 fi
 
 # 1) init gocryptfs falls nötig (ohne Dateien zu löschen)
+log "init_gocryptfs_if_needed"
 init_gocryptfs_if_needed
 
 # 2) stelle sicher, dass der Container gemountet ist (für restore oder falls Workflows mount benötigen)
 #    Für normalen Unison-Sync wird LOCAL_ENCRYPTED synchronisiert; wir mounten trotzdem, weil Benutzer evtl.
 #    lokal mit LOCAL_DECRYPTED arbeiten will bzw. Restore benötigt.
+log "init_gocryptfs_if_needed"
 mount_gocryptfs
 
 # 3) Hauptaktion:
