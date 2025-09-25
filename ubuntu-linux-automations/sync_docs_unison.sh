@@ -8,11 +8,18 @@
 # - optional: --reset (reset current mounts, does not affect LOCAL_DOCS)
 #
 # WICHTIG: Dieses Script löscht NIE ungefragt Dateien in LOCAL_DOCS.
-#         Unison behandelt Konflikte interaktiv (fragt den Nutzer).
-#
+#         Unison behandelt Konflikte interaktiv (fragt den Nutzer).#
+
 # Script ausführbar machen: >> chmod +x ~/sync_docs_unison.sh
 # Script ausführen, z.B.:   >> ./sync_docs_unison.sh --restore
 
+# === Credential-File ===
+# 1. Erst credentials_nas anlegen:
+# sudo nano /etc/samba/credentials_sync_docs
+# 2. Inhalt:
+# NUR_DAS_PASSWORT_EINTRAGEN
+# 3. Rechte beschränken
+# sudo chmod 600 /etc/samba/credentials_sync_docs
 
 # Manuelles Retten:
 # 1. Nas-Ziel setzen:
@@ -37,15 +44,16 @@ fi
 # ============================
 # =  Konfiguration (Variablen)
 # ============================
-LOCAL_DOCS="$USER_HOME/testdir/"
-LOCAL_ENCRYPTED="$USER_HOME/.encrypted_docs"
-LOCAL_DECRYPTED="$USER_HOME/.decrypted_docs"
-NAS_TARGET="/mnt/nas/data/Backups/encrypted_documents_paul_test"
-CRED_FILE="/etc/samba/credentials_sync_docs"
-LOGDIR="/var/log/sync_docs_unison"     # bitte ggf. anpassen, kann root-Rechte benötigen
+LOCAL_DOCS="$USER_HOME/testdir/"    # Zu sicherndes lokales Verzeichnis
+LOCAL_ENCRYPTED="$USER_HOME/.encrypted_docs"  # gocryptfs-Mount verschlüsselt
+LOCAL_DECRYPTED="$USER_HOME/.decrypted_docs"  # gocryptfs-Mount UNverschlüsselt
+NAS_TARGET="/mnt/nas/data/Backups/encrypted_docs_backup"  # Backup-Ordner z.B. auf einer NAS
+CRED_FILE="/etc/samba/credentials_sync_docs"  # anlegen mit: (Nur das Passwort dort eintragen) >> sudo nano /etc/samba/credentials_sync_docs >> sudo chmod 600 /etc/samba/credentials_sync_docs
+
+LOGDIR="/tmp/log/sync_docs_unison"
 LOGFILE="${LOGDIR}/sync_$(date +%F_%H%M%S).log"
 TMP_EXTPASS_SCRIPT="/tmp/gocryptfs_extpass_$$.sh"   # temporäres extpass-script
-UNISON_PROFILE="/tmp/unison_sync_profile_$$.prf"   # temporärer Unison-Profil
+UNISON_PROFILE="/tmp/unison_sync_profile_$$.prf"    # temporärer Unison-Profil
 
 # ============================
 # =  Hilfsfunktionen
@@ -302,6 +310,33 @@ restore_local_from_nas() {
     unmount_gocryptfs
 }
 
+# ============================
+# =  Initialer Push auf NAS
+# ============================
+init_backup() {
+    log "=== Initialer Backup-Flow: NAS ist leer ==="
+
+    # Stelle sicher, dass gocryptfs gemountet ist
+    mount_gocryptfs
+
+    log "Initialer Push von LOCAL_ENCRYPTED -> NAS_TARGET"
+    rsync -avh --progress "$LOCAL_DOCS"/ "$LOCAL_DECRYPTED"/ 2>&1 | tee -a "$LOGFILE"
+    rsync -avh --progress "$LOCAL_ENCRYPTED"/ "$NAS_TARGET"/ 2>&1 | tee -a "$LOGFILE"
+    rc=${PIPESTATUS[0]}
+    if [ $rc -ne 0 ]; then
+        fatal "Initialer Push auf NAS fehlgeschlagen (rc=$rc)."
+    fi
+
+    log "Initialer Push abgeschlossen. NAS enthält jetzt die verschlüsselten Dateien."
+
+    # Optional: danach Unison normal ausführen
+    run_sync_nas
+
+    # Unmounten nach initialem Push
+    unmount_gocryptfs
+}
+
+
 reset_all() {
     echo "=== Reset-Modus gestartet ==="
 
@@ -394,7 +429,7 @@ init_gocryptfs_if_needed
 # 2) stelle sicher, dass der Container gemountet ist (für restore oder falls Workflows mount benötigen)
 #    Für normalen Unison-Sync wird LOCAL_ENCRYPTED synchronisiert; wir mounten trotzdem, weil Benutzer evtl.
 #    lokal mit LOCAL_DECRYPTED arbeiten will bzw. Restore benötigt.
-log "init_gocryptfs_if_needed"
+log "mount_gocryptfs"
 mount_gocryptfs
 
 # 3) Hauptaktion:
@@ -402,8 +437,12 @@ if [ "$RESTORE_LOCAL" = true ]; then
     # Restore-Flow
     restore_local_from_nas
 else
-    # Normaler Bidirektionaler Sync: Unison zwischen verschlüsseltem Container und NAS
+    if [ -z "$(ls -A "$NAS_TARGET")" ]; then
+        # Erstes Backup, Zielverzeichnis auf der NAS ist leer
+        init_backup
+    fi
 
+    # Normaler Bidirektionaler Sync: Unison zwischen verschlüsseltem Container und NAS
     run_sync_local
     run_sync_nas
     run_sync_local
