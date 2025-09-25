@@ -11,7 +11,7 @@
 #         Unison behandelt Konflikte interaktiv (fragt den Nutzer).
 #
 # Script ausführbar machen: >> chmod +x ~/sync_docs_unison.sh
-# Script ausführen, z.B.:   >> sudo ./sync_docs_unison.sh --restore
+# Script ausführen, z.B.:   >> ./sync_docs_unison.sh --restore
 
 
 # Manuelles Retten:
@@ -28,7 +28,7 @@ set -u
 set -o pipefail
 
 # never use root dir, allways determine real user home directory
-if [ -n "$SUDO_USER" ]; then
+if [ -n "${SUDO_USER:-}" ]; then
     USER_HOME=$(eval echo "~$SUDO_USER")
 else
     USER_HOME="$HOME"
@@ -72,15 +72,27 @@ cleanup_temp() {
 
 read_password_from_credfile() {
     # Liefert Passwort auf stdout falls gefunden und lesbar, sonst leeres Ergebnis.
-    if [ -r "$CRED_FILE" ]; then
-        log "Suche in $CRED_FILE nach Passwort"
-        pw=$(grep -m1 -E '^[^#[:space:]]' "$CRED_FILE" 2>/dev/null | sed -E 's/^password=//')
+    if sudo test -r "$CRED_FILE"; then
+        pw=$(sudo grep -m1 -E '^[^#[:space:]]' "$CRED_FILE" 2>/dev/null | sed -E 's/^password=//')
         if [ -n "$pw" ]; then
-            echo "Passwort erfolgreich gelesen"
+            echo "$pw"
             return 0
         fi
     fi
+
     return 1
+}
+
+make_extpass_script() {
+    # erzeugt ein kleines Script, das das Passwort ausgibt, für gocryptfs -extpass.
+    # erwartet Passwort als ersten Parameter
+    local pw="$1"
+    cat > "$TMP_EXTPASS_SCRIPT" <<EOF
+#!/bin/sh
+echo "$pw"
+EOF
+
+    chmod 700 "$TMP_EXTPASS_SCRIPT"
 }
 
 check_programs() {
@@ -108,11 +120,11 @@ mount_gocryptfs() {
 
     mkdir -p "$LOCAL_DECRYPTED"
     # Versuche Passwort aus CRED_FILE
-    if (read_password_from_credfile); then
+    if pw=$(read_password_from_credfile); then
         log "Mount: Passwort aus $CRED_FILE wird verwendet"
-
+        make_extpass_script "$pw"
         # --nonempty falls verschlüss. Ordner nicht leer ist; keine interactive Passworteingabe.
-        gocryptfs -passfile "$CRED_FILE" "$LOCAL_ENCRYPTED" "$LOCAL_DECRYPTED" 2>&1 | tee -a "$LOGFILE"
+        gocryptfs -extpass "$TMP_EXTPASS_SCRIPT" "$LOCAL_ENCRYPTED" "$LOCAL_DECRYPTED" 2>&1 | tee -a "$LOGFILE"
         rc=${PIPESTATUS[0]}
         if [ $rc -ne 0 ]; then
             fatal "gocryptfs mount fehlgeschlagen (rc=$rc)."
@@ -153,13 +165,14 @@ init_gocryptfs_if_needed() {
     # Versuche Passwort aus CRED_FILE zu benutzen
     if pw=$(read_password_from_credfile); then
         log "Initialisiere gocryptfs mit Passwort aus $CRED_FILE"
+        make_extpass_script "$pw"
         # gocryptfs -init liest nicht --extpass; wir können passwd via stdin übergeben:
         # aber gocryptfs -init fragt Passwort interaktiv zweimal; wir verwenden here-doc sicher.
         # Achtung: Damit Passwort nicht in ps angezeigt wird, vermeiden wir Befehlszeilen-Parameter.
         # Wir verwenden ein expect-ähnliches HereDoc — gocryptfs akzeptiert stdin für -init.
         # (Falls auf deiner Version nicht funktioniert, wird interaktiv gefragt.)
 
-        gocryptfs -init -passfile "$CRED_FILE" "$LOCAL_ENCRYPTED" 2>&1 | tee -a "$LOGFILE"
+        gocryptfs -init -extpass "$TMP_EXTPASS_SCRIPT" "$LOCAL_ENCRYPTED" 2>&1 | tee -a "$LOGFILE"
         rc=${PIPESTATUS[0]}
         if [ $rc -ne 0 ]; then
             fatal "gocryptfs -init fehlgeschlagen (rc=$rc)."
@@ -178,18 +191,7 @@ init_gocryptfs_if_needed() {
     fi
 }
 
-run_unison_sync() {
-    # Führe Unison in interaktivem Modus aus, damit Konflikte abgefragt werden.
-    # Unison zwischen LOCAL_ENCRYPTED und NAS_TARGET (beides verschlüsselte Daten)
-    log "Starte Unison-Synchronisation (bidirektional) zwischen:"
-    log "  lokal(encrypted): $LOCAL_ENCRYPTED"
-    log "  NAS:              $NAS_TARGET"
-
-    # Sicherheitschecks
-    if [ ! -d "$NAS_TARGET" ]; then
-        fatal "NAS_TARGET $NAS_TARGET existiert nicht oder ist nicht erreichbar."
-    fi
-
+create_unison_profile() {
     # Erzeuge temporäres Unison-Profil, damit wir reproduzierbar loggen können
     cat > "$UNISON_PROFILE" <<EOF
 root = $LOCAL_ENCRYPTED
@@ -206,15 +208,45 @@ EOF
     # Unison interaktiv (UI: text). Bei Konflikten wirst du interaktiv gefragt.
     # Wir leiten stdout/stderr ins Hauptlog.
     log "Unison-Profil geschrieben nach $UNISON_PROFILE"
+}
 
-    # Sync LOCAL_DOCS <-> LOCAL_DECRYPTED
-    # Result: LOCAL_DOCS  <->  LOCAL_DECRYPTED  ->  LOCAL_ENCRYPTED  <->  NAS_TARGET
-    log "Syncrhonisiere $LOCAL_DOCS und $LOCAL_DECRYPTED"
-    rsync -avh --update "$LOCAL_DOCS"/ "$LOCAL_DECRYPTED"/ 2>&1 | tee -a "$LOGFILE"
-    rsync -avh --update "$LOCAL_DECRYPTED"/ "$LOCAL_DOCS"/ 2>&1 | tee -a "$LOGFILE"
+run_sync_nas() {
+    # Führe Unison in interaktivem Modus aus, damit Konflikte abgefragt werden.
+    # Unison zwischen LOCAL_ENCRYPTED und NAS_TARGET (beides verschlüsselte Daten)
+    log "Starte Unison-Synchronisation (bidirektional) zwischen:"
+    log "  lokal(encrypted): $LOCAL_ENCRYPTED"
+    log "  NAS:              $NAS_TARGET"
+
+    # Sicherheitschecks
+    if [ ! -d "$NAS_TARGET" ]; then
+        fatal "NAS_TARGET $NAS_TARGET existiert nicht oder ist nicht erreichbar."
+    fi
 
     # Auf manchen Systemen braucht Unison den Profil-Namen, wir starten mit -ui text und -pref
     unison -ui text -perms 0 -batch "$LOCAL_ENCRYPTED" "$NAS_TARGET" 2>&1 | tee -a "$LOGFILE"
+    rc=${PIPESTATUS[0]}
+    if [ $rc -ne 0 ]; then
+        log "Unison Meldung (rc=$rc). Falls rc != 0 könnte es Konflikte oder Fehler gegeben haben. Prüfe ${LOGDIR}."
+    else
+        log "Unison Sync beendet (rc=0)."
+    fi
+}
+
+run_sync_local() {
+    # Führe Unison in interaktivem Modus aus, damit Konflikte abgefragt werden.
+    # Unison zwischen $LOCAL_DOCS und $LOCAL_DECRYPTED (beides verschlüsselte Daten)
+    log "Starte Unison-Synchronisation (bidirektional) zwischen:"
+    log "  lokal(zu sicherndes Verzeichnis): $LOCAL_DOCS"
+    log "  lokal(decrypted): $LOCAL_DECRYPTED"
+
+    # Sicherheitschecks
+    if [ ! -d "$LOCAL_DECRYPTED" ]; then
+        fatal "LOCAL_DECRYPTED $LOCAL_DECRYPTED existiert nicht oder ist nicht erreichbar."
+    fi
+
+    # Sync LOCAL_DOCS <-> LOCAL_DECRYPTED
+    log "Syncrhonisiere $LOCAL_DOCS und $LOCAL_DECRYPTED"
+    unison -ui text -perms 0 -batch "$LOCAL_DOCS" "$LOCAL_DECRYPTED" 2>&1 | tee -a "$LOGFILE"
     rc=${PIPESTATUS[0]}
     if [ $rc -ne 0 ]; then
         log "Unison Meldung (rc=$rc). Falls rc != 0 könnte es Konflikte oder Fehler gegeben haben. Prüfe ${LOGDIR}."
@@ -233,7 +265,7 @@ restore_local_from_nas() {
     log "=== Wiederherstellungs-Workflow gestartet: Lokale Kopie wird aus NAS wiederhergestellt ==="
 
     # 1) sync verschlüsselt
-    run_unison_sync
+    run_sync_nas
 
     # 2) mounten
     mount_gocryptfs
@@ -371,7 +403,10 @@ if [ "$RESTORE_LOCAL" = true ]; then
     restore_local_from_nas
 else
     # Normaler Bidirektionaler Sync: Unison zwischen verschlüsseltem Container und NAS
-    run_unison_sync
+
+    run_sync_local
+    run_sync_nas
+    run_sync_local
     # optional: nach Sync unmounten
     unmount_gocryptfs
 fi
