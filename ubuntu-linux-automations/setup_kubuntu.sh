@@ -150,7 +150,7 @@ mkdir -p ~/.config/autostart
 for app in \
   /usr/share/applications/org.kde.latte-dock.desktop \
   /usr/share/applications/org.mozilla.firefox.desktop \
-  /var/lib/snapd/desktop/applications/signal-desktop.desktop; do
+  /usr/share/applications/signal-desktop.desktop; do
   [ -f "$app" ] && cp "$app" ~/.config/autostart/
 done
 
