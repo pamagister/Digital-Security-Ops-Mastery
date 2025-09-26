@@ -1,65 +1,76 @@
 #!/usr/bin/env bash
 # sync_docs_unison.sh
-# Bidirektionaler Sync zwischen lokalem gocryptfs-Container und NAS via Unison.
-# - bevorzugt Passwort aus /etc/samba/credentials_sync_docs
-# - init gocryptfs automatisch falls nötig (versucht Passwort aus CRED_FILE)
-# - mount, run unison between LOCAL_ENCRYPTED and NAS_TARGET, unmount
-# - optional: --restore (restore decrypted files into LOCAL_DOCS)
-# - optional: --reset (reset current mounts, does not affect LOCAL_DOCS)
+# Bidirectional sync between local gocryptfs container and NAS via Unison.
+# - Prefers password from /etc/samba/credentials_sync_docs
+# - Auto-initializes gocryptfs if needed (tries password from CRED_FILE)
+# - Mount, run unison between LOCAL_ENCRYPTED and NAS_TARGET, unmount
+# - Optional: --restore (restore decrypted files into LOCAL_DOCS)
+# - Optional: --reset (reset current mounts, does not affect LOCAL_DOCS)
+# - Optional: --init-backup (initial backup when NAS is empty)
 #
-# WICHTIG: Dieses Script löscht NIE ungefragt Dateien in LOCAL_DOCS.
-#         Unison behandelt Konflikte interaktiv (fragt den Nutzer).#
+# IMPORTANT: This script NEVER deletes files in LOCAL_DOCS without asking.
+#           Unison handles conflicts interactively (asks the user).
 
-# Script ausführbar machen: >> chmod +x ~/sync_docs_unison.sh
-# Script ausführen, z.B.:   >> ./sync_docs_unison.sh --restore
+# Make script executable: chmod +x ~/sync_docs_unison.sh
+# Run script, e.g.: ./sync_docs_unison.sh --restore
 
-# === Credential-File ===
-# 1. Erst credentials_nas anlegen:
+# === Credential File Setup ===
+# 1. Create credentials file:
 # sudo nano /etc/samba/credentials_sync_docs
-# 2. Inhalt:
-# NUR_DAS_PASSWORT_EINTRAGEN
-# 3. Rechte beschränken
+# 2. Content (just the password):
+# YOUR_PASSWORD_HERE
+# 3. Secure permissions:
 # sudo chmod 600 /etc/samba/credentials_sync_docs
 
-# Manuelles Retten:
-# 1. Nas-Ziel setzen:
-# >> NAS_TARGET="/mnt/nas/data/Backups/encrypted_documents"
-# 2. Mountpoint vorbereiten:
-# >> mkdir -p tmp/nas_decrypted
-# 3. gocryptfs direkt starten (mit Passwortabfrage read-only zur Sicherheit):
-# >> gocryptfs -ro "$NAS_TARGET" user/NAME/nas_decrypted
-# 4. Unmount, wenn fertig
-# >> umount tmp/nas_decrypted
+# Manual recovery:
+# 1. Set NAS target:
+# NAS_TARGET="/mnt/nas/data/Backups/encrypted_documents"
+# 2. Prepare mountpoint:
+# mkdir -p tmp/nas_decrypted
+# 3. Start gocryptfs directly (with password prompt, read-only for safety):
+# gocryptfs -ro "$NAS_TARGET" tmp/nas_decrypted
+# 4. Unmount when done:
+# fusermount -u tmp/nas_decrypted
 
-set -u
-set -o pipefail
+set -euo pipefail
 
-# never use root dir, allways determine real user home directory
-if [ -n "${SUDO_USER:-}" ]; then
+# ============================
+# Configuration Variables
+# ============================
+
+# Determine real user home directory (handle sudo cases)
+if [[ -n "${SUDO_USER:-}" ]]; then
     USER_HOME=$(eval echo "~$SUDO_USER")
 else
     USER_HOME="$HOME"
 fi
 
-# ============================
-# =  Konfiguration (Variablen)
-# ============================
-LOCAL_DOCS="$USER_HOME/Dokumente/"    # Zu sicherndes lokales Verzeichnis
-LOCAL_ENCRYPTED="$USER_HOME/.encrypted_docs"  # gocryptfs-Mount verschlüsselt
-LOCAL_DECRYPTED="$USER_HOME/.decrypted_docs"  # gocryptfs-Mount UNverschlüsselt
-NAS_TARGET="/mnt/nas/data/Backups/encrypted_docs_backup"  # Backup-Ordner z.B. auf einer NAS
-CRED_FILE="/etc/samba/credentials_sync_docs"  # anlegen mit: (Nur das Passwort dort eintragen) >> sudo nano /etc/samba/credentials_sync_docs >> sudo chmod 600 /etc/samba/credentials_sync_docs
+# Path configuration
+LOCAL_DOCS="$USER_HOME/Documents/"                           # Local directory to backup
+LOCAL_ENCRYPTED="$USER_HOME/.encrypted_docs"                 # gocryptfs encrypted mount
+LOCAL_DECRYPTED="$USER_HOME/.decrypted_docs"                 # gocryptfs decrypted mount
+NAS_TARGET="/mnt/nas/data/Backups/encrypted_docs_backup"     # Backup folder on NAS
+CRED_FILE="/etc/samba/credentials_sync_docs"                 # Password file
 
+# Logging configuration
 LOGDIR="/tmp/log/sync_docs_unison"
 LOGFILE="${LOGDIR}/sync_$(date +%F_%H%M%S).log"
-TMP_EXTPASS_SCRIPT="/tmp/gocryptfs_extpass_$$.sh"   # temporäres extpass-script
-UNISON_PROFILE="/tmp/unison_sync_profile_$$.prf"    # temporärer Unison-Profil
+TMP_EXTPASS_SCRIPT="/tmp/gocryptfs_extpass_$$.sh"
+UNISON_PROFILE="/tmp/unison_sync_profile_$$.prf"
+
+# Script state
+CLEANUP_PERFORMED=false
 
 # ============================
-# =  Hilfsfunktionen
+# Utility Functions
 # ============================
+
 log() {
     echo "[$(date +'%Y-%m-%d %H:%M:%S')] $*" | tee -a "$LOGFILE"
+}
+
+error() {
+    echo "[$(date +'%Y-%m-%d %H:%M:%S')] ERROR: $*" | tee -a "$LOGFILE" >&2
 }
 
 fatal() {
@@ -69,386 +80,457 @@ fatal() {
 }
 
 cleanup_temp() {
-    # sichere Löschung der temporären extpass-Scripts
-    if [ -f "$TMP_EXTPASS_SCRIPT" ]; then
+    if [[ "$CLEANUP_PERFORMED" == "true" ]]; then
+        return 0
+    fi
+
+    # Secure deletion of temporary scripts
+    if [[ -f "$TMP_EXTPASS_SCRIPT" ]]; then
         shred -u "$TMP_EXTPASS_SCRIPT" 2>/dev/null || rm -f "$TMP_EXTPASS_SCRIPT"
     fi
-    if [ -f "$UNISON_PROFILE" ]; then
+    if [[ -f "$UNISON_PROFILE" ]]; then
         rm -f "$UNISON_PROFILE"
     fi
+
+    CLEANUP_PERFORMED=true
 }
 
 read_password_from_credfile() {
-    # Liefert Passwort auf stdout falls gefunden und lesbar, sonst leeres Ergebnis.
-    if sudo test -r "$CRED_FILE"; then
-        pw=$(sudo grep -m1 -E '^[^#[:space:]]' "$CRED_FILE" 2>/dev/null | sed -E 's/^password=//')
-        if [ -n "$pw" ]; then
+    # Returns password on stdout if found and readable, otherwise fails
+    if sudo test -r "$CRED_FILE" 2>/dev/null; then
+        local pw
+        pw=$(sudo grep -m1 -E '^[^#[:space:]]' "$CRED_FILE" 2>/dev/null | sed -E 's/^password=//' | tr -d '\r\n')
+        if [[ -n "$pw" ]]; then
             echo "$pw"
             return 0
         fi
     fi
-
     return 1
 }
 
 make_extpass_script() {
-    # erzeugt ein kleines Script, das das Passwort ausgibt, für gocryptfs -extpass.
-    # erwartet Passwort als ersten Parameter
+    # Creates a script that outputs the password for gocryptfs -extpass
     local pw="$1"
     cat > "$TMP_EXTPASS_SCRIPT" <<EOF
-#!/bin/sh
+#!/bin/bash
 echo "$pw"
 EOF
-
     chmod 700 "$TMP_EXTPASS_SCRIPT"
 }
 
 check_programs() {
     local missing=()
-    for prog in gocryptfs unison rsync fusermount; do
+    local required_programs=("gocryptfs" "unison" "rsync" "fusermount")
+
+    for prog in "${required_programs[@]}"; do
         if ! command -v "$prog" >/dev/null 2>&1; then
             missing+=("$prog")
         fi
     done
-    if [ ${#missing[@]} -ne 0 ]; then
-        fatal "Benötigte Programme fehlen: ${missing[*]}. Bitte installieren."
+
+    if [[ ${#missing[@]} -ne 0 ]]; then
+        fatal "Required programs missing: ${missing[*]}. Please install them."
+    fi
+}
+
+check_directories() {
+    # Create necessary directories
+    mkdir -p "$LOCAL_DOCS" "$LOCAL_ENCRYPTED" "$LOCAL_DECRYPTED"
+
+    # Check if LOCAL_DOCS is accessible
+    if [[ ! -d "$LOCAL_DOCS" ]] || [[ ! -r "$LOCAL_DOCS" ]]; then
+        fatal "LOCAL_DOCS directory $LOCAL_DOCS is not accessible"
     fi
 }
 
 gocryptfs_is_initialized() {
-    [ -f "${LOCAL_ENCRYPTED}/gocryptfs.conf" ]
+    [[ -f "${LOCAL_ENCRYPTED}/gocryptfs.conf" ]]
+}
+
+is_mounted() {
+    local mountpoint="$1"
+    mountpoint -q "$mountpoint" 2>/dev/null
 }
 
 mount_gocryptfs() {
-    # Mountet LOCAL_ENCRYPTED -> LOCAL_DECRYPTED. Nutzt CRED_FILE falls vorhanden.
-    if mountpoint -q "$LOCAL_DECRYPTED"; then
-        log "gocryptfs bereits gemountet auf $LOCAL_DECRYPTED"
+    # Mount LOCAL_ENCRYPTED -> LOCAL_DECRYPTED using CRED_FILE if available
+    if is_mounted "$LOCAL_DECRYPTED"; then
+        log "gocryptfs already mounted at $LOCAL_DECRYPTED"
         return 0
     fi
 
     mkdir -p "$LOCAL_DECRYPTED"
-    # Versuche Passwort aus CRED_FILE
+
+    # Try password from CRED_FILE
+    local pw
     if pw=$(read_password_from_credfile); then
-        log "Mount: Passwort aus $CRED_FILE wird verwendet"
+        log "Mounting with password from $CRED_FILE"
         make_extpass_script "$pw"
-        # --nonempty falls verschlüss. Ordner nicht leer ist; keine interactive Passworteingabe.
-        gocryptfs -extpass "$TMP_EXTPASS_SCRIPT" "$LOCAL_ENCRYPTED" "$LOCAL_DECRYPTED" 2>&1 | tee -a "$LOGFILE"
-        rc=${PIPESTATUS[0]}
-        if [ $rc -ne 0 ]; then
-            fatal "gocryptfs mount fehlgeschlagen (rc=$rc)."
+
+        if gocryptfs -extpass "$TMP_EXTPASS_SCRIPT" "$LOCAL_ENCRYPTED" "$LOCAL_DECRYPTED" 2>&1 | tee -a "$LOGFILE"; then
+            log "gocryptfs mount successful"
+        else
+            fatal "gocryptfs mount failed"
         fi
     else
-        # interactiver Mount (Passworteingabe)
-        log "Kein Passwort in $CRED_FILE gefunden/lesbar. Interaktive Passwort-Eingabe erforderlich."
-        gocryptfs --nonempty "$LOCAL_ENCRYPTED" "$LOCAL_DECRYPTED" 2>&1 | tee -a "$LOGFILE"
-        rc=${PIPESTATUS[0]}
-        if [ $rc -ne 0 ]; then
-            fatal "gocryptfs mount fehlgeschlagen (rc=$rc)."
+        # Interactive mount (password prompt)
+        log "No password found in $CRED_FILE. Interactive password input required."
+        echo "Please enter the gocryptfs password:"
+
+        if gocryptfs "$LOCAL_ENCRYPTED" "$LOCAL_DECRYPTED" 2>&1 | tee -a "$LOGFILE"; then
+            log "gocryptfs mount successful"
+        else
+            fatal "gocryptfs mount failed"
         fi
     fi
 }
 
 unmount_gocryptfs() {
-    if mountpoint -q "$LOCAL_DECRYPTED"; then
+    if is_mounted "$LOCAL_DECRYPTED"; then
         log "Unmounting $LOCAL_DECRYPTED..."
+
         if fusermount -u "$LOCAL_DECRYPTED" 2>&1 | tee -a "$LOGFILE"; then
-            log "Unmount erfolgreich."
+            log "Unmount successful"
         else
-            log "Warnung: Unmount möglicherweise fehlgeschlagen; Versuch mit lazy unmount."
-            fusermount -uz "$LOCAL_DECRYPTED" 2>&1 | tee -a "$LOGFILE" || log "Lazy unmount ebenfalls fehlgeschlagen."
+            log "Warning: Normal unmount failed, trying lazy unmount..."
+            if fusermount -uz "$LOCAL_DECRYPTED" 2>&1 | tee -a "$LOGFILE"; then
+                log "Lazy unmount successful"
+            else
+                error "Both normal and lazy unmount failed"
+            fi
         fi
     else
-        log "Kein mount gefunden; überspringe unmount."
+        log "No mount found at $LOCAL_DECRYPTED, skipping unmount"
     fi
 }
 
 init_gocryptfs_if_needed() {
-    # initialisiert LOCAL_ENCRYPTED falls noch nicht initialisiert.
+    # Initialize LOCAL_ENCRYPTED if not already initialized
     mkdir -p "$LOCAL_ENCRYPTED"
+
     if gocryptfs_is_initialized; then
-        log "gocryptfs bereits initialisiert in $LOCAL_ENCRYPTED"
+        log "gocryptfs already initialized in $LOCAL_ENCRYPTED"
         return 0
     fi
 
-    # Versuche Passwort aus CRED_FILE zu benutzen
-    if pw=$(read_password_from_credfile); then
-        log "Initialisiere gocryptfs mit Passwort aus $CRED_FILE"
-        make_extpass_script "$pw"
-        # gocryptfs -init liest nicht --extpass; wir können passwd via stdin übergeben:
-        # aber gocryptfs -init fragt Passwort interaktiv zweimal; wir verwenden here-doc sicher.
-        # Achtung: Damit Passwort nicht in ps angezeigt wird, vermeiden wir Befehlszeilen-Parameter.
-        # Wir verwenden ein expect-ähnliches HereDoc — gocryptfs akzeptiert stdin für -init.
-        # (Falls auf deiner Version nicht funktioniert, wird interaktiv gefragt.)
+    log "Initializing gocryptfs container..."
 
-        gocryptfs -init -extpass "$TMP_EXTPASS_SCRIPT" "$LOCAL_ENCRYPTED" 2>&1 | tee -a "$LOGFILE"
-        rc=${PIPESTATUS[0]}
-        if [ $rc -ne 0 ]; then
-            fatal "gocryptfs -init fehlgeschlagen (rc=$rc)."
+    # Try password from CRED_FILE
+    local pw
+    if pw=$(read_password_from_credfile); then
+        log "Initializing gocryptfs with password from $CRED_FILE"
+        make_extpass_script "$pw"
+
+        if gocryptfs -init -extpass "$TMP_EXTPASS_SCRIPT" "$LOCAL_ENCRYPTED" 2>&1 | tee -a "$LOGFILE"; then
+            log "gocryptfs initialization successful"
         else
-            log "gocryptfs -init erfolgreich"
+            fatal "gocryptfs initialization failed"
         fi
     else
-        # Interaktive Init
-        log "gocryptfs nicht initialisiert. Interaktive Passwortvergabe wird benötigt."
-        echo "Bitte wähle ein starkes Passwort für den Verschlüsselungs-Container (wird nicht protokolliert)."
-        gocryptfs -init "$LOCAL_ENCRYPTED" 2>&1 | tee -a "$LOGFILE"
-        rc=${PIPESTATUS[0]}
-        if [ $rc -ne 0 ]; then
-            fatal "gocryptfs -init fehlgeschlagen (rc=$rc)."
+        # Interactive initialization
+        log "gocryptfs not initialized. Interactive password setup required."
+        echo "Please choose a strong password for the encryption container:"
+
+        if gocryptfs -init "$LOCAL_ENCRYPTED" 2>&1 | tee -a "$LOGFILE"; then
+            log "gocryptfs initialization successful"
+        else
+            fatal "gocryptfs initialization failed"
         fi
     fi
-}
-
-create_unison_profile() {
-    # Erzeuge temporäres Unison-Profil, damit wir reproduzierbar loggen können
-    cat > "$UNISON_PROFILE" <<EOF
-root = $LOCAL_ENCRYPTED
-root = $NAS_TARGET
-# Keine automatische Löschung ohne Nachfrage
-confirmbigdel = true
-# Logfile für unison selbst
-log = true
-logfile = ${LOGDIR}/unison_$(date +%F_%H%M%S).log
-# Standard-Optionen (rekursiv, ignorieren von .git etc. anpassen falls nötig)
-ignore = Path .git
-EOF
-
-    # Unison interaktiv (UI: text). Bei Konflikten wirst du interaktiv gefragt.
-    # Wir leiten stdout/stderr ins Hauptlog.
-    log "Unison-Profil geschrieben nach $UNISON_PROFILE"
 }
 
 run_sync_nas() {
-    # Führe Unison in interaktivem Modus aus, damit Konflikte abgefragt werden.
-    # Unison zwischen LOCAL_ENCRYPTED und NAS_TARGET (beides verschlüsselte Daten)
-    log "Starte Unison-Synchronisation (bidirektional) zwischen:"
-    log "  lokal(encrypted): $LOCAL_ENCRYPTED"
+    # Run Unison sync between LOCAL_ENCRYPTED and NAS_TARGET (both encrypted data)
+    log "Starting Unison synchronization (bidirectional) between:"
+    log "  local(encrypted): $LOCAL_ENCRYPTED"
     log "  NAS:              $NAS_TARGET"
 
-    # Sicherheitschecks
-    if [ ! -d "$NAS_TARGET" ]; then
-        fatal "NAS_TARGET $NAS_TARGET existiert nicht oder ist nicht erreichbar."
+    # Safety checks
+    if [[ ! -d "$NAS_TARGET" ]]; then
+        fatal "NAS_TARGET $NAS_TARGET does not exist or is not accessible"
     fi
 
-    # Auf manchen Systemen braucht Unison den Profil-Namen, wir starten mit -ui text und -pref
-    unison -ui text -perms 0 -batch "$LOCAL_ENCRYPTED" "$NAS_TARGET" 2>&1 | tee -a "$LOGFILE"
-    rc=${PIPESTATUS[0]}
-    if [ $rc -ne 0 ]; then
-        log "Unison Meldung (rc=$rc). Falls rc != 0 könnte es Konflikte oder Fehler gegeben haben. Prüfe ${LOGDIR}."
+    # Run Unison with batch mode for automated operation
+    if unison -ui text -batch -perms 0 -times "$LOCAL_ENCRYPTED" "$NAS_TARGET" 2>&1 | tee -a "$LOGFILE"; then
+        log "Unison NAS sync completed successfully"
     else
-        log "Unison Sync beendet (rc=0)."
+        local rc=${PIPESTATUS[0]}
+        if [[ $rc -eq 1 ]]; then
+            log "Unison completed with warnings (rc=1) - check log for details"
+        else
+            error "Unison NAS sync failed (rc=$rc)"
+            return $rc
+        fi
     fi
 }
 
 run_sync_local() {
-    # Führe Unison in interaktivem Modus aus, damit Konflikte abgefragt werden.
-    # Unison zwischen $LOCAL_DOCS und $LOCAL_DECRYPTED (beides verschlüsselte Daten)
-    log "Starte Unison-Synchronisation (bidirektional) zwischen:"
-    log "  lokal(zu sicherndes Verzeichnis): $LOCAL_DOCS"
-    log "  lokal(decrypted): $LOCAL_DECRYPTED"
+    # Run Unison sync between LOCAL_DOCS and LOCAL_DECRYPTED
+    log "Starting Unison synchronization (bidirectional) between:"
+    log "  local(documents): $LOCAL_DOCS"
+    log "  local(decrypted): $LOCAL_DECRYPTED"
 
-    # Sicherheitschecks
-    if [ ! -d "$LOCAL_DECRYPTED" ]; then
-        fatal "LOCAL_DECRYPTED $LOCAL_DECRYPTED existiert nicht oder ist nicht erreichbar."
+    # Safety checks
+    if [[ ! -d "$LOCAL_DECRYPTED" ]]; then
+        fatal "LOCAL_DECRYPTED $LOCAL_DECRYPTED does not exist or is not accessible"
     fi
 
     # Sync LOCAL_DOCS <-> LOCAL_DECRYPTED
-    log "Syncrhonisiere $LOCAL_DOCS und $LOCAL_DECRYPTED"
-    unison -ui text -perms 0 -batch "$LOCAL_DOCS" "$LOCAL_DECRYPTED" 2>&1 | tee -a "$LOGFILE"
-    rc=${PIPESTATUS[0]}
-    if [ $rc -ne 0 ]; then
-        log "Unison Meldung (rc=$rc). Falls rc != 0 könnte es Konflikte oder Fehler gegeben haben. Prüfe ${LOGDIR}."
+    if unison -ui text -batch -perms 0 -times "$LOCAL_DOCS" "$LOCAL_DECRYPTED" 2>&1 | tee -a "$LOGFILE"; then
+        log "Unison local sync completed successfully"
     else
-        log "Unison Sync beendet (rc=0)."
+        local rc=${PIPESTATUS[0]}
+        if [[ $rc -eq 1 ]]; then
+            log "Unison completed with warnings (rc=1) - check log for details"
+        else
+            error "Unison local sync failed (rc=$rc)"
+            return $rc
+        fi
     fi
 }
 
 restore_local_from_nas() {
-    # Anwendung: komplette lokale Kopie aus dem Backup (NAS) wiederherstellen.
-    # Ablauf:
-    # 1) Unison sync LOCAL_ENCRYPTED <-> NAS_TARGET (holt neueste verschlüsselte Daten)
+    # Restore complete local copy from backup (NAS)
+    # Process:
+    # 1) Unison sync LOCAL_ENCRYPTED <-> NAS_TARGET (get latest encrypted data)
     # 2) mount gocryptfs (LOCAL_ENCRYPTED -> LOCAL_DECRYPTED)
-    # 3) rsync --archive --update --backup --backup-dir=... LOCAL_DECRYPTED/ LOCAL_DOCS/
-    #    (Sicherheit: wir fragen Nutzer vor dem finalen Restore)
-    log "=== Wiederherstellungs-Workflow gestartet: Lokale Kopie wird aus NAS wiederhergestellt ==="
+    # 3) rsync with safety options LOCAL_DECRYPTED/ -> LOCAL_DOCS/
 
-    # 1) sync verschlüsselt
-    run_sync_nas
+    log "=== Starting restore workflow: Local copy will be restored from NAS ==="
 
-    # 2) mounten
-    mount_gocryptfs
+    # 1) Sync encrypted data
+    run_sync_nas || fatal "NAS sync failed during restore"
 
-    # 3) Vor dem restore: Sicherheitsabfrage, denn dies kann Dateien überschreiben
+    # 2) Mount if not already mounted
+    if ! is_mounted "$LOCAL_DECRYPTED"; then
+        mount_gocryptfs
+    fi
+
+    # 3) Safety prompt before restore
     echo
-    log "Vor dem Kopiervorgang: lokale Dateien in $LOCAL_DOCS können überschrieben werden."
-    echo "Soll ich die entschlüsselte Version vom Container nach"
+    log "Warning: Local files in $LOCAL_DOCS may be overwritten."
+    echo "Do you want to copy/update the decrypted version from container to"
     echo "  $LOCAL_DOCS"
-    echo "kopieren/aktualisieren? (Antwort: ja oder nein)"
-    read -r -p "Restore durchführen? [ja/NEIN]: " ans
-    ans=${ans,,}   # lower
-    if [[ "$ans" != "ja" && "$ans" != "j" ]]; then
-        log "Restore abgebrochen vom Nutzer."
-        unmount_gocryptfs
+    echo "This will create backups of overwritten files."
+
+    local ans
+    read -r -p "Perform restore? [yes/NO]: " ans
+    ans=${ans,,}  # lowercase
+
+    if [[ "$ans" != "yes" && "$ans" != "y" ]]; then
+        log "Restore cancelled by user"
         return 0
     fi
 
-    # safe rsync: wir lassen ältere Dateien unangetastet, überschreiben nur mit neueren
-    # zusätzlich legen wir Backups der überschriebenen Dateien in ein Datum-Verzeichnis
-    BACKUP_DIR="${LOCAL_DOCS}_backup_before_restore_$(date +%F_%H%M%S)"
-    mkdir -p "$BACKUP_DIR"
-    log "Backup-Verzeichnis für überschriebenen Dateien: $BACKUP_DIR"
+    # Safe rsync: preserve older files, only overwrite with newer ones
+    # Create backup directory for overwritten files
+    local backup_dir="${LOCAL_DOCS%/}_backup_before_restore_$(date +%F_%H%M%S)"
+    mkdir -p "$backup_dir"
+    log "Backup directory for overwritten files: $backup_dir"
 
-    # rsync mit --backup (verschobene/überschriebene Dateien landen in BACKUP_DIR)
-    rsync -avh --update --backup --backup-dir="$BACKUP_DIR" --exclude="$LOCAL_DOCS/*" "$LOCAL_DECRYPTED"/ "$LOCAL_DOCS"/ 2>&1 | tee -a "$LOGFILE"
-    rc=${PIPESTATUS[0]}
-    if [ $rc -ne 0 ]; then
-        log "Warnung: rsync (restore) wurde mit rc=$rc beendet. Sieh ins Log."
+    # rsync with --backup (overwritten files go to backup_dir)
+    if rsync -avh --update --backup --backup-dir="$backup_dir" "$LOCAL_DECRYPTED"/ "$LOCAL_DOCS"/ 2>&1 | tee -a "$LOGFILE"; then
+        log "Restore completed successfully"
+        log "Backup of older/overwritten files in $backup_dir"
     else
-        log "Restore abgeschlossen. Backup älterer/überschriebener Dateien in $BACKUP_DIR"
+        local rc=${PIPESTATUS[0]}
+        error "rsync (restore) completed with rc=$rc. Check log for details."
     fi
-
-    unmount_gocryptfs
 }
 
-# ============================
-# =  Initialer Push auf NAS
-# ============================
 init_backup() {
-    log "=== Initialer Backup-Flow: NAS ist leer ==="
+    # Initial backup flow: NAS is empty
+    log "=== Initial backup flow: NAS is empty ==="
 
-    # Stelle sicher, dass gocryptfs gemountet ist
-    mount_gocryptfs
-
-    log "Initialer Push von LOCAL_ENCRYPTED -> NAS_TARGET"
-    rsync -avh --progress "$LOCAL_DOCS"/ "$LOCAL_DECRYPTED"/ 2>&1 | tee -a "$LOGFILE"
-    rsync -avh --progress "$LOCAL_ENCRYPTED"/ "$NAS_TARGET"/ 2>&1 | tee -a "$LOGFILE"
-    rc=${PIPESTATUS[0]}
-    if [ $rc -ne 0 ]; then
-        fatal "Initialer Push auf NAS fehlgeschlagen (rc=$rc)."
+    # Ensure gocryptfs is mounted
+    if ! is_mounted "$LOCAL_DECRYPTED"; then
+        mount_gocryptfs
     fi
 
-    log "Initialer Push abgeschlossen. NAS enthält jetzt die verschlüsselten Dateien."
+    log "Initial push from LOCAL_DOCS -> LOCAL_DECRYPTED -> NAS_TARGET"
 
-    # Optional: danach Unison normal ausführen
+    # First sync local documents to decrypted container
+    if rsync -avh --progress "$LOCAL_DOCS"/ "$LOCAL_DECRYPTED"/ 2>&1 | tee -a "$LOGFILE"; then
+        log "Local documents synced to decrypted container"
+    else
+        fatal "Failed to sync local documents to decrypted container"
+    fi
+
+    # Then sync encrypted container to NAS
+    if rsync -avh --progress "$LOCAL_ENCRYPTED"/ "$NAS_TARGET"/ 2>&1 | tee -a "$LOGFILE"; then
+        log "Encrypted container synced to NAS"
+    else
+        fatal "Initial push to NAS failed"
+    fi
+
+    log "Initial backup completed. NAS now contains encrypted files."
+
+    # Run normal Unison sync after initial push
     run_sync_nas
-
-    # Unmounten nach initialem Push
-    unmount_gocryptfs
 }
-
 
 reset_all() {
-    echo "=== Reset-Modus gestartet ==="
+    echo "=== Reset mode started ==="
 
-    echo "🔒 Versuche, gocryptfs zu unmounten..."
-    if mountpoint -q "$LOCAL_DECRYPTED"; then
-        fusermount -u "$LOCAL_DECRYPTED" 2>/dev/null || umount "$LOCAL_DECRYPTED"
-        echo "✅ $LOCAL_DECRYPTED wurde unmountet."
+    echo "🔒 Attempting to unmount gocryptfs..."
+    if is_mounted "$LOCAL_DECRYPTED"; then
+        unmount_gocryptfs
+        echo "✅ $LOCAL_DECRYPTED was unmounted"
     else
-        echo "ℹ️  $LOCAL_DECRYPTED ist nicht gemountet."
+        echo "ℹ️  $LOCAL_DECRYPTED is not mounted"
     fi
 
-    echo "🗑️ Lösche Container-Verzeichnis $LOCAL_ENCRYPTED ..."
+    echo "🗑️ Removing container directory $LOCAL_ENCRYPTED ..."
     rm -rf "$LOCAL_ENCRYPTED"
 
-    echo "🗑️ Lösche Mountpoint $LOCAL_DECRYPTED ..."
+    echo "🗑️ Removing mountpoint $LOCAL_DECRYPTED ..."
     rm -rf "$LOCAL_DECRYPTED"
 
-    echo "🗑️ Lösche Logfile $LOGFILE ..."
-    rm -f "$LOGFILE"
+    echo "🗑️ Removing log files..."
+    rm -rf "$LOGDIR"
 
-    echo "✅ Reset abgeschlossen. Dein Ordner $LOCAL_DOCS bleibt unberührt."
+    echo "✅ Reset completed. Your directory $LOCAL_DOCS remains untouched."
 }
 
+show_help() {
+    cat << EOF
+Usage: $0 [OPTIONS]
 
-# ============================
-# =  Start: Setup logs etc.
-# ============================
-# Erstelle Log-Verzeichnis falls möglich
-if ! mkdir -p "$LOGDIR" 2>/dev/null; then
-    # Fallback auf home-Verzeichnis
-    LOGDIR="${HOME}/.local/share/sync_docs_unison"
-    mkdir -p "$LOGDIR"
-    LOGFILE="${LOGDIR}/sync_$(date +%F_%H%M%S).log"
-fi
+Bidirectional sync script for encrypted document backup using gocryptfs and Unison.
 
-touch "$LOGFILE" 2>/dev/null || fatal "Konnte Logfile $LOGFILE nicht anlegen."
+OPTIONS:
+    --restore       Restore local documents from NAS backup
+    --reset         Reset all mounts and containers (LOCAL_DOCS untouched)
+    --init-backup   Force initial backup (use when NAS is empty)
+    --help, -h      Show this help message
 
-log "==== START sync_docs_unison.sh ===="
-log "LOGFILE: $LOGFILE"
-log "LOCAL_DOCS: $LOCAL_DOCS"
-log "LOCAL_ENCRYPTED: $LOCAL_ENCRYPTED"
-log "LOCAL_DECRYPTED: $LOCAL_DECRYPTED"
-log "NAS_TARGET: $NAS_TARGET"
-log "CRED_FILE: $CRED_FILE"
+EXAMPLES:
+    $0                   # Normal sync operation
+    $0 --restore         # Restore from backup
+    $0 --reset          # Clean reset
+    $0 --init-backup    # Initial backup setup
 
-# cleanup on EXIT
-trap cleanup_temp EXIT
+CONFIGURATION:
+    Edit the variables at the top of this script to customize paths.
+    Set up credentials file: $CRED_FILE
 
-# Check required programs
-check_programs
+EOF
+}
 
-# ============================
-# =  Argumente
-# ============================
-RESTORE_LOCAL=false
-RESET_ALL=false
-# optionaler Parameter: --restore
-if [ "${#@}" -gt 0 ]; then
-    for a in "$@"; do
-        case "$a" in
-            --restore) RESTORE_LOCAL=true ;;
-            --reset) RESET_ALL=true ;;
-            --help|-h) echo "Usage: $0 [--restore] [--reset]"; exit 0 ;;
-            *) echo "Unbekannter Parameter: $a"; echo "Usage: $0 [--restore] [--reset]"; exit 1 ;;
-        esac
-    done
-fi
-
-# ============================
-# =  Workflow
-# ============================
-if [ "$RESET_ALL" = true ]; then
-    # Restore-Flow
-    reset_all
-    exit 0
-fi
-
-# 0) Basis-Checks / Erreichbarkeit NAS
-if [ ! -d "$NAS_TARGET" ]; then
-    # try to fallback to mountpoint not mounted message
-    log "Warnung: NAS_TARGET $NAS_TARGET scheint nicht vorhanden zu sein. Stelle sicher, dass das NAS gemountet ist."
-    log "Script stoppt jetzt."
-    fatal "NAS Zielpfad $NAS_TARGET nicht verfügbar."
-fi
-
-# 1) init gocryptfs falls nötig (ohne Dateien zu löschen)
-log "init_gocryptfs_if_needed"
-init_gocryptfs_if_needed
-
-# 2) stelle sicher, dass der Container gemountet ist (für restore oder falls Workflows mount benötigen)
-#    Für normalen Unison-Sync wird LOCAL_ENCRYPTED synchronisiert; wir mounten trotzdem, weil Benutzer evtl.
-#    lokal mit LOCAL_DECRYPTED arbeiten will bzw. Restore benötigt.
-log "mount_gocryptfs"
-mount_gocryptfs
-
-# 3) Hauptaktion:
-if [ "$RESTORE_LOCAL" = true ]; then
-    # Restore-Flow
-    restore_local_from_nas
-else
-    if [ -z "$(ls -A "$NAS_TARGET")" ]; then
-        # Erstes Backup, Zielverzeichnis auf der NAS ist leer
-        init_backup
+setup_logging() {
+    # Create log directory
+    if ! mkdir -p "$LOGDIR" 2>/dev/null; then
+        # Fallback to user directory
+        LOGDIR="${USER_HOME}/.local/share/sync_docs_unison"
+        mkdir -p "$LOGDIR"
+        LOGFILE="${LOGDIR}/sync_$(date +%F_%H%M%S).log"
     fi
 
-    # Normaler Bidirektionaler Sync: Unison zwischen verschlüsseltem Container und NAS
-    run_sync_local
-    run_sync_nas
-    run_sync_local
-    # optional: nach Sync unmounten
-    unmount_gocryptfs
-fi
+    if ! touch "$LOGFILE" 2>/dev/null; then
+        fatal "Could not create log file $LOGFILE"
+    fi
+}
 
-log "==== ENDE sync_docs_unison.sh ===="
-exit 0
+# ============================
+# Main Script Logic
+# ============================
+
+main() {
+    # Setup logging
+    setup_logging
+
+    log "==== START sync_docs_unison.sh ===="
+    log "LOGFILE: $LOGFILE"
+    log "LOCAL_DOCS: $LOCAL_DOCS"
+    log "LOCAL_ENCRYPTED: $LOCAL_ENCRYPTED"
+    log "LOCAL_DECRYPTED: $LOCAL_DECRYPTED"
+    log "NAS_TARGET: $NAS_TARGET"
+    log "CRED_FILE: $CRED_FILE"
+
+    # Setup cleanup on exit
+    trap cleanup_temp EXIT
+
+    # Check required programs
+    check_programs
+
+    # Parse command line arguments
+    local restore_local=false
+    local reset_all=false
+    local init_backup=false
+
+    for arg in "$@"; do
+        case "$arg" in
+            --restore)
+                restore_local=true
+                ;;
+            --reset)
+                reset_all=true
+                ;;
+            --init-backup)
+                init_backup=true
+                ;;
+            --help|-h)
+                show_help
+                exit 0
+                ;;
+            *)
+                error "Unknown parameter: $arg"
+                show_help
+                exit 1
+                ;;
+        esac
+    done
+
+    # Execute based on arguments
+    if [[ "$reset_all" == "true" ]]; then
+        reset_all
+        exit 0
+    fi
+
+    # Check directories and NAS availability
+    check_directories
+
+    if [[ ! -d "$NAS_TARGET" ]]; then
+        log "Warning: NAS_TARGET $NAS_TARGET is not available. Ensure NAS is mounted."
+        fatal "NAS target path $NAS_TARGET not available"
+    fi
+
+    # Initialize gocryptfs if needed
+    init_gocryptfs_if_needed
+
+    # Mount gocryptfs container
+    mount_gocryptfs
+
+    # Execute main workflow
+    if [[ "$restore_local" == "true" ]]; then
+        restore_local_from_nas
+    elif [[ "$init_backup" == "true" ]]; then
+        init_backup
+    else
+        # No arguments: Normal sync operation
+        if [[ -z "$(ls -A "$NAS_TARGET" 2>/dev/null)" ]]; then
+            log "NAS target $NAS_TARGET is empty, performing initial backup"
+            init_backup
+            exit 0
+        fi
+        if [[ -z "$(ls -A "$LOCAL_DOCS" 2>/dev/null)" ]]; then
+            log "LOCAL_DOCS target $LOCAL_DOCS is empty, performing restore operation"
+            restore_local_from_nas
+            exit 0
+        fi
+
+        # Standard bidirectional sync
+        run_sync_local || error "Local sync failed"
+        run_sync_nas || error "NAS sync failed"
+        run_sync_local || error "Final local sync failed"
+
+
+        # Unmount after sync
+        unmount_gocryptfs
+    fi
+
+    log "==== END sync_docs_unison.sh ===="
+}
+
+# Run main function with all arguments
+main "$@"
