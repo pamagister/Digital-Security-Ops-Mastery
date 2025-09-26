@@ -18,9 +18,9 @@ Entdecken Sie die Möglichkeiten von De-Googled-Phones, einem Weg zu unvergleich
 
 Der Leitfaden umfasst Schritte zur Einrichtung von Bildschirmzeitbegrenzungen, App-Sperren, Inhaltssperren und Geräteverfolgung, um ein sicheres und kinderfreundliches mobiles Erlebnis zu gewährleisten.
 
-## ![app_image](/res/ico/ubuntu.ico) Halbautomatische Ubuntu-Einrichtung<!--(semi-automated-ubuntu-setup/README_de.md)-->
+## ![app_image](/res/ico/ubuntu.ico) [Linux (Ubuntu/Kubuntu) Automatisierungen ](ubuntu-linux-automations/README.md)
 
-... wird fortgesetzt. Bleiben Sie dran.
+Linux-Einrichtung und Tasks automatisieren.
 
 ## ![app_image](/res/ico/ubuntu_children.ico) Kindersicherer Ubuntu PC<!--(kindersicher-ubuntu/README_de.md)-->
 
