@@ -2,7 +2,7 @@
 
 A comprehensive automated setup script for Kubuntu 24.04 that installs essential software, configures system security, and sets up a productive desktop environment.
 
-## Overview
+## ✨ Overview
 
 This script automates the initial setup of a fresh Kubuntu 24.04 installation by:
 
@@ -13,13 +13,13 @@ This script automates the initial setup of a fresh Kubuntu 24.04 installation by
 - Installing Flatpak applications and Snap packages
 - Autostart Configuration: add selected applications automatically to autostart menu
 
-## Prerequisites
+## 📥 Prerequisites
 
 - Fresh Kubuntu installation
 - User account with sudo privileges
 - Active internet connection
 
-## Quick Start
+## 🚀 Quick Start
 
 1. **Download the script:**
    ```bash
@@ -35,7 +35,7 @@ This script automates the initial setup of a fresh Kubuntu 24.04 installation by
    ./kubuntu_setup.sh
    ```
 
-## Post-Installation Notes
+## ⚙️ Post-Installation Notes
 
 ### Manual Steps Required
 
@@ -58,7 +58,7 @@ The script can be easily customized by:
 - ClamAV provides on-demand virus scanning
 - All software is installed from official repositories
 
-## Troubleshooting
+## 📝 Troubleshooting
 
 ### Common Issues
 

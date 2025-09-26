@@ -2,7 +2,7 @@
 
 This script configures KDE/Plasma to use **one language for the user interface** (e.g., English) and **another language for regional settings** (e.g., German for dates, numbers, currency, and spell-checking).  
 
-## Features
+## ✨ Features
 - Set GUI language separately from locale formats  
 - Configure KDE/Plasma locale (time, numbers, currency, paper size)  
 - Configure spell-checking language  

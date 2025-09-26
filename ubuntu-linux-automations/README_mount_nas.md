@@ -4,7 +4,7 @@ This script allows you to mount, unmount, and configure automatic mounting of NA
 
 ---
 
-## Prerequisites
+## 📥 Prerequisites
 
 0. Download script file:
 
@@ -39,7 +39,7 @@ chmod +x mount_nas.sh
 
 ---
 
-## Configuration
+## ⚙️ Configuration
 
 Edit the script variables as needed:
 
@@ -54,7 +54,7 @@ SHARES=("book" "data" "music" "photo" "software" "video" "data_encrypt" "cloud")
 
 ---
 
-## Usage
+## 🚀 Usage
 
 Run the script with `sudo`:
 
@@ -72,7 +72,7 @@ You will be prompted to select an action:
 
 ---
 
-## Automount Details
+## ⚙️ Automount Details
 
 When choosing option 3:
 
@@ -89,7 +89,7 @@ sudo mount -a
 
 ---
 
-## Notes
+## 📝 Notes
 
 * The script checks if the NAS host is reachable before mounting.
 * Existing mounts are unmounted first to avoid conflicts.
@@ -98,7 +98,7 @@ sudo mount -a
 
 ---
 
-## Example
+## 🚀 Example
 
 Mount all shares manually:
 

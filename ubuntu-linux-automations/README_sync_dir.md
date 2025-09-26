@@ -1,6 +1,6 @@
 # sync_dir.sh Documentation
 
-## Overview
+## ✨ Overview
 `sync_dir.sh` is a bidirectional synchronization script that keeps a local gocryptfs-encrypted container in sync with a NAS target using **Unison**.  
 
 It automates:
@@ -17,7 +17,7 @@ It automates:
 
 ---
 
-## Requirements
+## ⚙️ Requirements
 The following tools must be installed:
 - `gocryptfs`
 - `unison`
@@ -31,7 +31,7 @@ which gocryptfs unison rsync fusermount
 
 ---
 
-## Setup
+## 📥 Setup
 
 ### 0. Download the script
 ```bash
@@ -76,7 +76,7 @@ sudo chmod 600 /etc/samba/credentials_sync_docs
 
 ---
 
-## Usage
+## 🚀 Usage
 
 ### Normal Sync (default)
 
@@ -118,7 +118,7 @@ Unmount, remove containers, and cleanup logs (does **not** delete `LOCAL_DOCS`):
 
 ---
 
-## Recovery (Manual)
+## 🟢 Recovery (Manual)
 
 If needed, you can manually access encrypted NAS backups:
 
@@ -138,7 +138,7 @@ fusermount -u tmp/nas_decrypted
 
 ---
 
-## Logging
+## 📝 Logging
 
 Logs are written to:
 
@@ -148,7 +148,7 @@ Logs are written to:
 
 ---
 
-## Examples
+## ℹ️ Examples
 
 ```bash
 ./sync_dir.sh                # Normal sync
@@ -159,7 +159,7 @@ Logs are written to:
 
 ---
 
-## Notes
+## 📝 Notes
 
 * Conflicts are resolved interactively by **Unison**.
 * `rsync` is used for safe restores and backups.
