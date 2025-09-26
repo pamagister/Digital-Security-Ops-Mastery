@@ -61,6 +61,7 @@ log "Installing basic tools"
 sudo apt install -y curl                         # Tool for downloading files via HTTP/FTP
 sudo apt install -y git                          # Version control (very common in software projects)
 sudo apt install -y subversion                   # Older version control system (SVN)
+sudo apt install -y ffmpeg                       # Video encoder
 sudo apt install -y kdesvn                       # KDE frontend for Subversion
 sudo apt install -y htop                         # Interactive process and resource monitor
 sudo apt install -y vim                          # Powerful text editor (console-based)
@@ -87,8 +88,6 @@ sudo apt install -y digikam           # Photo management and editing (KDE/Qt-bas
 sudo apt install -y veracrypt         # Tool for encrypted containers/partitions
 sudo apt install -y nextcloud-desktop # File synchronization with Nextcloud server
 sudo apt install -y gthumb            # Lightweight image viewer with basic editing
-
-
 
 
 # -----------------------------
