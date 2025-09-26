@@ -1,35 +1,45 @@
 #!/bin/bash
 # Script: set_kde_language.sh
-# Zweck: GUI auf Englisch, Rest auf Deutsch, inklusive Rechtschreibprüfung
+# Purpose: Use one language for the GUI, another for locale settings (dates, numbers, currency, etc.),
+#          including spell checking.
 
 # -----------------------------
-# KDE/Plasma Sprach- und Formateinstellungen
+# KDE/Plasma language and locale settings
 # -----------------------------
 
-# Setze GUI-Sprache auf Englisch
-kwriteconfig5 --file kcmfonts --group General --key Language en_US
+# Define your preferred languages/locales here:
+GUI_LANG="en_US"
+LOCALE_LANG="de_DE"
 
-# Setze Datums-, Zahlen-, Währungs- und Papierformate auf Deutsch
-kwriteconfig5 --file kdeglobals --group Locale --key LANG de_DE.UTF-8
-kwriteconfig5 --file kdeglobals --group Locale --key LC_TIME de_DE.UTF-8
-kwriteconfig5 --file kdeglobals --group Locale --key LC_NUMERIC de_DE.UTF-8
-kwriteconfig5 --file kdeglobals --group Locale --key LC_MONETARY de_DE.UTF-8
-kwriteconfig5 --file kdeglobals --group Locale --key LC_PAPER de_DE.UTF-8
+# Set GUI language
+kwriteconfig5 --file kcmfonts --group General --key Language "$GUI_LANG"
 
-# Setze Rechtschreibprüfung auf Deutsch
-kwriteconfig5 --file kdeglobals --group KDE --key SpellCheckingLanguage de_DE
+# Set date, number, currency, and paper formats
+kwriteconfig5 --file kdeglobals --group Locale --key LANG "${LOCALE_LANG}.UTF-8"
+kwriteconfig5 --file kdeglobals --group Locale --key LC_TIME "${LOCALE_LANG}.UTF-8"
+kwriteconfig5 --file kdeglobals --group Locale --key LC_NUMERIC "${LOCALE_LANG}.UTF-8"
+kwriteconfig5 --file kdeglobals --group Locale --key LC_MONETARY "${LOCALE_LANG}.UTF-8"
+kwriteconfig5 --file kdeglobals --group Locale --key LC_PAPER "${LOCALE_LANG}.UTF-8"
+
+# Set spell-checking language
+kwriteconfig5 --file kdeglobals --group KDE --key SpellCheckingLanguage "$LOCALE_LANG"
 
 # -----------------------------
-# Optional: Systemweite Umgebungsvariablen
+# Optional: system-wide environment variables
 # -----------------------------
 PROFILE_FILE="$HOME/.profile"
 
-grep -qxF "export LANG=en_US.UTF-8" "$PROFILE_FILE" || echo "export LANG=en_US.UTF-8" >> "$PROFILE_FILE"
-grep -qxF "export LC_MESSAGES=en_US.UTF-8" "$PROFILE_FILE" || echo "export LC_MESSAGES=en_US.UTF-8" >> "$PROFILE_FILE"
-grep -qxF "export LC_TIME=de_DE.UTF-8" "$PROFILE_FILE" || echo "export LC_TIME=de_DE.UTF-8" >> "$PROFILE_FILE"
-grep -qxF "export LC_NUMERIC=de_DE.UTF-8" "$PROFILE_FILE" || echo "export LC_NUMERIC=de_DE.UTF-8" >> "$PROFILE_FILE"
-grep -qxF "export LC_MONETARY=de_DE.UTF-8" "$PROFILE_FILE" || echo "export LC_MONETARY=de_DE.UTF-8" >> "$PROFILE_FILE"
-grep -qxF "export LC_PAPER=de_DE.UTF-8" "$PROFILE_FILE" || echo "export LC_PAPER=de_DE.UTF-8" >> "$PROFILE_FILE"
+add_env_var() {
+    local VAR="$1"
+    local VALUE="$2"
+    grep -qxF "export $VAR=$VALUE" "$PROFILE_FILE" || echo "export $VAR=$VALUE" >> "$PROFILE_FILE"
+}
 
-echo "Fertig! Bitte abmelden und wieder anmelden, damit alle Änderungen greifen."
+add_env_var LANG "${GUI_LANG}.UTF-8"
+add_env_var LC_MESSAGES "${GUI_LANG}.UTF-8"
+add_env_var LC_TIME "${LOCALE_LANG}.UTF-8"
+add_env_var LC_NUMERIC "${LOCALE_LANG}.UTF-8"
+add_env_var LC_MONETARY "${LOCALE_LANG}.UTF-8"
+add_env_var LC_PAPER "${LOCALE_LANG}.UTF-8"
 
+echo "Done! Please log out and log back in for all changes to take effect."

@@ -10,3 +10,7 @@ A comprehensive automated setup script for Kubuntu 24.04 that installs essential
 
 Synchronize your local data to an encrypted NAS container.
 A bidirectional synchronization script that keeps your local data folder and a local gocryptfs-encrypted container in sync with a NAS target using **Unison**.  
+
+## [Set GUI language separately from locale formats](README_setup_kde_language.md)
+
+This script configures KDE/Plasma to use **one language for the user interface** (e.g., English) and **another language for regional settings** (e.g., German for dates, numbers, currency, and spell-checking).  
