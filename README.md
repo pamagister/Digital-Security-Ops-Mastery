@@ -18,9 +18,9 @@ Discover the power of de-Googled phones, a pathway to unparalleled control over 
 
 The guide covers steps for setting up screen time limits, app locking, content blocking, and device tracking, ensuring a secure and child-friendly mobile experience.
 
-## ![app_image](/res/ico/ubuntu.ico) Semi-automated Ubuntu setup<!--(semi-automated-ubuntu-setup/README.md)-->
+## ![app_image](/res/ico/ubuntu.ico) [Linux (Ubuntu/Kubuntu) automations ](ubuntu-linux-automations/README.md)
 
-... to be continued. Stay tuned.
+Automate Linux setup, app installations and sync tasks.
 
 ## ![app_image](/res/ico/ubuntu_children.ico) Child-proof Ubuntu PC<!--(child-proof-ubuntu/README.md)-->
 
