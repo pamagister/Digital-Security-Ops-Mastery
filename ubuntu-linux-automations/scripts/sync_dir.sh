@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# sync_docs_unison.sh
+# sync_dir.sh
 # Bidirectional sync between local gocryptfs container and NAS via Unison.
 # - Prefers password from /etc/samba/credentials_sync_docs
 # - Auto-initializes gocryptfs if needed (tries password from CRED_FILE)
@@ -11,8 +11,8 @@
 # IMPORTANT: This script NEVER deletes files in LOCAL_DOCS without asking.
 #           Unison handles conflicts interactively (asks the user).
 
-# Make script executable: chmod +x ~/sync_docs_unison.sh
-# Run script, e.g.: ./sync_docs_unison.sh --restore
+# Make script executable: chmod +x ~/sync_dir.sh
+# Run script, e.g.: ./sync_dir.sh --restore
 
 # === Credential File Setup ===
 # 1. Create credentials file:
@@ -53,7 +53,7 @@ NAS_TARGET="/mnt/nas/data/Backups/encrypted_docs_backup"     # Backup folder on 
 CRED_FILE="/etc/samba/credentials_sync_docs"                 # Password file
 
 # Logging configuration
-LOGDIR="/tmp/log/sync_docs_unison"
+LOGDIR="/tmp/log/sync_dir"
 LOGFILE="${LOGDIR}/sync_$(date +%F_%H%M%S).log"
 TMP_EXTPASS_SCRIPT="/tmp/gocryptfs_extpass_$$.sh"
 UNISON_PROFILE="/tmp/unison_sync_profile_$$.prf"
@@ -421,7 +421,7 @@ setup_logging() {
     # Create log directory
     if ! mkdir -p "$LOGDIR" 2>/dev/null; then
         # Fallback to user directory
-        LOGDIR="${USER_HOME}/.local/share/sync_docs_unison"
+        LOGDIR="${USER_HOME}/.local/share/sync_dir"
         mkdir -p "$LOGDIR"
         LOGFILE="${LOGDIR}/sync_$(date +%F_%H%M%S).log"
     fi
@@ -439,7 +439,7 @@ main() {
     # Setup logging
     setup_logging
 
-    log "==== START sync_docs_unison.sh ===="
+    log "==== START sync_dir.sh ===="
     log "LOGFILE: $LOGFILE"
     log "LOCAL_DOCS: $LOCAL_DOCS"
     log "LOCAL_ENCRYPTED: $LOCAL_ENCRYPTED"
@@ -529,7 +529,7 @@ main() {
         unmount_gocryptfs
     fi
 
-    log "==== END sync_docs_unison.sh ===="
+    log "==== END sync_dir.sh ===="
 }
 
 # Run main function with all arguments
