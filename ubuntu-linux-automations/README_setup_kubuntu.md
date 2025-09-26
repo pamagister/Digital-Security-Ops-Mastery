@@ -11,10 +11,11 @@ This script automates the initial setup of a fresh Kubuntu 24.04 installation by
 - Setting up security features (firewall, antivirus)
 - Configuring shell environment (Zsh + Oh My Zsh)
 - Installing Flatpak applications and Snap packages
+- Autostart Configuration: add selected applications automatically to autostart menu
 
 ## Prerequisites
 
-- Fresh Kubuntu 24.04 installation
+- Fresh Kubuntu installation
 - User account with sudo privileges
 - Active internet connection
 
@@ -22,7 +23,7 @@ This script automates the initial setup of a fresh Kubuntu 24.04 installation by
 
 1. **Download the script:**
    ```bash
-   wget https://raw.githubusercontent.com/pamagister/Digital-Security-Ops-Mastery/main/ubuntu-linux-automations/scripts/setup_kubuntu.sh
+   wget https://github.com/pamagister/Digital-Security-Ops-Mastery/blob/main/ubuntu-linux-automations/scripts/setup_kubuntu.sh
    ```
 2. **Make it executable:**
    ```bash
@@ -33,51 +34,6 @@ This script automates the initial setup of a fresh Kubuntu 24.04 installation by
    ```bash
    ./kubuntu_setup.sh
    ```
-
-## What Gets Installed
-
-### System Updates & Security
-
-- Automatic security updates (unattended-upgrades)
-- UFW firewall (enabled by default)
-- ClamAV antivirus scanner
-- Weekly system update cron job (Sundays & Wednesdays at 8 PM)
-
-### Development Tools
-
-- Git and Subversion version control
-- Build essentials (gcc, make, etc.)
-- PyCharm Community Edition (via Snap)
-- Vim and Nano text editors
-- Archive utilities (unzip, 7zip)
-
-### Desktop Applications
-
-- **Browsers**: Firefox
-- **Media**: VLC media player, Kdenlive video editor
-- **Photography**: digiKam, gThumb image viewer
-- **Security**: KeePassXC password manager, VeraCrypt encryption
-- **Productivity**: Nextcloud desktop client
-- **Communication**: Signal Messenger
-- **Desktop Enhancement**: Latte Dock
-
-### Package Managers
-
-- Flatpak with Flathub repository
-- Snap packages support
-
-### Shell Environment
-
-- Zsh shell with Oh My Zsh framework
-- Enhanced command-line experience
-
-### Autostart Configuration
-
-The script automatically configures these applications to start with the desktop:
-
-- Latte Dock
-- Firefox
-- Signal Messenger
 
 ## Post-Installation Notes
 
