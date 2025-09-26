@@ -14,3 +14,7 @@ A bidirectional synchronization script that keeps your local data folder and a l
 ## [Set GUI language separately from locale formats](README_setup_kde_language.md)
 
 This script configures KDE/Plasma to use **one language for the user interface** (e.g., English) and **another language for regional settings** (e.g., German for dates, numbers, currency, and spell-checking).  
+
+## [Mount and unmount NAS shares](README_mount_nas.md)
+
+This script allows you to mount, unmount, and configure automatic mounting of NAS shares on Ubuntu Linux.

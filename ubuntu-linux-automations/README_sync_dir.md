@@ -34,9 +34,9 @@ which gocryptfs unison rsync fusermount
 ## Setup
 
 ### 0. Download the script
-   ```bash
-   wget https://github.com/pamagister/Digital-Security-Ops-Mastery/blob/main/ubuntu-linux-automations/scripts/sync_dir.sh
-   ```
+```bash
+wget https://github.com/pamagister/Digital-Security-Ops-Mastery/blob/main/ubuntu-linux-automations/scripts/sync_dir.sh
+```
    
 ### 1. Make the Script Executable
 

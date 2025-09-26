@@ -9,7 +9,13 @@ This script configures KDE/Plasma to use **one language for the user interface**
 - Optionally set environment variables in `~/.profile` for consistency  
 
 ## Usage
+
 1. Edit the variables at the top of the script to set your preferred languages:
+   ```bash
+   wget https://github.com/pamagister/Digital-Security-Ops-Mastery/blob/main/ubuntu-linux-automations/scripts/set_kde_language.sh
+   ```
+
+2. Edit the variables at the top of the script to set your preferred languages:
    ```bash
    GUI_LANG="en_US"   # Interface language
    LOCALE_LANG="de_DE" # Regional/locale settings
