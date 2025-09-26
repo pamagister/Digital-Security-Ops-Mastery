@@ -22,6 +22,30 @@ log "Automatische Updates aktivieren (interaktiv)"
 sudo apt install -y unattended-upgrades
 sudo dpkg-reconfigure -plow unattended-upgrades
 
+# -----------------------------
+# Automatisch aktualisieren, z.B. Sonntag und Mittwoch 20 Uhr:
+# -----------------------------
+
+CRON_FILE="/etc/cron.d/apt-weekly"
+
+# Inhalt des Cronjobs
+# CRON_JOB='0 20 * * 0,3 root bash -c "apt update && apt full-upgrade -y && apt autoremove -y && apt clean"'
+CRON_JOB="0 20 * * 0,3 root apt update && apt full-upgrade -y && apt autoremove -y && apt clean"
+echo "Richte systemweiten Cronjob ein unter: $CRON_FILE"
+
+# Datei schreiben
+sudo bash -c "cat > $CRON_FILE <<EOF
+# Automatic updates via cron job:
+$CRON_JOB
+EOF"
+
+# Rechte setzen
+sudo chmod 644 "$CRON_FILE"
+
+echo "Systemweiter Cronjob eingerichtet:"
+cat "$CRON_FILE"
+
+
 
 # -----------------------------
 # Flatpak + Flathub
@@ -51,12 +75,9 @@ sudo apt install -y gocryptfs                    # Verschlüsseltes Dateisystem 
 sudo apt install -y build-essential              # Grundlegende Entwicklungswerkzeuge (gcc, g++, make usw.)
 sudo apt install -y software-properties-common   # Zusätzliche Tools für Paketquellen (z. B. add-apt-repository)
 
-
 # -----------------------------
 # Desktop-Programme
 # -----------------------------
-log "Desktop-Programme installieren"
-
 log "Desktop-Programme installieren"
 
 sudo apt install -y firefox           # Webbrowser (Standard in Ubuntu/Kubuntu)
@@ -67,6 +88,8 @@ sudo apt install -y digikam           # Fotoverwaltung und -bearbeitung (KDE/Qt-
 sudo apt install -y veracrypt         # Tool für verschlüsselte Container/Partitionen
 sudo apt install -y nextcloud-desktop # Synchronisation von Dateien mit einem Nextcloud-Server
 sudo apt install -y gthumb            # Leichter Bildbetrachter mit Basisbearbeitung
+
+
 
 
 # -----------------------------
@@ -112,6 +135,7 @@ sudo mv signal-desktop.sources /etc/apt/sources.list.d/
 sudo apt update
 sudo apt install -y signal-desktop
 
+
 # -----------------------------
 # Latte Dock + Autostart
 # -----------------------------
@@ -123,13 +147,13 @@ sudo apt install -y latte-dock
 # Autostart Apps hinzufügen
 # -----------------------------
 mkdir -p ~/.config/autostart
-
 for app in \
   /usr/share/applications/org.kde.latte-dock.desktop \
   /usr/share/applications/org.mozilla.firefox.desktop \
   /var/lib/snapd/desktop/applications/signal-desktop.desktop; do
   [ -f "$app" ] && cp "$app" ~/.config/autostart/
 done
+
 
 # -----------------------------
 # ClamAV Virenscanner
@@ -149,28 +173,5 @@ sudo systemctl start clamav-freshclam
 log "KDE Menü Cache aktualisieren"
 kbuildsycoca5 --noincremental || true
 
-# -----------------------------
-# NAS-Mount-Hinweis
-# -----------------------------
-log "Vorlage für NAS-Mount"
-cat << EOF
-
-Um deine Synology NAS automatisch zu mounten:
-
-1. Mountpoint erstellen:
-   sudo mkdir -p /mnt/nas
-
-2. Zugangsdaten-Datei:
-   nano ~/.smbcredentials
-   ---
-   username=DEINUSER
-   password=DEINPASSWD
-   ---
-   chmod 600 ~/.smbcredentials
-
-3. In /etc/fstab einfügen:
-   //192.168.1.100/Shared /mnt/nas cifs credentials=/home/$USER/.smbcredentials,iocharset=utf8,uid=$(id -u),gid=$(id -g),file_mode=0770,dir_mode=0770,nofail 0 0
-
-EOF
 
 log "Einrichtung abgeschlossen 🎉"

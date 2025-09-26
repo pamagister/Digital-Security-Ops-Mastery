@@ -44,7 +44,7 @@ fi
 # ============================
 # =  Konfiguration (Variablen)
 # ============================
-LOCAL_DOCS="$USER_HOME/testdir/"    # Zu sicherndes lokales Verzeichnis
+LOCAL_DOCS="$USER_HOME/Dokumente/"    # Zu sicherndes lokales Verzeichnis
 LOCAL_ENCRYPTED="$USER_HOME/.encrypted_docs"  # gocryptfs-Mount verschlüsselt
 LOCAL_DECRYPTED="$USER_HOME/.decrypted_docs"  # gocryptfs-Mount UNverschlüsselt
 NAS_TARGET="/mnt/nas/data/Backups/encrypted_docs_backup"  # Backup-Ordner z.B. auf einer NAS
