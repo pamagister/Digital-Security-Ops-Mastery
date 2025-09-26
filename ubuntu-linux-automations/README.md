@@ -18,3 +18,7 @@ This script configures KDE/Plasma to use **one language for the user interface**
 ## [Mount and unmount NAS shares](README_mount_nas.md)
 
 This script allows you to mount, unmount, and configure automatic mounting of NAS shares on Ubuntu Linux.
+
+## [Compress videos recursively](README_compress_videos.md)
+
+Recursively compress all videos in a folder and its subfolders.
