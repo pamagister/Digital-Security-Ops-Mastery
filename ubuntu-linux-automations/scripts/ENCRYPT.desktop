@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=Encrypt Backup
+Exec=konsole -e zsh -c '/home/USER/ENCRYPT.sh'
+Icon=utilities-terminal
+Terminal=false
+
+
+# .desktop-Datei ausführbar machen:
+# chmod +x /home/USER/ENCRYPT.desktop
