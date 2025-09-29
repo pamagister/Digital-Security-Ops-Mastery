@@ -6,7 +6,7 @@ Automate Linux setup, app installations, and sync tasks.
 
 A comprehensive automated setup script for Kubuntu 24.04 that installs essential software, configures system security, and sets up a productive desktop environment.
 
-## 🔐 [Synchronize your local data to an encrypted NAS container](README_sync_nas_container.md)
+## 🔐 [Synchronize your local data to an encrypted NAS container](README_sync_dir.md)
 
 Synchronize your local data to an encrypted NAS container.  
 A bidirectional synchronization script that keeps your local data folder and a local gocryptfs-encrypted container in sync with a NAS target using **Unison**.  
