@@ -15,6 +15,35 @@ It automates:
 - This script **never deletes files in `LOCAL_DOCS` without confirmation**.  
 - File conflicts are handled interactively by **Unison**.
 
+## Sync Architecture Diagram
+
+               ┌────────────────────┐
+               │ 📂 LOCAL_DOCS      │
+               │ ~/Documents/       │
+               └─────────┬──────────┘
+                         │
+                         │ 🔄 Unison (bidirectional sync)
+                         │
+               ┌─────────▼──────────┐
+               │ 📂 LOCAL_DECRYPTED │
+               │ ~/.decrypted_docs  │
+               └─────────┬──────────┘
+                         │
+                         │ 🔐 gocryptfs (encryption/decryption)
+                         │
+               ┌─────────▼──────────┐
+               │ 📦 LOCAL_ENCRYPTED │
+               │ ~/.encrypted_docs  │
+               └─────────┬──────────┘
+                         │
+                         │ 🔄 Unison (bidirectional sync)
+                         │
+               ┌─────────▼──────────┐
+               │ 🖴 NAS_TARGET       │
+               │ /mnt/nas/...backup │
+               └────────────────────┘
+
+
 ---
 
 ## ⚙️ Requirements
