@@ -20,26 +20,26 @@ It automates:
                ┌────────────────────┐
                │ 📂 LOCAL_DOCS      │
                │ ~/Documents/       │
-               └─────────┬──────────┘
+               └─────────▲──────────┘
                          │
                          │ 🔄 Unison (bidirectional sync)
                          │
                ┌─────────▼──────────┐
                │ 📂 LOCAL_DECRYPTED │
                │ ~/.decrypted_docs  │
-               └─────────┬──────────┘
+               └─────────▲──────────┘
                          │
                          │ 🔐 gocryptfs (encryption/decryption)
                          │
                ┌─────────▼──────────┐
                │ 📦 LOCAL_ENCRYPTED │
                │ ~/.encrypted_docs  │
-               └─────────┬──────────┘
+               └─────────▲──────────┘
                          │
                          │ 🔄 Unison (bidirectional sync)
                          │
                ┌─────────▼──────────┐
-               │ 🖴 NAS_TARGET       │
+               │ 💾 NAS_TARGET      │ 
                │ /mnt/nas/...backup │
                └────────────────────┘
 
