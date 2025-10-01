@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=Service
+ServiceTypes=KonqPopupMenu/Plugin
+MimeType=video/mp4;video/x-matroska;video/avi;video/x-msvideo;video/webm;
+Actions=compressvideos;
+X-KDE-Priority=TopLevel
+
+[Desktop Action compressvideos]
+Name=Compress Videos
+Exec=konsole -e /home/username/scripts/compress_videos.sh %F
+Icon=video
+Terminal=true

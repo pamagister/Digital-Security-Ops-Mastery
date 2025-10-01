@@ -4,25 +4,31 @@
 #
 
 #######################################
-# User-configurable settings
+# User-configurable defaults
 #######################################
-VIDEO_FOLDER="$HOME/Videos"   # Root folder to search ("" = use script location)
-CRF=27                        # Constant Rate Factor (lower = better quality, 18–28 typical)
-PRESET="medium"                 # Preset: ultrafast, superfast, veryfast, faster, fast, medium, slow, slower, veryslow
+VIDEO_FOLDER="$HOME/Videos"   # Root folder to search if no input args
+DEFAULT_CRF=27                # Default Constant Rate Factor (lower = better quality, 20–30 typical)
+PRESET="medium"               # Preset: ultrafast, superfast, veryfast, faster, fast, medium, slow, slower, veryslow
 AUDIO_BITRATE="192k"          # Audio bitrate (""=copy audio, "0", or "0k" = strip audio)
-SUFFIX="_comp"                # Suffix for compressed files
-SUFFIX_PROCESSED=""           # Optional suffix for marking original files as processed
+SUFFIX_COMPRESSED="_comp"                # Default suffix for compressed files (only used if not overwriting)
+SUFFIX_PROCESSED=""           # Optional suffix for marking originals
 CODEC="libx264"               # Video codec
 DRY_RUN=false                 # Set true for testing (no ffmpeg executed)
 
 #######################################
-# Script logic
+# User prompts
 #######################################
 
-# If VIDEO_FOLDER is empty, use the directory where the script resides
-if [[ -z "$VIDEO_FOLDER" ]]; then
-    SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-    VIDEO_FOLDER="$SCRIPT_DIR"
+# Prompt for CRF
+read -p "Enter Constant Rate Factor (CRF) (lower = better quality, 20–30 typical) [default=$DEFAULT_CRF]: " input_crf
+CRF="${input_crf:-$DEFAULT_CRF}"
+
+# Prompt overwrite
+read -p "Overwrite original files? [y/N]: " overwrite
+if [[ "$overwrite" =~ ^[Yy]$ ]]; then
+    SUFFIX_COMPRESSED=""
+else
+    SUFFIX_COMPRESSED="_compressed"
 fi
 
 echo "=== Video Compression Script ==="
@@ -31,12 +37,14 @@ echo "Codec            : $CODEC"
 echo "Preset           : $PRESET"
 echo "CRF              : $CRF"
 echo "Audio bitrate    : ${AUDIO_BITRATE:-copy original} (0 = strip audio)"
-echo "Compressed suffix: $SUFFIX"
+echo "Compressed suffix: '$SUFFIX'"
 echo "Processed suffix : $SUFFIX_PROCESSED"
 echo "Dry run          : $DRY_RUN"
 echo "================================"
 
-# Build audio options
+#######################################
+# Helper: Build audio options
+#######################################
 get_audio_opts() {
     if [[ -z "$AUDIO_BITRATE" ]]; then
         echo "-c:a copy"
@@ -46,33 +54,50 @@ get_audio_opts() {
         echo "-c:a aac -b:a $AUDIO_BITRATE"
     fi
 }
-
 AUDIO_OPTS="$(get_audio_opts)"
 
-# Use find -print0 to handle spaces/special chars safely
-find "$VIDEO_FOLDER" -type f \( \
-  -iname "*.mp4" -o \
-  -iname "*.mov" -o \
-  -iname "*.avi" -o \
-  -iname "*.mkv" -o \
-  -iname "*.flv" -o \
-  -iname "*.wmv" \
-\) -print0 | while IFS= read -r -d '' file; do
+#######################################
+# Build file list
+#######################################
+files=()
+
+if [[ $# -gt 0 ]]; then
+    # Files passed as arguments
+    files=("$@")
+else
+    # Use VIDEO_FOLDER
+    while IFS= read -r -d '' f; do
+        files+=("$f")
+    done < <(find "$VIDEO_FOLDER" -type f \( \
+        -iname "*.mp4" -o \
+        -iname "*.mov" -o \
+        -iname "*.avi" -o \
+        -iname "*.mkv" -o \
+        -iname "*.flv" -o \
+        -iname "*.wmv" \
+    \) -print0)
+fi
+
+#######################################
+# Main loop
+#######################################
+for file in "${files[@]}"; do
     dir=$(dirname "$file")
     base=$(basename "$file")
     extension="${base##*.}"
     filename="${base%.*}"
 
-    # Skip already compressed files
-    if [[ "$filename" == *"$SUFFIX" ]]; then
+    # Skip already compressed if suffix is used
+    if [[ -n "$SUFFIX_COMPRESSED" && "$filename" == *"$SUFFIX_COMPRESSED" ]]; then
         echo "Skipping (already compressed): $file"
         continue
     fi
 
-    output="$dir/${filename}${SUFFIX_PROCESSED}${SUFFIX}.${extension}"
+    output="$dir/${filename}${SUFFIX_COMPRESSED}.${extension}"
+    output_temp="$dir/${filename}${SUFFIX_COMPRESSED}_TEMP.${extension}"
 
-    # Skip if compressed version already exists
-    if [[ -f "$output" ]]; then
+    # Skip if compressed version already exists (when suffix is used)
+    if [[ -n "$SUFFIX_COMPRESSED" && -f "$output" ]]; then
         echo "Skipping (compressed file exists): $output"
         continue
     fi
@@ -86,13 +111,14 @@ find "$VIDEO_FOLDER" -type f \( \
         ffmpeg -nostdin -i "$file" \
             -c:v $CODEC -preset $PRESET -crf $CRF \
             $AUDIO_OPTS \
-            "$output"
+            "$output_temp"
+            mv -f "$output_temp" "$output"
 
         if [[ $? -eq 0 ]]; then
             echo "Done: $output"
 
-            # Optionally mark original as processed
-            if [[ -n "$SUFFIX_PROCESSED" ]]; then
+            # Optionally mark original as processed (only if suffix is used)
+            if [[ -n "$SUFFIX_PROCESSED" && -n "$SUFFIX_COMPRESSED" ]]; then
                 processed_name="$dir/${filename}${SUFFIX_PROCESSED}.${extension}"
                 mv -n "$file" "$processed_name"
                 echo "Original marked as: $processed_name"
