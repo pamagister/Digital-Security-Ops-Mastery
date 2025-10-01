@@ -10,7 +10,7 @@ VIDEO_FOLDER="$HOME/Videos"   # Root folder to search if no input args
 DEFAULT_CRF=27                # Default Constant Rate Factor (lower = better quality, 20–30 typical)
 PRESET="medium"               # Preset: ultrafast, superfast, veryfast, faster, fast, medium, slow, slower, veryslow
 AUDIO_BITRATE="192k"          # Audio bitrate (""=copy audio, "0", or "0k" = strip audio)
-SUFFIX_COMPRESSED="_comp"                # Default suffix for compressed files (only used if not overwriting)
+SUFFIX_COMPRESSED="_compressed"                # Default suffix for compressed files (only used if not overwriting)
 SUFFIX_PROCESSED=""           # Optional suffix for marking originals
 CODEC="libx264"               # Video codec
 DRY_RUN=false                 # Set true for testing (no ffmpeg executed)
@@ -27,8 +27,6 @@ CRF="${input_crf:-$DEFAULT_CRF}"
 read -p "Overwrite original files? [y/N]: " overwrite
 if [[ "$overwrite" =~ ^[Yy]$ ]]; then
     SUFFIX_COMPRESSED=""
-else
-    SUFFIX_COMPRESSED="_compressed"
 fi
 
 echo "=== Video Compression Script ==="
@@ -37,7 +35,7 @@ echo "Codec            : $CODEC"
 echo "Preset           : $PRESET"
 echo "CRF              : $CRF"
 echo "Audio bitrate    : ${AUDIO_BITRATE:-copy original} (0 = strip audio)"
-echo "Compressed suffix: '$SUFFIX'"
+echo "Compressed suffix: $SUFFIX_COMPRESSED"
 echo "Processed suffix : $SUFFIX_PROCESSED"
 echo "Dry run          : $DRY_RUN"
 echo "================================"
