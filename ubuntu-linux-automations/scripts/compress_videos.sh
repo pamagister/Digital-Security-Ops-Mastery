@@ -69,7 +69,7 @@ find "$VIDEO_FOLDER" -type f \( \
         continue
     fi
 
-    output="$dir/${filename}${SUFFIX}.${extension}"
+    output="$dir/${filename}${SUFFIX_PROCESSED}${SUFFIX}.${extension}"
 
     # Skip if compressed version already exists
     if [[ -f "$output" ]]; then
