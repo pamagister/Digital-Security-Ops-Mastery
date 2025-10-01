@@ -8,7 +8,7 @@
 #######################################
 VIDEO_FOLDER="$HOME/Videos"   # Root folder to search if no input args
 DEFAULT_CRF=27                # Default Constant Rate Factor (lower = better quality, 20–30 typical)
-PRESET="medium"               # Preset: ultrafast, superfast, veryfast, faster, fast, medium, slow, slower, veryslow
+PRESET="slow"                 # Preset: ultrafast, superfast, veryfast, faster, fast, medium, slow, slower, veryslow
 AUDIO_BITRATE="192k"          # Audio bitrate (""=copy audio, "0", or "0k" = strip audio)
 SUFFIX_COMPRESSED="_compressed"                # Default suffix for compressed files (only used if not overwriting)
 SUFFIX_PROCESSED=""           # Optional suffix for marking originals

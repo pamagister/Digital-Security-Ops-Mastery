@@ -1,24 +1,39 @@
 # 🎬 Video Compression Script for Linux
 
-This script recursively compresses videos in a given folder using **ffmpeg**.  
-It maintains high quality (H.264 codec) while reducing file size, and offers flexible options for audio handling, suffixes, and dry runs.
+This script compresses videos using **ffmpeg**.
+It supports both direct file arguments and recursive folder scanning, while offering flexible control over quality, audio, and output handling.
 
 ---
 
 ## ✨ Features
-- Recursively compress all videos in a folder and its subfolders.
-- Uses **ffmpeg** with `libx264`, CRF, and preset for high-quality compression.
-- Configurable **CRF**, **preset**, and **suffixes**.
-- Handles **audio streams** flexibly:
-  - Re-encode audio at given bitrate.
-  - Copy audio unchanged.
-  - Strip audio completely.
-- **Dry run mode** to preview actions without running ffmpeg.
-- Optionally rename originals with a custom processed suffix.
+
+* **File arguments or folder scanning**:
+
+  * Provide video files directly as arguments.
+  * Or run without arguments to compress all videos in `$VIDEO_FOLDER`.
+* **Interactive prompts**:
+
+  * Choose a Constant Rate Factor (CRF) at runtime (default = 27).
+  * Decide whether to overwrite originals or save with a suffix.
+* Uses **ffmpeg** with H.264 (`libx264`), CRF, and preset for efficient compression.
+* Flexible **audio handling**:
+
+  * Re-encode at chosen bitrate.
+  * Copy audio unchanged.
+  * Strip audio completely.
+* **Dry run mode** to preview actions without running ffmpeg.
+* Optional renaming of originals with a custom processed suffix.
+* KDE / Dolphin right-click menu integration via `.desktop` file.
 
 ---
 
 ## 📥 Installation
+
+Requires **ffmpeg**:
+
+```bash
+sudo apt install ffmpeg
+```
 
 Download and make the script executable:
 
@@ -35,28 +50,22 @@ chmod +x compress_videos.sh
 
 # 4. Run the script
 ./compress_videos.sh
-````
-
-To run from anywhere, move it into your `$PATH`:
-
-```bash
-sudo mv compress_videos.sh /usr/local/bin/compress_videos
-compress_videos
 ```
+
 
 ---
 
 ## ⚙️ Configuration
 
-Inside the script, adjust these variables as needed:
+Inside the script, you can adjust these defaults:
 
 ```bash
-VIDEO_FOLDER=""               # Root folder to search ("" = script's location)
-CRF=23                        # Constant Rate Factor (18 = high quality, 28 = lower quality)
+VIDEO_FOLDER="$HOME/Videos"   # Root folder if no input args
+DEFAULT_CRF=27                # Default CRF (lower = better quality, 20–30 typical)
 PRESET="slow"                 # ffmpeg preset: ultrafast ... veryslow
-AUDIO_BITRATE="192k"          # Audio bitrate
-SUFFIX="_comp"                # Suffix for compressed files
-SUFFIX_PROCESSED=""           # Suffix for marking original files as processed
+AUDIO_BITRATE="192k"          # Re-encode audio bitrate
+SUFFIX_COMPRESSED="_compressed"  # Default suffix (unused if overwriting)
+SUFFIX_PROCESSED=""           # Optional suffix for marking originals
 CODEC="libx264"               # Video codec
 DRY_RUN=false                 # true = test mode (no ffmpeg executed)
 ```
@@ -67,41 +76,72 @@ DRY_RUN=false                 # true = test mode (no ffmpeg executed)
 
 * `AUDIO_BITRATE="192k"` → re-encode audio at 192 kbps.
 * `AUDIO_BITRATE=""` → copy audio unchanged.
-* `AUDIO_BITRATE="0"` or `"0k"` → remove audio track.
+* `AUDIO_BITRATE="0"` or `"0k"` → strip audio.
 
 ---
 
 ## 🚀 Usage Examples
 
-### Run in script folder (default)
+### Compress all videos in `$VIDEO_FOLDER`
 
 ```bash
 ./compress_videos.sh
 ```
 
-### Run with dry run (preview only)
+* Prompts for CRF (default 27).
+* Prompts whether to overwrite originals or save as `*_compressed.mp4`.
+
+### Compress specific files
 
 ```bash
-DRY_RUN=true ./compress_videos.sh
+./compress_videos.sh movie1.mp4 clip.avi
 ```
 
-### Compress and mark originals as processed
+### Run in dry-run mode (preview commands only)
 
 ```bash
-SUFFIX_PROCESSED="_old" ./compress_videos.sh
+DRY_RUN=true
 ```
+
+### Mark originals as processed
+
+```bash
+SUFFIX_PROCESSED="_old"
+```
+
+---
+
+## 📂 KDE / Dolphin Right-Click Menu Integration
+
+To integrate with the KDE context menu, create a `compress_videos.desktop` file in:
+
+```
+~/.local/share/kservices5/ServiceMenus/
+```
+
+### `compress_videos.desktop`
+
+```ini
+[Desktop Entry]
+Type=Service
+ServiceTypes=KonqPopupMenu/Plugin
+MimeType=video/mp4;video/x-matroska;video/avi;video/x-msvideo;video/webm;
+Actions=compressvideos;
+X-KDE-Priority=TopLevel
+
+[Desktop Action compressvideos]
+Name=Compress Videos
+Exec=konsole -e /home/username/scripts/compress_videos.sh %F
+Icon=video
+Terminal=true
+```
+
+Now you can **right-click on videos in Dolphin** → **Compress Videos**.
 
 ---
 
 ## 📝 Notes
 
-* Works on Linux (tested on Ubuntu).
-* Requires **ffmpeg** to be installed:
-
-  ```bash
-  sudo apt install ffmpeg
-  ```
 * Skips files already containing the compressed suffix.
-* Skips if a compressed version already exists.
-
----
+* Skips if a compressed version already exists (unless overwrite mode is chosen).
+* Works on Linux (tested on Ubuntu + KDE Dolphin integration).
