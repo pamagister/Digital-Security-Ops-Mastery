@@ -22,3 +22,8 @@ This script allows you to mount, unmount, and configure automatic mounting of NA
 ## 🎬 [Compress videos recursively](README_compress_videos.md)
 
 Recursively compress all videos in a folder and its subfolders.
+
+
+## 🎬 [Compress images](README_compress_images.md)
+
+Compress images by using the context menu in the file manager.
