@@ -88,13 +88,13 @@ kbuildsycoca5
 4. A terminal window will open:
 
    * Enter the **target file size** in kB (default 500 KB).
-   * Choose whether to **overwrite originals** (`y`) or create prefixed copies (`compressed_`).
+   * Choose whether to **overwrite originals** (`y`) or create postfixed copies (`_compressed`).
 
 5. The script will compress each file and display status messages:
 
 ```
-🔧 Compressing image.jpg -> compressed_image.jpg (target 500kb)...
-✅ Done: compressed_image.jpg
+🔧 Compressing image.jpg -> image_compressed.jpg (target 500kb)...
+✅ Done: image_compressed.jpg
 ```
 
 ---
@@ -116,6 +116,6 @@ You can also run the script manually in a terminal:
 
 * Compress **JPEG and PNG** images without resizing.
 * Interactive **target size selection** (default: 500 KB).
-* Option to **overwrite originals** or save as `compressed_` copies.
+* Option to **overwrite originals** or save as `_comperssed` copies.
 * Skips unsupported files and continues processing remaining files.
 * Integrated with Dolphin via **right-click context menu**.

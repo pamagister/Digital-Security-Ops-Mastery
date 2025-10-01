@@ -34,7 +34,7 @@ for file in "$@"; do
             if [[ "$OVERWRITE" == "y" ]]; then
                 output="$file"
             else
-                output="$dir/compressed_$base"
+                output="${dir}/${base%.*}_compressed.${base##*.}"
             fi
 
             echo "🔧 Compressing $file -> $output (target $TARGET)..."
