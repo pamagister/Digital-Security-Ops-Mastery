@@ -74,6 +74,7 @@ sudo apt install -y unison-gtk                   # Synchronization program, GUI 
 sudo apt install -y gocryptfs                    # Encrypted filesystem in user space (FUSE-based)
 sudo apt install -y build-essential              # Basic development tools (gcc, g++, make etc.)
 sudo apt install -y software-properties-common   # Additional tools for package sources (e.g. add-apt-repository)
+sudo apt install -y imagemagick                  # Tool for image editing, especially via terminal
 
 # -----------------------------
 # Desktop Programs
@@ -88,6 +89,7 @@ sudo apt install -y digikam           # Photo management and editing (KDE/Qt-bas
 sudo apt install -y veracrypt         # Tool for encrypted containers/partitions
 sudo apt install -y nextcloud-desktop # File synchronization with Nextcloud server
 sudo apt install -y gthumb            # Lightweight image viewer with basic editing
+sudo apt install -y tipp10            # Learn to write with 10 fingers
 
 
 # -----------------------------
