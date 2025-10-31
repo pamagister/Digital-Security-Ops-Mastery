@@ -2,6 +2,25 @@
 
 This guide walks you through configuring a Brother MFC-9332CDW printer/scanner to save scanned documents directly to a Linux machine via Samba (SMB). It also covers firewall settings, editing `smb.conf`, and troubleshooting.
 
+✨ You can also use a script to setup a network device
+
+
+## 1. Download the script
+```bash
+wget https://github.com/pamagister/Digital-Security-Ops-Mastery/blob/main/ubuntu-linux-automations/scripts/setup_shared_folder_samba.sh
+```
+   
+## 2. Make the Script Executable
+
+```bash
+chmod +x ~/setup_shared_folder_samba.sh
+```
+## 2. Run the Script
+
+```bash
+./setup_shared_folder_samba.sh
+```
+
 ---
 
 ## Step 1: Create a Samba Share
@@ -144,7 +163,7 @@ sudo apt install samba
 
 ---
 
-## Step 5: Create a Samba User
+## Step 5: Optionally for verification: Create a Samba User
 
 ```bash
 sudo smbpasswd -a USERNAME
