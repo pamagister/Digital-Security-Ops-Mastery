@@ -81,7 +81,8 @@ sudo apt install -y imagemagick                  # Tool for image editing, espec
 # -----------------------------
 log "Installing desktop programs"
 
-sudo apt install -y firefox           # Web browser (standard in Ubuntu/Kubuntu)
+sudo snap install firefox             # use standard web browser explicitly from snap
+# sudo apt install -y firefox           # Web browser (standard in Ubuntu/Kubuntu)
 sudo apt install -y keepassxc         # Password manager with KeePass format database
 sudo apt install -y kdenlive          # Video editor (KDE/Qt-based)
 sudo apt install -y vlc               # Universal media player for audio/video
@@ -90,6 +91,7 @@ sudo apt install -y veracrypt         # Tool for encrypted containers/partitions
 sudo apt install -y nextcloud-desktop # File synchronization with Nextcloud server
 sudo apt install -y gthumb            # Lightweight image viewer with basic editing
 sudo apt install -y tipp10            # Learn to write with 10 fingers
+
 
 
 # -----------------------------
@@ -149,10 +151,23 @@ sudo apt install -y latte-dock
 mkdir -p ~/.config/autostart
 for app in \
   /usr/share/applications/org.kde.latte-dock.desktop \
-  /usr/share/applications/org.mozilla.firefox.desktop \
   /usr/share/applications/signal-desktop.desktop; do
   [ -f "$app" ] && cp "$app" ~/.config/autostart/
 done
+
+
+if command -v snap >/dev/null && snap list firefox >/dev/null 2>&1; then
+  mkdir -p ~/.config/autostart
+  cat <<'EOF' > ~/.config/autostart/firefox.desktop
+[Desktop Entry]
+Type=Application
+Name=Firefox
+Exec=sh -c "sleep 10 && snap run firefox"
+Icon=firefox
+X-GNOME-Autostart-enabled=true
+EOF
+fi
+
 
 
 # -----------------------------
