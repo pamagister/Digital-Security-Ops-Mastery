@@ -34,6 +34,8 @@ Für die Synchronisation mit dem eigenen PC gibt es auch die Nextcloud PC Client
 1. ![app_image](../res/ico/fdroid.ico) **F-Droid**: Alternativer Playstore mit generell sicheren Open-Source-Apps
 1. ![app_image](../res/ico/nextcloud.ico) **Nextcloud**: Synchronisations-Client für die Nextcloud-App, Basis für die Synchronisation von Dateien, Kontakten, Kalendern, Aufgaben, etc.
 1. ![app_image](../res/ico/davx5.ico) **DAVx⁵**: DAVx⁵ ist eine CalDAV/CardDAV-Verwaltungs- und Synchronisations-App für Android, die sich nahtlos in Kalender- und Kontakt-Apps integrieren lässt. Mit DAVx⁵ haben Sie Ihre Kontakte, Termine und Aufgaben auf Ihrem eigenen Server oder einem vertrauenswürdigen CalDAV/CardDAV-Dienst unter Ihrer eigenen Kontrolle.
+1. ![app_image](../res/ico/nextcloudnotes.ico) **[Nextcloud Notes](https://f-droid.org/de/packages/it.niedermann.owncloud.notes/)**: Anzeigen und Bearbeiten von Notizen auf Nextcloud
+1. ![app_image](../res/ico/opentasks.ico) **[OpenTasks](https://f-droid.org/de/packages/org.dmfs.tasks/)**: Eine Aufgabenmanager-App, mit der Sie Ihre ToDo-Liste nach Dringlichkeit, Status, Zeitrahmen usw. kategorisieren können.
 
 ## Nextcloud-Server konfigurieren
 1. Richten Sie den Nextcloud-Dienst ein, z.B. bei Hosting.de. 
