@@ -55,6 +55,69 @@ Der Fokus liegt auf **Android (Google‑Ökosystem)** mit **klaren Backup‑Stra
 
 ---
 
+Gute Ergänzung 👍 – das ist praxisnah, verständlich und entlastet KeePass im Alltag, ohne es zu ersetzen.
+Hier ist ein **zusätzliches Kapitel in sauberem Markdown**, stilistisch passend zur 1-Seiten-Checkliste und **copy-paste-fähig**.
+
+---
+
+## 🌐 Browser-Sync als zusätzliches Sicherheitsnetz
+
+> 💡 **Ergänzung, kein Ersatz für KeePass.**
+> Hilft bei **Passwörtern, Logins und Lesezeichen** – besonders bequem bei Handy-Wechsel.
+
+---
+
+### Warum das sinnvoll ist
+
+* Ein Login → **gleiche Daten auf PC & Smartphone**
+* Wiederherstellung bei neuem Gerät in Minuten
+* Automatische Sicherung von:
+  * Passwörtern
+  * Lesezeichen
+  * Verlauf (optional)
+
+---
+
+### Empfohlene Browser
+
+* 🦊 Firefox (sehr gut geeignet)
+* 🌍 Google Chrome (falls ohnehin Google genutzt wird)
+
+
+**Checkliste:**
+
+☐ Browser (Firefox oder Chrome) auf PC & Smartphone identisch
+☐ Mit gleichem Login (Firefox) oder Google-Konto anmelden
+☐ Synchronisation aktivieren
+
+---
+
+### Wichtige Hinweise ⚠️
+
+* Browser-Sync **ersetzt KeePass nicht**
+* Kritische Logins (Bank, E-Mail, Apple/Google-ID) weiterhin in KeePass
+
+
+---
+
+### Bewährte Praxis
+
+* **KeePass = Tresor**
+* **Browser = Alltag**
+
+💡 Passwörter dürfen ruhig **an zwei Stellen existieren**,
+**solange KeePass die Referenz bleibt.**
+
+---
+
+### Mini-Check (30 Sekunden)
+
+☐ Browser auf PC & Handy identisch
+☐ Login aktiv
+☐ Lesezeichen auf beiden Geräten sichtbar
+☐ Ein gespeichertes Passwort testweise abrufen
+
+
 ## 💬 Messenger & Nachrichten
 
 ### WhatsApp
@@ -96,13 +159,14 @@ Der Fokus liegt auf **Android (Google‑Ökosystem)** mit **klaren Backup‑Stra
 
 ### Telegram
 
-* 💡 **Alles serverseitig gespeichert**
-
-✔ Kein Backup nötig
+* **Alles serverseitig gespeichert** → ✔ Kein Backup nötig
+* Besser als der Telegram Messenger vom Play Store ist die Open-Source-Variante **"Forkogram"** von F-Droid
+* Dort muss jedoch ein altes Zweit-Gerät oder der Browser im Telegram-Konto angemeldet sein, damit man über die "alte" Telegram-Instanz den Anmeldecode empfangen kann, um auf dem neuen **Forkogram**-Gerät den Account zu aktivieren
 
 **Tipp 💡**
 
-> Ideal für Notizen & Selbst‑Chats
+> 1. Ideal für Notizen & Selbst‑Chats
+> 2. Immer ein Zweitgerät oder den PC via https://web.telegram.org verbunden haben, um das neue Gerät kostenfrei mit der bestehenden Nummer zu verbinden
 
 ---
 
