@@ -1,56 +1,58 @@
-[:uk: English](README.md) | [:de: Deutsch](README_de.md) 
+[:uk: English](README_en.md) | [:de: Deutsch](README.md) 
 
-# Introduction
+# Einführung
 
-## Why Nextcloud?
+## Warum Nextcloud?
 
-Nextcloud is a versatile, open-source platform facilitating secure file storage and collaboration. Beyond file syncing, it seamlessly integrates calendar, contacts, and notes synchronization. Empowering users to manage their digital lives, Nextcloud offers a unified solution for seamless access and collaboration across devices, ensuring efficient and synchronized personal and professional workflows.
+Nextcloud ist eine vielseitige Open-Source-Plattform, die eine sichere Speicherung von Dateien und Zusammenarbeit ermöglicht. Neben der Synchronisierung von Dateien ermöglicht sie auch die nahtlose Synchronisierung von Kalendern, Kontakten und Notizen. Nextcloud bietet eine einheitliche Lösung für den nahtlosen Zugriff und die Zusammenarbeit über verschiedene Geräte hinweg und gewährleistet so effiziente und synchronisierte persönliche und berufliche Arbeitsabläufe.
 
-## Key features of Nextcloud
-1. **Data Control and Privacy:** Hosting Nextcloud on your own server gives you complete control over your data. You decide where it's stored, who has access, and how it's managed, enhancing your privacy.
-1. **Customization and Flexibility:** Self-hosting allows you to tailor Nextcloud to your specific needs. You can install additional apps, customize the user interface, and integrate it with other services and tools.
-1. **Cost Efficiency:** While there may be initial setup costs, self-hosting can be cost-effective in the long run. You won't incur recurring subscription fees, and you can choose hardware that fits your budget.
-1. **Scalability:** With self-hosted Nextcloud, you have the flexibility to scale your infrastructure based on your requirements. This is particularly beneficial for businesses or individuals with growing storage needs.
-1. **Enhanced Security:** You have direct control over the security measures implemented on your server. This includes choosing encryption methods, configuring firewalls, and staying on top of security updates, reducing reliance on external providers.
-1. **Offline Access:** Self-hosted Nextcloud allows for offline access to your files. This is especially useful when you are in environments without consistent internet connectivity.
-1. **Collaboration Features:** Nextcloud provides a suite of collaboration tools, including file sharing, calendar, contacts, and collaborative document editing. When self-hosted, these tools can be tailored to your specific collaboration needs.
-1. **Integration with Existing Systems:** Self-hosting Nextcloud enables seamless integration with your existing infrastructure and authentication systems. This can streamline user management and make the user experience more cohesive.
-1. **Community Support:** The Nextcloud community is active and provides support through forums, documentation, and other channels. Self-hosting allows you to benefit from this collaborative environment.
-1. **Learning Opportunity:** Hosting Nextcloud on your own server provides a valuable learning experience. It allows you to deepen your understanding of server administration, security practices, and the inner workings of cloud services.
-
-While self-hosting Nextcloud offers these advantages, it's important to consider your technical skills, available resources, and the level of maintenance required before deciding on a self-hosted solution.
+## Die wichtigsten Funktionen von Nextcloud
+1. **Datenkontrolle und Datenschutz:** Wenn Sie Nextcloud auf Ihrem eigenen Server hosten, haben Sie die volle Kontrolle über Ihre Daten. Sie entscheiden, wo sie gespeichert werden, wer Zugriff darauf hat und wie sie verwaltet werden, was Ihre Privatsphäre schützt.
+1. **Anpassung und Flexibilität:** Das Selbst-Hosting ermöglicht es Ihnen, Nextcloud an Ihre speziellen Bedürfnisse anzupassen. Sie können zusätzliche Anwendungen installieren, die Benutzeroberfläche anpassen und sie mit anderen Diensten und Tools integrieren.
+1. **Kosteneffizienz:** Auch wenn anfangs Kosten für die Einrichtung anfallen, kann Self-Hosting auf lange Sicht kosteneffizient sein. Es fallen keine wiederkehrenden Abonnementgebühren an, und Sie können die Hardware wählen, die zu Ihrem Budget passt.
+1. **Skalierbarkeit:** Mit der selbst gehosteten Nextcloud haben Sie die Flexibilität, Ihre Infrastruktur entsprechend Ihren Anforderungen zu skalieren. Dies ist besonders vorteilhaft für Unternehmen oder Einzelpersonen mit wachsendem Speicherbedarf.
+1. **Erhöhte Sicherheit:** Sie haben die direkte Kontrolle über die auf Ihrem Server implementierten Sicherheitsmaßnahmen. Dazu gehören die Auswahl von Verschlüsselungsmethoden, die Konfiguration von Firewalls und die Überwachung von Sicherheitsupdates, um die Abhängigkeit von externen Anbietern zu verringern.
+1. **Offline-Zugriff:** Die selbst gehostete Nextcloud ermöglicht den Offline-Zugriff auf Ihre Dateien. Dies ist besonders nützlich, wenn Sie sich in Umgebungen ohne konstante Internetverbindung befinden.
+1. **Kollaborationsfunktionen:** Nextcloud bietet eine Reihe von Kollaborationstools, einschließlich Dateifreigabe, Kalender, Kontakte und gemeinsame Dokumentenbearbeitung. Wenn Sie selbst gehostet werden, können diese Tools auf Ihre speziellen Anforderungen an die Zusammenarbeit zugeschnitten werden.
+1. **Integration mit bestehenden Systemen:** Das Self-Hosting von Nextcloud ermöglicht eine nahtlose Integration mit Ihrer bestehenden Infrastruktur und Ihren Authentifizierungssystemen. Dies kann die Benutzerverwaltung rationalisieren und die Benutzererfahrung kohärenter gestalten.
+1. **Community-Support:** Die Nextcloud-Community ist aktiv und bietet Unterstützung durch Foren, Dokumentation und andere Kanäle. Durch das Selbst-Hosten können Sie von dieser kollaborativen Umgebung profitieren.
+1. **Lernchance:** Das Hosting von Nextcloud auf Ihrem eigenen Server bietet Ihnen eine wertvolle Lernerfahrung. Es ermöglicht Ihnen, Ihr Verständnis für die Serveradministration, Sicherheitspraktiken und die Funktionsweise von Cloud-Diensten zu vertiefen.
 
 
-# Setting up Nextcloud
 
-## Set up a Nextcloud server
-As an alternative to various big tech clouds (google, dropbox), you can set up your own Nextcloud, e.g. on a Raspberry, or alternatively choose a hosted "Managed Nextcloud". 
-A limited, but nevertheless recommendable and free Nextcloud is offered by https://www.hosting.de/.
-For syncing with your own PC, there is also Nextcloud PC client software to synchronize the files between Nextcloud, the phone and the PC.
-
-## Install the required apps on the mobile device
-1. ![app_image](../res/ico/fdroid.ico) **F-Droid**: Alternative Playstore with generally secure open source apps
-1. ![app_image](../res/ico/nextcloud.ico) **Nextcloud**: Synchronization client for the Nextcloud app, basis for syncing files, contacts, calendars, tasks, etc.
-1. ![app_image](../res/ico/davx5.ico) **DAVx⁵**: DAVx⁵ is a CalDAV/CardDAV management and synchronization app for Android that integrates seamlessly with calendar and contacts apps. With DAVx⁵ you have your contacts, appointments and tasks on your own server or a trusted CalDAV/CardDAV service under your own control.
-
-## Configure Nextcloud server
-1. set up the Nextcloud service, e.g. at Hosting.de. 
-1. configure Nextcloud so that the corresponding functions of the service are available. To do this, activate the Nextcloud function online at hosting.de and the corresponding apps in the App Center (calendar, contacts, notes, tasks, etc.).
-1. write down the server address together with the password (preferably stored in a password management system such as KeePass on the PC). This is something like: https://xxxxxxxxxxxxxxxxxxxx.Nextcloud.hosting.zone 
-1. tip: To make it easier to have the (hopefully long and therefore secure) passwords to hand, it is advisable to transfer the KeePass.kdbx password container from the PC to the phone via USB at this point and then use it with KeePassDX.
-1. set up the Nextcloud app: Open the Nextcloud app and log in with the server address. → Then "Connect to the account" by entering the hosting.de access data via "Login". → Finally, the Nextcloud app must be granted permission to access the phone's file system. 
-1. setup DAVx5: Open the DAVx5 app → grant permissions → add account with "URL and user name" (enter the server address, the hosting.de user name and password here again. Now you can select the desired CARDDAV contacts and CALDAV calendars to be synchronized. Integration into the native Android apps such as Calendar and Contacts takes place automatically. The OpenTasks app is now also synchronized.
-1. if necessary, install Collabora to be able to open and edit the documents from the Nextcloud
-
-## Syncing Contacts
-The contacts sync is a bit tricky at first. Here is a small guide to the procedure
-1. prepare contacts in the existing system (e.g. google) properly and, if necessary, group them so that they can also be divided into "own contacts" and "contacts shared with partner/family", etc.
-1. export contacts from google as VCF file(s)
-1. create the corresponding groups for the contacts via DAVx5. Attention - the name of the group and the description text cannot be changed later. Click on Synchronize again in DAVx5
-1. copy the VCF files to the phone or synchronize them to the phone via Nextcloud
-1. now in the regular calendar app via Settings → Import the contacts from the VCF into the respective contact group
-
-## Further tips on Nextcloud
-* The free plan of the Managed Nextcloud from hosting.de only allows one user. However, several calendars and contact groups can be created, each of which can then only be used by one partner (i.e. intended for synchronization) or can be used jointly, e.g. for a family calendar. You then share a single Nextcloud account and can view practically all calendars and contacts, but only subscribe to those you are entitled to on a trust basis.
+Auch wenn das Selbsthosten von Nextcloud diese Vorteile bietet, ist es wichtig, dass Sie Ihre technischen Fähigkeiten, die verfügbaren Ressourcen und den erforderlichen Wartungsaufwand berücksichtigen, bevor Sie sich für eine selbst gehostete Lösung entscheiden.
 
 
+# Einrichten von Nextcloud
+
+## Einrichten eines Nextcloud-Servers
+Als Alternative zu verschiedenen großen Tech-Clouds (Google, Dropbox) können Sie Ihre eigene Nextcloud einrichten, z.B. auf einem Raspberry, oder alternativ eine gehostete "Managed Nextcloud" wählen. 
+Eine eingeschränkte, aber dennoch empfehlenswerte und kostenlose Nextcloud wird von https://www.hosting.de/ angeboten.
+Für die Synchronisation mit dem eigenen PC gibt es auch die Nextcloud PC Client Software, um die Dateien zwischen Nextcloud, dem Telefon und dem PC zu synchronisieren.
+
+## Installieren Sie die benötigten Apps auf dem mobilen Gerät
+1. ![app_image](../res/ico/fdroid.ico) **F-Droid**: Alternativer Playstore mit generell sicheren Open-Source-Apps
+1. ![app_image](../res/ico/nextcloud.ico) **Nextcloud**: Synchronisations-Client für die Nextcloud-App, Basis für die Synchronisation von Dateien, Kontakten, Kalendern, Aufgaben, etc.
+1. ![app_image](../res/ico/davx5.ico) **DAVx⁵**: DAVx⁵ ist eine CalDAV/CardDAV-Verwaltungs- und Synchronisations-App für Android, die sich nahtlos in Kalender- und Kontakt-Apps integrieren lässt. Mit DAVx⁵ haben Sie Ihre Kontakte, Termine und Aufgaben auf Ihrem eigenen Server oder einem vertrauenswürdigen CalDAV/CardDAV-Dienst unter Ihrer eigenen Kontrolle.
+1. ![app_image](../res/ico/nextcloudnotes.ico) **[Nextcloud Notes](https://f-droid.org/de/packages/it.niedermann.owncloud.notes/)**: Anzeigen und Bearbeiten von Notizen auf Nextcloud
+1. ![app_image](../res/ico/opentasks.ico) **[OpenTasks](https://f-droid.org/de/packages/org.dmfs.tasks/)**: Eine Aufgabenmanager-App, mit der Sie Ihre ToDo-Liste nach Dringlichkeit, Status, Zeitrahmen usw. kategorisieren können.
+
+## Nextcloud-Server konfigurieren
+1. Richten Sie den Nextcloud-Dienst ein, z.B. bei Hosting.de. 
+1. Nextcloud so konfigurieren, dass die entsprechenden Funktionen des Dienstes zur Verfügung stehen. Aktivieren Sie dazu die Nextcloud-Funktion online bei hosting.de und die entsprechenden Apps im App Center (Kalender, Kontakte, Notizen, Aufgaben, etc.).
+1. Notieren Sie sich die Serveradresse zusammen mit dem Passwort (am besten in einer Passwortverwaltung wie KeePass auf dem PC gespeichert). Das ist etwa so: https://xxxxxxxxxxxxxxxxxxxx.Nextcloud.hosting.zone 
+1. Tipp: Um die (hoffentlich langen und damit sicheren) Passwörter leichter zur Hand zu haben, empfiehlt es sich, den Passwort-Container KeePass.kdbx an dieser Stelle per USB vom PC auf das Telefon zu übertragen und dann mit KeePassDX zu verwenden.
+1. Richten Sie die Nextcloud-App ein: Öffnen Sie die Nextcloud-App und melden Sie sich mit der Serveradresse an. → Dann "Mit dem Konto verbinden", indem man die hosting.de-Zugangsdaten über "Login" eingibt. → Schließlich muss der Nextcloud-App die Berechtigung zum Zugriff auf das Dateisystem des Telefons erteilt werden. 
+1. DAVx5 einrichten: Öffnen Sie die DAVx5-App → Berechtigungen erteilen → Konto hinzufügen mit "URL und Benutzername" (geben Sie hier wieder die Serveradresse, den hosting.de-Benutzernamen und das Passwort ein. Nun können Sie die gewünschten CARDDAV-Kontakte und CALDAV-Kalender auswählen, die synchronisiert werden sollen. Die Integration in die nativen Android-Apps wie Kalender und Kontakte erfolgt automatisch. Die OpenTasks-App wird nun ebenfalls synchronisiert.
+1. Installieren Sie ggf. Collabora, um die Dokumente in der Nextcloud öffnen und bearbeiten zu können.
+
+## Kontakte synchronisieren
+Die Synchronisierung der Kontakte ist anfangs etwas knifflig. Hier ist eine kleine Anleitung zum Vorgehen
+1. Kontakte im bestehenden System (z.B. google) ordentlich vorbereiten und ggf. gruppieren, so dass sie auch in "eigene Kontakte" und "mit Partner/Familie geteilte Kontakte" etc. unterteilt werden können.
+1. Kontakte aus google als VCF-Datei(en) exportieren
+1. Erstellen Sie die entsprechenden Gruppen für die Kontakte über DAVx5. Achtung - der Name der Gruppe und der Beschreibungstext können später nicht mehr geändert werden. Klicken Sie in DAVx5 erneut auf Synchronisieren
+1. Kopieren Sie die VCF-Dateien auf das Telefon oder synchronisieren Sie sie über Nextcloud mit dem Telefon
+1. nun in der regulären Kalender-App über Einstellungen → Importieren die Kontakte aus der VCF in die jeweilige Kontaktgruppe
+
+## Weitere Tipps zu Nextcloud
+* Der kostenlose Tarif der Managed Nextcloud von hosting.de erlaubt nur einen Nutzer. Es können jedoch mehrere Kalender und Kontaktgruppen angelegt werden, die dann jeweils nur von einem Partner genutzt werden können (also für die Synchronisation gedacht sind) oder gemeinsam genutzt werden können, z.B. für einen Familienkalender. Sie teilen sich dann ein einziges Nextcloud-Konto und können praktisch alle Kalender und Kontakte einsehen, aber nur die abonnieren, zu denen Sie auf Vertrauensbasis berechtigt sind.

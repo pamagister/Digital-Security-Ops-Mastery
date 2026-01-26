@@ -255,7 +255,7 @@ Hier ist ein **zusätzliches Kapitel in sauberem Markdown**, stilistisch passend
 * Zentrale Notizen
 * Plattformübergreifend
 
-📌 Details siehe: [Nextcloud](../nextcloud/README_de.md)
+📌 Details siehe: [Nextcloud](../nextcloud/README.md)
 
 ### Google Keep 
 

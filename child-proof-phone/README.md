@@ -1,128 +1,129 @@
-[:uk: English](README.md) | [:de: Deutsch](README_de.md) 
+[:uk: English](README_en.md) | [:de: Deutsch](README.md) 
 
-# Setting up a child-proof phone
-The aim of this chapter is to set up a mobile phone that can be used safely by children.
-The focus is on ensuring the following features:
-- Limiting the screen time for certain apps and categories of apps
-- Preventing the installation and uninstallation of certain apps
-- Preventing the uninstallation of the app required to limit screen time
-- Protection against inappropriate content
-- Localization of the phone in case of loss or to determine the location of the child
-
-
-<a name="recommended" />
-
-## Recommended apps
-
-- ![app_image](../res/ico/timelimit.ico) **[TimeLimit](https://timelimit.io/)** on [f-droid](https://f-droid.org/packages/io.timelimit.android.aosp.direct/): Flexibly limit the period of use 
-- ![app_image](../res/ico/adaway.ico) **[AdAway](https://adaway.org/)** on [f-droid](https://f-droid.org/de/packages/org.adaway/): A free and open-source ad blocker for Android
-- ![app_image](../res/ico/applock.ico) **[App Lock](https://play.google.com/store/apps/details?id=applock.lockapps.fingerprint.password.lockit)**: AppLock easily secures apps and protects your private data with one click. Protect your phone with a PIN, pattern or fingerprint
-- ![app_image](../res/ico/findmydevice.ico) **[Find My Device](https://f-droid.org/de/packages/de.nulide.findmydevice/)** on [f-droid]((https://f-droid.org/de/packages/de.nulide.findmydevice/)): Locate and control your device remotely
+# Einrichten eines kindersicheren Telefons
+In diesem Kapitel geht es darum, ein Mobiltelefon einzurichten, das von Kindern sicher benutzt werden kann.
+Der Schwerpunkt liegt dabei auf der Gewährleistung der folgenden Funktionen:
+- Begrenzung der Bildschirmzeit für bestimmte Anwendungen und Kategorien von Anwendungen
+- Verhindern der Installation und Deinstallation von bestimmten Apps
+- Verhinderung der Deinstallation der App, die zur Begrenzung der Bildschirmzeit erforderlich ist
+- Schutz vor unangemessenen Inhalten
+- Lokalisierung des Telefons im Falle eines Verlustes oder zur Bestimmung des Aufenthaltsortes des Kindes
 
 
-## Set up device
+<a name="empfohlen" />
 
-### Set up screen time limit app
-⚡ Quick start ⚡
-1. Install the required TimeLimit App [as mentioned above](#recommended)
-1. Grant the necessary authorizations
-1. Add at least the following apps as explicitly allowed apps so that these apps can work unhindered:
-   * AdAway content blocker
-   * App Lock
-1. Block these apps completely (time limit 0)
-   * Settings (This increases security against unauthorized uninstallation)
-1. Set time limits as required
+## Empfohlene Apps
 
-<details>
-<summary>ℹ️ Tips and Details about screen time limit app</summary>
+- ![app_image](../res/ico/timelimit.ico) **[TimeLimit](https://timelimit.io/)** auf [f-droid](https://f-droid.org/packages/io.timelimit.android.aosp.direct/): Flexibel die Nutzungsdauer begrenzen 
+- ![app_image](../res/ico/adaway.ico) **[AdAway](https://adaway.org/)** auf [f-droid](https://f-droid.org/de/packages/org.adaway/): Ein kostenloser und quelloffener Werbeblocker für Android
+- ![app_image](../res/ico/applock.ico) **[App Lock](https://play.google.com/store/apps/details?id=applock.lockapps.fingerprint.password.lockit)**: AppLock sichert Apps und schützt Ihre privaten Daten mit nur einem Klick. Schützen Sie Ihr Telefon mit einer PIN, einem Muster oder einem Fingerabdruck
+- ![app_image](../res/ico/findmydevice.ico) **[Find My Device](https://f-droid.org/de/packages/de.nulide.findmydevice/)** auf [f-droid]((https://f-droid.org/de/packages/de.nulide.findmydevice/)): Lokalisieren und steuern Sie Ihr Gerät aus der Ferne
 
-To set up the screen time limit, individual apps can be grouped into categories using the app mentioned above.
-An individual time limit can be set for each of these categories.
 
-One problem is that the display time limit is more of a self-control mechanism. 
-Although a pin can be set up, it is very easy to bypass, for example by uninstalling or deactivating the app. 
-It is therefore necessary to combine the time limit app with an app for generally blocking other apps, see below.
+## Gerät einrichten
+
+### App zur Begrenzung der Bildschirmzeit einrichten
+⚡ Schnellstart ⚡ 
+1. Installieren Sie die erforderliche TimeLimit App [wie oben erwähnt](#empfohlen)
+1. Erteilen Sie die notwendigen Berechtigungen
+1. Fügen Sie mindestens die folgenden Apps als explizit erlaubte Apps hinzu, damit diese Apps ungehindert arbeiten können:
+   * AdAway-Inhaltsblocker
+   * App-Sperre
+1. Sperren Sie diese Apps vollständig (Zeitlimit 0)
+   * Einstellungen (Dies erhöht die Sicherheit gegen unautorisierte Deinstallationen)
+1. Setzen Sie nach Bedarf Zeitlimits
+
+<Details>
+<summary>ℹ️ Tipps und Details zur Bildschirmzeitbegrenzungs-App</summary>
+
+Um die Bildschirmzeit zu begrenzen, können einzelne Apps mit der oben genannten App in Kategorien eingeteilt werden.
+Für jede dieser Kategorien kann ein individuelles Zeitlimit eingestellt werden.
+
+Ein Problem ist, dass das Bildschirmzeitlimit eher ein Selbstkontrollmechanismus ist. 
+Es lässt sich zwar eine Stecknadel einrichten, die aber sehr leicht umgangen werden kann, zum Beispiel durch Deinstallation oder Deaktivierung der App. 
+Daher ist es notwendig, die Zeitlimit-App mit einer App zur generellen Sperrung anderer Apps zu kombinieren, siehe unten.
 </details>
 
-### Set up content blocker
-⚡ Quick start ⚡
-1. Install the required ad-blocker App [as mentioned above](#recommended)
-1. Add some individual block lists as required:
+### Inhaltsblocker einrichten
+⚡ Schnellstart ⚡
+1. Installieren Sie die erforderliche Ad-Blocker-App [wie oben erwähnt](#empfohlen)
+1. Fügen Sie bei Bedarf einige individuelle Blocklisten hinzu:
    * StevenBlack Unified hosts: https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts
-   * StevenBlack fakenews-gambling-porn: https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/fakenews-gambling-porn-only/hosts
+   * StevenBlack Fakenews-Glücksspiel-Porno: https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/fakenews-gambling-porn-only/hosts
    * Online Gaming: https://raw.githubusercontent.com/pamagister/Digital-Security-Ops-Mastery/main/child-proof-phone/online-games-hosts-blocklist/hosts
 
 
-<details>
-<summary>ℹ️ Tips and Details about content blocker</summary>
+<Details>
+<summary>ℹ️ Tipps und Details zum Inhaltsblocker</summary>
 
-* For more details, refer to a detailed explanation in this [blog post](https://www.kuketz-blog.de/adaway-werbe-und-trackingfrei-im-android-universum/) (german).
-* Most devices will not have root permissions, which means that you have to rely on the VPN-based ad blocker.
-* Don't forget to update the sources regularly and check the desired function of the ad blocker.
+* Weitere Details finden Sie in einer ausführlichen Erklärung in diesem [Blogpost](https://www.kuketz-blog.de/adaway-werbe-und-trackingfrei-im-android-universum/) (deutsch).
+* Die meisten Geräte haben keine Root-Rechte, so dass Sie sich auf den VPN-basierten Werbeblocker verlassen müssen.
+* Vergessen Sie nicht, die Quellen regelmäßig zu aktualisieren und die gewünschte Funktion des Werbeblockers zu überprüfen.
 </details>
 
 
-<details>
-<summary>Using unified blocked hosts</summary>
+<Details>
+<summary>Verwendung vereinheitlichter gesperrter Hosts</summary>
 
-In addition to the already preset blocked hosts, further special hosts can be [found here](https://github.com/StevenBlack/hosts#list-of-all-hosts-file-variants).
-The list of **Unified hosts** is often already pre-set so that specific categories like [gambling and porn](https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/gambling-porn-only/hosts) or further hosts from [Stephen Black Hosts](https://github.com/StevenBlack/hosts) can be added for children. 
+Zusätzlich zu den bereits voreingestellten gesperrten Hosts, können weitere spezielle Hosts [hier](https://github.com/StevenBlack/hosts#list-of-all-hosts-file-variants) gefunden werden.
+Die Liste der **Unified Hosts** ist oft schon voreingestellt, so dass für Kinder spezifische Kategorien wie [Glücksspiel und Porno](https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/gambling-porn-only/hosts) oder weitere Hosts aus [Stephen Black Hosts](https://github.com/StevenBlack/hosts) hinzugefügt werden können. 
 </details>
 
 
-<details>
-<summary>Build individual block lists</summary>
+<Details>
+<summary>Individuelle Sperrlisten erstellen</summary>
 
-In some cases it will be necessary to block additional pages individually, like **online games**. 
-Further information on this can be found in the [AdAway Wiki](https://github.com/AdAway/AdAway/wiki/HostsSources).
+In manchen Fällen wird es notwendig sein, zusätzliche Seiten individuell zu sperren, wie z.B. **Onlinespiele**. 
+Weitere Informationen dazu finden Sie im [AdAway Wiki](https://github.com/AdAway/AdAway/wiki/HostsSources).
 
-An additional [host list to block online games](https://raw.githubusercontent.com/pamagister/Digital-Security-Ops-Mastery/main/child-proof-phone/online-games-hosts-blocklist/hosts) has been created here in this repository using AdAway. 
-This is based on the AdBlock-compatible list from [IREK-szef](https://raw.githubusercontent.com/IREK-szef/games-blocklist/main/lists/Adblock-dns/games.txt), which is adapted to the AdAway format and has been slightly expanded.
+Eine zusätzliche [Hostliste zum Blockieren von Online-Spielen](https://raw.githubusercontent.com/pamagister/Digital-Security-Ops-Mastery/main/child-proof-phone/online-games-hosts-blocklist/hosts) wurde hier in diesem Repository mit AdAway erstellt. 
+Diese basiert auf der AdBlock-kompatiblen Liste von [IREK-szef](https://raw.githubusercontent.com/IREK-szef/games-blocklist/main/lists/Adblock-dns/games.txt), die an das AdAway-Format angepasst und leicht erweitert wurde.
 </details>
 
 
-### Set up App locker
-⚡ Quick start ⚡
-1. Install the required App [as mentioned above](#recommended)
-1. Grant the necessary authorizations
-1. Block at least the following apps:
-   * AdAway Content Blocker (to prevent deletions of host block lists)
-   * Screen time limit app (Even if the time limiter app has its own security, this increases security against unwanted manipulation)
-   * Settings (this prevents uninstallation)
-1. Adjust App Settings
-   * 🔴 **[off]** Use fingerprint (would allow unlocking with children fingerprint)
-   * 🟢 **[on]** Lock new app
-   * 🟢 **[on]** Set a passwort or pin that differs from children pin
-   * 🔴 **[off]** Battery optimization (this might cause the app to run inactively in the background)
-   * 🟢 **[on]** Symbol camouflage
-   * 🟢 **[on]** Uninstall protection
+### App Locker einrichten
+⚡ Schnellstart ⚡.
+1. Installieren Sie die gewünschte App [wie oben erwähnt](#empfohlen)
+1. Erteilen Sie die notwendigen Berechtigungen
+1. Sperren Sie mindestens die folgenden Apps:
+
+   * AdAway Content Blocker (zur Verhinderung von Löschungen von Hostblocklisten)
+   * App zur Begrenzung der Bildschirmzeit (auch wenn die App zur Begrenzung der Bildschirmzeit ihre eigene Sicherheit hat, erhöht dies die Sicherheit gegen unerwünschte Manipulationen)
+   * Einstellungen (dies verhindert die Deinstallation)
+1. App-Einstellungen anpassen
+   * 🔴 **[aus]** Fingerabdruck verwenden (würde das Entsperren mit dem Fingerabdruck der Kinder ermöglichen)
+   * 🟢 **[ein]** Neue App sperren
+   * 🟢 **[ein]** Passwort oder Pin festlegen, die sich von der Pin der Kinder unterscheidet
+   * 🔴 **[aus]** Batterieoptimierung (dies kann dazu führen, dass die App im Hintergrund inaktiv läuft)
+   * 🟢 **[ein]** Symboltarnung
+   * 🟢 **[ein]** Deinstallationsschutz
 
 
-<details>
-<summary>ℹ️ Tips and Details about App Locker</summary>
+<Details>
+<summary>ℹ️ Tipps und Details zu App Locker</summary>
 
-* To prevent the above-mentioned app from being deactivated or even uninstalled, App Lock can be used to set up an access lock for certain apps.
-* The settings menu can also be secured via this app to prevent the lock app from being uninstalled. A recovery email must be set up for this.
-* It can also be used to protect harmless apps that require a special configuration (e.g. nextcloud) that should not be changed by the child.
+* Um zu verhindern, dass die oben erwähnte App deaktiviert oder gar deinstalliert wird, kann mit App Lock eine Zugriffssperre für bestimmte Apps eingerichtet werden.
+* Auch das Einstellungsmenü kann über diese App gesichert werden, um zu verhindern, dass die Lock-App deinstalliert wird. Hierfür muss eine Wiederherstellungs-E-Mail eingerichtet werden.
+* Sie kann auch dazu verwendet werden, harmlose Apps zu schützen, die eine spezielle Konfiguration benötigen (z.B. nextcloud), die vom Kind nicht verändert werden soll.
 </details>
 
 
-### Set up Find my Device
-The Find my Device app must be installed on the cell phone that is to be located, e.g. in the event of loss.
-In addition, all devices that have permission to locate the device via SMS must first be authorized on the device to be located.
-All settings must therefore be made on the device to be located, e.g. the child's phone. 
+### Find my Device einrichten
+Die App Find my Device muss auf dem Handy installiert sein, das z.B. im Falle eines Verlustes geortet werden soll.
+Außerdem müssen alle Geräte, die die Erlaubnis haben sollen, das Gerät per SMS zu orten, zunächst auf dem zu ortenden Gerät autorisiert werden.
+Alle Einstellungen müssen also auf dem zu ortenden Gerät vorgenommen werden, z.B. die Telefonnummer des Kindes.
 
-On the previously authorized device on which the information about the location of the lost device is required, the corresponding command must be sent via SMS:
+Auf dem zuvor autorisierten Gerät, auf dem die Information über den Standort des verlorenen Gerätes benötigt wird, muss der entsprechende Befehl per SMS gesendet werden:
 
 ```
-fmd locate - sends the current GPS location
-fmd ring - triggers the phone to ring
-fmd lock - locks the phone
-fmd stats - sends device details
-fmd delete - resets the phone to factory settings
-fmd camera (back/front) - captures a photo (using front or back camera) and sends it to the server
+fmd locate - sendet den aktuellen GPS-Standort
+fmd ring - löst ein Klingeln des Telefons aus
+fmd lock - sperrt das Telefon
+fmd stats - sendet Gerätedetails
+fmd delete - setzt das Telefon auf die Werkseinstellungen zurück
+fmd camera (back/front) - nimmt ein Foto auf (mit der Front- oder Rückkamera) und sendet es an den Server
 ```
 
-## Further links
-- AdAway: [Comprehensive description of the functionality (german)](https://www.kuketz-blog.de/adaway-werbe-und-trackingfrei-im-android-universum/)
+## Weitere Links
+- AdAway: [Ausführliche Beschreibung der Funktionalität (deutsch)](https://www.kuketz-blog.de/adaway-werbe-und-trackingfrei-im-android-universum/)
 - FindMyDevice: [github Wiki](https://github.com/ColoursofOSINT/findmydevice/tree/main)
