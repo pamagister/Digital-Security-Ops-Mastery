@@ -88,24 +88,24 @@ Diese basiert auf der AdBlock-kompatiblen Liste von [IREK-szef](https://raw.gith
 
 ### App Locker einrichten
 
-1. Installieren Sie die gewünschte App [wie oben erwähnt](#empfohlen)
+#. Installieren Sie die gewünschte App [wie oben erwähnt](#empfohlen)
 
-1. Erteilen Sie die notwendigen Berechtigungen
+#. Erteilen Sie die notwendigen Berechtigungen
 
-1. Sperren Sie mindestens die folgenden Apps:
+#. Sperren Sie mindestens die folgenden Apps:
 
-   #. AdAway Content Blocker (zur Verhinderung von Löschungen von Hostblocklisten)
-   #. App zur Begrenzung der Bildschirmzeit (auch wenn die App zur Begrenzung der Bildschirmzeit ihre eigene Sicherheit hat, erhöht dies die Sicherheit gegen unerwünschte Manipulationen)
-   #. Einstellungen (dies verhindert die Deinstallation)
+   a. AdAway Content Blocker (zur Verhinderung von Löschungen von Hostblocklisten)
+   b. App zur Begrenzung der Bildschirmzeit (auch wenn die App zur Begrenzung der Bildschirmzeit ihre eigene Sicherheit hat, erhöht dies die Sicherheit gegen unerwünschte Manipulationen)
+   c. Einstellungen (dies verhindert die Deinstallation)
 
-1. App-Einstellungen anpassen
+#. App-Einstellungen anpassen
 
    a. 🔴 **[aus]** Fingerabdruck verwenden (würde das Entsperren mit dem Fingerabdruck der Kinder ermöglichen)
-   a. 🟢 **[ein]** Neue App sperren
-   a. 🟢 **[ein]** Passwort oder Pin festlegen, die sich von der Pin der Kinder unterscheidet
-   a. 🔴 **[aus]** Batterieoptimierung (dies kann dazu führen, dass die App im Hintergrund inaktiv läuft)
-   a. 🟢 **[ein]** Symboltarnung
-   a. 🟢 **[ein]** Deinstallationsschutz
+   b. 🟢 **[ein]** Neue App sperren
+   c. 🟢 **[ein]** Passwort oder Pin festlegen, die sich von der Pin der Kinder unterscheidet
+   d. 🔴 **[aus]** Batterieoptimierung (dies kann dazu führen, dass die App im Hintergrund inaktiv läuft)
+   e. 🟢 **[ein]** Symboltarnung
+   f. 🟢 **[ein]** Deinstallationsschutz
 
 
 <Details>

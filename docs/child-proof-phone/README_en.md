@@ -1,8 +1,10 @@
 ![English](../_static/ico/uk.ico)[English](README_en.md) | ![German](../_static/ico/germany.ico)[Deutsch](README.md) 
 
 # Setting up a child-proof phone
+
 The aim of this chapter is to set up a mobile phone that can be used safely by children.
 The focus is on ensuring the following features:
+
 - Limiting the screen time for certain apps and categories of apps
 - Preventing the installation and uninstallation of certain apps
 - Preventing the uninstallation of the app required to limit screen time
@@ -22,14 +24,14 @@ The focus is on ensuring the following features:
 
 ### Set up screen time limit app
 
-1. Install the required TimeLimit App [as mentioned above](#recommended)
-1. Grant the necessary authorizations
-1. Add at least the following apps as explicitly allowed apps so that these apps can work unhindered:
-   * AdAway content blocker
-   * App Lock
-1. Block these apps completely (time limit 0)
-   * Settings (This increases security against unauthorized uninstallation)
-1. Set time limits as required
+#. Install the required TimeLimit App [as mentioned above](#recommended)
+#. Grant the necessary authorizations
+#. Add at least the following apps as explicitly allowed apps so that these apps can work unhindered:
+   #. AdAway content blocker
+   #. App Lock
+#. Block these apps completely (time limit 0)
+   #. Settings (This increases security against unauthorized uninstallation)
+#. Set time limits as required
 
 <details>
 <summary>ℹ️ Tips and Details about screen time limit app</summary>
