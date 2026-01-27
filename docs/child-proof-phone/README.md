@@ -14,10 +14,10 @@ Der Schwerpunkt liegt dabei auf der Gewährleistung der folgenden Funktionen:
 
 ## Empfohlene Apps
 
-- ![app_image](../res/ico/timelimit.ico) **[TimeLimit](https://timelimit.io/)** auf [f-droid](https://f-droid.org/packages/io.timelimit.android.aosp.direct/): Flexibel die Nutzungsdauer begrenzen 
-- ![app_image](../res/ico/adaway.ico) **[AdAway](https://adaway.org/)** auf [f-droid](https://f-droid.org/de/packages/org.adaway/): Ein kostenloser und quelloffener Werbeblocker für Android
-- ![app_image](../res/ico/applock.ico) **[App Lock](https://play.google.com/store/apps/details?id=applock.lockapps.fingerprint.password.lockit)**: AppLock sichert Apps und schützt Ihre privaten Daten mit nur einem Klick. Schützen Sie Ihr Telefon mit einer PIN, einem Muster oder einem Fingerabdruck
-- ![app_image](../res/ico/findmydevice.ico) **[Find My Device](https://f-droid.org/de/packages/de.nulide.findmydevice/)** auf [f-droid]((https://f-droid.org/de/packages/de.nulide.findmydevice/)): Lokalisieren und steuern Sie Ihr Gerät aus der Ferne
+- ![app_image](../../res/ico/timelimit.ico) **[TimeLimit](https://timelimit.io/)** auf [f-droid](https://f-droid.org/packages/io.timelimit.android.aosp.direct/): Flexibel die Nutzungsdauer begrenzen 
+- ![app_image](../../res/ico/adaway.ico) **[AdAway](https://adaway.org/)** auf [f-droid](https://f-droid.org/de/packages/org.adaway/): Ein kostenloser und quelloffener Werbeblocker für Android
+- ![app_image](../../res/ico/applock.ico) **[App Lock](https://play.google.com/store/apps/details?id=applock.lockapps.fingerprint.password.lockit)**: AppLock sichert Apps und schützt Ihre privaten Daten mit nur einem Klick. Schützen Sie Ihr Telefon mit einer PIN, einem Muster oder einem Fingerabdruck
+- ![app_image](../../res/ico/findmydevice.ico) **[Find My Device](https://f-droid.org/de/packages/de.nulide.findmydevice/)** auf [f-droid]((https://f-droid.org/de/packages/de.nulide.findmydevice/)): Lokalisieren und steuern Sie Ihr Gerät aus der Ferne
 
 
 ## Gerät einrichten
