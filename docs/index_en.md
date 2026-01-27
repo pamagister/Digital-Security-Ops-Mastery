@@ -1,4 +1,4 @@
-![English](_static/ico/uk.ico)[English](index_en.md) | ![English](_static/ico/germany.ico)[Deutsch](index.md)  [![Read the Docs](https://readthedocs.org/projects/Digital-Security-Ops-Mastery/badge/?version=latest)](https://Digital-Security-Ops-Mastery.readthedocs.io/en/latest/)
+![English](_static/ico/uk.ico)[English](index_en.md) | ![Deutsch](_static/ico/germany.ico)[Deutsch](index.md)  [![Read the Docs](https://readthedocs.org/projects/Digital-Security-Ops-Mastery/badge/?version=latest)](https://Digital-Security-Ops-Mastery.readthedocs.io/en/latest/)
 
 # Digital-Security-Ops-Mastery
 

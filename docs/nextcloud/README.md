@@ -1,4 +1,4 @@
-![English](_static/ico/uk.ico)[English](README_en.md) | ![English](_static/ico/germany.ico)[Deutsch](README.md) 
+![English](../_static/ico/uk.ico)[English](README_en.md) | ![Deutsch](../_static/ico/germany.ico)[Deutsch](README.md) 
 
 # Einführung
 

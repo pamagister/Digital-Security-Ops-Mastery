@@ -1,4 +1,4 @@
-![English](_static/ico/uk.ico)[English](README_en.md) | ![English](_static/ico/germany.ico)[Deutsch](README.md) 
+![English](../_static/ico/uk.ico)[English](README_en.md) | ![Deutsch](../_static/ico/germany.ico)[Deutsch](README.md) 
 
 # Einrichten eines kindersicheren Telefons
 
@@ -20,11 +20,11 @@ Der Schwerpunkt liegt dabei auf der Gewährleistung der folgenden Funktionen:
 - ![app_image](../_static/ico/findmydevice.ico) **[Find My Device](https://f-droid.org/de/packages/de.nulide.findmydevice/)** auf [f-droid]((https://f-droid.org/de/packages/de.nulide.findmydevice/)): Lokalisieren und steuern Sie Ihr Gerät aus der Ferne
 
 
+---
+
 ## Gerät einrichten
 
 ### App zur Begrenzung der Bildschirmzeit einrichten
-
-⚡ Schnellstart ⚡ 
 
 1. Installieren Sie die erforderliche TimeLimit App [wie oben erwähnt](#empfohlen)
 1. Erteilen Sie die notwendigen Berechtigungen
@@ -46,9 +46,9 @@ Es lässt sich zwar eine Stecknadel einrichten, die aber sehr leicht umgangen we
 Daher ist es notwendig, die Zeitlimit-App mit einer App zur generellen Sperrung anderer Apps zu kombinieren, siehe unten.
 </details>
 
-### Inhaltsblocker einrichten
+---
 
-⚡ Schnellstart ⚡
+### Inhaltsblocker einrichten
 
 1. Installieren Sie die erforderliche Ad-Blocker-App [wie oben erwähnt](#empfohlen)
 1. Fügen Sie bei Bedarf einige individuelle Blocklisten hinzu:
@@ -84,13 +84,14 @@ Eine zusätzliche [Hostliste zum Blockieren von Online-Spielen](https://raw.gith
 Diese basiert auf der AdBlock-kompatiblen Liste von [IREK-szef](https://raw.githubusercontent.com/IREK-szef/games-blocklist/main/lists/Adblock-dns/games.txt), die an das AdAway-Format angepasst und leicht erweitert wurde.
 </details>
 
+---
 
 ### App Locker einrichten
 
-⚡ Schnellstart ⚡.
-
 1. Installieren Sie die gewünschte App [wie oben erwähnt](#empfohlen)
+
 1. Erteilen Sie die notwendigen Berechtigungen
+
 1. Sperren Sie mindestens die folgenden Apps:
 
    * AdAway Content Blocker (zur Verhinderung von Löschungen von Hostblocklisten)
@@ -116,6 +117,8 @@ Diese basiert auf der AdBlock-kompatiblen Liste von [IREK-szef](https://raw.gith
 </details>
 
 
+---
+
 ### Find my Device einrichten
 
 Die App Find my Device muss auf dem Handy installiert sein, das z.B. im Falle eines Verlustes geortet werden soll.
@@ -132,6 +135,8 @@ fmd stats - sendet Gerätedetails
 fmd delete - setzt das Telefon auf die Werkseinstellungen zurück
 fmd camera (back/front) - nimmt ein Foto auf (mit der Front- oder Rückkamera) und sendet es an den Server
 ```
+
+---
 
 ## Weitere Links
 

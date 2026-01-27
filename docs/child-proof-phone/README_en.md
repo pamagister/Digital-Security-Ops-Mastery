@@ -1,4 +1,4 @@
-![English](_static/ico/uk.ico)[English](README_en.md) | ![English](_static/ico/germany.ico)[Deutsch](README.md) 
+![English](../_static/ico/uk.ico)[English](README_en.md) | ![German](../_static/ico/germany.ico)[Deutsch](README.md) 
 
 # Setting up a child-proof phone
 The aim of this chapter is to set up a mobile phone that can be used safely by children.
