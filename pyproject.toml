@@ -1,0 +1,8 @@
+[project]
+name = "Digital-Security-Ops-Mastery"
+dynamic = ["version"]
+description = "A modern hands-on guide for building secure, privacy-first PC and smartphone setups – from Linux automation and child-safe devices to Google-free digital independence."
+authors = [
+    {name = "pamagister"}
+]
+readme = "README_en.md"
