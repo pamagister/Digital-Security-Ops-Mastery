@@ -9,15 +9,19 @@ Das Flashen einer benutzerdefinierten Open-Source-ROM und das De-Googeln Ihres M
 - Ebenfalls sehr empfehlenswert, kompatibel für eine große Anzahl von Geräten: https://lineageos.org/
 
 ## Empfohlene Apps
+
 ### App Stores
+
 - ![app_image](../_static/ico/fdroid.ico) **[F-Droid](https://f-droid.org/)**: Der App-Store, der Freiheit und Privatsphäre respektiert
 - ![app_image](../_static/ico/aurora.ico) **[Aurora Store](https://f-droid.org/de/packages/com.aurora.store/)**: Aurora Store ist ein inoffizieller FOSS-Client für Google Play mit einem eleganten Design. Aurora Store ermöglicht es Benutzern, Apps herunterzuladen, zu aktualisieren und zu suchen, ähnlich wie im Play Store. 
 
 ### Kommunikation
+
 - ![app_image](../_static/ico/k9mail.ico) **[K-9 Mail](https://f-droid.org/de/packages/com.fsck.k9/)**: ist ein Open-Source-E-Mail-Client, der es leicht macht, große Mengen von E-Mails zu bearbeiten.
 - ![app_image](../_static/ico/conversations.ico) **[Conversations](https://f-droid.org/de/packages/eu.siacs.conversations/)**: Ein verschlüsselter, benutzerfreundlicher XMPP-Instant-Messaging-Client, der für Mobiltelefone optimiert ist.
 
 ### Synchronisation
+
 - ![app_image](../_static/ico/nextcloud.ico) **[Nextcloud](https://f-droid.org/de/packages/com.nextcloud.client/)**: Synchronisations-Client für die NextCloud-App, Basis für die Synchronisation von Dateien, Kontakten, Kalendern, Aufgaben, etc.
 - ![app_image](../_static/ico/acalendar.ico) **[aCalendar](https://acalendar.tapirapps.de/en/support/home)**: Schöne Kalenderanzeige und Widget, bessere Handhabung als der Standardkalender
 - ![app_image](../_static/ico/nextcloudnotes.ico) **[Nextcloud Notes](https://f-droid.org/de/packages/it.niedermann.owncloud.notes/)**: Anzeigen und Bearbeiten von Notizen auf Nextcloud
@@ -25,6 +29,7 @@ Das Flashen einer benutzerdefinierten Open-Source-ROM und das De-Googeln Ihres M
 - ![app_image](../_static/ico/davx5.ico) **[DAVx⁵](https://f-droid.org/de/packages/at.bitfire.davdroid/)**: DAVx⁵ ist eine CalDAV/CardDAV-Verwaltungs- und Synchronisations-App für Android, die sich nahtlos in Kalender- und Kontakt-Apps integrieren lässt.
 
 ### Produktivität
+
 - ![app_image](../_static/ico/aegis.ico) **[Aegis Authenticator](https://f-droid.org/de/packages/com.beemdevelopment.aegis/)**: Kostenlose, sichere und quelloffene 2FA-App zur Verwaltung von Token für Ihre Online-Dienste.
 - ![app_image](../_static/ico/keepassdx.ico) **[KeePassDX](https://f-droid.org/de/packages/com.kunzisoft.keepass.libre/)**: Sicherer und quelloffener Passwortmanager, der mit KeePass-Dateien kompatibel ist. 
 - ![app_image](../_static/ico/osmand.ico) **[OsmAnd](https://f-droid.org/de/packages/net.osmand.plus/)**: Globale Karten- und Navigationsanwendung für Offline- und Online-OSM-Karten Alternative zu Google Maps
@@ -34,6 +39,7 @@ Collabora Office ist ein Texteditor, Tabellenkalkulations- und Präsentationspro
 
 
 ## Weitere Links
+
 - Digitale Selbstverteidigung: https://digitalcourage.de/digitale-selbstverteidigung
 - Google-Alternativen: https://restoreprivacy.com/google-alternatives/
 - Mail-Anbieter:

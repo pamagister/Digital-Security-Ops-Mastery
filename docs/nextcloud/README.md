@@ -7,6 +7,7 @@
 Nextcloud ist eine vielseitige Open-Source-Plattform, die eine sichere Speicherung von Dateien und Zusammenarbeit ermöglicht. Neben der Synchronisierung von Dateien ermöglicht sie auch die nahtlose Synchronisierung von Kalendern, Kontakten und Notizen. Nextcloud bietet eine einheitliche Lösung für den nahtlosen Zugriff und die Zusammenarbeit über verschiedene Geräte hinweg und gewährleistet so effiziente und synchronisierte persönliche und berufliche Arbeitsabläufe.
 
 ## Die wichtigsten Funktionen von Nextcloud
+
 1. **Datenkontrolle und Datenschutz:** Wenn Sie Nextcloud auf Ihrem eigenen Server hosten, haben Sie die volle Kontrolle über Ihre Daten. Sie entscheiden, wo sie gespeichert werden, wer Zugriff darauf hat und wie sie verwaltet werden, was Ihre Privatsphäre schützt.
 1. **Anpassung und Flexibilität:** Das Selbst-Hosting ermöglicht es Ihnen, Nextcloud an Ihre speziellen Bedürfnisse anzupassen. Sie können zusätzliche Anwendungen installieren, die Benutzeroberfläche anpassen und sie mit anderen Diensten und Tools integrieren.
 1. **Kosteneffizienz:** Auch wenn anfangs Kosten für die Einrichtung anfallen, kann Self-Hosting auf lange Sicht kosteneffizient sein. Es fallen keine wiederkehrenden Abonnementgebühren an, und Sie können die Hardware wählen, die zu Ihrem Budget passt.
@@ -26,11 +27,13 @@ Auch wenn das Selbsthosten von Nextcloud diese Vorteile bietet, ist es wichtig, 
 # Einrichten von Nextcloud
 
 ## Einrichten eines Nextcloud-Servers
+
 Als Alternative zu verschiedenen großen Tech-Clouds (Google, Dropbox) können Sie Ihre eigene Nextcloud einrichten, z.B. auf einem Raspberry, oder alternativ eine gehostete "Managed Nextcloud" wählen. 
 Eine eingeschränkte, aber dennoch empfehlenswerte und kostenlose Nextcloud wird von https://www.hosting.de/ angeboten.
 Für die Synchronisation mit dem eigenen PC gibt es auch die Nextcloud PC Client Software, um die Dateien zwischen Nextcloud, dem Telefon und dem PC zu synchronisieren.
 
 ## Installieren Sie die benötigten Apps auf dem mobilen Gerät
+
 1. ![app_image](../_static/ico/fdroid.ico) **F-Droid**: Alternativer Playstore mit generell sicheren Open-Source-Apps
 1. ![app_image](../_static/ico/nextcloud.ico) **Nextcloud**: Synchronisations-Client für die Nextcloud-App, Basis für die Synchronisation von Dateien, Kontakten, Kalendern, Aufgaben, etc.
 1. ![app_image](../_static/ico/davx5.ico) **DAVx⁵**: DAVx⁵ ist eine CalDAV/CardDAV-Verwaltungs- und Synchronisations-App für Android, die sich nahtlos in Kalender- und Kontakt-Apps integrieren lässt. Mit DAVx⁵ haben Sie Ihre Kontakte, Termine und Aufgaben auf Ihrem eigenen Server oder einem vertrauenswürdigen CalDAV/CardDAV-Dienst unter Ihrer eigenen Kontrolle.
@@ -38,6 +41,7 @@ Für die Synchronisation mit dem eigenen PC gibt es auch die Nextcloud PC Client
 1. ![app_image](../_static/ico/opentasks.ico) **[OpenTasks](https://f-droid.org/de/packages/org.dmfs.tasks/)**: Eine Aufgabenmanager-App, mit der Sie Ihre ToDo-Liste nach Dringlichkeit, Status, Zeitrahmen usw. kategorisieren können.
 
 ## Nextcloud-Server konfigurieren
+
 1. Richten Sie den Nextcloud-Dienst ein, z.B. bei Hosting.de. 
 1. Nextcloud so konfigurieren, dass die entsprechenden Funktionen des Dienstes zur Verfügung stehen. Aktivieren Sie dazu die Nextcloud-Funktion online bei hosting.de und die entsprechenden Apps im App Center (Kalender, Kontakte, Notizen, Aufgaben, etc.).
 1. Notieren Sie sich die Serveradresse zusammen mit dem Passwort (am besten in einer Passwortverwaltung wie KeePass auf dem PC gespeichert). Das ist etwa so: https://xxxxxxxxxxxxxxxxxxxx.Nextcloud.hosting.zone 
@@ -47,6 +51,7 @@ Für die Synchronisation mit dem eigenen PC gibt es auch die Nextcloud PC Client
 1. Installieren Sie ggf. Collabora, um die Dokumente in der Nextcloud öffnen und bearbeiten zu können.
 
 ## Kontakte synchronisieren
+
 Die Synchronisierung der Kontakte ist anfangs etwas knifflig. Hier ist eine kleine Anleitung zum Vorgehen
 1. Kontakte im bestehenden System (z.B. google) ordentlich vorbereiten und ggf. gruppieren, so dass sie auch in "eigene Kontakte" und "mit Partner/Familie geteilte Kontakte" etc. unterteilt werden können.
 1. Kontakte aus google als VCF-Datei(en) exportieren
@@ -55,4 +60,5 @@ Die Synchronisierung der Kontakte ist anfangs etwas knifflig. Hier ist eine klei
 1. nun in der regulären Kalender-App über Einstellungen → Importieren die Kontakte aus der VCF in die jeweilige Kontaktgruppe
 
 ## Weitere Tipps zu Nextcloud
+
 * Der kostenlose Tarif der Managed Nextcloud von hosting.de erlaubt nur einen Nutzer. Es können jedoch mehrere Kalender und Kontaktgruppen angelegt werden, die dann jeweils nur von einem Partner genutzt werden können (also für die Synchronisation gedacht sind) oder gemeinsam genutzt werden können, z.B. für einen Familienkalender. Sie teilen sich dann ein einziges Nextcloud-Konto und können praktisch alle Kalender und Kontakte einsehen, aber nur die abonnieren, zu denen Sie auf Vertrauensbasis berechtigt sind.

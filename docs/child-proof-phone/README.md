@@ -1,8 +1,10 @@
 [:uk: English](README_en.md) | [:de: Deutsch](README.md) 
 
 # Einrichten eines kindersicheren Telefons
+
 In diesem Kapitel geht es darum, ein Mobiltelefon einzurichten, das von Kindern sicher benutzt werden kann.
 Der Schwerpunkt liegt dabei auf der Gewährleistung der folgenden Funktionen:
+
 - Begrenzung der Bildschirmzeit für bestimmte Anwendungen und Kategorien von Anwendungen
 - Verhindern der Installation und Deinstallation von bestimmten Apps
 - Verhinderung der Deinstallation der App, die zur Begrenzung der Bildschirmzeit erforderlich ist
@@ -23,7 +25,9 @@ Der Schwerpunkt liegt dabei auf der Gewährleistung der folgenden Funktionen:
 ## Gerät einrichten
 
 ### App zur Begrenzung der Bildschirmzeit einrichten
+
 ⚡ Schnellstart ⚡ 
+
 1. Installieren Sie die erforderliche TimeLimit App [wie oben erwähnt](#empfohlen)
 1. Erteilen Sie die notwendigen Berechtigungen
 1. Fügen Sie mindestens die folgenden Apps als explizit erlaubte Apps hinzu, damit diese Apps ungehindert arbeiten können:
@@ -45,7 +49,9 @@ Daher ist es notwendig, die Zeitlimit-App mit einer App zur generellen Sperrung 
 </details>
 
 ### Inhaltsblocker einrichten
+
 ⚡ Schnellstart ⚡
+
 1. Installieren Sie die erforderliche Ad-Blocker-App [wie oben erwähnt](#empfohlen)
 1. Fügen Sie bei Bedarf einige individuelle Blocklisten hinzu:
    * StevenBlack Unified hosts: https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts
@@ -82,7 +88,9 @@ Diese basiert auf der AdBlock-kompatiblen Liste von [IREK-szef](https://raw.gith
 
 
 ### App Locker einrichten
+
 ⚡ Schnellstart ⚡.
+
 1. Installieren Sie die gewünschte App [wie oben erwähnt](#empfohlen)
 1. Erteilen Sie die notwendigen Berechtigungen
 1. Sperren Sie mindestens die folgenden Apps:
@@ -90,7 +98,9 @@ Diese basiert auf der AdBlock-kompatiblen Liste von [IREK-szef](https://raw.gith
    * AdAway Content Blocker (zur Verhinderung von Löschungen von Hostblocklisten)
    * App zur Begrenzung der Bildschirmzeit (auch wenn die App zur Begrenzung der Bildschirmzeit ihre eigene Sicherheit hat, erhöht dies die Sicherheit gegen unerwünschte Manipulationen)
    * Einstellungen (dies verhindert die Deinstallation)
+
 1. App-Einstellungen anpassen
+
    * 🔴 **[aus]** Fingerabdruck verwenden (würde das Entsperren mit dem Fingerabdruck der Kinder ermöglichen)
    * 🟢 **[ein]** Neue App sperren
    * 🟢 **[ein]** Passwort oder Pin festlegen, die sich von der Pin der Kinder unterscheidet
@@ -109,6 +119,7 @@ Diese basiert auf der AdBlock-kompatiblen Liste von [IREK-szef](https://raw.gith
 
 
 ### Find my Device einrichten
+
 Die App Find my Device muss auf dem Handy installiert sein, das z.B. im Falle eines Verlustes geortet werden soll.
 Außerdem müssen alle Geräte, die die Erlaubnis haben sollen, das Gerät per SMS zu orten, zunächst auf dem zu ortenden Gerät autorisiert werden.
 Alle Einstellungen müssen also auf dem zu ortenden Gerät vorgenommen werden, z.B. die Telefonnummer des Kindes.
@@ -125,5 +136,6 @@ fmd camera (back/front) - nimmt ein Foto auf (mit der Front- oder Rückkamera) u
 ```
 
 ## Weitere Links
+
 - AdAway: [Ausführliche Beschreibung der Funktionalität (deutsch)](https://www.kuketz-blog.de/adaway-werbe-und-trackingfrei-im-android-universum/)
 - FindMyDevice: [github Wiki](https://github.com/ColoursofOSINT/findmydevice/tree/main)
