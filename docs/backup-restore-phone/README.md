@@ -53,10 +53,6 @@ Der Fokus liegt auf **Android (Google‑Ökosystem)** mit **klaren Backup‑Stra
 
 > Cloud‑Ordner nur für KeePass nutzen, nicht wild mischen
 
----
-
-Gute Ergänzung 👍 – das ist praxisnah, verständlich und entlastet KeePass im Alltag, ohne es zu ersetzen.
-Hier ist ein **zusätzliches Kapitel in sauberem Markdown**, stilistisch passend zur 1-Seiten-Checkliste und **copy-paste-fähig**.
 
 ---
 

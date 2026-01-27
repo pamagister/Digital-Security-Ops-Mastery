@@ -20,6 +20,8 @@ The focus is on ensuring the following features:
 - ![app_image](../_static/ico/findmydevice.ico) **[Find My Device](https://f-droid.org/de/packages/de.nulide.findmydevice/)** on [f-droid]((https://f-droid.org/de/packages/de.nulide.findmydevice/)): Locate and control your device remotely
 
 
+---
+
 ## Set up device
 
 ### Set up screen time limit app
@@ -44,6 +46,8 @@ Although a pin can be set up, it is very easy to bypass, for example by uninstal
 It is therefore necessary to combine the time limit app with an app for generally blocking other apps, see below.
 </details>
 
+
+---
 
 ### Set up content blocker
 
@@ -82,6 +86,8 @@ This is based on the AdBlock-compatible list from [IREK-szef](https://raw.github
 </details>
 
 
+---
+
 ### Set up App locker
 
 1. Install the required App [as mentioned above](#recommended)
@@ -110,6 +116,8 @@ This is based on the AdBlock-compatible list from [IREK-szef](https://raw.github
 * It can also be used to protect harmless apps that require a special configuration (e.g. nextcloud) that should not be changed by the child.
 </details>
 
+
+---
 
 ### Set up Find my Device
 The Find my Device app must be installed on the cell phone that is to be located, e.g. in the event of loss.
