@@ -1,4 +1,4 @@
-[:uk: English](README_en.md) | [:de: Deutsch](README.md) [![Read the Docs](https://readthedocs.org/projects/Digital-Security-Ops-Mastery/badge/?version=stable)](https://Digital-Security-Ops-Mastery.readthedocs.io/en/stable/)
+[:uk: English](README_en.md) | [:de: Deutsch](README.md) [![Read the Docs](https://readthedocs.org/projects/Digital-Security-Ops-Mastery/badge/?version=latest)](https://Digital-Security-Ops-Mastery.readthedocs.io/en/latest/)
 
 # Digital-Security-Ops-Mastery
 
