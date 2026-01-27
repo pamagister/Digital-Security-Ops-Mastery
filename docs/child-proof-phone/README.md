@@ -94,18 +94,18 @@ Diese basiert auf der AdBlock-kompatiblen Liste von [IREK-szef](https://raw.gith
 
 1. Sperren Sie mindestens die folgenden Apps:
 
-   * AdAway Content Blocker (zur Verhinderung von Löschungen von Hostblocklisten)
-   * App zur Begrenzung der Bildschirmzeit (auch wenn die App zur Begrenzung der Bildschirmzeit ihre eigene Sicherheit hat, erhöht dies die Sicherheit gegen unerwünschte Manipulationen)
-   * Einstellungen (dies verhindert die Deinstallation)
+   #. AdAway Content Blocker (zur Verhinderung von Löschungen von Hostblocklisten)
+   #. App zur Begrenzung der Bildschirmzeit (auch wenn die App zur Begrenzung der Bildschirmzeit ihre eigene Sicherheit hat, erhöht dies die Sicherheit gegen unerwünschte Manipulationen)
+   #. Einstellungen (dies verhindert die Deinstallation)
 
 1. App-Einstellungen anpassen
 
-   * 🔴 **[aus]** Fingerabdruck verwenden (würde das Entsperren mit dem Fingerabdruck der Kinder ermöglichen)
-   * 🟢 **[ein]** Neue App sperren
-   * 🟢 **[ein]** Passwort oder Pin festlegen, die sich von der Pin der Kinder unterscheidet
-   * 🔴 **[aus]** Batterieoptimierung (dies kann dazu führen, dass die App im Hintergrund inaktiv läuft)
-   * 🟢 **[ein]** Symboltarnung
-   * 🟢 **[ein]** Deinstallationsschutz
+   a. 🔴 **[aus]** Fingerabdruck verwenden (würde das Entsperren mit dem Fingerabdruck der Kinder ermöglichen)
+   a. 🟢 **[ein]** Neue App sperren
+   a. 🟢 **[ein]** Passwort oder Pin festlegen, die sich von der Pin der Kinder unterscheidet
+   a. 🔴 **[aus]** Batterieoptimierung (dies kann dazu führen, dass die App im Hintergrund inaktiv läuft)
+   a. 🟢 **[ein]** Symboltarnung
+   a. 🟢 **[ein]** Deinstallationsschutz
 
 
 <Details>
