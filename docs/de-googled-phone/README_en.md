@@ -1,4 +1,4 @@
-[:uk: English](README_en.md) | [:de: Deutsch](README.md) 
+![English](_static/ico/uk.ico)[English](README_en.md) | ![English](_static/ico/germany.ico)[Deutsch](README.md) 
 
 # Setting up De-Googled Phone
 Flashing a custom open-source ROM and de-Googling your mobile phone grants you unparalleled control over your device and privacy. By embracing this transformative step, you reclaim ownership of your smartphone experience, free from intrusive data collection. Open-source ROMs offer enhanced customization, performance optimization, and security features, empowering you to tailor your device to your preferences. De-Googling ensures your digital footprint remains your own, fostering a privacy-centric mobile experience. Take charge of your smartphone, break free from corporate control, and embrace a liberated, personalized, and privacy-focused mobile journey.

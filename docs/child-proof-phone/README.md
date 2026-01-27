@@ -1,4 +1,4 @@
-[:uk: English](README_en.md) | [:de: Deutsch](README.md) 
+![English](_static/ico/uk.ico)[English](README_en.md) | ![English](_static/ico/germany.ico)[Deutsch](README.md) 
 
 # Einrichten eines kindersicheren Telefons
 
@@ -11,8 +11,6 @@ Der Schwerpunkt liegt dabei auf der Gewährleistung der folgenden Funktionen:
 - Schutz vor unangemessenen Inhalten
 - Lokalisierung des Telefons im Falle eines Verlustes oder zur Bestimmung des Aufenthaltsortes des Kindes
 
-
-<a name="empfohlen" />
 
 ## Empfohlene Apps
 

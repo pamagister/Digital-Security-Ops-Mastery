@@ -1,4 +1,4 @@
-[:uk: English](README_en.md) | [:de: Deutsch](README.md) 
+![English](_static/ico/uk.ico)[English](README_en.md) | ![English](_static/ico/germany.ico)[Deutsch](README.md) 
 
 # Introduction
 

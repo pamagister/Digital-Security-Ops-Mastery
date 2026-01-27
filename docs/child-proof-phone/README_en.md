@@ -1,4 +1,4 @@
-[:uk: English](README_en.md) | [:de: Deutsch](README.md) 
+![English](_static/ico/uk.ico)[English](README_en.md) | ![English](_static/ico/germany.ico)[Deutsch](README.md) 
 
 # Setting up a child-proof phone
 The aim of this chapter is to set up a mobile phone that can be used safely by children.
@@ -9,8 +9,6 @@ The focus is on ensuring the following features:
 - Protection against inappropriate content
 - Localization of the phone in case of loss or to determine the location of the child
 
-
-<a name="recommended" />
 
 ## Recommended apps
 
@@ -23,7 +21,7 @@ The focus is on ensuring the following features:
 ## Set up device
 
 ### Set up screen time limit app
-⚡ Quick start ⚡
+
 1. Install the required TimeLimit App [as mentioned above](#recommended)
 1. Grant the necessary authorizations
 1. Add at least the following apps as explicitly allowed apps so that these apps can work unhindered:
@@ -44,8 +42,9 @@ Although a pin can be set up, it is very easy to bypass, for example by uninstal
 It is therefore necessary to combine the time limit app with an app for generally blocking other apps, see below.
 </details>
 
+
 ### Set up content blocker
-⚡ Quick start ⚡
+
 1. Install the required ad-blocker App [as mentioned above](#recommended)
 1. Add some individual block lists as required:
    * StevenBlack Unified hosts: https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts
@@ -82,14 +81,17 @@ This is based on the AdBlock-compatible list from [IREK-szef](https://raw.github
 
 
 ### Set up App locker
-⚡ Quick start ⚡
+
 1. Install the required App [as mentioned above](#recommended)
 1. Grant the necessary authorizations
 1. Block at least the following apps:
+
    * AdAway Content Blocker (to prevent deletions of host block lists)
    * Screen time limit app (Even if the time limiter app has its own security, this increases security against unwanted manipulation)
    * Settings (this prevents uninstallation)
+
 1. Adjust App Settings
+
    * 🔴 **[off]** Use fingerprint (would allow unlocking with children fingerprint)
    * 🟢 **[on]** Lock new app
    * 🟢 **[on]** Set a passwort or pin that differs from children pin

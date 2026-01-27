@@ -1,4 +1,4 @@
-[:uk: English](README_en.md) | [:de: Deutsch](README.md) [![Read the Docs](https://readthedocs.org/projects/Digital-Security-Ops-Mastery/badge/?version=latest)](https://Digital-Security-Ops-Mastery.readthedocs.io/en/latest/)
+![English](_static/ico/uk.ico)[English](README_en.md) | ![English](_static/ico/germany.ico)[Deutsch](README.md) [![Read the Docs](https://readthedocs.org/projects/Digital-Security-Ops-Mastery/badge/?version=latest)](https://Digital-Security-Ops-Mastery.readthedocs.io/en/latest/)
 # Digital-Security-Ops-Mastery
 
 Werde zum Master deiner digitalen Sicherheit! Mit Digital Security Ops Mastery navigierst du souverän durch den Dschungel der digitalen Welt und behältst jederzeit die volle Kontrolle über deine Daten.
