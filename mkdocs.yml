@@ -1,0 +1,33 @@
+site_name: Digital-Security-Ops-Mastery
+site_url: !ENV READTHEDOCS_CANONICAL_URL
+site_description: Ein moderner Praxis-Guide für souveräne, sichere und datensparsame Setups von PC und Smartphone – vom Linux-Automaten über kindersichere Geräte bis zur Google-freien Selbstbestimmung.
+repo_url: https://github.com/pamagister/Digital-Security-Ops-Mastery
+repo_name: GitHub
+
+# See also:
+#  https://squidfunk.github.io/mkdocs-material/
+#  https://www.mkdocs.org/user-guide/
+#  Extensions: https://python-markdown.github.io/extensions/
+#  - CodeHilite: https://python-markdown.github.io/extensions/code_hilite/
+
+theme:
+  name: readthedocs
+  highlightjs: true
+  logo: _static/img/logo.png
+  favicon: _static/img/logo.png
+  features:
+    - navigation.instant
+
+extra_css:
+  - css/custom.css
+
+markdown_extensions:
+  - toc:
+      permalink: "#"
+  - tables
+  - admonition
+  - codehilite:
+      use_pygments: True
+
+plugins:
+   - awesome-nav

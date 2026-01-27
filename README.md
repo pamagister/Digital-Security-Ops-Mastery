@@ -2,30 +2,30 @@
 
 # Digital-Security-Ops-Mastery
 
-Erweitern Sie Ihr Fachwissen im Bereich der digitalen Sicherheit mit Digital Security Ops Mastery und versetzen Sie sich in die Lage, die sich ständig verändernde Landschaft der digitalen Abläufe sicher zu navigieren.
+Werde zum Master deiner digitalen Sicherheit! Mit Digital Security Ops Mastery navigierst du souverän durch den Dschungel der digitalen Welt und behältst jederzeit die volle Kontrolle über deine Daten.
 
 # Themen
 
 ## ![app_image](/res/ico/nextcloud.ico) [Nextcloud](nextcloud/README.md)
 
-Nextcloud-Einrichtung: Schritt-für-Schritt-Anleitungen zur Einrichtung und Optimierung von Nextcloud für eine nahtlose und sichere Dateisynchronisation zwischen Ihren Geräten.
+Deine Daten, deine Regeln! Richte dir deine eigene Nextcloud ein und synchronisiere Dateien, Kontakte und Kalender nahtlos und sicher über alle Geräte hinweg – ganz ohne Big Tech.
 
 ## ![app_image](/res/ico/android.ico) [De-Googled-phone](de-googled-phone/README.md)
 
-Entdecken Sie die Möglichkeiten von De-Googled-Phones, einem Weg zu unvergleichlicher Kontrolle über Ihr Gerät. Entdecken Sie datenschutzfreundliche Google-freie Betriebssysteme und Open-Source-Anwendungen.
+Befreie dein Smartphone von Google-Fesseln! Entdecke datenschutzfreundliche Betriebssysteme wie GrapheneOS und nutze geniale Open-Source-Apps, die dir die volle Kontrolle über dein Gerät zurückgeben.
 
 ## ![app_image](/res/ico/adaway.ico) [Kindersicheres Telefon](child-proof-phone/README.md)
 
-Der Leitfaden umfasst Schritte zur Einrichtung von Bildschirmzeitbegrenzungen, App-Sperren, Inhaltssperren und Geräteverfolgung, um ein sicheres und kinderfreundliches mobiles Erlebnis zu gewährleisten.
+Sicherer Start für Kids in die digitale Welt. Richte Bildschirmzeiten, App-Sperren und Inhaltsfilter ein, damit dein Kind geschützt surfen kann – inklusive Ortung für den Notfall.
 
 ## ![app_image](/res/ico/backup.ico) [Smartphone sicher einrichten](backup-restore-phone/README.md)
 
-Eine Anleitung, um das Handy sicher einzurichten und im Notfall alle Daten wiederherstellen zu können.
+Keine Panik bei Datenverlust! Mit der 3-2-1-Strategie, KeePass und automatischen Syncs für Fotos und Chats bist du auf jeden Notfall vorbereitet und stellst dein Handy im Handumdrehen wieder her.
 
-## ![app_image](/res/ico/ubuntu.ico) [Linux (Ubuntu/Kubuntu) Automatisierungen ](ubuntu-linux-automations/README_en.md)
+## ![app_image](/res/ico/ubuntu.ico) [Linux (Ubuntu/Kubuntu) Automatisierungen ](ubuntu-linux-automations/README.md)
 
-Linux-Einrichtung und Tasks automatisieren.
+Linux-Power auf Autopilot! Automatisiere dein Kubuntu-Setup, synchronisiere verschlüsselte Daten aufs NAS und optimiere Videos und Bilder direkt per Rechtsklick – effizienter geht's nicht.
 
 ## ![app_image](/res/ico/ubuntu_children.ico) Kindersicherer Ubuntu PC<!--(kindersicher-ubuntu/README.md)-->
 
-... wird fortgesetzt. Bleiben Sie dran.
+Ein sicherer PC für die Kleinen. Coming soon – bleib dran für das ultimative kinderfreundliche Ubuntu-Setup!
