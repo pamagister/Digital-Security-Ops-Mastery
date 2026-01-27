@@ -51,9 +51,13 @@ Daher ist es notwendig, die Zeitlimit-App mit einer App zur generellen Sperrung 
 ### Inhaltsblocker einrichten
 
 1. Installieren Sie die erforderliche Ad-Blocker-App [wie oben erwähnt](#empfohlen)
-1. Fügen Sie bei Bedarf einige individuelle Blocklisten hinzu:
+
+2. Fügen Sie bei Bedarf einige individuelle Blocklisten hinzu:
+
    * StevenBlack Unified hosts: https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts
+
    * StevenBlack Fakenews-Glücksspiel-Porno: https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/fakenews-gambling-porn-only/hosts
+
    * Online Gaming: https://raw.githubusercontent.com/pamagister/Digital-Security-Ops-Mastery/main/child-proof-phone/online-games-hosts-blocklist/hosts
 
 
@@ -89,17 +93,12 @@ Diese basiert auf der AdBlock-kompatiblen Liste von [IREK-szef](https://raw.gith
 ### App Locker einrichten
 
 #. Installieren Sie die gewünschte App [wie oben erwähnt](#empfohlen)
-
 #. Erteilen Sie die notwendigen Berechtigungen
-
 #. Sperren Sie mindestens die folgenden Apps:
-
    a. AdAway Content Blocker (zur Verhinderung von Löschungen von Hostblocklisten)
    b. App zur Begrenzung der Bildschirmzeit (auch wenn die App zur Begrenzung der Bildschirmzeit ihre eigene Sicherheit hat, erhöht dies die Sicherheit gegen unerwünschte Manipulationen)
    c. Einstellungen (dies verhindert die Deinstallation)
-
 #. App-Einstellungen anpassen
-
    a. 🔴 **[aus]** Fingerabdruck verwenden (würde das Entsperren mit dem Fingerabdruck der Kinder ermöglichen)
    b. 🟢 **[ein]** Neue App sperren
    c. 🟢 **[ein]** Passwort oder Pin festlegen, die sich von der Pin der Kinder unterscheidet
