@@ -48,7 +48,6 @@ This script automates the initial setup of a fresh Kubuntu 24.04 installation by
 The script can be easily customized by:
 
 - Modifying the application list in each section
-- Adjusting the cron schedule for automatic updates
 - Adding or removing autostart applications
 
 ## Security Considerations

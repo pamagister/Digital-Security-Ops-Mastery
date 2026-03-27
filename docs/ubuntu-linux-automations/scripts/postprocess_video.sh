@@ -3,12 +3,12 @@
 # Video postprocessing script to join video Files passed as main argument and
 # a music track passed as optional argument --music:
 # video file is the main argument for this script
-# music file can be provided by --music argument, if not, user can select the track from an enumbereated list
+# music file can be provided by --music argument, if not, user can select the track from an enumerated list
 #   from audio files in the MUSIC_FOLDER
 # video and music are joined into one file, with a given FADEOUT_TIME to fade out audio and video in the end
 # if the audio is longer then the video, it will be cutted at the end of the video
 # if the audio is shorter, the video will have silence in the end
-# file fill be saved at the location of the intput video file, with a SUFFIX_PROCESSED
+# file will be saved at the location of the intput video file, with a SUFFIX_PROCESSED
 
 #!/usr/bin/env bash
 set -euo pipefail
