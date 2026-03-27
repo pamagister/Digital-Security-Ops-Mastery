@@ -18,33 +18,14 @@ sudo apt update && sudo apt upgrade -y && sudo apt autoremove -y
 # -----------------------------
 # Automatic Updates
 # -----------------------------
-log "Enabling automatic updates (interactive)"
-sudo apt install -y unattended-upgrades
-sudo dpkg-reconfigure -plow unattended-upgrades
+log "Enabling automatic updates (noninteractive)"
+# install unattended-upgrades
+sudo apt install -y unattended-upgrades apt-listchanges
 
-# -----------------------------
-# Auto-update schedule, e.g. Sunday and Wednesday 8 PM:
-# -----------------------------
+# activate automatic Updates
+sudo dpkg-reconfigure -f noninteractive unattended-upgrades
 
-CRON_FILE="/etc/cron.d/apt-weekly"
-
-# Cron job content
-CRON_JOB="0 20 * * 0,3 root apt update && apt full-upgrade -y && apt autoremove -y && apt clean"
-echo "Setting up system-wide cron job at: $CRON_FILE"
-
-# Write file
-sudo bash -c "cat > $CRON_FILE <<EOF
-# Automatic updates via cron job:
-$CRON_JOB
-EOF"
-
-# Set permissions
-sudo chmod 644 "$CRON_FILE"
-
-echo "System-wide cron job configured:"
-cat "$CRON_FILE"
-
-
+log "if you want to activate scheduled auto-updates, run auto-update-setup.sh"
 
 # -----------------------------
 # Flatpak + Flathub
