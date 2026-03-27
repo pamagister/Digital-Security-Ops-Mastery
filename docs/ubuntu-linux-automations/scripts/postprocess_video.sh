@@ -16,13 +16,16 @@ set -euo pipefail
 #######################################
 # User-configurable defaults
 #######################################
-DEFAULT_CRF=27                # Default Constant Rate Factor (lower = better quality, 20–30 typical)
-PRESET="slow"                 # Preset: ultrafast, superfast, veryfast, faster, fast, medium, slow, slower, veryslow
+DEFAULT_CRF=30                # Default Constant Rate Factor (lower = better quality, 20–30 typical)
+PRESET="veryfast"                 # Preset: ultrafast, superfast, veryfast, faster, fast, medium, slow, slower, veryslow
 AUDIO_BITRATE="192k"          # Audio bitrate (""=copy audio, "0", or "0k" = strip audio)
 SUFFIX_PROCESSED="_processed" # Default suffix for processed files (only used if not overwriting)
 CODEC="libx264"               # Video codec
 MUSIC_FOLDER="$HOME/Musik"    # Root folder to search for music tracks
-FADEOUT_TIME=2.5              # Time (s) to fade out video (to black) and music (to silent)
+FADEIN_TIME=3.0
+FADEOUT_TIME=3.0              # Time (s) to fade out video (to black) and music (to silent)
+
+PRESERVE_LRF=0                # Set to 1 if you want to keep original LRF format, otherwise output MP4
 
 #######################################
 # Helper: print usage
@@ -49,8 +52,33 @@ get_audio_opts() {
 # Helper: get duration of a media file
 #######################################
 get_duration() {
-    ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 "$1" \
-    | LC_NUMERIC=C awk '{printf "%.2f", $1}'
+    ffprobe -v error \
+        -show_entries format=duration \
+        -of default=noprint_wrappers=1:nokey=1 "$1" \
+        | LC_NUMERIC=C awk '{printf "%.2f",$1}'
+}
+
+#######################################
+# Extract DJI timestamp
+#######################################
+extract_datetime_text() {
+
+    local file="$1"
+    local base
+    base=$(basename "$file")
+
+    if [[ $base =~ DJI_([0-9]{14})_ ]]; then
+        ts="${BASH_REMATCH[1]}"
+
+        year=${ts:0:4}
+        month=${ts:4:2}
+        day=${ts:6:2}
+        hour=${ts:8:2}
+
+        echo "${day}.${month}.${year} - ${hour} Uhr"
+    else
+        echo ""
+    fi
 }
 
 #######################################
@@ -66,86 +94,106 @@ while [[ $# -gt 0 ]]; do
             shift 2
             ;;
         -*)
-            echo "Unknown option: $1"
             usage
             ;;
         *)
-            if [[ -z "$VIDEO_FILE" ]]; then
-                VIDEO_FILE="$1"
-            else
-                echo "Error: Multiple video files not supported."
-                usage
-            fi
+            VIDEO_FILE="$1"
             shift
             ;;
     esac
 done
 
 [[ -z "$VIDEO_FILE" ]] && usage
-[[ ! -f "$VIDEO_FILE" ]] && { echo "Video file not found: $VIDEO_FILE"; exit 1; }
+[[ ! -f "$VIDEO_FILE" ]] && exit 1
 
 #######################################
-# Prompt music if not provided
+# LRF Support
+#######################################
+TMP_INPUT=""
+INPUT_FOR_FFMPEG="$VIDEO_FILE"
+
+EXT="${VIDEO_FILE##*.}"
+
+if [[ "${EXT^^}" == "LRF" ]]; then
+    echo "Copy LRF file into MP4"
+    TMP_INPUT=$(mktemp /tmp/dji_lrf_XXXXXX.mp4)
+    cp -f "$VIDEO_FILE" "$TMP_INPUT"
+    INPUT_FOR_FFMPEG="$TMP_INPUT"
+fi
+
+#######################################
+# Prompt music if needed
 #######################################
 if [[ -z "$MUSIC_FILE" ]]; then
-    echo "No music file provided. Searching in $MUSIC_FOLDER..."
-    mapfile -t MUSIC_FILES < <(find "$MUSIC_FOLDER" -type f \( -iname "*.mp3" -o -iname "*.wav" -o -iname "*.flac" -o -iname "*.aac" -o -iname "*.ogg" \) | sort)
+    mapfile -t MUSIC_FILES < <(
+        find "$MUSIC_FOLDER" -type f \
+        \( -iname "*.mp3" -o -iname "*.wav" -o -iname "*.flac" \
+           -o -iname "*.aac" -o -iname "*.ogg" \) | sort
+    )
 
-    if [[ ${#MUSIC_FILES[@]} -eq 0 ]]; then
-        echo "No audio files found in $MUSIC_FOLDER"
-        exit 1
-    fi
+    [[ ${#MUSIC_FILES[@]} -eq 0 ]] && exit 1
 
-    VIDEO_DURATION=$(get_duration "$VIDEO_FILE")
-    echo "Video duration: ${VIDEO_DURATION}s"
-    echo
-    echo "Available music files:"
+    echo "Available music:"
     for i in "${!MUSIC_FILES[@]}"; do
-        dur=$(get_duration "${MUSIC_FILES[$i]}")
-        echo "[$i] ${MUSIC_FILES[$i]}  (duration: ${dur}s)"
+        echo "[$i] ${MUSIC_FILES[$i]}"
     done
 
-    read -p "Select music track index: " idx
+    read -p "Select index: " idx
     MUSIC_FILE="${MUSIC_FILES[$idx]}"
 fi
 
-[[ ! -f "$MUSIC_FILE" ]] && { echo "Music file not found: $MUSIC_FILE"; exit 1; }
+#######################################
+# Processing values
+#######################################
+AUDIO_OPTS=$(get_audio_opts)
+
+VIDEO_DURATION=$(get_duration "$INPUT_FOR_FFMPEG")
+
+fade_start_video=$(LC_NUMERIC=C awk -v vd="$VIDEO_DURATION" -v ft="$FADEOUT_TIME" \
+'BEGIN{printf "%.3f",(vd-ft>0)?vd-ft:0}')
+
+fade_start_audio="$fade_start_video"
 
 #######################################
-# Processing
+# Date overlay
 #######################################
-AUDIO_OPTS="$(get_audio_opts)"
-VIDEO_DURATION=$(get_duration "$VIDEO_FILE")
-MUSIC_DURATION=$(get_duration "$MUSIC_FILE")
+DATETIME_TEXT=$(extract_datetime_text "$VIDEO_FILE")
+TEXT_DURATION=$(LC_NUMERIC=C awk -v f="$FADEIN_TIME" 'BEGIN{printf "%.3f",f*1.2}')
 
-OUTPUT_FILE="${VIDEO_FILE%.*}${SUFFIX_PROCESSED}.${VIDEO_FILE##*.}"
+DRAW_TEXT=""
 
-echo "=== Video Processing ==="
-echo "Video: $VIDEO_FILE (${VIDEO_DURATION}s)"
-echo "Music: $MUSIC_FILE (${MUSIC_DURATION}s)"
-echo "Output: $OUTPUT_FILE"
-echo "Codec: $CODEC"
-echo "Preset: $PRESET"
-echo "CRF: $DEFAULT_CRF"
-echo "Audio options: $AUDIO_OPTS"
-echo "Fadeout: $FADEOUT_TIME s"
-echo "========================"
+if [[ -n "$DATETIME_TEXT" ]]; then
+DRAW_TEXT="drawtext=
+text='${DATETIME_TEXT}':
+fontcolor=white:
+fontsize=100:
+x=20:
+y=h-th-20:
+enable='between(t,0,$TEXT_DURATION)'"
+fi
 
 #######################################
-# Build filters
+# Filters
 #######################################
-# Determine fade start times
-fade_start_video=$(LC_NUMERIC=C awk -v vd="$VIDEO_DURATION" -v ft="$FADEOUT_TIME" 'BEGIN {print (vd-ft>0)?vd-ft:0}')
-fade_start_audio=$(LC_NUMERIC=C awk -v vd="$VIDEO_DURATION" -v ft="$FADEOUT_TIME" 'BEGIN {print (vd-ft>0)?vd-ft:0}')
+VIDEO_FILTER="fade=t=in:st=0:d=$FADEIN_TIME,\
+fade=t=out:st=$fade_start_video:d=$FADEOUT_TIME"
 
-VIDEO_FILTER="fade=t=out:st=$fade_start_video:d=$FADEOUT_TIME"
+[[ -n "$DRAW_TEXT" ]] && VIDEO_FILTER="$VIDEO_FILTER,$DRAW_TEXT"
+
 AUDIO_FILTER="afade=t=out:st=$fade_start_audio:d=$FADEOUT_TIME"
+
+#######################################
+# Output filename
+#######################################
+OUT_BASE="${VIDEO_FILE%.*}${SUFFIX_PROCESSED}"
+
+TMP_OUTPUT="${OUT_BASE}.mp4"
 
 #######################################
 # Run ffmpeg
 #######################################
 ffmpeg -y \
-    -i "$VIDEO_FILE" \
+    -i "$INPUT_FOR_FFMPEG" \
     -i "$MUSIC_FILE" \
     -t "$VIDEO_DURATION" \
     -map 0:v:0 -map 1:a:0 \
@@ -153,6 +201,20 @@ ffmpeg -y \
     -af "$AUDIO_FILTER" \
     -c:v $CODEC -preset $PRESET -crf $DEFAULT_CRF \
     $AUDIO_OPTS \
-    "$OUTPUT_FILE"
+    "$TMP_OUTPUT"
 
-echo "✅ Done! Output saved to: $OUTPUT_FILE"
+#######################################
+# Restore LRF extension if needed
+#######################################
+FINAL_OUTPUT="$TMP_OUTPUT"
+
+if  [[ "$PRESERVE_LRF" == 1 ]]; then
+  if [[ "${EXT^^}" == "LRF" ]]; then
+      FINAL_OUTPUT="${OUT_BASE}.LRF"
+      mv "$TMP_OUTPUT" "$FINAL_OUTPUT"
+  fi
+fi
+
+[[ -n "$TMP_INPUT" ]] && rm "$TMP_INPUT"
+echo "✅ Done: $FINAL_OUTPUT"
+
