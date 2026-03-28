@@ -1,14 +1,78 @@
 #!/bin/bash
 #
-# Video postprocessing script to join video Files passed as main argument and
-# a music track passed as optional argument --music:
-# video file is the main argument for this script
-# music file can be provided by --music argument, if not, user can select the track from an enumerated list
-#   from audio files in the MUSIC_FOLDER
-# video and music are joined into one file, with a given FADE_OUT_TIME to fade out audio and video in the end
-# if the audio is longer then the video, it will be cutted at the end of the video
-# if the audio is shorter, the video will have silence in the end
-# file will be saved at the location of the intput video file, with a SUFFIX_PROCESSED
+#
+# ------------------------------------------------------------
+# Drone Video Post-Processing Script
+# ------------------------------------------------------------
+#
+# PURPOSE
+# -------
+# Automates post-processing of drone footage using ffmpeg.
+# The script combines a video file with a music track, applies
+# cinematic fades, optional recompression, resolution limiting,
+# and automatically overlays a recording timestamp.
+#
+#
+# USAGE
+# -----
+#   ./process_video.sh <video_file> [--music <audio_file>]
+#
+# Arguments:
+#   <video_file>        Input video (DJI MP4 or LRF supported)
+#   --music <file>      Optional music track
+#
+# If no music file is provided, the user can interactively
+# select one from MUSIC_FOLDER.
+#
+#
+# MAIN FEATURES
+# -------------
+#
+# ✔ Video + music merging
+#   - Replaces original audio with selected music track
+#   - Music automatically trimmed to video duration
+#   - Silence added automatically if music is shorter
+#
+# ✔ Cinematic transitions
+#   - Configurable fade-in
+#   - Automatic fade-out to black and silence
+#
+# ✔ Automatic timestamp overlay
+#   - Extracts date/time from DJI filename
+#   - Fallback: reads creation_time from video metadata
+#   - Text size and margins scale relative to video height
+#   - Resolution-independent positioning
+#
+# ✔ Resolution control
+#   - Optional LIMIT_HEIGHT caps output resolution
+#   - Aspect ratio preserved automatically
+#
+# ✔ Smart format handling
+#   - DJI LRF files supported transparently
+#   - Optional restoration of original LRF extension
+#
+# ✔ Encoding control
+#   - Adjustable CRF quality setting
+#   - Configurable encoder preset
+#   - Optional audio copy, re-encode, or removal
+#
+# ✔ Clean output workflow
+#   - Output stored next to input file
+#   - Filename appended with SUFFIX_PROCESSED
+#
+#
+# WORKFLOW SUMMARY
+# ----------------
+# 1. Read input video
+# 2. Select music (argument or interactive picker)
+# 3. Detect video duration and resolution
+# 4. Extract recording timestamp
+# 5. Apply scaling, fades, and overlay
+# 6. Encode final video
+# 7. Write processed output file
+#
+# ------------------------------------------------------------
+#
 
 #!/usr/bin/env bash
 set -euo pipefail
