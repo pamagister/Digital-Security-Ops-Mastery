@@ -5,7 +5,7 @@
 # video file is the main argument for this script
 # music file can be provided by --music argument, if not, user can select the track from an enumerated list
 #   from audio files in the MUSIC_FOLDER
-# video and music are joined into one file, with a given FADEOUT_TIME to fade out audio and video in the end
+# video and music are joined into one file, with a given FADE_OUT_TIME to fade out audio and video in the end
 # if the audio is longer then the video, it will be cutted at the end of the video
 # if the audio is shorter, the video will have silence in the end
 # file will be saved at the location of the intput video file, with a SUFFIX_PROCESSED
@@ -16,16 +16,19 @@ set -euo pipefail
 #######################################
 # User-configurable defaults
 #######################################
-DEFAULT_CRF=30                # Default Constant Rate Factor (lower = better quality, 20–30 typical)
-PRESET="veryfast"                 # Preset: ultrafast, superfast, veryfast, faster, fast, medium, slow, slower, veryslow
+DEFAULT_CRF=27                # Default Constant Rate Factor (lower = better quality, 20–30 typical)
+PRESET="medium"                 # Preset: ultrafast, superfast, veryfast, faster, fast, medium, slow, slower, veryslow
 AUDIO_BITRATE="192k"          # Audio bitrate (""=copy audio, "0", or "0k" = strip audio)
 SUFFIX_PROCESSED="_processed" # Default suffix for processed files (only used if not overwriting)
 CODEC="libx264"               # Video codec
 MUSIC_FOLDER="$HOME/Musik"    # Root folder to search for music tracks
-FADEIN_TIME=3.0
-FADEOUT_TIME=3.0              # Time (s) to fade out video (to black) and music (to silent)
+FADE_IN_TIME=3.0
+FADE_OUT_TIME=3.0              # Time (s) to fade out video (to black) and music (to silent)
 
 PRESERVE_LRF=0                # Set to 1 if you want to keep original LRF format, otherwise output MP4
+TEXT_SIZE=5           # Text height in percent of video height (e.g. 5 = 5%)
+LIMIT_HEIGHT=720     # 0 = keep original height, otherwise max output height
+TEXT_MARGIN=3         # Margin in percent of video height
 
 #######################################
 # Helper: print usage
@@ -148,8 +151,15 @@ fi
 AUDIO_OPTS=$(get_audio_opts)
 
 VIDEO_DURATION=$(get_duration "$INPUT_FOR_FFMPEG")
+VIDEO_WIDTH=$(ffprobe -v error -select_streams v:0 \
+    -show_entries stream=width \
+    -of csv=p=0 "$INPUT_FOR_FFMPEG")
 
-fade_start_video=$(LC_NUMERIC=C awk -v vd="$VIDEO_DURATION" -v ft="$FADEOUT_TIME" \
+VIDEO_HEIGHT=$(ffprobe -v error -select_streams v:0 \
+    -show_entries stream=height \
+    -of csv=p=0 "$INPUT_FOR_FFMPEG")
+
+fade_start_video=$(LC_NUMERIC=C awk -v vd="$VIDEO_DURATION" -v ft="$FADE_OUT_TIME" \
 'BEGIN{printf "%.3f",(vd-ft>0)?vd-ft:0}')
 
 fade_start_audio="$fade_start_video"
@@ -158,7 +168,17 @@ fade_start_audio="$fade_start_video"
 # Date overlay
 #######################################
 DATETIME_TEXT=$(extract_datetime_text "$VIDEO_FILE")
-TEXT_DURATION=$(LC_NUMERIC=C awk -v f="$FADEIN_TIME" 'BEGIN{printf "%.3f",f*1.2}')
+TEXT_DURATION=$(LC_NUMERIC=C awk -v f="$FADE_IN_TIME" 'BEGIN{printf "%.3f",f*1.2}')
+
+FONT_SIZE=$(LC_NUMERIC=C awk \
+    -v h="$VIDEO_HEIGHT" \
+    -v p="$TEXT_SIZE" \
+    'BEGIN{printf "%d",(h*p/100)}')
+
+TEXT_MARGIN_PX=$(LC_NUMERIC=C awk \
+    -v h="$VIDEO_HEIGHT" \
+    -v p="$TEXT_MARGIN" \
+    'BEGIN{printf "%d",(h*p/100)}')
 
 DRAW_TEXT=""
 
@@ -166,21 +186,32 @@ if [[ -n "$DATETIME_TEXT" ]]; then
 DRAW_TEXT="drawtext=
 text='${DATETIME_TEXT}':
 fontcolor=white:
-fontsize=100:
-x=20:
-y=h-th-20:
+fontsize=${FONT_SIZE}:
+x=${TEXT_MARGIN_PX}:
+y=h-th-${TEXT_MARGIN_PX}:
 enable='between(t,0,$TEXT_DURATION)'"
 fi
 
 #######################################
 # Filters
 #######################################
-VIDEO_FILTER="fade=t=in:st=0:d=$FADEIN_TIME,\
-fade=t=out:st=$fade_start_video:d=$FADEOUT_TIME"
+
+SCALE_FILTER=""
+
+if [[ "$LIMIT_HEIGHT" -gt 0 ]]; then
+    SCALE_FILTER="scale=-2:'min(ih,$LIMIT_HEIGHT)'"
+fi
+
+VIDEO_FILTER=""
+
+[[ -n "$SCALE_FILTER" ]] && VIDEO_FILTER="$SCALE_FILTER,"
+
+VIDEO_FILTER="${VIDEO_FILTER}fade=t=in:st=0:d=$FADE_IN_TIME,\
+fade=t=out:st=$fade_start_video:d=$FADE_OUT_TIME"
 
 [[ -n "$DRAW_TEXT" ]] && VIDEO_FILTER="$VIDEO_FILTER,$DRAW_TEXT"
 
-AUDIO_FILTER="afade=t=out:st=$fade_start_audio:d=$FADEOUT_TIME"
+AUDIO_FILTER="afade=t=out:st=$fade_start_audio:d=$FADE_OUT_TIME"
 
 #######################################
 # Output filename
