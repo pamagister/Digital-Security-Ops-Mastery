@@ -62,14 +62,18 @@ get_duration() {
 }
 
 #######################################
-# Extract DJI timestamp
+# Extract DJI timestamp (filename or metadata fallback)
 #######################################
 extract_datetime_text() {
 
     local file="$1"
-    local base
+    local base ts year month day hour
+
     base=$(basename "$file")
 
+    ###################################
+    # 1. Try DJI filename format
+    ###################################
     if [[ $base =~ DJI_([0-9]{14})_ ]]; then
         ts="${BASH_REMATCH[1]}"
 
@@ -79,9 +83,44 @@ extract_datetime_text() {
         hour=${ts:8:2}
 
         echo "${day}.${month}.${year} - ${hour} Uhr"
-    else
-        echo ""
+        return 0
     fi
+
+    ###################################
+    # 2. Fallback: read metadata creation_time
+    ###################################
+    ts=$(ffprobe -v error \
+        -select_streams v:0 \
+        -show_entries stream_tags=creation_time \
+        -of default=noprint_wrappers=1:nokey=1 \
+        "$file" 2>/dev/null | head -n1)
+
+    # fallback to container metadata if stream tag missing
+    if [[ -z "$ts" ]]; then
+        ts=$(ffprobe -v error \
+            -show_entries format_tags=creation_time \
+            -of default=noprint_wrappers=1:nokey=1 \
+            "$file" 2>/dev/null | head -n1)
+    fi
+
+    ###################################
+    # 3. Parse ISO timestamp
+    # Example: 2025-10-13T15:09:04.000000Z
+    ###################################
+    if [[ $ts =~ ^([0-9]{4})-([0-9]{2})-([0-9]{2})T([0-9]{2}) ]]; then
+        year="${BASH_REMATCH[1]}"
+        month="${BASH_REMATCH[2]}"
+        day="${BASH_REMATCH[3]}"
+        hour="${BASH_REMATCH[4]}"
+
+        echo "${day}.${month}.${year} - ${hour} Uhr"
+        return 0
+    fi
+
+    ###################################
+    # 4. Nothing found
+    ###################################
+    echo ""
 }
 
 #######################################
@@ -151,9 +190,6 @@ fi
 AUDIO_OPTS=$(get_audio_opts)
 
 VIDEO_DURATION=$(get_duration "$INPUT_FOR_FFMPEG")
-VIDEO_WIDTH=$(ffprobe -v error -select_streams v:0 \
-    -show_entries stream=width \
-    -of csv=p=0 "$INPUT_FOR_FFMPEG")
 
 VIDEO_HEIGHT=$(ffprobe -v error -select_streams v:0 \
     -show_entries stream=height \
@@ -182,13 +218,14 @@ TEXT_MARGIN_PX=$(LC_NUMERIC=C awk \
 
 DRAW_TEXT=""
 
+# text at bottom: y=h-th-${TEXT_MARGIN_PX}:
 if [[ -n "$DATETIME_TEXT" ]]; then
 DRAW_TEXT="drawtext=
 text='${DATETIME_TEXT}':
 fontcolor=white:
 fontsize=${FONT_SIZE}:
 x=${TEXT_MARGIN_PX}:
-y=h-th-${TEXT_MARGIN_PX}:
+y=${TEXT_MARGIN_PX}:
 enable='between(t,0,$TEXT_DURATION)'"
 fi
 
