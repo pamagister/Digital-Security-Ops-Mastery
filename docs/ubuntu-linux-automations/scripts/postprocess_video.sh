@@ -91,6 +91,7 @@ FADE_IN_TIME=5.0            # Duration for fading in the video
 FADE_OUT_TIME=3.0              # Time (s) to fade out video (to black) and music (to silent)
 INTRO_VIDEO="$HOME/Videos/Intro_Sparks.mp4"  # Introductory video sequence (optional)
 THUMBNAIL_TIME=5.0          # Time when reference thumbnail snapshot is taken. -1.0 means: No thumbnail
+SAVE_THUMBNAIL=True   # True = create jpg + attach cover, False = skip completely
 
 PRESERVE_LRF=0                # Set to 1 if you want to keep original LRF format, otherwise output MP4
 TEXT_SIZE=20           # Text height in percent of video height (e.g. 5 = 5%)
@@ -272,6 +273,12 @@ VIDEO_HEIGHT=$(ffprobe -v error -select_streams v:0 \
     -show_entries stream=height \
     -of csv=p=0 "$INPUT_FOR_FFMPEG")
 
+TARGET_HEIGHT="$VIDEO_HEIGHT"
+
+if [[ "$LIMIT_HEIGHT" -gt 0 && "$VIDEO_HEIGHT" -gt "$LIMIT_HEIGHT" ]]; then
+    TARGET_HEIGHT="$LIMIT_HEIGHT"
+fi
+
 fade_start_video=$(LC_NUMERIC=C awk -v vd="$VIDEO_DURATION" -v ft="$FADE_OUT_TIME" \
 'BEGIN{printf "%.3f",(vd-ft>0)?vd-ft:0}')
 
@@ -303,7 +310,15 @@ fi
 # Date overlay
 #######################################
 DATETIME_TEXT=$(extract_datetime_text "$VIDEO_FILE")
-TEXT_DURATION=$(LC_NUMERIC=C awk -v f="$FADE_IN_TIME" 'BEGIN{printf "%.3f",f*1.2}')
+TEXT_FADE_IN=$(LC_NUMERIC=C awk -v fi="$FADE_IN_TIME" 'BEGIN{printf "%.3f",fi*0.1}')
+TEXT_VISIBLE=$(LC_NUMERIC=C awk -v fi="$FADE_IN_TIME" 'BEGIN{printf "%.3f",fi}')
+TEXT_FADE_OUT=$(LC_NUMERIC=C awk -v fi="$FADE_IN_TIME" 'BEGIN{printf "%.3f",fi*0.3}')
+
+TEXT_END=$(LC_NUMERIC=C awk \
+    -v a="$TEXT_FADE_IN" \
+    -v b="$TEXT_VISIBLE" \
+    -v c="$TEXT_FADE_OUT" \
+    'BEGIN{printf "%.3f",a+b+c}')
 
 FONT_SIZE=$(LC_NUMERIC=C awk \
     -v h="$VIDEO_HEIGHT" \
@@ -327,12 +342,13 @@ TEXT_MARGIN_Y_PX=$(LC_NUMERIC=C awk \
 #######################################
 # Fade timing
 #######################################
-TEXT_FADE_OUT=$(LC_NUMERIC=C awk \
-    -v td="$TEXT_DURATION" \
-    -v fi="$FADE_IN_TIME" \
-    'BEGIN{printf "%.3f",td+(0.3*fi)}')
-
-ALPHA_EXPR="if(lt(t,$TEXT_DURATION),1, if(lt(t,$TEXT_FADE_OUT),(1-(t-$TEXT_DURATION)/($TEXT_FADE_OUT-$TEXT_DURATION)),0))"
+ALPHA_EXPR="if(lt(t,$TEXT_FADE_IN),
+t/$TEXT_FADE_IN,
+if(lt(t,$TEXT_FADE_IN+$TEXT_VISIBLE),
+1,
+if(lt(t,$TEXT_END),
+1-(t-($TEXT_FADE_IN+$TEXT_VISIBLE))/$TEXT_FADE_OUT,
+0)))"
 
 DRAW_TEXT=""
 
@@ -387,27 +403,13 @@ fi
 # Filters (Intro + Crossfade support)
 #######################################
 
-SCALE_FILTER=""
-
-if [[ "$LIMIT_HEIGHT" -gt 0 ]]; then
-    SCALE_FILTER="scale=-2:'min(ih,$LIMIT_HEIGHT)'"
-fi
+SCALE_FILTER="scale=-2:${TARGET_HEIGHT}"
 
 MAIN_VIDEO_FILTER=""
 [[ -n "$SCALE_FILTER" ]] && MAIN_VIDEO_FILTER="$SCALE_FILTER,"
 
 MAIN_VIDEO_FILTER="${MAIN_VIDEO_FILTER}fade=t=out:st=$fade_start_video:d=$FADE_OUT_TIME"
 
-#######################################
-# TEXT timing depending on INTRO
-#######################################
-
-if [[ -n "$INTRO_VIDEO" ]]; then
-    TEXT_DURATION=99999
-    TEXT_FADE_OUT=$FADE_IN_TIME
-fi
-
-[[ -n "$DRAW_TEXT" ]] && MAIN_VIDEO_FILTER="$MAIN_VIDEO_FILTER,$DRAW_TEXT"
 
 AUDIO_FILTER="afade=t=out:st=$fade_start_audio:d=$FADE_OUT_TIME"
 
@@ -469,6 +471,8 @@ ffmpeg -y \
     -t "$OUTPUT_DURATION" \
     -af "$AUDIO_FILTER" \
     -c:v $CODEC -preset $PRESET -crf $DEFAULT_CRF \
+    -map_metadata 1 \
+    -movflags use_metadata_tags \
     $AUDIO_OPTS \
     "$TMP_OUTPUT"
 
@@ -483,6 +487,8 @@ ffmpeg -y \
     -vf "$MAIN_VIDEO_FILTER" \
     -af "$AUDIO_FILTER" \
     -c:v $CODEC -preset $PRESET -crf $DEFAULT_CRF \
+    -map_metadata 0 \
+    -movflags use_metadata_tags \
     $AUDIO_OPTS \
     "$TMP_OUTPUT"
 
@@ -505,7 +511,7 @@ fi
 #######################################
 # Thumbnail generation
 #######################################
-if [[ "$THUMBNAIL_TIME" != "-1.0" ]]; then
+if [[ "$SAVE_THUMBNAIL" == "True" && "$THUMBNAIL_TIME" != "-1.0" ]]; then
 
 THUMB_FILE="${OUT_BASE}.jpg"
 
@@ -517,7 +523,7 @@ text='${VIDEO_TITLE}':
 fontcolor=white:
 fontsize=${FONT_SIZE}:
 x=${TEXT_MARGIN_X_PX}:
-y=${TEXT_MARGIN_X_PX}"
+y=${TEXT_MARGIN_Y_PX}"
 fi
 
 if [[ -n "$DATETIME_TEXT" ]]; then
