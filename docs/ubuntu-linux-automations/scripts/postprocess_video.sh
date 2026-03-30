@@ -89,7 +89,7 @@ MUSIC_FOLDER="$HOME/Musik"    # Root folder to search for music tracks
 OUTPUT_FOLDER="$HOME/Videos/Output"              # Leave empty to use input folder
 FADE_IN_TIME=5.0            # Duration for fading in the video
 FADE_OUT_TIME=3.0              # Time (s) to fade out video (to black) and music (to silent)
-INTRO_VIDEO="$HOME/Videos/Intro_Sparks.mp4"  # Introductory video sequence (optional)
+INTRO_VIDEO="$HOME/Videos/Intro_Cosmic.mp4"  # Introductory video sequence (optional)
 THUMBNAIL_TIME=5.0          # Time when reference thumbnail snapshot is taken. -1.0 means: No thumbnail
 SAVE_THUMBNAIL=True   # True = create jpg + attach cover, False = skip completely
 
@@ -97,6 +97,9 @@ PRESERVE_LRF=0                # Set to 1 if you want to keep original LRF format
 TEXT_SIZE=20           # Text height in percent of video height (e.g. 5 = 5%)
 LIMIT_HEIGHT=720     # 0 = keep original height, otherwise max output height
 TEXT_MARGIN=3         # Margin in percent of video height
+
+
+# FONT="/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"
 
 #######################################
 # Helper: print usage
@@ -357,13 +360,7 @@ DRAW_TEXT=""
 #######################################
 if [[ -n "$VIDEO_TITLE" ]]; then
 
-DRAW_TEXT="drawtext=
-text='${VIDEO_TITLE}':
-fontcolor=white:
-fontsize=${FONT_SIZE}:
-x=${TEXT_MARGIN_X_PX}:
-y=${TEXT_MARGIN_Y_PX}:
-alpha='${ALPHA_EXPR}'"
+DRAW_TEXT="drawtext=text='${VIDEO_TITLE}':fontcolor=white:fontsize=${FONT_SIZE}:x=${TEXT_MARGIN_X_PX}:y=${TEXT_MARGIN_Y_PX}:alpha='${ALPHA_EXPR}'"
 
 NAME_BLOCK_HEIGHT=$(LC_NUMERIC=C awk \
     -v fs="$FONT_SIZE" \
@@ -383,13 +380,7 @@ fi
 #######################################
 if [[ -n "$DATETIME_TEXT" ]]; then
 
-DATE_DRAW="drawtext=
-text='${DATETIME_TEXT}':
-fontcolor=white:
-fontsize=${DATE_FONT_SIZE}:
-x=${TEXT_MARGIN_X_PX}:
-y=${DATE_Y_POS}:
-alpha='${ALPHA_EXPR}'"
+DATE_DRAW="drawtext=text='${DATETIME_TEXT}':fontcolor=white:fontsize=${DATE_FONT_SIZE}:x=${TEXT_MARGIN_X_PX}:y=${DATE_Y_POS}:alpha='${ALPHA_EXPR}'"
 
 if [[ -n "$DRAW_TEXT" ]]; then
     DRAW_TEXT="${DRAW_TEXT},${DATE_DRAW}"
@@ -409,6 +400,10 @@ MAIN_VIDEO_FILTER=""
 [[ -n "$SCALE_FILTER" ]] && MAIN_VIDEO_FILTER="$SCALE_FILTER,"
 
 MAIN_VIDEO_FILTER="${MAIN_VIDEO_FILTER}fade=t=out:st=$fade_start_video:d=$FADE_OUT_TIME"
+
+if [[ -n "$DRAW_TEXT" ]]; then
+    MAIN_VIDEO_FILTER="${MAIN_VIDEO_FILTER},${DRAW_TEXT}"
+fi
 
 
 AUDIO_FILTER="afade=t=out:st=$fade_start_audio:d=$FADE_OUT_TIME"
@@ -457,20 +452,28 @@ XFADE_START=$(LC_NUMERIC=C awk \
     -v id="$INTRO_DURATION" \
     -v fi="$FADE_IN_TIME" \
     'BEGIN{printf "%.3f",(id-fi>0)?id-fi:0}')
+MAIN_DURATION="$OUTPUT_DURATION"
+
+FINAL_DURATION=$(LC_NUMERIC=C awk \
+    -v intro="$INTRO_DURATION" \
+    -v main="$MAIN_DURATION" \
+    -v fade="$FADE_IN_TIME" \
+    'BEGIN{printf "%.3f", intro + main - fade}')
 
 ffmpeg -y \
     -i "$INTRO_VIDEO" \
     -ss "$START_TIME" -i "$INPUT_FOR_FFMPEG" \
     -i "$MUSIC_FILE" \
     -filter_complex "
-        [0:v]${SCALE_FILTER}[intro];
-        [1:v]${MAIN_VIDEO_FILTER}[main];
+        [0:v:0]fps=30,format=yuv420p,${SCALE_FILTER},setsar=1[intro];
+        [1:v:0]fps=30,format=yuv420p,${SCALE_FILTER},${MAIN_VIDEO_FILTER},setsar=1[main];
         [intro][main]xfade=transition=fade:duration=$FADE_IN_TIME:offset=$XFADE_START[v]
     " \
-    -map "[v]" -map 2:a:0 \
-    -t "$OUTPUT_DURATION" \
+    -map "[v]" \
+    -map 2:a:0 -shortest \
+    -t "$FINAL_DURATION" \
     -af "$AUDIO_FILTER" \
-    -c:v $CODEC -preset $PRESET -crf $DEFAULT_CRF \
+    -c:v $CODEC -preset $PRESET -crf $DEFAULT_CRF -r 30 \
     -map_metadata 1 \
     -movflags use_metadata_tags \
     $AUDIO_OPTS \
@@ -486,7 +489,7 @@ ffmpeg -y \
     -map 0:v:0 -map 1:a:0 \
     -vf "$MAIN_VIDEO_FILTER" \
     -af "$AUDIO_FILTER" \
-    -c:v $CODEC -preset $PRESET -crf $DEFAULT_CRF \
+    -c:v $CODEC -preset $PRESET -crf $DEFAULT_CRF -r 30\
     -map_metadata 0 \
     -movflags use_metadata_tags \
     $AUDIO_OPTS \
