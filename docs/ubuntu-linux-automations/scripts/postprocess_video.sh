@@ -87,9 +87,9 @@ SUFFIX_PROCESSED="_processed" # Default suffix for processed files (only used if
 CODEC="libx264"               # Video codec
 MUSIC_FOLDER="$HOME/Musik"    # Root folder to search for music tracks
 OUTPUT_FOLDER="$HOME/Videos/Output"              # Leave empty to use input folder
-FADE_IN_TIME=3.0            # Duration for fading in the video
+FADE_IN_TIME=5.0            # Duration for fading in the video
 FADE_OUT_TIME=3.0              # Time (s) to fade out video (to black) and music (to silent)
-INTRO_VIDEO=""  # "$HOME/Videos/Intro_Sparks.mp4"  # Introductory video sequence (optional)
+INTRO_VIDEO="$HOME/Videos/Intro_Sparks.mp4"  # Introductory video sequence (optional)
 THUMBNAIL_TIME=5.0          # Time when reference thumbnail snapshot is taken. -1.0 means: No thumbnail
 
 PRESERVE_LRF=0                # Set to 1 if you want to keep original LRF format, otherwise output MP4
@@ -314,7 +314,12 @@ DATE_FONT_SIZE=$(LC_NUMERIC=C awk \
     -v fs="$FONT_SIZE" \
     'BEGIN{printf "%d",(fs*0.5)}')
 
-TEXT_MARGIN_PX=$(LC_NUMERIC=C awk \
+TEXT_MARGIN_X_PX=$(LC_NUMERIC=C awk \
+    -v h="$VIDEO_HEIGHT" \
+    -v p="$TEXT_MARGIN" \
+    'BEGIN{printf "%d",(5*h*p/100)}')
+
+TEXT_MARGIN_Y_PX=$(LC_NUMERIC=C awk \
     -v h="$VIDEO_HEIGHT" \
     -v p="$TEXT_MARGIN" \
     'BEGIN{printf "%d",(h*p/100)}')
@@ -340,8 +345,8 @@ DRAW_TEXT="drawtext=
 text='${VIDEO_TITLE}':
 fontcolor=white:
 fontsize=${FONT_SIZE}:
-x=${TEXT_MARGIN_PX}:
-y=${TEXT_MARGIN_PX}:
+x=${TEXT_MARGIN_X_PX}:
+y=${TEXT_MARGIN_Y_PX}:
 alpha='${ALPHA_EXPR}'"
 
 NAME_BLOCK_HEIGHT=$(LC_NUMERIC=C awk \
@@ -349,12 +354,12 @@ NAME_BLOCK_HEIGHT=$(LC_NUMERIC=C awk \
     'BEGIN{printf "%d",(fs*1.2)}')
 
 DATE_Y_POS=$(LC_NUMERIC=C awk \
-    -v m="$TEXT_MARGIN_PX" \
+    -v m="$TEXT_MARGIN_Y_PX" \
     -v h="$NAME_BLOCK_HEIGHT" \
     'BEGIN{printf "%d",(m+h)}')
 
 else
-DATE_Y_POS=$TEXT_MARGIN_PX
+DATE_Y_POS=$TEXT_MARGIN_Y_PX
 fi
 
 #######################################
@@ -366,7 +371,7 @@ DATE_DRAW="drawtext=
 text='${DATETIME_TEXT}':
 fontcolor=white:
 fontsize=${DATE_FONT_SIZE}:
-x=${TEXT_MARGIN_PX}:
+x=${TEXT_MARGIN_X_PX}:
 y=${DATE_Y_POS}:
 alpha='${ALPHA_EXPR}'"
 
@@ -511,8 +516,8 @@ THUMB_TEXT="drawtext=
 text='${VIDEO_TITLE}':
 fontcolor=white:
 fontsize=${FONT_SIZE}:
-x=${TEXT_MARGIN_PX}:
-y=${TEXT_MARGIN_PX}"
+x=${TEXT_MARGIN_X_PX}:
+y=${TEXT_MARGIN_X_PX}"
 fi
 
 if [[ -n "$DATETIME_TEXT" ]]; then
@@ -521,7 +526,7 @@ DATE_THUMB="drawtext=
 text='${DATETIME_TEXT}':
 fontcolor=white:
 fontsize=${DATE_FONT_SIZE}:
-x=${TEXT_MARGIN_PX}:
+x=${TEXT_MARGIN_X_PX}:
 y=${DATE_Y_POS}"
 
 if [[ -n "$THUMB_TEXT" ]]; then
