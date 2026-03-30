@@ -81,7 +81,7 @@ set -euo pipefail
 # User-configurable defaults
 #######################################
 DEFAULT_CRF=27                # Default Constant Rate Factor (lower = better quality, 20–30 typical)
-PRESET="medium"                 # Preset: ultrafast, superfast, veryfast, faster, fast, medium, slow, slower, veryslow
+PRESET="faster"                 # Preset: ultrafast, superfast, veryfast, faster, fast, medium, slow, slower, veryslow
 AUDIO_BITRATE="192k"          # Audio bitrate (""=copy audio, "0", or "0k" = strip audio)
 SUFFIX_PROCESSED="_processed" # Default suffix for processed files (only used if not overwriting)
 CODEC="libx264"               # Video codec
@@ -90,7 +90,7 @@ FADE_IN_TIME=3.0
 FADE_OUT_TIME=3.0              # Time (s) to fade out video (to black) and music (to silent)
 
 PRESERVE_LRF=0                # Set to 1 if you want to keep original LRF format, otherwise output MP4
-TEXT_SIZE=5           # Text height in percent of video height (e.g. 5 = 5%)
+TEXT_SIZE=20           # Text height in percent of video height (e.g. 5 = 5%)
 LIMIT_HEIGHT=720     # 0 = keep original height, otherwise max output height
 TEXT_MARGIN=3         # Margin in percent of video height
 
@@ -251,11 +251,11 @@ fi
 #######################################
 # Optional custom video name
 #######################################
-read -p "Optional video name (ENTER to skip): " USER_NAME
+read -p "Optional video name (ENTER to skip): " VIDEO_TITLE
 
-USER_NAME_SANITIZED=""
-if [[ -n "${USER_NAME// }" ]]; then
-    USER_NAME_SANITIZED=$(echo "$USER_NAME" | tr ' ' '_')
+VIDEO_TITLE_SANITIZED=""
+if [[ -n "${VIDEO_TITLE// }" ]]; then
+    VIDEO_TITLE_SANITIZED=$(echo "$VIDEO_TITLE" | tr ' ' '_')
 fi
 
 #######################################
@@ -307,38 +307,73 @@ FONT_SIZE=$(LC_NUMERIC=C awk \
     -v p="$TEXT_SIZE" \
     'BEGIN{printf "%d",(h*p/100)}')
 
+DATE_FONT_SIZE=$(LC_NUMERIC=C awk \
+    -v fs="$FONT_SIZE" \
+    'BEGIN{printf "%d",(fs*0.5)}')
+
 TEXT_MARGIN_PX=$(LC_NUMERIC=C awk \
     -v h="$VIDEO_HEIGHT" \
     -v p="$TEXT_MARGIN" \
     'BEGIN{printf "%d",(h*p/100)}')
 
 #######################################
-# Date + optional name overlay
+# Fade timing
 #######################################
-OVERLAY_TEXT="$DATETIME_TEXT"
-
-if [[ -n "$USER_NAME" ]]; then
-    OVERLAY_TEXT="${USER_NAME} ${OVERLAY_TEXT}"
-fi
-
 TEXT_FADE_OUT=$(LC_NUMERIC=C awk \
     -v td="$TEXT_DURATION" \
     -v fi="$FADE_IN_TIME" \
     'BEGIN{printf "%.3f",td+(0.3*fi)}')
 
+ALPHA_EXPR="if(lt(t,$TEXT_DURATION),1, if(lt(t,$TEXT_FADE_OUT),(1-(t-$TEXT_DURATION)/($TEXT_FADE_OUT-$TEXT_DURATION)),0))"
+
 DRAW_TEXT=""
 
-if [[ -n "$OVERLAY_TEXT" ]]; then
+#######################################
+# Optional VIDEO_TITLE (top line)
+#######################################
+if [[ -n "$VIDEO_TITLE" ]]; then
+
 DRAW_TEXT="drawtext=
-text='${OVERLAY_TEXT}':
+text='${VIDEO_TITLE}':
 fontcolor=white:
 fontsize=${FONT_SIZE}:
-line_spacing=10:
 x=${TEXT_MARGIN_PX}:
 y=${TEXT_MARGIN_PX}:
-alpha='if(lt(t,$TEXT_DURATION),1, if(lt(t,$TEXT_FADE_OUT),(1-(t-$TEXT_DURATION)/($TEXT_FADE_OUT-$TEXT_DURATION)),0))'"
+alpha='${ALPHA_EXPR}'"
+
+NAME_BLOCK_HEIGHT=$(LC_NUMERIC=C awk \
+    -v fs="$FONT_SIZE" \
+    'BEGIN{printf "%d",(fs*1.2)}')
+
+DATE_Y_POS=$(LC_NUMERIC=C awk \
+    -v m="$TEXT_MARGIN_PX" \
+    -v h="$NAME_BLOCK_HEIGHT" \
+    'BEGIN{printf "%d",(m+h)}')
+
+else
+DATE_Y_POS=$TEXT_MARGIN_PX
 fi
 
+#######################################
+# Date line (second line)
+#######################################
+if [[ -n "$DATETIME_TEXT" ]]; then
+
+DATE_DRAW="drawtext=
+text='${DATETIME_TEXT}':
+fontcolor=white:
+fontsize=${DATE_FONT_SIZE}:
+x=${TEXT_MARGIN_PX}:
+y=${DATE_Y_POS}:
+alpha='${ALPHA_EXPR}'"
+
+if [[ -n "$DRAW_TEXT" ]]; then
+    DRAW_TEXT="${DRAW_TEXT},${DATE_DRAW}"
+else
+    DRAW_TEXT="${DATE_DRAW}"
+fi
+
+fi
 #######################################
 # Filters
 #######################################
@@ -365,8 +400,8 @@ AUDIO_FILTER="afade=t=out:st=$fade_start_audio:d=$FADE_OUT_TIME"
 #######################################
 OUT_BASE="${VIDEO_FILE%.*}${SUFFIX_PROCESSED}"
 
-if [[ -n "$USER_NAME_SANITIZED" ]]; then
-    OUT_BASE="${OUT_BASE}_${USER_NAME_SANITIZED}"
+if [[ -n "$VIDEO_TITLE_SANITIZED" ]]; then
+    OUT_BASE="${OUT_BASE}_${VIDEO_TITLE_SANITIZED}"
 fi
 
 TMP_OUTPUT="${OUT_BASE}.mp4"
