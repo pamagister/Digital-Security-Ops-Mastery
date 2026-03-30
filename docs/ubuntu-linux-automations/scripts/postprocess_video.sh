@@ -26,7 +26,7 @@
 #
 #
 # MAIN FEATURES
-# -------------
+# -------------Nutzer
 #
 # ✔ Video + music merging
 #   - Replaces original audio with selected music track
@@ -249,6 +249,16 @@ if [[ -z "$MUSIC_FILE" ]]; then
 fi
 
 #######################################
+# Optional custom video name
+#######################################
+read -p "Optional video name (ENTER to skip): " USER_NAME
+
+USER_NAME_SANITIZED=""
+if [[ -n "${USER_NAME// }" ]]; then
+    USER_NAME_SANITIZED=$(echo "$USER_NAME" | tr ' ' '_')
+fi
+
+#######################################
 # Processing values
 #######################################
 AUDIO_OPTS=$(get_audio_opts)
@@ -263,6 +273,28 @@ fade_start_video=$(LC_NUMERIC=C awk -v vd="$VIDEO_DURATION" -v ft="$FADE_OUT_TIM
 'BEGIN{printf "%.3f",(vd-ft>0)?vd-ft:0}')
 
 fade_start_audio="$fade_start_video"
+
+#######################################
+# Optional trimming
+#######################################
+echo "Start time? [total duration ${VIDEO_DURATION}s]"
+read -p "> " START_TIME_INPUT
+
+START_TIME="${START_TIME_INPUT:-0}"
+
+REMAINING_DURATION=$(LC_NUMERIC=C awk \
+    -v total="$VIDEO_DURATION" \
+    -v start="$START_TIME" \
+    'BEGIN{printf "%.2f",(total-start>0)?total-start:0}')
+
+echo "Duration? [remaining duration ${REMAINING_DURATION}s]"
+read -p "> " DURATION_INPUT
+
+if [[ -n "$DURATION_INPUT" ]]; then
+    OUTPUT_DURATION="$DURATION_INPUT"
+else
+    OUTPUT_DURATION="$REMAINING_DURATION"
+fi
 
 #######################################
 # Date overlay
@@ -280,17 +312,31 @@ TEXT_MARGIN_PX=$(LC_NUMERIC=C awk \
     -v p="$TEXT_MARGIN" \
     'BEGIN{printf "%d",(h*p/100)}')
 
+#######################################
+# Date + optional name overlay
+#######################################
+OVERLAY_TEXT="$DATETIME_TEXT"
+
+if [[ -n "$USER_NAME" ]]; then
+    OVERLAY_TEXT="${USER_NAME} ${OVERLAY_TEXT}"
+fi
+
+TEXT_FADE_OUT=$(LC_NUMERIC=C awk \
+    -v td="$TEXT_DURATION" \
+    -v fi="$FADE_IN_TIME" \
+    'BEGIN{printf "%.3f",td+(0.3*fi)}')
+
 DRAW_TEXT=""
 
-# text at bottom: y=h-th-${TEXT_MARGIN_PX}:
-if [[ -n "$DATETIME_TEXT" ]]; then
+if [[ -n "$OVERLAY_TEXT" ]]; then
 DRAW_TEXT="drawtext=
-text='${DATETIME_TEXT}':
+text='${OVERLAY_TEXT}':
 fontcolor=white:
 fontsize=${FONT_SIZE}:
+line_spacing=10:
 x=${TEXT_MARGIN_PX}:
 y=${TEXT_MARGIN_PX}:
-enable='between(t,0,$TEXT_DURATION)'"
+alpha='if(lt(t,$TEXT_DURATION),1, if(lt(t,$TEXT_FADE_OUT),(1-(t-$TEXT_DURATION)/($TEXT_FADE_OUT-$TEXT_DURATION)),0))'"
 fi
 
 #######################################
@@ -319,15 +365,32 @@ AUDIO_FILTER="afade=t=out:st=$fade_start_audio:d=$FADE_OUT_TIME"
 #######################################
 OUT_BASE="${VIDEO_FILE%.*}${SUFFIX_PROCESSED}"
 
+if [[ -n "$USER_NAME_SANITIZED" ]]; then
+    OUT_BASE="${OUT_BASE}_${USER_NAME_SANITIZED}"
+fi
+
 TMP_OUTPUT="${OUT_BASE}.mp4"
+
+
+#######################################
+# Simple processing queue (single instance)
+#######################################
+LOCKFILE="/tmp/dji_video_processing.lock"
+
+exec 9>"$LOCKFILE"
+
+echo "Waiting for processing queue..."
+flock 9
+echo "Queue acquired."
 
 #######################################
 # Run ffmpeg
 #######################################
 ffmpeg -y \
+    -ss "$START_TIME" \
     -i "$INPUT_FOR_FFMPEG" \
     -i "$MUSIC_FILE" \
-    -t "$VIDEO_DURATION" \
+    -t "$OUTPUT_DURATION" \
     -map 0:v:0 -map 1:a:0 \
     -vf "$VIDEO_FILTER" \
     -af "$AUDIO_FILTER" \
