@@ -86,8 +86,11 @@ AUDIO_BITRATE="192k"          # Audio bitrate (""=copy audio, "0", or "0k" = str
 SUFFIX_PROCESSED="_processed" # Default suffix for processed files (only used if not overwriting)
 CODEC="libx264"               # Video codec
 MUSIC_FOLDER="$HOME/Musik"    # Root folder to search for music tracks
+OUTPUT_FOLDER="$HOME/Videos/Output"              # Leave empty to use input folder
 FADE_IN_TIME=3.0
 FADE_OUT_TIME=3.0              # Time (s) to fade out video (to black) and music (to silent)
+INTRO_VIDEO="$HOME/Videos/Intro_Sparks.mp4"  # Introductory video sequence (optional)
+THUMBNAIL_TIME=5.0          # Time when reference thumbnail snapshot is taken. -1.0 means: No thumbnail
 
 PRESERVE_LRF=0                # Set to 1 if you want to keep original LRF format, otherwise output MP4
 TEXT_SIZE=20           # Text height in percent of video height (e.g. 5 = 5%)
@@ -396,9 +399,20 @@ fade=t=out:st=$fade_start_video:d=$FADE_OUT_TIME"
 AUDIO_FILTER="afade=t=out:st=$fade_start_audio:d=$FADE_OUT_TIME"
 
 #######################################
-# Output filename
+# Output filename + OUTPUT_FOLDER support
 #######################################
-OUT_BASE="${VIDEO_FILE%.*}${SUFFIX_PROCESSED}"
+INPUT_DIR=$(dirname "$VIDEO_FILE")
+
+if [[ -n "$OUTPUT_FOLDER" ]]; then
+    mkdir -p "$OUTPUT_FOLDER"
+    TARGET_DIR="$OUTPUT_FOLDER"
+else
+    TARGET_DIR="$INPUT_DIR"
+fi
+
+BASE_NAME=$(basename "${VIDEO_FILE%.*}")
+
+OUT_BASE="${TARGET_DIR}/${BASE_NAME}${SUFFIX_PROCESSED}"
 
 if [[ -n "$VIDEO_TITLE_SANITIZED" ]]; then
     OUT_BASE="${OUT_BASE}_${VIDEO_TITLE_SANITIZED}"
