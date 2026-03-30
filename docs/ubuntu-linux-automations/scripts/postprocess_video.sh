@@ -87,9 +87,9 @@ SUFFIX_PROCESSED="_processed" # Default suffix for processed files (only used if
 CODEC="libx264"               # Video codec
 MUSIC_FOLDER="$HOME/Musik"    # Root folder to search for music tracks
 OUTPUT_FOLDER="$HOME/Videos/Output"              # Leave empty to use input folder
-FADE_IN_TIME=3.0
+FADE_IN_TIME=3.0            # Duration for fading in the video
 FADE_OUT_TIME=3.0              # Time (s) to fade out video (to black) and music (to silent)
-INTRO_VIDEO="$HOME/Videos/Intro_Sparks.mp4"  # Introductory video sequence (optional)
+INTRO_VIDEO=""  # "$HOME/Videos/Intro_Sparks.mp4"  # Introductory video sequence (optional)
 THUMBNAIL_TIME=5.0          # Time when reference thumbnail snapshot is taken. -1.0 means: No thumbnail
 
 PRESERVE_LRF=0                # Set to 1 if you want to keep original LRF format, otherwise output MP4
@@ -377,8 +377,9 @@ else
 fi
 
 fi
+
 #######################################
-# Filters
+# Filters (Intro + Crossfade support)
 #######################################
 
 SCALE_FILTER=""
@@ -387,14 +388,21 @@ if [[ "$LIMIT_HEIGHT" -gt 0 ]]; then
     SCALE_FILTER="scale=-2:'min(ih,$LIMIT_HEIGHT)'"
 fi
 
-VIDEO_FILTER=""
+MAIN_VIDEO_FILTER=""
+[[ -n "$SCALE_FILTER" ]] && MAIN_VIDEO_FILTER="$SCALE_FILTER,"
 
-[[ -n "$SCALE_FILTER" ]] && VIDEO_FILTER="$SCALE_FILTER,"
+MAIN_VIDEO_FILTER="${MAIN_VIDEO_FILTER}fade=t=out:st=$fade_start_video:d=$FADE_OUT_TIME"
 
-VIDEO_FILTER="${VIDEO_FILTER}fade=t=in:st=0:d=$FADE_IN_TIME,\
-fade=t=out:st=$fade_start_video:d=$FADE_OUT_TIME"
+#######################################
+# TEXT timing depending on INTRO
+#######################################
 
-[[ -n "$DRAW_TEXT" ]] && VIDEO_FILTER="$VIDEO_FILTER,$DRAW_TEXT"
+if [[ -n "$INTRO_VIDEO" ]]; then
+    TEXT_DURATION=99999
+    TEXT_FADE_OUT=$FADE_IN_TIME
+fi
+
+[[ -n "$DRAW_TEXT" ]] && MAIN_VIDEO_FILTER="$MAIN_VIDEO_FILTER,$DRAW_TEXT"
 
 AUDIO_FILTER="afade=t=out:st=$fade_start_audio:d=$FADE_OUT_TIME"
 
@@ -435,17 +443,45 @@ echo "Queue acquired."
 #######################################
 # Run ffmpeg
 #######################################
+if [[ -n "$INTRO_VIDEO" ]]; then
+
+INTRO_DURATION=$(get_duration "$INTRO_VIDEO")
+XFADE_START=$(LC_NUMERIC=C awk \
+    -v id="$INTRO_DURATION" \
+    -v fi="$FADE_IN_TIME" \
+    'BEGIN{printf "%.3f",(id-fi>0)?id-fi:0}')
+
+ffmpeg -y \
+    -i "$INTRO_VIDEO" \
+    -ss "$START_TIME" -i "$INPUT_FOR_FFMPEG" \
+    -i "$MUSIC_FILE" \
+    -filter_complex "
+        [0:v]${SCALE_FILTER}[intro];
+        [1:v]${MAIN_VIDEO_FILTER}[main];
+        [intro][main]xfade=transition=fade:duration=$FADE_IN_TIME:offset=$XFADE_START[v]
+    " \
+    -map "[v]" -map 2:a:0 \
+    -t "$OUTPUT_DURATION" \
+    -af "$AUDIO_FILTER" \
+    -c:v $CODEC -preset $PRESET -crf $DEFAULT_CRF \
+    $AUDIO_OPTS \
+    "$TMP_OUTPUT"
+
+else
+
 ffmpeg -y \
     -ss "$START_TIME" \
     -i "$INPUT_FOR_FFMPEG" \
     -i "$MUSIC_FILE" \
     -t "$OUTPUT_DURATION" \
     -map 0:v:0 -map 1:a:0 \
-    -vf "$VIDEO_FILTER" \
+    -vf "$MAIN_VIDEO_FILTER" \
     -af "$AUDIO_FILTER" \
     -c:v $CODEC -preset $PRESET -crf $DEFAULT_CRF \
     $AUDIO_OPTS \
     "$TMP_OUTPUT"
+
+fi
 
 #######################################
 # Restore LRF extension if needed
@@ -460,5 +496,64 @@ if  [[ "$PRESERVE_LRF" == 1 ]]; then
 fi
 
 [[ -n "$TMP_INPUT" ]] && rm "$TMP_INPUT"
+
+#######################################
+# Thumbnail generation
+#######################################
+if [[ "$THUMBNAIL_TIME" != "-1.0" ]]; then
+
+THUMB_FILE="${OUT_BASE}.jpg"
+
+THUMB_TEXT=""
+
+if [[ -n "$VIDEO_TITLE" ]]; then
+THUMB_TEXT="drawtext=
+text='${VIDEO_TITLE}':
+fontcolor=white:
+fontsize=${FONT_SIZE}:
+x=${TEXT_MARGIN_PX}:
+y=${TEXT_MARGIN_PX}"
+fi
+
+if [[ -n "$DATETIME_TEXT" ]]; then
+
+DATE_THUMB="drawtext=
+text='${DATETIME_TEXT}':
+fontcolor=white:
+fontsize=${DATE_FONT_SIZE}:
+x=${TEXT_MARGIN_PX}:
+y=${DATE_Y_POS}"
+
+if [[ -n "$THUMB_TEXT" ]]; then
+    THUMB_TEXT="${THUMB_TEXT},${DATE_THUMB}"
+else
+    THUMB_TEXT="${DATE_THUMB}"
+fi
+
+fi
+
+ffmpeg -y \
+    -ss "$THUMBNAIL_TIME" \
+    -i "$TMP_OUTPUT" \
+    -frames:v 1 \
+    -vf "$THUMB_TEXT" \
+    "$THUMB_FILE"
+
+# attach thumbnail as cover art
+ffmpeg -y \
+    -i "$TMP_OUTPUT" \
+    -i "$THUMB_FILE" \
+    -map 0 -map 1 \
+    -c copy \
+    -disposition:v:1 attached_pic \
+    "${TMP_OUTPUT}.tmp"
+
+###########################################
+# Write Output file
+###########################################
+mv "${TMP_OUTPUT}.tmp" "$TMP_OUTPUT"
+
+fi
+
 echo "✅ Done: $FINAL_OUTPUT"
 
