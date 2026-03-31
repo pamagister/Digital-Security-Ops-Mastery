@@ -82,8 +82,8 @@ set -euo pipefail
 # User-configurable defaults
 #######################################
 DEFAULT_CRF=26                # Default Constant Rate Factor (lower = better quality, 20–30 typical)
-PRESET="medium"                 # Preset: ultrafast, superfast, veryfast, faster, fast, medium, slow, slower, veryslow
-AUDIO_BITRATE="192k"          # Audio bitrate (""=copy audio, "0", or "0k" = strip audio)
+PRESET="slow"                 # Preset: ultrafast, superfast, veryfast, faster, fast, medium, slow, slower, veryslow
+AUDIO_BITRATE="160k"          # Audio bitrate (""=copy audio, "0", or "0k" = strip audio)
 SUFFIX_PROCESSED="_processed" # Default suffix for processed files (only used if not overwriting)
 CODEC="libx264"               # Video codec
 MUSIC_FOLDER="$HOME/Musik/Ambient"    # Root folder to search for music tracks
@@ -93,7 +93,7 @@ FADE_IN_TIME=4.0            # Duration for fading in the video
 FADE_OUT_TIME=2.0              # Time (s) to fade out video (to black) and music (to silent)
 FADE_IN_AUDIO=False   # True = Audio fades in smoothly
 THUMBNAIL_TIME=5.0          # Time when reference thumbnail snapshot is taken. -1.0 means: No thumbnail
-SAVE_THUMBNAIL=False   # True = create jpg + attach cover, False = skip completely
+SAVE_THUMBNAIL=True   # True = create jpg + attach cover, False = skip completely
 
 PRESERVE_LRF=0                # Set to 1 if you want to keep original LRF format, otherwise output MP4
 TEXT_SIZE=10           # Text height in percent of video height (e.g. 5 = 5%)
@@ -364,7 +364,7 @@ TEXT_END=$(LC_NUMERIC=C awk \
     'BEGIN{printf "%.3f",a+b+c}')
 
 FONT_SIZE=$(LC_NUMERIC=C awk \
-    -v h="$VIDEO_HEIGHT" \
+    -v h="$TARGET_HEIGHT" \
     -v p="$TEXT_SIZE" \
     'BEGIN{printf "%d",(h*p/100)}')
 
