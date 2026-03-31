@@ -18,8 +18,9 @@
 #   ./process_video.sh <video_file> [--music <audio_file>]
 #
 # Arguments:
-#   <video_file>        Input video (DJI MP4 or LRF supported)
+#   <video>        Input video (DJI MP4 or LRF supported)
 #   --music <file>      Optional music track
+#   --intro <file>      Optional intro video
 #
 # If no music file is provided, the user can interactively
 # select one from MUSIC_FOLDER.
@@ -89,6 +90,7 @@ CODEC="libx264"               # Video codec
 MUSIC_FOLDER="$HOME/Musik/Ambient"    # Root folder to search for music tracks
 VIDEO_INTRO_FOLDER="$HOME/Videos/Intros"    # Root folder to search for intro videos
 OUTPUT_FOLDER="$HOME/Videos/Output"              # Leave empty to use input folder
+BATCH_FILE="video_processing.sh"
 FADE_IN_TIME=4.0            # Duration for fading in the video
 FADE_OUT_TIME=2.0              # Time (s) to fade out video (to black) and music (to silent)
 FADE_IN_AUDIO=False   # True = Audio fades in smoothly
@@ -106,12 +108,11 @@ FONT="/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"
 # Helper: print usage
 #######################################
 usage() {
-    echo "Usage: $0 <video_file> [options]"
+    echo "Usage: $0 <video> [options]"
     echo ""
     echo "Options:"
     echo "  --music <file>"
-    echo "  --music-index <n>"
-    echo "  --intro-index <n>"
+    echo "  --intro <file>"
     echo "  --title <text>"
     echo "  --start <seconds>"
     echo "  --duration <seconds>"
