@@ -87,12 +87,11 @@ AUDIO_BITRATE="192k"          # Audio bitrate (""=copy audio, "0", or "0k" = str
 SUFFIX_PROCESSED="_processed" # Default suffix for processed files (only used if not overwriting)
 CODEC="libx264"               # Video codec
 MUSIC_FOLDER="$HOME/Musik/Ambient"    # Root folder to search for music tracks
-VIDEO_INTRO_FOLDER="$HOME/Videos/Intro"    # Root folder to search for intro videos
+VIDEO_INTRO_FOLDER="$HOME/Videos/Intros"    # Root folder to search for intro videos
 OUTPUT_FOLDER="$HOME/Videos/Output"              # Leave empty to use input folder
 FADE_IN_TIME=4.0            # Duration for fading in the video
 FADE_OUT_TIME=2.0              # Time (s) to fade out video (to black) and music (to silent)
 FADE_IN_AUDIO=False   # True = Audio fades in smoothly
-INTRO_VIDEO="$HOME/Videos/Intro_Cosmic.mp4"  # Introductory video sequence (optional)
 THUMBNAIL_TIME=5.0          # Time when reference thumbnail snapshot is taken. -1.0 means: No thumbnail
 SAVE_THUMBNAIL=False   # True = create jpg + attach cover, False = skip completely
 
@@ -256,6 +255,37 @@ if [[ -z "$MUSIC_FILE" ]]; then
 
     read -p "Select index: " idx
     MUSIC_FILE="${MUSIC_FILES[$idx]}"
+fi
+
+#######################################
+# Optional intro video selection
+#######################################
+INTRO_VIDEO=""
+
+if [[ -d "$VIDEO_INTRO_FOLDER" ]]; then
+
+    mapfile -t INTRO_FILES < <(
+        find "$VIDEO_INTRO_FOLDER" -type f \
+        \( -iname "*.mp4" -o -iname "*.mov" -o -iname "*.mkv" \
+           -o -iname "*.m4v" -o -iname "*.avi" \) | sort
+    )
+
+    if [[ ${#INTRO_FILES[@]} -gt 0 ]]; then
+
+        echo ""
+        echo "Available intro videos:"
+        echo "[ENTER] No intro"
+
+        for i in "${!INTRO_FILES[@]}"; do
+            echo "[$i] $(basename "${INTRO_FILES[$i]}")"
+        done
+
+        read -p "Select intro index: " intro_idx
+
+        if [[ -n "$intro_idx" ]]; then
+            INTRO_VIDEO="${INTRO_FILES[$intro_idx]}"
+        fi
+    fi
 fi
 
 #######################################
