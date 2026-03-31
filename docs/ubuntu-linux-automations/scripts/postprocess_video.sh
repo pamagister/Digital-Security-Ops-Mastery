@@ -95,9 +95,9 @@ THUMBNAIL_TIME=5.0          # Time when reference thumbnail snapshot is taken. -
 SAVE_THUMBNAIL=False   # True = create jpg + attach cover, False = skip completely
 
 PRESERVE_LRF=0                # Set to 1 if you want to keep original LRF format, otherwise output MP4
-TEXT_SIZE=10           # Text height in percent of video height (e.g. 5 = 5%)
+TEXT_SIZE=12           # Text height in percent of video height (e.g. 5 = 5%)
 LIMIT_HEIGHT=1080     # 0 = keep original height, otherwise max output height
-TEXT_MARGIN=3         # Margin in percent of video height
+TEXT_MARGIN=6         # Margin in percent of video height
 
 
 # FONT="/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"
@@ -283,10 +283,6 @@ if [[ "$LIMIT_HEIGHT" -gt 0 && "$VIDEO_HEIGHT" -gt "$LIMIT_HEIGHT" ]]; then
     TARGET_HEIGHT="$LIMIT_HEIGHT"
 fi
 
-fade_start_video=$(LC_NUMERIC=C awk -v vd="$VIDEO_DURATION" -v ft="$FADE_OUT_TIME" \
-'BEGIN{printf "%.3f",(vd-ft>0)?vd-ft:0}')
-
-fade_start_audio="$fade_start_video"
 
 #######################################
 # Optional trimming
@@ -309,6 +305,17 @@ if [[ -n "$DURATION_INPUT" ]]; then
 else
     OUTPUT_DURATION="$REMAINING_DURATION"
 fi
+
+#######################################
+# Fade timing (based on OUTPUT duration!)
+#######################################
+
+fade_start_video=$(LC_NUMERIC=C awk \
+    -v od="$OUTPUT_DURATION" \
+    -v ft="$FADE_OUT_TIME" \
+    'BEGIN{printf "%.3f",(od-ft>0)?od-ft:0}')
+
+fade_start_audio="$fade_start_video"
 
 #######################################
 # Date overlay
@@ -336,7 +343,7 @@ DATE_FONT_SIZE=$(LC_NUMERIC=C awk \
 TEXT_MARGIN_X_PX=$(LC_NUMERIC=C awk \
     -v h="$VIDEO_HEIGHT" \
     -v p="$TEXT_MARGIN" \
-    'BEGIN{printf "%d",(5*h*p/100)}')
+    'BEGIN{printf "%d",(2*h*p/100)}')
 
 TEXT_MARGIN_Y_PX=$(LC_NUMERIC=C awk \
     -v h="$VIDEO_HEIGHT" \
@@ -365,7 +372,7 @@ DRAW_TEXT="drawtext=text='${VIDEO_TITLE}':fontcolor=white:fontsize=${FONT_SIZE}:
 
 NAME_BLOCK_HEIGHT=$(LC_NUMERIC=C awk \
     -v fs="$FONT_SIZE" \
-    'BEGIN{printf "%d",(fs*1.2)}')
+    'BEGIN{printf "%d",(fs*1.0)}')
 
 DATE_Y_POS=$(LC_NUMERIC=C awk \
     -v m="$TEXT_MARGIN_Y_PX" \
@@ -461,19 +468,28 @@ FINAL_DURATION=$(LC_NUMERIC=C awk \
     -v fade="$FADE_IN_TIME" \
     'BEGIN{printf "%.3f", intro + main - fade}')
 
+# Audio fade timing (based on FINAL video)
+
+audio_fade_out_start=$(LC_NUMERIC=C awk \
+    -v dur="$FINAL_DURATION" \
+    -v ft="$FADE_OUT_TIME" \
+    'BEGIN{printf "%.3f",(dur-ft>0)?dur-ft:0}')
+
+AUDIO_FILTER="afade=t=in:st=0:d=$FADE_IN_TIME,\
+afade=t=out:st=$audio_fade_out_start:d=$FADE_OUT_TIME"
+
 ffmpeg -y \
     -i "$INTRO_VIDEO" \
-    -ss "$START_TIME" -i "$INPUT_FOR_FFMPEG" \
+    -i "$INPUT_FOR_FFMPEG" \
     -i "$MUSIC_FILE" \
     -filter_complex "
         [0:v:0]fps=30,format=yuv420p,${SCALE_FILTER},setsar=1[intro];
-        [1:v:0]fps=30,format=yuv420p,${SCALE_FILTER},${MAIN_VIDEO_FILTER},setsar=1[main];
+        [1:v:0]trim=start=$START_TIME:duration=$OUTPUT_DURATION,setpts=PTS-STARTPTS,fps=30,format=yuv420p,${SCALE_FILTER},${MAIN_VIDEO_FILTER},setsar=1[main];
         [intro][main]xfade=transition=fade:duration=$FADE_IN_TIME:offset=$XFADE_START[v]
     " \
     -map "[v]" \
-    -map 2:a:0 -shortest \
-    -t "$FINAL_DURATION" \
-    -af "$AUDIO_FILTER" \
+    -map 2:a:0 \
+    -af "atrim=duration=$FINAL_DURATION,$AUDIO_FILTER" \
     -c:v $CODEC -preset $PRESET -crf $DEFAULT_CRF -r 30 \
     -map_metadata 1 \
     -movflags use_metadata_tags \
