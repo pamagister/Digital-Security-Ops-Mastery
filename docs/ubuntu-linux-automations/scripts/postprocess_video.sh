@@ -29,9 +29,10 @@
 # -------------Nutzer
 #
 # ✔ Video + music merging
-#   - Replaces original audio with selected music track
+#   - Replaces original audio with selected music track, e.g. from https://pixabay.com/music/
 #   - Music automatically trimmed to video duration
 #   - Silence added automatically if music is shorter
+#   - use an optional intro video, e.g. from https://pixabay.com/de/videos/search/intro/
 #
 # ✔ Cinematic transitions
 #   - Configurable fade-in
@@ -81,21 +82,21 @@ set -euo pipefail
 # User-configurable defaults
 #######################################
 DEFAULT_CRF=27                # Default Constant Rate Factor (lower = better quality, 20–30 typical)
-PRESET="faster"                 # Preset: ultrafast, superfast, veryfast, faster, fast, medium, slow, slower, veryslow
+PRESET="medium"                 # Preset: ultrafast, superfast, veryfast, faster, fast, medium, slow, slower, veryslow
 AUDIO_BITRATE="192k"          # Audio bitrate (""=copy audio, "0", or "0k" = strip audio)
 SUFFIX_PROCESSED="_processed" # Default suffix for processed files (only used if not overwriting)
 CODEC="libx264"               # Video codec
 MUSIC_FOLDER="$HOME/Musik"    # Root folder to search for music tracks
 OUTPUT_FOLDER="$HOME/Videos/Output"              # Leave empty to use input folder
-FADE_IN_TIME=5.0            # Duration for fading in the video
-FADE_OUT_TIME=3.0              # Time (s) to fade out video (to black) and music (to silent)
+FADE_IN_TIME=3.0            # Duration for fading in the video
+FADE_OUT_TIME=2.0              # Time (s) to fade out video (to black) and music (to silent)
 INTRO_VIDEO="$HOME/Videos/Intro_Cosmic.mp4"  # Introductory video sequence (optional)
 THUMBNAIL_TIME=5.0          # Time when reference thumbnail snapshot is taken. -1.0 means: No thumbnail
-SAVE_THUMBNAIL=True   # True = create jpg + attach cover, False = skip completely
+SAVE_THUMBNAIL=False   # True = create jpg + attach cover, False = skip completely
 
 PRESERVE_LRF=0                # Set to 1 if you want to keep original LRF format, otherwise output MP4
-TEXT_SIZE=20           # Text height in percent of video height (e.g. 5 = 5%)
-LIMIT_HEIGHT=720     # 0 = keep original height, otherwise max output height
+TEXT_SIZE=10           # Text height in percent of video height (e.g. 5 = 5%)
+LIMIT_HEIGHT=1080     # 0 = keep original height, otherwise max output height
 TEXT_MARGIN=3         # Margin in percent of video height
 
 
@@ -313,9 +314,9 @@ fi
 # Date overlay
 #######################################
 DATETIME_TEXT=$(extract_datetime_text "$VIDEO_FILE")
-TEXT_FADE_IN=$(LC_NUMERIC=C awk -v fi="$FADE_IN_TIME" 'BEGIN{printf "%.3f",fi*0.1}')
-TEXT_VISIBLE=$(LC_NUMERIC=C awk -v fi="$FADE_IN_TIME" 'BEGIN{printf "%.3f",fi}')
-TEXT_FADE_OUT=$(LC_NUMERIC=C awk -v fi="$FADE_IN_TIME" 'BEGIN{printf "%.3f",fi*0.3}')
+TEXT_FADE_IN=$(LC_NUMERIC=C awk -v fi="$FADE_IN_TIME" 'BEGIN{printf "%.3f",fi*0.2}')
+TEXT_VISIBLE=$(LC_NUMERIC=C awk -v fi="$FADE_IN_TIME" 'BEGIN{printf "%.3f",fi*0.4}')
+TEXT_FADE_OUT=$(LC_NUMERIC=C awk -v fi="$FADE_IN_TIME" 'BEGIN{printf "%.3f",fi*0.4}')
 
 TEXT_END=$(LC_NUMERIC=C awk \
     -v a="$TEXT_FADE_IN" \
