@@ -90,7 +90,7 @@ CODEC="libx264"               # Video codec
 MUSIC_FOLDER="$HOME/Musik/Ambient"    # Root folder to search for music tracks
 VIDEO_INTRO_FOLDER="$HOME/Videos/Intros"    # Root folder to search for intro videos
 OUTPUT_FOLDER="$HOME/Videos/Output"              # Leave empty to use input folder
-BATCH_FILE="video_processing.sh"
+BATCH_FILE_NAME="video_processing.sh" # File name that the prompts for reproducing rendering are being written. This is inside OUTPUT_FOLDER
 FADE_IN_TIME=4.0            # Duration for fading in the video
 FADE_OUT_TIME=2.0              # Time (s) to fade out video (to black) and music (to silent)
 FADE_IN_AUDIO=False   # True = Audio fades in smoothly
@@ -125,15 +125,30 @@ usage() {
 append_to_batch() {
 
     local cmd="$1"
+    echo "Write to batch file: $BATCH_FILE"
 
+    # ensure directory exists
+    mkdir -p "$(dirname "$BATCH_FILE")"
+
+    # create batch file once
     if [[ ! -f "$BATCH_FILE" ]]; then
-        echo "#!/usr/bin/env bash" > "$BATCH_FILE"
+        {
+            echo "#!/usr/bin/env bash"
+            echo ""
+            echo "# Auto-generated render batch"
+            echo "# $(date)"
+        } > "$BATCH_FILE"
+
         chmod +x "$BATCH_FILE"
     fi
 
-    echo "" >> "$BATCH_FILE"
-    echo "# $(date)" >> "$BATCH_FILE"
-    echo "$cmd" >> "$BATCH_FILE"
+    {
+        echo ""
+        echo "# $(date)"
+        echo "$cmd"
+    } >> "$BATCH_FILE"
+
+    echo "Batch updated: $BATCH_FILE"
 }
 
 #######################################
@@ -224,31 +239,26 @@ extract_datetime_text() {
 #######################################
 # CLI parameters (optional overrides)
 #######################################
-CLI_MUSIC_INDEX=""
-CLI_INTRO_INDEX=""
+CLI_MUSIC_FILE=""
+CLI_INTRO_FILE=""
 CLI_TITLE=""
 CLI_START=""
 CLI_DURATION=""
 
-
 #######################################
 # Parse arguments
 #######################################
+
 VIDEO_FILE=""
-MUSIC_FILE=""
 
 while [[ $# -gt 0 ]]; do
     case "$1" in
         --music)
-            MUSIC_FILE="$2"
+            CLI_MUSIC_FILE="$2"
             shift 2
             ;;
-        --music-index)
-            CLI_MUSIC_INDEX="$2"
-            shift 2
-            ;;
-        --intro-index)
-            CLI_INTRO_INDEX="$2"
+        --intro)
+            CLI_INTRO_FILE="$2"
             shift 2
             ;;
         --title)
@@ -273,21 +283,14 @@ while [[ $# -gt 0 ]]; do
     esac
 done
 
-while [[ $# -gt 0 ]]; do
-    case "$1" in
-        --music)
-            MUSIC_FILE="$2"
-            shift 2
-            ;;
-        -*)
-            usage
-            ;;
-        *)
-            VIDEO_FILE="$1"
-            shift
-            ;;
-    esac
-done
+# Make absolute paths
+VIDEO_FILE=$(realpath "$VIDEO_FILE")
+
+[[ -n "$CLI_MUSIC_FILE" ]] && CLI_MUSIC_FILE=$(realpath "$CLI_MUSIC_FILE")
+[[ -n "$CLI_INTRO_FILE" ]] && CLI_INTRO_FILE=$(realpath "$CLI_INTRO_FILE")
+
+[[ -z "$VIDEO_FILE" ]] && usage
+[[ ! -f "$VIDEO_FILE" ]] && { echo "Video not found"; exit 1; }
 
 [[ -z "$VIDEO_FILE" ]] && usage
 [[ ! -f "$VIDEO_FILE" ]] && exit 1
@@ -308,9 +311,13 @@ if [[ "${EXT^^}" == "LRF" ]]; then
 fi
 
 #######################################
-# Prompt music if needed
+# Music selection
 #######################################
-if [[ -z "$MUSIC_FILE" ]]; then
+
+if [[ -n "$CLI_MUSIC_FILE" ]]; then
+    [[ ! -f "$CLI_MUSIC_FILE" ]] && { echo "Music file not found"; exit 1; }
+    MUSIC_FILE="$CLI_MUSIC_FILE"
+else
     mapfile -t MUSIC_FILES < <(
         find "$MUSIC_FOLDER" -type f \
         \( -iname "*.mp3" -o -iname "*.wav" -o -iname "*.flac" \
@@ -331,34 +338,37 @@ fi
 #######################################
 # Optional intro video selection
 #######################################
+
 INTRO_VIDEO=""
 
-if [[ -d "$VIDEO_INTRO_FOLDER" ]]; then
+if [[ -n "$CLI_INTRO_FILE" ]]; then
+    if [[ -n "$CLI_INTRO_FILE" && -f "$CLI_INTRO_FILE" ]]; then
+        INTRO_VIDEO="$CLI_INTRO_FILE"
+    fi
+else
+    if [[ -d "$VIDEO_INTRO_FOLDER" ]]; then
 
-    mapfile -t INTRO_FILES < <(
-        find "$VIDEO_INTRO_FOLDER" -type f \
-        \( -iname "*.mp4" -o -iname "*.mov" -o -iname "*.mkv" \
-           -o -iname "*.m4v" -o -iname "*.avi" \) | sort
-    )
+        mapfile -t INTRO_FILES < <(
+            find "$VIDEO_INTRO_FOLDER" -type f \
+            \( -iname "*.mp4" -o -iname "*.mov" -o -iname "*.mkv" \
+               -o -iname "*.m4v" -o -iname "*.avi" \) | sort
+        )
 
-    if [[ ${#INTRO_FILES[@]} -gt 0 ]]; then
+        if [[ ${#INTRO_FILES[@]} -gt 0 ]]; then
 
-        echo ""
-        echo "Available intro videos:"
-        echo "[ENTER] No intro"
+            echo ""
+            echo "Available intro videos:"
+            echo "[ENTER] No intro"
 
-        for i in "${!INTRO_FILES[@]}"; do
-            echo "[$i] $(basename "${INTRO_FILES[$i]}")"
-        done
+            for i in "${!INTRO_FILES[@]}"; do
+                echo "[$i] $(basename "${INTRO_FILES[$i]}")"
+            done
 
-        if [[ -n "$CLI_INTRO_INDEX" ]]; then
-            intro_idx="$CLI_INTRO_INDEX"
-        else
             read -p "Select intro index: " intro_idx
-        fi
 
-        if [[ -n "$intro_idx" ]]; then
-            INTRO_VIDEO="${INTRO_FILES[$intro_idx]}"
+            if [[ -n "$intro_idx" ]]; then
+                INTRO_VIDEO="${INTRO_FILES[$intro_idx]}"
+            fi
         fi
     fi
 fi
@@ -424,6 +434,21 @@ if [[ -n "$DURATION_INPUT" ]]; then
 else
     OUTPUT_DURATION="$REMAINING_DURATION"
 fi
+
+
+#######################################
+# Rebuild CLI command for batch replay
+#######################################
+
+SCRIPT_PATH=$(realpath "$0")
+
+REPLAY_CMD="$SCRIPT_PATH \"$VIDEO_FILE\""
+
+[[ -n "$CLI_MUSIC_FILE" ]] && REPLAY_CMD+=" --music \"$CLI_MUSIC_FILE\""
+[[ -n "$CLI_INTRO_FILE" ]] && REPLAY_CMD+=" --intro \"$CLI_INTRO_FILE\""
+[[ -n "$VIDEO_TITLE" ]] && REPLAY_CMD+=" --title \"$VIDEO_TITLE\""
+[[ -n "$START_TIME_INPUT" ]] && REPLAY_CMD+=" --start \"$START_TIME_INPUT\""
+[[ -n "$DURATION_INPUT" ]] && REPLAY_CMD+=" --duration \"$DURATION_INPUT\""
 
 #######################################
 # Fade timing (based on OUTPUT duration!)
@@ -563,6 +588,9 @@ fi
 
 TMP_OUTPUT="${OUT_BASE}.mp4"
 
+# Resolve batch file location
+BATCH_FILE="${TARGET_DIR}/${BATCH_FILE_NAME}"
+
 
 #######################################
 # Simple processing queue (single instance)
@@ -661,6 +689,8 @@ fi
 #######################################
 # Thumbnail generation
 #######################################
+append_to_batch "$REPLAY_CMD"
+
 if [[ "$SAVE_THUMBNAIL" == "True" && "$THUMBNAIL_TIME" != "-1.0" ]]; then
 
 THUMB_FILE="${OUT_BASE}.jpg"
@@ -717,4 +747,3 @@ mv "${TMP_OUTPUT}.tmp" "$TMP_OUTPUT"
 fi
 
 echo "✅ Done: $FINAL_OUTPUT"
-
