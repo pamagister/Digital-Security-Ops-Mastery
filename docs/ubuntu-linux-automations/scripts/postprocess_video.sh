@@ -83,7 +83,7 @@ set -euo pipefail
 # User-configurable defaults
 #######################################
 DEFAULT_CRF=26                # Default Constant Rate Factor (lower = better quality, 20–30 typical)
-PRESET="ultrafast"                 # Preset: ultrafast, superfast, veryfast, faster, fast, medium, slow, slower, veryslow
+PRESET="slow"                 # Preset: ultrafast, superfast, veryfast, faster, fast, medium, slow, slower, veryslow
 AUDIO_BITRATE="160k"          # Audio bitrate (""=copy audio, "0", or "0k" = strip audio)
 SUFFIX_PROCESSED="_processed" # Default suffix for processed files (only used if not overwriting)
 CODEC="libx264"               # Video codec
@@ -97,7 +97,7 @@ FADE_IN_AUDIO=False   # True = Audio fades in smoothly
 THUMBNAIL_TIME=5.0          # Time when reference thumbnail snapshot is taken. -1.0 means: No thumbnail
 SAVE_THUMBNAIL=True   # True = create jpg + attach cover, False = skip completely
 
-PRESERVE_LRF=0                # Set to 1 if you want to keep original LRF format, otherwise output MP4
+PRESERVE_LRF=False                # Set to True if you want to keep original LRF format, otherwise output MP4
 TEXT_SIZE=10           # Text height in percent of video height (e.g. 5 = 5%)
 LIMIT_HEIGHT=1080     # 0 = keep original height, otherwise max output height
 TEXT_MARGIN=6         # Margin in percent of video height
@@ -444,8 +444,8 @@ SCRIPT_PATH=$(realpath "$0")
 
 REPLAY_CMD="$SCRIPT_PATH \"$VIDEO_FILE\""
 
-[[ -n "$CLI_MUSIC_FILE" ]] && REPLAY_CMD+=" --music \"$CLI_MUSIC_FILE\""
-[[ -n "$CLI_INTRO_FILE" ]] && REPLAY_CMD+=" --intro \"$CLI_INTRO_FILE\""
+[[ -n "$MUSIC_FILE" ]] && REPLAY_CMD+=" --music \"$MUSIC_FILE\""
+[[ -n "$INTRO_VIDEO" ]] && REPLAY_CMD+=" --intro \"$INTRO_VIDEO\""
 [[ -n "$VIDEO_TITLE" ]] && REPLAY_CMD+=" --title \"$VIDEO_TITLE\""
 [[ -n "$START_TIME_INPUT" ]] && REPLAY_CMD+=" --start \"$START_TIME_INPUT\""
 [[ -n "$DURATION_INPUT" ]] && REPLAY_CMD+=" --duration \"$DURATION_INPUT\""
@@ -677,7 +677,7 @@ fi
 #######################################
 FINAL_OUTPUT="$TMP_OUTPUT"
 
-if  [[ "$PRESERVE_LRF" == 1 ]]; then
+if  [[ "$PRESERVE_LRF" == "True" ]]; then
   if [[ "${EXT^^}" == "LRF" ]]; then
       FINAL_OUTPUT="${OUT_BASE}.LRF"
       mv "$TMP_OUTPUT" "$FINAL_OUTPUT"
@@ -689,7 +689,6 @@ fi
 #######################################
 # Thumbnail generation
 #######################################
-append_to_batch "$REPLAY_CMD"
 
 if [[ "$SAVE_THUMBNAIL" == "True" && "$THUMBNAIL_TIME" != "-1.0" ]]; then
 
@@ -762,4 +761,5 @@ mv "${TMP_OUTPUT}.tmp" "$TMP_OUTPUT"
 
 fi
 
+append_to_batch "$REPLAY_CMD"
 echo "✅ Done: $FINAL_OUTPUT"
