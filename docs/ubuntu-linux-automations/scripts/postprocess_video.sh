@@ -82,7 +82,7 @@ set -euo pipefail
 # User-configurable defaults
 #######################################
 DEFAULT_CRF=26                # Default Constant Rate Factor (lower = better quality, 20–30 typical)
-PRESET="slow"                 # Preset: ultrafast, superfast, veryfast, faster, fast, medium, slow, slower, veryslow
+PRESET="ultrafast"                 # Preset: ultrafast, superfast, veryfast, faster, fast, medium, slow, slower, veryslow
 AUDIO_BITRATE="160k"          # Audio bitrate (""=copy audio, "0", or "0k" = strip audio)
 SUFFIX_PROCESSED="_processed" # Default suffix for processed files (only used if not overwriting)
 CODEC="libx264"               # Video codec
@@ -107,7 +107,15 @@ TEXT_MARGIN=6         # Margin in percent of video height
 # Helper: print usage
 #######################################
 usage() {
-    echo "Usage: $0 <video_file> [--music <music_file>]"
+    echo "Usage: $0 <video_file> [options]"
+    echo ""
+    echo "Options:"
+    echo "  --music <file>"
+    echo "  --music-index <n>"
+    echo "  --intro-index <n>"
+    echo "  --title <text>"
+    echo "  --start <seconds>"
+    echo "  --duration <seconds>"
     exit 1
 }
 
@@ -197,10 +205,56 @@ extract_datetime_text() {
 }
 
 #######################################
+# CLI parameters (optional overrides)
+#######################################
+CLI_MUSIC_INDEX=""
+CLI_INTRO_INDEX=""
+CLI_TITLE=""
+CLI_START=""
+CLI_DURATION=""
+
+
+#######################################
 # Parse arguments
 #######################################
 VIDEO_FILE=""
 MUSIC_FILE=""
+
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        --music)
+            MUSIC_FILE="$2"
+            shift 2
+            ;;
+        --music-index)
+            CLI_MUSIC_INDEX="$2"
+            shift 2
+            ;;
+        --intro-index)
+            CLI_INTRO_INDEX="$2"
+            shift 2
+            ;;
+        --title)
+            CLI_TITLE="$2"
+            shift 2
+            ;;
+        --start)
+            CLI_START="$2"
+            shift 2
+            ;;
+        --duration)
+            CLI_DURATION="$2"
+            shift 2
+            ;;
+        -*)
+            usage
+            ;;
+        *)
+            VIDEO_FILE="$1"
+            shift
+            ;;
+    esac
+done
 
 while [[ $# -gt 0 ]]; do
     case "$1" in
@@ -373,12 +427,12 @@ DATE_FONT_SIZE=$(LC_NUMERIC=C awk \
     'BEGIN{printf "%d",(fs*0.5)}')
 
 TEXT_MARGIN_X_PX=$(LC_NUMERIC=C awk \
-    -v h="$VIDEO_HEIGHT" \
+    -v h="$TARGET_HEIGHT" \
     -v p="$TEXT_MARGIN" \
     'BEGIN{printf "%d",(2*h*p/100)}')
 
 TEXT_MARGIN_Y_PX=$(LC_NUMERIC=C awk \
-    -v h="$VIDEO_HEIGHT" \
+    -v h="$TARGET_HEIGHT" \
     -v p="$TEXT_MARGIN" \
     'BEGIN{printf "%d",(h*p/100)}')
 
