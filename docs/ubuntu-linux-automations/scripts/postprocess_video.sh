@@ -723,10 +723,24 @@ fi
 
 fi
 
+# Calculate the absolute timestamp in the FINAL video for the thumbnail
+# Formula: Intro_Duration + User_Thumbnail_Time - Fade_In_Overlap
+if [[ -n "$INTRO_VIDEO" ]]; then
+    ABS_THUMB_TIME=$(LC_NUMERIC=C awk \
+        -v id="$INTRO_DURATION" \
+        -v tt="$THUMBNAIL_TIME" \
+        -v fi="$FADE_IN_TIME" \
+        'BEGIN{printf "%.3f", id + tt - fi}')
+else
+    ABS_THUMB_TIME="$THUMBNAIL_TIME"
+fi
+
+
 ffmpeg -y \
-    -ss "$THUMBNAIL_TIME" \
+    -ss "$ABS_THUMB_TIME" \
     -i "$TMP_OUTPUT" \
     -frames:v 1 \
+    -update 1 \
     -vf "$THUMB_TEXT" \
     "$THUMB_FILE"
 
@@ -734,9 +748,11 @@ ffmpeg -y \
 ffmpeg -y \
     -i "$TMP_OUTPUT" \
     -i "$THUMB_FILE" \
-    -map 0 -map 1 \
+    -map 0 \
+    -map 1 \
     -c copy \
     -disposition:v:1 attached_pic \
+    -f mp4 \
     "${TMP_OUTPUT}.tmp"
 
 ###########################################
