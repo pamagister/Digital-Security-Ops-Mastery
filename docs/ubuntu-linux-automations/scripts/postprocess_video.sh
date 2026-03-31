@@ -88,14 +88,14 @@ SUFFIX_PROCESSED="_processed" # Default suffix for processed files (only used if
 CODEC="libx264"               # Video codec
 MUSIC_FOLDER="$HOME/Musik"    # Root folder to search for music tracks
 OUTPUT_FOLDER="$HOME/Videos/Output"              # Leave empty to use input folder
-FADE_IN_TIME=3.0            # Duration for fading in the video
+FADE_IN_TIME=4.0            # Duration for fading in the video
 FADE_OUT_TIME=2.0              # Time (s) to fade out video (to black) and music (to silent)
 INTRO_VIDEO="$HOME/Videos/Intro_Cosmic.mp4"  # Introductory video sequence (optional)
 THUMBNAIL_TIME=5.0          # Time when reference thumbnail snapshot is taken. -1.0 means: No thumbnail
 SAVE_THUMBNAIL=False   # True = create jpg + attach cover, False = skip completely
 
 PRESERVE_LRF=0                # Set to 1 if you want to keep original LRF format, otherwise output MP4
-TEXT_SIZE=12           # Text height in percent of video height (e.g. 5 = 5%)
+TEXT_SIZE=10           # Text height in percent of video height (e.g. 5 = 5%)
 LIMIT_HEIGHT=1080     # 0 = keep original height, otherwise max output height
 TEXT_MARGIN=6         # Margin in percent of video height
 
@@ -403,16 +403,22 @@ fi
 #######################################
 
 SCALE_FILTER="scale=-2:${TARGET_HEIGHT}"
-
 MAIN_VIDEO_FILTER=""
-[[ -n "$SCALE_FILTER" ]] && MAIN_VIDEO_FILTER="$SCALE_FILTER,"
 
-MAIN_VIDEO_FILTER="${MAIN_VIDEO_FILTER}fade=t=out:st=$fade_start_video:d=$FADE_OUT_TIME"
+[[ -n "$SCALE_FILTER" ]] && MAIN_VIDEO_FILTER="$SCALE_FILTER"
 
+# Add fade-in ONLY if no intro video
+if [[ -z "$INTRO_VIDEO" ]]; then
+    MAIN_VIDEO_FILTER="${MAIN_VIDEO_FILTER},fade=t=in:st=0:d=$FADE_IN_TIME"
+fi
+
+# Always fade out
+MAIN_VIDEO_FILTER="${MAIN_VIDEO_FILTER},fade=t=out:st=$fade_start_video:d=$FADE_OUT_TIME"
+
+# Text overlay
 if [[ -n "$DRAW_TEXT" ]]; then
     MAIN_VIDEO_FILTER="${MAIN_VIDEO_FILTER},${DRAW_TEXT}"
 fi
-
 
 AUDIO_FILTER="afade=t=out:st=$fade_start_audio:d=$FADE_OUT_TIME"
 
