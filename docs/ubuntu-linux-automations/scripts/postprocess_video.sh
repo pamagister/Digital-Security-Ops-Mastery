@@ -100,8 +100,7 @@ TEXT_SIZE=10           # Text height in percent of video height (e.g. 5 = 5%)
 LIMIT_HEIGHT=1080     # 0 = keep original height, otherwise max output height
 TEXT_MARGIN=6         # Margin in percent of video height
 
-
-# FONT="/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"
+FONT="/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"
 
 #######################################
 # Helper: print usage
@@ -487,7 +486,7 @@ DRAW_TEXT=""
 #######################################
 if [[ -n "$VIDEO_TITLE" ]]; then
 
-DRAW_TEXT="drawtext=text='${VIDEO_TITLE}':fontcolor=white:fontsize=${FONT_SIZE}:x=${TEXT_MARGIN_X_PX}:y=${TEXT_MARGIN_Y_PX}:alpha='${ALPHA_EXPR}'"
+DRAW_TEXT="drawtext=fontfile=${FONT}:text='${VIDEO_TITLE}':fontcolor=white:fontsize=${FONT_SIZE}:x=${TEXT_MARGIN_X_PX}:y=${TEXT_MARGIN_Y_PX}:alpha='${ALPHA_EXPR}'"
 
 NAME_BLOCK_HEIGHT=$(LC_NUMERIC=C awk \
     -v fs="$FONT_SIZE" \
@@ -507,7 +506,7 @@ fi
 #######################################
 if [[ -n "$DATETIME_TEXT" ]]; then
 
-DATE_DRAW="drawtext=text='${DATETIME_TEXT}':fontcolor=white:fontsize=${DATE_FONT_SIZE}:x=${TEXT_MARGIN_X_PX}:y=${DATE_Y_POS}:alpha='${ALPHA_EXPR}'"
+DATE_DRAW="drawtext=fontfile=${FONT}:text='${DATETIME_TEXT}':fontcolor=white:fontsize=${DATE_FONT_SIZE}:x=${TEXT_MARGIN_X_PX}:y=${DATE_Y_POS}:alpha='${ALPHA_EXPR}'"
 
 if [[ -n "$DRAW_TEXT" ]]; then
     DRAW_TEXT="${DRAW_TEXT},${DATE_DRAW}"
