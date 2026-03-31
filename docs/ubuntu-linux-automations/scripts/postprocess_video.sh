@@ -81,15 +81,17 @@ set -euo pipefail
 #######################################
 # User-configurable defaults
 #######################################
-DEFAULT_CRF=27                # Default Constant Rate Factor (lower = better quality, 20–30 typical)
+DEFAULT_CRF=26                # Default Constant Rate Factor (lower = better quality, 20–30 typical)
 PRESET="medium"                 # Preset: ultrafast, superfast, veryfast, faster, fast, medium, slow, slower, veryslow
 AUDIO_BITRATE="192k"          # Audio bitrate (""=copy audio, "0", or "0k" = strip audio)
 SUFFIX_PROCESSED="_processed" # Default suffix for processed files (only used if not overwriting)
 CODEC="libx264"               # Video codec
-MUSIC_FOLDER="$HOME/Musik"    # Root folder to search for music tracks
+MUSIC_FOLDER="$HOME/Musik/Ambient"    # Root folder to search for music tracks
+VIDEO_INTRO_FOLDER="$HOME/Videos/Intro"    # Root folder to search for intro videos
 OUTPUT_FOLDER="$HOME/Videos/Output"              # Leave empty to use input folder
 FADE_IN_TIME=4.0            # Duration for fading in the video
 FADE_OUT_TIME=2.0              # Time (s) to fade out video (to black) and music (to silent)
+FADE_IN_AUDIO=False   # True = Audio fades in smoothly
 INTRO_VIDEO="$HOME/Videos/Intro_Cosmic.mp4"  # Introductory video sequence (optional)
 THUMBNAIL_TIME=5.0          # Time when reference thumbnail snapshot is taken. -1.0 means: No thumbnail
 SAVE_THUMBNAIL=False   # True = create jpg + attach cover, False = skip completely
@@ -481,8 +483,13 @@ audio_fade_out_start=$(LC_NUMERIC=C awk \
     -v ft="$FADE_OUT_TIME" \
     'BEGIN{printf "%.3f",(dur-ft>0)?dur-ft:0}')
 
-AUDIO_FILTER="afade=t=in:st=0:d=$FADE_IN_TIME,\
-afade=t=out:st=$audio_fade_out_start:d=$FADE_OUT_TIME"
+if [[ "$FADE_IN_AUDIO" == "True" ]]; then
+  # fade-in and fadeout:
+  AUDIO_FILTER="afade=t=in:st=0:d=$FADE_IN_TIME,afade=t=out:st=$audio_fade_out_start:d=$FADE_OUT_TIME"
+else
+  # only fade-out audio without fade-in:
+  AUDIO_FILTER="afade=t=out:st=$audio_fade_out_start:d=$FADE_OUT_TIME"
+fi
 
 ffmpeg -y \
     -i "$INTRO_VIDEO" \
