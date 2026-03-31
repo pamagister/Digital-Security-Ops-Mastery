@@ -120,6 +120,23 @@ usage() {
 }
 
 #######################################
+# Append command to batch file
+#######################################
+append_to_batch() {
+
+    local cmd="$1"
+
+    if [[ ! -f "$BATCH_FILE" ]]; then
+        echo "#!/usr/bin/env bash" > "$BATCH_FILE"
+        chmod +x "$BATCH_FILE"
+    fi
+
+    echo "" >> "$BATCH_FILE"
+    echo "# $(date)" >> "$BATCH_FILE"
+    echo "$cmd" >> "$BATCH_FILE"
+}
+
+#######################################
 # Helper: Build audio options
 #######################################
 get_audio_opts() {
@@ -334,7 +351,11 @@ if [[ -d "$VIDEO_INTRO_FOLDER" ]]; then
             echo "[$i] $(basename "${INTRO_FILES[$i]}")"
         done
 
-        read -p "Select intro index: " intro_idx
+        if [[ -n "$CLI_INTRO_INDEX" ]]; then
+            intro_idx="$CLI_INTRO_INDEX"
+        else
+            read -p "Select intro index: " intro_idx
+        fi
 
         if [[ -n "$intro_idx" ]]; then
             INTRO_VIDEO="${INTRO_FILES[$intro_idx]}"
@@ -345,7 +366,11 @@ fi
 #######################################
 # Optional custom video name
 #######################################
-read -p "Optional video name (ENTER to skip): " VIDEO_TITLE
+if [[ -n "$CLI_TITLE" ]]; then
+    VIDEO_TITLE="$CLI_TITLE"
+else
+    read -p "Optional video name (ENTER to skip): " VIDEO_TITLE
+fi
 
 VIDEO_TITLE_SANITIZED=""
 if [[ -n "${VIDEO_TITLE// }" ]]; then
@@ -374,7 +399,11 @@ fi
 # Optional trimming
 #######################################
 echo "Start time? [total duration ${VIDEO_DURATION}s]"
-read -p "> " START_TIME_INPUT
+if [[ -n "$CLI_START" ]]; then
+    START_TIME_INPUT="$CLI_START"
+else
+    read -p "> " START_TIME_INPUT
+fi
 
 START_TIME="${START_TIME_INPUT:-0}"
 
@@ -384,7 +413,11 @@ REMAINING_DURATION=$(LC_NUMERIC=C awk \
     'BEGIN{printf "%.2f",(total-start>0)?total-start:0}')
 
 echo "Duration? [remaining duration ${REMAINING_DURATION}s]"
-read -p "> " DURATION_INPUT
+if [[ -n "$CLI_DURATION" ]]; then
+    DURATION_INPUT="$CLI_DURATION"
+else
+    read -p "> " DURATION_INPUT
+fi
 
 if [[ -n "$DURATION_INPUT" ]]; then
     OUTPUT_DURATION="$DURATION_INPUT"
