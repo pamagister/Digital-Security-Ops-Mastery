@@ -82,24 +82,24 @@ set -euo pipefail
 #######################################
 # User-configurable defaults
 #######################################
-DEFAULT_CRF=26                # Default Constant Rate Factor (lower = better quality, 20–30 typical)
-PRESET="slow"                 # Preset: ultrafast, superfast, veryfast, faster, fast, medium, slow, slower, veryslow
+DEFAULT_CRF=33                # Default Constant Rate Factor (lower = better quality, 20–30 typical)
+PRESET="fast"                 # Preset: ultrafast, superfast, veryfast, faster, fast, medium, slow, slower, veryslow
 AUDIO_BITRATE="160k"          # Audio bitrate (""=copy audio, "0", or "0k" = strip audio)
 SUFFIX_PROCESSED="_processed" # Default suffix for processed files (only used if not overwriting)
 CODEC="libx264"               # Video codec
 MUSIC_FOLDER="$HOME/Musik/Ambient"    # Root folder to search for music tracks
 VIDEO_INTRO_FOLDER="$HOME/Videos/Intros"    # Root folder to search for intro videos
-OUTPUT_FOLDER="$HOME/Videos/Output"              # Leave empty to use input folder
-BATCH_FILE_NAME="video_processing.sh" # File name that the prompts for reproducing rendering are being written. This is inside OUTPUT_FOLDER
-FADE_IN_TIME=4.0            # Duration for fading in the video
-FADE_OUT_TIME=2.0              # Time (s) to fade out video (to black) and music (to silent)
-FADE_IN_AUDIO=False   # True = Audio fades in smoothly
+OUTPUT_FOLDER="$HOME/Videos/Output_small"              # Leave empty to use input folder
+BATCH_FILE_NAME="video_processing.sh" # File name that the prompts for reproducing rendering are being written. This is inside the Folder of this same script.
+FADE_IN_TIME=4.0              # Duration for fading in the video
+FADE_OUT_TIME=2.0             # Time (s) to fade out video (to black) and music (to silent)
+FADE_IN_AUDIO=false   # true = Audio fades in smoothly
 THUMBNAIL_TIME=5.0          # Time when reference thumbnail snapshot is taken. -1.0 means: No thumbnail
-SAVE_THUMBNAIL=True   # True = create jpg + attach cover, False = skip completely
+SAVE_THUMBNAIL=true   # true = create jpg + attach cover, false = skip completely
 
-PRESERVE_LRF=False                # Set to True if you want to keep original LRF format, otherwise output MP4
+PRESERVE_LRF=false                # Set to true if you want to keep original LRF format, otherwise output MP4
 TEXT_SIZE=10           # Text height in percent of video height (e.g. 5 = 5%)
-LIMIT_HEIGHT=1080     # 0 = keep original height, otherwise max output height
+LIMIT_HEIGHT=480     # 0 = keep original height, otherwise max output height
 TEXT_MARGIN=6         # Margin in percent of video height
 
 FONT="/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"
@@ -244,6 +244,19 @@ CLI_INTRO_FILE=""
 CLI_TITLE=""
 CLI_START=""
 CLI_DURATION=""
+
+#######################################
+# Detect CLI usage
+#######################################
+
+CLI_ARGUMENTS_PASSED=$#
+CLI_ARGUMENTS_THRESHOLD=3
+
+INTERACTIVE_MODE=true
+
+if [[ "$CLI_ARGUMENTS_PASSED" -gt $CLI_ARGUMENTS_THRESHOLD ]]; then
+    INTERACTIVE_MODE=false
+fi
 
 #######################################
 # Parse arguments
@@ -408,14 +421,15 @@ fi
 #######################################
 # Optional trimming
 #######################################
-echo "Start time? [total duration ${VIDEO_DURATION}s]"
-if [[ -n "$CLI_START" ]]; then
-    START_TIME_INPUT="$CLI_START"
-else
-    read -p "> " START_TIME_INPUT
-fi
 
-START_TIME="${START_TIME_INPUT:-0}"
+echo "Start time? [total duration ${VIDEO_DURATION}s]"
+
+if [[ -n "$CLI_START" ]]; then
+    START_TIME="$CLI_START"
+else
+    read -p "> " USER_INPUT
+    START_TIME="${USER_INPUT:-0}"
+fi
 
 REMAINING_DURATION=$(LC_NUMERIC=C awk \
     -v total="$VIDEO_DURATION" \
@@ -423,16 +437,12 @@ REMAINING_DURATION=$(LC_NUMERIC=C awk \
     'BEGIN{printf "%.2f",(total-start>0)?total-start:0}')
 
 echo "Duration? [remaining duration ${REMAINING_DURATION}s]"
-if [[ -n "$CLI_DURATION" ]]; then
-    DURATION_INPUT="$CLI_DURATION"
-else
-    read -p "> " DURATION_INPUT
-fi
 
-if [[ -n "$DURATION_INPUT" ]]; then
-    OUTPUT_DURATION="$DURATION_INPUT"
+if [[ -n "$CLI_DURATION" ]]; then
+    OUTPUT_DURATION="$CLI_DURATION"
 else
-    OUTPUT_DURATION="$REMAINING_DURATION"
+    read -p "> " USER_INPUT
+    OUTPUT_DURATION="${USER_INPUT:-$REMAINING_DURATION}"
 fi
 
 
@@ -444,11 +454,11 @@ SCRIPT_PATH=$(realpath "$0")
 
 REPLAY_CMD="$SCRIPT_PATH \"$VIDEO_FILE\""
 
-[[ -n "$MUSIC_FILE" ]] && REPLAY_CMD+=" --music \"$MUSIC_FILE\""
-[[ -n "$INTRO_VIDEO" ]] && REPLAY_CMD+=" --intro \"$INTRO_VIDEO\""
-[[ -n "$VIDEO_TITLE" ]] && REPLAY_CMD+=" --title \"$VIDEO_TITLE\""
-[[ -n "$START_TIME_INPUT" ]] && REPLAY_CMD+=" --start \"$START_TIME_INPUT\""
-[[ -n "$DURATION_INPUT" ]] && REPLAY_CMD+=" --duration \"$DURATION_INPUT\""
+REPLAY_CMD+=" --music \"$MUSIC_FILE\""
+REPLAY_CMD+=" --intro \"$INTRO_VIDEO\""
+REPLAY_CMD+=" --title \"$VIDEO_TITLE\""
+REPLAY_CMD+=" --start \"$START_TIME\""
+REPLAY_CMD+=" --duration \"$OUTPUT_DURATION\""
 
 #######################################
 # Fade timing (based on OUTPUT duration!)
@@ -589,7 +599,8 @@ fi
 TMP_OUTPUT="${OUT_BASE}.mp4"
 
 # Resolve batch file location
-BATCH_FILE="${TARGET_DIR}/${BATCH_FILE_NAME}"
+SCRIPT_DIR="$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")" && pwd)"
+BATCH_FILE="${SCRIPT_DIR}/${BATCH_FILE_NAME}"
 
 
 #######################################
@@ -628,7 +639,7 @@ audio_fade_out_start=$(LC_NUMERIC=C awk \
     -v ft="$FADE_OUT_TIME" \
     'BEGIN{printf "%.3f",(dur-ft>0)?dur-ft:0}')
 
-if [[ "$FADE_IN_AUDIO" == "True" ]]; then
+if [[ "$FADE_IN_AUDIO" == true ]]; then
   # fade-in and fadeout:
   AUDIO_FILTER="afade=t=in:st=0:d=$FADE_IN_TIME,afade=t=out:st=$audio_fade_out_start:d=$FADE_OUT_TIME"
 else
@@ -677,7 +688,7 @@ fi
 #######################################
 FINAL_OUTPUT="$TMP_OUTPUT"
 
-if  [[ "$PRESERVE_LRF" == "True" ]]; then
+if  [[ "$PRESERVE_LRF" == true ]]; then
   if [[ "${EXT^^}" == "LRF" ]]; then
       FINAL_OUTPUT="${OUT_BASE}.LRF"
       mv "$TMP_OUTPUT" "$FINAL_OUTPUT"
@@ -690,7 +701,7 @@ fi
 # Thumbnail generation
 #######################################
 
-if [[ "$SAVE_THUMBNAIL" == "True" && "$THUMBNAIL_TIME" != "-1.0" ]]; then
+if [[ "$SAVE_THUMBNAIL" == true && "$THUMBNAIL_TIME" != "-1.0" ]]; then
 
 THUMB_FILE="${OUT_BASE}.jpg"
 
@@ -761,5 +772,7 @@ mv "${TMP_OUTPUT}.tmp" "$TMP_OUTPUT"
 
 fi
 
-append_to_batch "$REPLAY_CMD"
+if [[ "$INTERACTIVE_MODE" == true ]]; then
+    append_to_batch "$REPLAY_CMD"
+fi
 echo "✅ Done: $FINAL_OUTPUT"
