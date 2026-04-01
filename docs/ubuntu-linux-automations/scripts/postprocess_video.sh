@@ -27,7 +27,7 @@
 #
 #
 # MAIN FEATURES
-# -------------Nutzer
+# -------------
 #
 # ✔ Video + music merging
 #   - Replaces original audio with selected music track, e.g. from https://pixabay.com/music/
@@ -239,11 +239,19 @@ extract_datetime_text() {
 #######################################
 # CLI parameters (optional overrides)
 #######################################
+
 CLI_MUSIC_FILE=""
 CLI_INTRO_FILE=""
 CLI_TITLE=""
 CLI_START=""
 CLI_DURATION=""
+
+# presence flags
+CLI_INTRO_SET=false
+CLI_TITLE_SET=false
+CLI_MUSIC_SET=false
+CLI_START_SET=false
+CLI_DURATION_SET=false
 
 #######################################
 # Detect CLI usage
@@ -268,22 +276,27 @@ while [[ $# -gt 0 ]]; do
     case "$1" in
         --music)
             CLI_MUSIC_FILE="$2"
+            CLI_MUSIC_SET=true
             shift 2
             ;;
         --intro)
             CLI_INTRO_FILE="$2"
+            CLI_INTRO_SET=true
             shift 2
             ;;
         --title)
             CLI_TITLE="$2"
+            CLI_TITLE_SET=true
             shift 2
             ;;
         --start)
             CLI_START="$2"
+            CLI_START_SET=true
             shift 2
             ;;
         --duration)
             CLI_DURATION="$2"
+            CLI_DURATION_SET=true
             shift 2
             ;;
         -*)
@@ -354,11 +367,17 @@ fi
 
 INTRO_VIDEO=""
 
-if [[ -n "$CLI_INTRO_FILE" ]]; then
+if [[ "$CLI_INTRO_SET" == true ]]; then
+
+    # user explicitly decided
     if [[ -n "$CLI_INTRO_FILE" && -f "$CLI_INTRO_FILE" ]]; then
         INTRO_VIDEO="$CLI_INTRO_FILE"
+    else
+        INTRO_VIDEO=""
     fi
-else
+
+elif [[ "$INTERACTIVE_MODE" == true ]]; then
+
     if [[ -d "$VIDEO_INTRO_FOLDER" ]]; then
 
         mapfile -t INTRO_FILES < <(
@@ -389,10 +408,13 @@ fi
 #######################################
 # Optional custom video name
 #######################################
-if [[ -n "$CLI_TITLE" ]]; then
+
+if [[ "$CLI_TITLE_SET" == true ]]; then
     VIDEO_TITLE="$CLI_TITLE"
-else
+elif [[ "$INTERACTIVE_MODE" == true ]]; then
     read -p "Optional video name (ENTER to skip): " VIDEO_TITLE
+else
+    VIDEO_TITLE=""
 fi
 
 VIDEO_TITLE_SANITIZED=""
