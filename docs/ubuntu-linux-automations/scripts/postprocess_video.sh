@@ -598,11 +598,6 @@ fi
 
 TMP_OUTPUT="${OUT_BASE}.mp4"
 
-# Resolve batch file location
-SCRIPT_DIR="$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")" && pwd)"
-BATCH_FILE="${SCRIPT_DIR}/${BATCH_FILE_NAME}"
-
-
 #######################################
 # Simple processing queue (single instance)
 #######################################
@@ -773,6 +768,10 @@ mv "${TMP_OUTPUT}.tmp" "$TMP_OUTPUT"
 fi
 
 if [[ "$INTERACTIVE_MODE" == true ]]; then
+    # Resolve batch file location
+    SCRIPT_DIR="$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")" && pwd)"
+    BATCH_FILE="${SCRIPT_DIR}/${BATCH_FILE_NAME}"
     append_to_batch "$REPLAY_CMD"
 fi
+
 echo "✅ Done: $FINAL_OUTPUT"
