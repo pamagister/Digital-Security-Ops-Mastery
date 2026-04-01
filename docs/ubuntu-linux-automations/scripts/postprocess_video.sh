@@ -82,14 +82,14 @@ set -euo pipefail
 #######################################
 # User-configurable defaults
 #######################################
-DEFAULT_CRF=33                # Default Constant Rate Factor (lower = better quality, 20–30 typical)
-PRESET="fast"                 # Preset: ultrafast, superfast, veryfast, faster, fast, medium, slow, slower, veryslow
+DEFAULT_CRF=27                # Default Constant Rate Factor (lower = better quality, 20–30 typical)
+PRESET="Slow"                 # Preset: ultrafast, superfast, veryfast, faster, fast, medium, slow, slower, veryslow
 AUDIO_BITRATE="160k"          # Audio bitrate (""=copy audio, "0", or "0k" = strip audio)
 SUFFIX_PROCESSED="_processed" # Default suffix for processed files (only used if not overwriting)
 CODEC="libx264"               # Video codec
 MUSIC_FOLDER="$HOME/Musik/Ambient"    # Root folder to search for music tracks
 VIDEO_INTRO_FOLDER="$HOME/Videos/Intros"    # Root folder to search for intro videos
-OUTPUT_FOLDER="$HOME/Videos/Output_small"              # Leave empty to use input folder
+OUTPUT_FOLDER="$HOME/Videos/Output"              # Leave empty to use input folder
 BATCH_FILE_NAME="video_processing.sh" # File name that the prompts for reproducing rendering are being written. This is inside the Folder of this same script.
 FADE_IN_TIME=4.0              # Duration for fading in the video
 FADE_OUT_TIME=2.0             # Time (s) to fade out video (to black) and music (to silent)
@@ -99,7 +99,7 @@ SAVE_THUMBNAIL=true   # true = create jpg + attach cover, false = skip completel
 
 PRESERVE_LRF=false                # Set to true if you want to keep original LRF format, otherwise output MP4
 TEXT_SIZE=10           # Text height in percent of video height (e.g. 5 = 5%)
-LIMIT_HEIGHT=480     # 0 = keep original height, otherwise max output height
+LIMIT_HEIGHT=1080     # 0 = keep original height, otherwise max output height
 TEXT_MARGIN=6         # Margin in percent of video height
 
 FONT="/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"
@@ -447,7 +447,7 @@ fi
 echo "Start time? [total duration ${VIDEO_DURATION}s]"
 
 if [[ -n "$CLI_START" ]]; then
-    START_TIME="$CLI_START"
+    START_TIME="${CLI_START:-0}"
 else
     read -p "> " USER_INPUT
     START_TIME="${USER_INPUT:-0}"
@@ -460,11 +460,25 @@ REMAINING_DURATION=$(LC_NUMERIC=C awk \
 
 echo "Duration? [remaining duration ${REMAINING_DURATION}s]"
 
-if [[ -n "$CLI_DURATION" ]]; then
-    OUTPUT_DURATION="$CLI_DURATION"
+# Duration input
+if [[ "$CLI_DURATION_SET" == true ]]; then
+    USER_DURATION="${CLI_DURATION:-0}"
 else
     read -p "> " USER_INPUT
-    OUTPUT_DURATION="${USER_INPUT:-$REMAINING_DURATION}"
+    USER_DURATION="${USER_INPUT:-$REMAINING_DURATION}"
+fi
+
+#######################################
+# Duration normalization
+#######################################
+
+# special meaning:
+# 0 = full remaining duration
+
+if [[ "$USER_DURATION" == "0" ]]; then
+    OUTPUT_DURATION="$REMAINING_DURATION"
+else
+    OUTPUT_DURATION="$USER_DURATION"
 fi
 
 
