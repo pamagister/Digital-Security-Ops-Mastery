@@ -11,9 +11,10 @@ It automates:
   - `LOCAL_ENCRYPTED` ↔ `NAS_TARGET` (encrypted files).
 - Optional restore and reset workflows.
 
-⚠️ **Important**:  
-- This script **never deletes files in `LOCAL_DOCS` without confirmation**.  
-- File conflicts are handled interactively by **Unison**.
+⚠️ **Important**:
+- Synchronization can propagate file deletions and changes. Keep a separate backup and test recovery before relying on this script.
+- The script runs Unison in batch mode; conflict handling is not interactive. Review its behavior with test data before using it on important files.
+- `--reset` deletes the local encrypted container directory (`LOCAL_ENCRYPTED`) and its logs. Do not use it as routine cleanup; make sure another valid copy exists first.
 
 ## Sync Architecture Diagram
 
@@ -47,7 +48,7 @@ It automates:
 ---
 
 ## ⚙️ Requirements
-The following tools must be installed:
+The following tools must be installed and available in `PATH`:
 - `gocryptfs`
 - `unison`
 - `rsync`
@@ -55,27 +56,27 @@ The following tools must be installed:
 
 Check installation:
 ```bash
-which gocryptfs unison rsync fusermount
+command -v gocryptfs unison rsync fusermount
 ````
 
 ---
 
 ## 📥 Setup
 
-### 0. Download the script
+### 1. Download the script
 ```bash
-wget https://github.com/pamagister/Digital-Security-Ops-Mastery/blob/main/ubuntu-linux-automations/scripts/sync_dir.sh
+curl -fL -o ~/sync_dir.sh https://raw.githubusercontent.com/pamagister/Digital-Security-Ops-Mastery/main/docs/ubuntu-linux-automations/scripts/sync_dir.sh
 ```
    
-### 1. Make the Script Executable
+### 2. Make the script executable
 
 ```bash
 chmod +x ~/sync_dir.sh
 ```
 
-### 2. Configure Paths
+### 3. Configure paths
 
-Inside the script, edit these variables as needed:
+The script defaults to the current user's `~/Documents` and a NAS directory mounted at `/mnt/nas/data/Backups/encrypted_docs_backup`. Edit these variables near the top of the script if your paths differ:
 
 ```bash
 LOCAL_DOCS="$HOME/Documents/"
@@ -85,13 +86,13 @@ NAS_TARGET="/mnt/nas/data/Backups/encrypted_docs_backup"
 CRED_FILE="/etc/samba/credentials_sync_docs"
 ```
 
-### 3. Setup Credential File
+### 4. Set up the credential file
 
 ```bash
 sudo nano /etc/samba/credentials_sync_docs
 ```
 
-Content (password only):
+The file contains the gocryptfs container passphrase on its first non-empty line. Protect it carefully and do not reuse your NAS login password:
 
 ```
 YOUR_PASSWORD_HERE
@@ -109,7 +110,7 @@ sudo chmod 600 /etc/samba/credentials_sync_docs
 
 ### Normal Sync (default)
 
-Bidirectional sync between local documents and NAS backup:
+Mount the encrypted directory and synchronize it with the NAS target:
 
 ```bash
 ./sync_dir.sh
@@ -125,7 +126,7 @@ Restore decrypted files from NAS into `LOCAL_DOCS`:
 
 ### Initial Backup
 
-Use when NAS target is empty:
+Use only after confirming that `NAS_TARGET` is mounted, points to the intended directory, and contains no data that must be preserved. The script does not verify that the target is empty:
 
 ```bash
 ./sync_dir.sh --init-backup
@@ -133,7 +134,7 @@ Use when NAS target is empty:
 
 ### Reset Environment
 
-Unmount, remove containers, and cleanup logs (does **not** delete `LOCAL_DOCS`):
+Unmount the decrypted mount and delete the local encrypted container directory and logs. `LOCAL_DOCS` and the NAS target are not deleted:
 
 ```bash
 ./sync_dir.sh --reset
@@ -149,20 +150,20 @@ Unmount, remove containers, and cleanup logs (does **not** delete `LOCAL_DOCS`):
 
 ## 🟢 Recovery (Manual)
 
-If needed, you can manually access encrypted NAS backups:
+If needed, manually access the encrypted NAS backup (use the actual mounted NAS path):
 
 ```bash
 # Example NAS target
-NAS_TARGET="/mnt/nas/data/Backups/encrypted_documents"
+NAS_TARGET="/mnt/nas/data/Backups/encrypted_docs_backup"
 
 # Create a mountpoint
-mkdir -p tmp/nas_decrypted
+mkdir -p "$HOME/tmp/nas_decrypted"
 
 # Mount (read-only for safety, password prompt)
-gocryptfs -ro "$NAS_TARGET" tmp/nas_decrypted
+gocryptfs -ro "$NAS_TARGET" "$HOME/tmp/nas_decrypted"
 
 # After work, unmount
-fusermount -u tmp/nas_decrypted
+fusermount -u "$HOME/tmp/nas_decrypted"
 ```
 
 ---
@@ -190,7 +191,7 @@ Logs are written to:
 
 ## 📝 Notes
 
-* Conflicts are resolved interactively by **Unison**.
-* `rsync` is used for safe restores and backups.
-* On exit, temporary scripts are securely deleted.
-
+* Unison is called with `-batch`; do not expect interactive conflict resolution.
+* Restore uses `rsync --update --backup` and prompts before copying. Older/overwritten destination files are placed in a timestamped sibling backup directory.
+* `--reset` removes the local encrypted container; it does not securely erase storage or remove the NAS copy.
+* Temporary password helper files are removed on exit. This does not replace protecting the credential file itself.

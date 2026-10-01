@@ -10,24 +10,25 @@ This script configures KDE/Plasma to use **one language for the user interface**
 
 ## Usage
 
-1. Edit the variables at the top of the script to set your preferred languages:
+1. Download the script:
    ```bash
-   wget https://github.com/pamagister/Digital-Security-Ops-Mastery/blob/main/ubuntu-linux-automations/scripts/set_kde_language.sh
+   curl -fL -o set_kde_language.sh https://raw.githubusercontent.com/pamagister/Digital-Security-Ops-Mastery/main/docs/ubuntu-linux-automations/scripts/set_kde_language.sh
+   chmod +x set_kde_language.sh
    ```
 
-2. Edit the variables at the top of the script to set your preferred languages:
+2. Edit the variables near the top of the script to set your preferred languages:
    ```bash
    GUI_LANG="en_US"   # Interface language
    LOCALE_LANG="de_DE" # Regional/locale settings
    ```
-   (like `fr_FR`, `es_ES`, `ja_JP`)
+   (for example `fr_FR`, `es_ES`, `ja_JP`). Make sure these locales are installed.
 
-2. Run the script:
+3. Run the script as your regular user (not with `sudo`):
    ```bash
    ./set_kde_language.sh
    ```
 
-3. Log out and back in to apply changes.
+4. Log out and back in to apply changes.
 
 ## Example
 
@@ -37,7 +38,6 @@ This script configures KDE/Plasma to use **one language for the user interface**
 
 ## Notes
 
-* The script modifies KDE configs via `kwriteconfig5`.
-* For full effect, it also appends environment variables to `~/.profile`.
+* The script modifies KDE configuration via `kwriteconfig5` and appends environment variables to the current user's `~/.profile`; it does not configure the system-wide locale.
+* Back up `~/.profile` first if you maintain locale settings there. The script adds entries but does not replace previous conflicting exports.
 * Logging out and logging back in ensures that all changes are applied.
-

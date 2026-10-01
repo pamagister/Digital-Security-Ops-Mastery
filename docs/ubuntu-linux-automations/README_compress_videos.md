@@ -43,7 +43,7 @@ cd ~
 
 # 2. Download the script from GitHub
 curl -o compress_videos.sh \
-  https://raw.githubusercontent.com/pamagister/Digital-Security-Ops-Mastery/main/ubuntu-linux-automations/scripts/compress_videos.sh
+  https://raw.githubusercontent.com/pamagister/Digital-Security-Ops-Mastery/main/docs/ubuntu-linux-automations/scripts/compress_videos.sh
 
 # 3. Make the script executable
 chmod +x compress_videos.sh
@@ -97,17 +97,21 @@ DRY_RUN=false                 # true = test mode (no ffmpeg executed)
 ./compress_videos.sh movie1.mp4 clip.avi
 ```
 
-### Run in dry-run mode (preview commands only)
+### Enable dry-run mode
 
+`DRY_RUN` is set inside the script, so edit that variable near the top of `compress_videos.sh` before running:
 ```bash
 DRY_RUN=true
 ```
 
 ### Mark originals as processed
 
+Edit `SUFFIX_PROCESSED` near the top of the script; this renames the original after successful compression when a separate compressed file is created:
 ```bash
 SUFFIX_PROCESSED="_old"
 ```
+
+The configurable defaults are set inside the script; shell assignments entered separately in a terminal do not change them. Back up important source files before selecting overwrite.
 
 ---
 

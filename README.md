@@ -1,30 +1,30 @@
-![English](_static/ico/uk.ico)[English](README_en.md) | ![Deutsch](_static/ico/germany.ico)[Deutsch](README.md) [![Read the Docs](https://readthedocs.org/projects/Digital-Security-Ops-Mastery/badge/?version=latest)](https://Digital-Security-Ops-Mastery.readthedocs.io/en/latest/)
+![English](docs/_static/ico/uk.ico)[English](README_en.md) | ![Deutsch](docs/_static/ico/germany.ico)[Deutsch](README.md) [![Read the Docs](https://readthedocs.org/projects/Digital-Security-Ops-Mastery/badge/?version=latest)](https://Digital-Security-Ops-Mastery.readthedocs.io/en/latest/)
 # Digital-Security-Ops-Mastery
 
-Werde zum Master deiner digitalen Sicherheit! Mit Digital Security Ops Mastery navigierst du souverän durch den Dschungel der digitalen Welt und behältst jederzeit die volle Kontrolle über deine Daten.
+Praxisnahe Anleitungen für datenschutzfreundliche und sichere Setups von Smartphone und PC – von Android-Backups und Nextcloud bis zu Linux-Automatisierungen.
 
 # Themen
 
 ## ![app_image](/docs/_static/ico/nextcloud.ico) [Nextcloud](docs/nextcloud/README.md)
 
-Deine Daten, deine Regeln! Richte dir deine eigene Nextcloud ein und synchronisiere Dateien, Kontakte und Kalender nahtlos und sicher über alle Geräte hinweg – ganz ohne Big Tech.
+Einrichtung und Synchronisierung von Dateien, Kontakten, Kalendern und Notizen mit selbst gehosteter oder verwalteter Nextcloud.
 
 ## ![app_image](/docs/_static/ico/android.ico) [De-Googled-phone](docs/de-googled-phone/README.md)
 
-Befreie dein Smartphone von Google-Fesseln! Entdecke datenschutzfreundliche Betriebssysteme wie GrapheneOS und nutze geniale Open-Source-Apps, die dir die volle Kontrolle über dein Gerät zurückgeben.
+Vergleiche alternative Android-Betriebssysteme und datenschutzfreundliche Apps. Geräteunterstützung und Sicherheitsniveau unterscheiden sich je nach Betriebssystem.
 
 ## ![app_image](/docs/_static/ico/adaway.ico) [Kindersicheres Telefon](docs/child-proof-phone/README.md)
 
-Sicherer Start für Kids in die digitale Welt. Richte Bildschirmzeiten, App-Sperren und Inhaltsfilter ein, damit dein Kind geschützt surfen kann – inklusive Ortung für den Notfall.
+Hinweise zu Bildschirmzeit, App-Sperren, Inhaltsfiltern und Geräteortung. Diese Maßnahmen ersetzen keine Begleitung und sind kein vollständiger Jugendschutz.
 
 ## ![app_image](/docs/_static/ico/backup.ico) [Smartphone sicher einrichten](docs/backup-restore-phone/README.md)
 
-Keine Panik bei Datenverlust! Mit der 3-2-1-Strategie, KeePass und automatischen Syncs für Fotos und Chats bist du auf jeden Notfall vorbereitet und stellst dein Handy im Handumdrehen wieder her.
+Die deutschsprachige Übersicht behandelt Backups für Passwörter, Nachrichten, Fotos und weitere Android-Daten sowie Grenzen der Wiederherstellung.
 
 ## ![app_image](/docs/_static/ico/ubuntu.ico) [Linux (Ubuntu/Kubuntu) Automatisierungen ](docs/ubuntu-linux-automations/README.md)
 
-Linux-Power auf Autopilot! Automatisiere dein Kubuntu-Setup, synchronisiere verschlüsselte Daten aufs NAS und optimiere Videos und Bilder direkt per Rechtsklick – effizienter geht's nicht.
+Anleitungen und Skripte für Kubuntu, NAS-Einbindungen, verschlüsselte Synchronisierung und die Verarbeitung von Bildern und Videos.
 
 ## ![app_image](/docs/_static/ico/ubuntu_children.ico) Kindersicherer Ubuntu PC<!--(kindersicher-ubuntu/README.md)-->
 
-Ein sicherer PC für die Kleinen. Coming soon – bleib dran für das ultimative kinderfreundliche Ubuntu-Setup!
+In Arbeit.

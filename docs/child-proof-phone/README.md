@@ -6,8 +6,8 @@ In diesem Kapitel geht es darum, ein Mobiltelefon einzurichten, das von Kindern 
 Der Schwerpunkt liegt dabei auf der Gewährleistung der folgenden Funktionen:
 
 - Begrenzung der Bildschirmzeit für bestimmte Anwendungen und Kategorien von Anwendungen
-- Verhindern der Installation und Deinstallation von bestimmten Apps
-- Verhinderung der Deinstallation der App, die zur Begrenzung der Bildschirmzeit erforderlich ist
+- Erschweren der Installation und Deinstallation bestimmter Apps (abhängig von Android-Version und Gerät)
+- Schutz der App zur Begrenzung der Bildschirmzeit; eine Drittanbieter-App kann Deinstallation oder Umgehung nicht zuverlässig verhindern
 - Schutz vor unangemessenen Inhalten
 - Lokalisierung des Telefons im Falle eines Verlustes oder zur Bestimmung des Aufenthaltsortes des Kindes
 
@@ -16,8 +16,8 @@ Der Schwerpunkt liegt dabei auf der Gewährleistung der folgenden Funktionen:
 
 - ![app_image](../_static/ico/timelimit.ico) **[TimeLimit](https://timelimit.io/)** auf [f-droid](https://f-droid.org/packages/io.timelimit.android.aosp.direct/): Flexibel die Nutzungsdauer begrenzen 
 - ![app_image](../_static/ico/adaway.ico) **[AdAway](https://adaway.org/)** auf [f-droid](https://f-droid.org/de/packages/org.adaway/): Ein kostenloser und quelloffener Werbeblocker für Android
-- ![app_image](../_static/ico/applock.ico) **[App Lock](https://play.google.com/store/apps/details?id=applock.lockapps.fingerprint.password.lockit)**: AppLock sichert Apps und schützt Ihre privaten Daten mit nur einem Klick. Schützen Sie Ihr Telefon mit einer PIN, einem Muster oder einem Fingerabdruck
-- ![app_image](../_static/ico/findmydevice.ico) **[Find My Device](https://f-droid.org/de/packages/de.nulide.findmydevice/)** auf [f-droid]((https://f-droid.org/de/packages/de.nulide.findmydevice/)): Lokalisieren und steuern Sie Ihr Gerät aus der Ferne
+- ![app_image](../_static/ico/applock.ico) **[App Lock](https://play.google.com/store/apps/details?id=applock.lockapps.fingerprint.password.lockit)**: Drittanbieter-App zum Sperren ausgewählter Apps. Die Sperre ist keine verlässliche Kindersicherung und kann je nach Gerät umgangen werden.
+- ![app_image](../_static/ico/findmydevice.ico) **[Find My Device](https://f-droid.org/packages/de.nulide.findmydevice/)**: Gerät per SMS orten und bestimmte Fernbefehle ausführen
 
 
 ---
@@ -26,7 +26,7 @@ Der Schwerpunkt liegt dabei auf der Gewährleistung der folgenden Funktionen:
 
 ### App zur Begrenzung der Bildschirmzeit einrichten
 
-1. Installieren Sie die erforderliche TimeLimit App [wie oben erwähnt](#empfohlen)
+1. Installieren Sie TimeLimit [wie oben erwähnt](#empfohlene-apps)
 1. Erteilen Sie die notwendigen Berechtigungen
 1. Fügen Sie mindestens die folgenden Apps als explizit erlaubte Apps hinzu, damit diese Apps ungehindert arbeiten können:
    * AdAway-Inhaltsblocker
@@ -50,7 +50,7 @@ Daher ist es notwendig, die Zeitlimit-App mit einer App zur generellen Sperrung 
 
 ### Inhaltsblocker einrichten
 
-1. Installieren Sie die erforderliche Ad-Blocker-App [wie oben erwähnt](#empfohlen)
+1. Installieren Sie AdAway [wie oben erwähnt](#empfohlene-apps)
 
 2. Fügen Sie bei Bedarf einige individuelle Blocklisten hinzu:
 
@@ -58,7 +58,7 @@ Daher ist es notwendig, die Zeitlimit-App mit einer App zur generellen Sperrung 
 
    * StevenBlack Fakenews-Glücksspiel-Porno: https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/fakenews-gambling-porn-only/hosts
 
-   * Online Gaming: https://raw.githubusercontent.com/pamagister/Digital-Security-Ops-Mastery/main/child-proof-phone/online-games-hosts-blocklist/hosts
+   * Online-Spiele: https://raw.githubusercontent.com/pamagister/Digital-Security-Ops-Mastery/main/docs/child-proof-phone/online-games-hosts-blocklist/hosts
 
 
 <Details>
@@ -73,8 +73,8 @@ Daher ist es notwendig, die Zeitlimit-App mit einer App zur generellen Sperrung 
 <Details>
 <summary>Verwendung vereinheitlichter gesperrter Hosts</summary>
 
-Zusätzlich zu den bereits voreingestellten gesperrten Hosts, können weitere spezielle Hosts [hier](https://github.com/StevenBlack/hosts#list-of-all-hosts-file-variants) gefunden werden.
-Die Liste der **Unified Hosts** ist oft schon voreingestellt, so dass für Kinder spezifische Kategorien wie [Glücksspiel und Porno](https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/gambling-porn-only/hosts) oder weitere Hosts aus [Stephen Black Hosts](https://github.com/StevenBlack/hosts) hinzugefügt werden können. 
+Zusätzlich zu den bereits voreingestellten gesperrten Hosts können weitere Hosts [hier](https://github.com/StevenBlack/hosts#list-of-all-hosts-file-variants) gefunden werden.
+Die Liste **Unified Hosts** ist häufig voreingestellt. Für Kinder können zusätzliche Kategorien wie [Glücksspiel und Pornografie](https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/gambling-porn-only/hosts) ergänzt werden. Prüfen Sie jede Liste auf Aktualität und Nebenwirkungen.
 </details>
 
 
@@ -84,7 +84,7 @@ Die Liste der **Unified Hosts** ist oft schon voreingestellt, so dass für Kinde
 In manchen Fällen wird es notwendig sein, zusätzliche Seiten individuell zu sperren, wie z.B. **Onlinespiele**. 
 Weitere Informationen dazu finden Sie im [AdAway Wiki](https://github.com/AdAway/AdAway/wiki/HostsSources).
 
-Eine zusätzliche [Hostliste zum Blockieren von Online-Spielen](https://raw.githubusercontent.com/pamagister/Digital-Security-Ops-Mastery/main/child-proof-phone/online-games-hosts-blocklist/hosts) wurde hier in diesem Repository mit AdAway erstellt. 
+Eine zusätzliche [Hostliste zum Blockieren von Online-Spielen](https://raw.githubusercontent.com/pamagister/Digital-Security-Ops-Mastery/main/docs/child-proof-phone/online-games-hosts-blocklist/hosts) liegt in diesem Repository.
 Diese basiert auf der AdBlock-kompatiblen Liste von [IREK-szef](https://raw.githubusercontent.com/IREK-szef/games-blocklist/main/lists/Adblock-dns/games.txt), die an das AdAway-Format angepasst und leicht erweitert wurde.
 </details>
 
@@ -92,7 +92,7 @@ Diese basiert auf der AdBlock-kompatiblen Liste von [IREK-szef](https://raw.gith
 
 ### App Locker einrichten
 
-1. Installieren Sie die gewünschte App [wie oben erwähnt](#empfohlen)
+1. Installieren Sie die gewünschte App [wie oben erwähnt](#empfohlene-apps)
 1. Erteilen Sie die notwendigen Berechtigungen
 1. Sperren Sie mindestens die folgenden Apps:
 
@@ -106,8 +106,8 @@ Diese basiert auf der AdBlock-kompatiblen Liste von [IREK-szef](https://raw.gith
 
    1. 🔴 **[aus]** Fingerabdruck verwenden (würde das Entsperren mit dem Fingerabdruck der Kinder ermöglichen)
    2. 🟢 **[ein]** Neue App sperren
-   3. 🟢 **[ein]** Passwort oder Pin festlegen, die sich von der Pin der Kinder unterscheidet
-   4. 🔴 **[aus]** Batterieoptimierung (dies kann dazu führen, dass die App im Hintergrund inaktiv läuft)
+   3. 🟢 **[ein]** Ein Passwort oder eine PIN festlegen, die sich von der PIN des Kindes unterscheidet
+   4. 🔴 **[aus]** Akku-Optimierung für die App (damit sie im Hintergrund weiterlaufen kann; der genaue Schaltername hängt von Android ab)
    5. 🟢 **[ein]** Symboltarnung
    6. 🟢 **[ein]** Deinstallationsschutz
 
@@ -115,21 +115,22 @@ Diese basiert auf der AdBlock-kompatiblen Liste von [IREK-szef](https://raw.gith
 <Details>
 <summary>ℹ️ Tipps und Details zu App Locker</summary>
 
-* Um zu verhindern, dass die oben erwähnte App deaktiviert oder gar deinstalliert wird, kann mit App Lock eine Zugriffssperre für bestimmte Apps eingerichtet werden.
-* Auch das Einstellungsmenü kann über diese App gesichert werden, um zu verhindern, dass die Lock-App deinstalliert wird. Hierfür muss eine Wiederherstellungs-E-Mail eingerichtet werden.
+* Eine App-Sperre kann Änderungen erschweren, verhindert aber nicht zuverlässig, dass eine App deaktiviert oder deinstalliert wird. Geräte-PIN, Android-Version und Berechtigungen beeinflussen die Umgehungsmöglichkeiten.
+* Das Sperren der Einstellungen ist keine verlässliche Kindersicherung. Prüfen Sie, ob die App im Hintergrund aktiv bleibt und ob die Schutzfunktionen auf dem konkreten Gerät funktionieren.
 * Sie kann auch dazu verwendet werden, harmlose Apps zu schützen, die eine spezielle Konfiguration benötigen (z.B. nextcloud), die vom Kind nicht verändert werden soll.
 </details>
 
 
 ---
 
-### Find my Device einrichten
+### Find My Device einrichten
 
-Die App Find my Device muss auf dem Handy installiert sein, das z.B. im Falle eines Verlustes geortet werden soll.
-Außerdem müssen alle Geräte, die die Erlaubnis haben sollen, das Gerät per SMS zu orten, zunächst auf dem zu ortenden Gerät autorisiert werden.
+Die App Find My Device muss auf dem Gerät installiert sein, das geortet werden soll. Autorisieren Sie alle Geräte, von denen aus Fernbefehle per SMS gesendet werden dürfen, zuerst auf diesem Gerät.
 Alle Einstellungen müssen also auf dem zu ortenden Gerät vorgenommen werden, z.B. die Telefonnummer des Kindes.
 
-Auf dem zuvor autorisierten Gerät, auf dem die Information über den Standort des verlorenen Gerätes benötigt wird, muss der entsprechende Befehl per SMS gesendet werden:
+Ortung und Fernbefehle können sensible Standort- und Gerätedaten offenlegen oder Daten löschen. Verwenden Sie diese Funktionen transparent, mit Zustimmung und nur entsprechend den geltenden Regeln. Prüfen Sie die aktuelle App-Dokumentation, bevor Sie Befehle nutzen; `fmd delete` setzt das Gerät zurück und löscht lokale Daten.
+
+Auf dem zuvor autorisierten Gerät wird der entsprechende Befehl per SMS gesendet:
 
 ```
 fmd locate - sendet den aktuellen GPS-Standort
@@ -137,7 +138,7 @@ fmd ring - löst ein Klingeln des Telefons aus
 fmd lock - sperrt das Telefon
 fmd stats - sendet Gerätedetails
 fmd delete - setzt das Telefon auf die Werkseinstellungen zurück
-fmd camera (back/front) - nimmt ein Foto auf (mit der Front- oder Rückkamera) und sendet es an den Server
+fmd camera (back/front) - nimmt ein Foto mit der gewählten Kamera auf und sendet es an den konfigurierten Server
 ```
 
 ---

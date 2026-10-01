@@ -1,6 +1,6 @@
 # Image Compression Tool (Linux/Kubuntu)
 
-A simple interactive script to compress JPEG and PNG images to a target file size without resizing. Integrated into Dolphin via a right-click context menu.
+A simple interactive script to process JPEG and PNG images without resizing. JPEG output is targeted to a selected file size. PNG handling depends on whether `pngquant` is installed: it may create a palette-based PNG, or convert the image to JPEG if `pngquant` is unavailable.
 
 ---
 
@@ -9,6 +9,7 @@ A simple interactive script to compress JPEG and PNG images to a target file siz
 * **Linux (Kubuntu)**
 * **Dolphin file manager**
 * **ImageMagick** (for image compression)
+* **pngquant** (optional; used for PNG palette compression)
 
 Install ImageMagick if not already installed:
 
@@ -20,18 +21,14 @@ sudo apt install imagemagick
 
 ## ⚙️ Setup
 
-### 1. Place the script
+### 1. Download the script
 
-Put the script somewhere convenient, e.g.:
-
-```text
-/home/username/scripts/compress_images.sh
-```
-
-Make it executable:
+Download it to a convenient location, for example:
 
 ```bash
-chmod +x /home/username/scripts/compress_images.sh
+mkdir -p ~/scripts
+curl -fL -o ~/scripts/compress_images.sh https://raw.githubusercontent.com/pamagister/Digital-Security-Ops-Mastery/main/docs/ubuntu-linux-automations/scripts/compress_images.sh
+chmod +x ~/scripts/compress_images.sh
 ```
 
 ---
@@ -87,8 +84,8 @@ kbuildsycoca5
 
 4. A terminal window will open:
 
-   * Enter the **target file size** in kB (default 500 KB).
-   * Choose whether to **overwrite originals** (`y`) or create postfixed copies (`_compressed`).
+   * Enter the **target file size** in kB (default 500 KB); this applies to JPEG compression.
+   * Choose whether to **overwrite originals** (`y`) or create `_compressed` copies.
 
 5. The script will compress each file and display status messages:
 
@@ -114,8 +111,10 @@ You can also run the script manually in a terminal:
 
 ## ⚡ Features
 
-* Compress **JPEG and PNG** images without resizing.
+* Process **JPEG and PNG** images without resizing. Without `pngquant`, PNG files are converted to JPEG, which can discard transparency and image data.
 * Interactive **target size selection** (default: 500 KB).
-* Option to **overwrite originals** or save as `_comperssed` copies.
+* Option to **overwrite originals** or save as `_compressed` copies.
 * Skips unsupported files and continues processing remaining files.
 * Integrated with Dolphin via **right-click context menu**.
+
+**Warning:** Overwriting replaces the source image, and PNG-to-JPEG conversion is lossy. Keep a backup of originals if you may need them.

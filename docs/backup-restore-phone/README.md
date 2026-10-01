@@ -18,6 +18,8 @@ Der Fokus liegt auf **Android (Google‑Ökosystem)** mit **klaren Backup‑Stra
 * 2 unterschiedliche Medien
 * 1 Kopie extern/offsite
 
+Synchronisierung (z. B. Nextcloud, Dropbox oder ein Foto-Upload) ist kein unabhängiges Backup: versehentliches Löschen, Schadsoftware oder ein Kontoverlust können sich auf synchronisierte Kopien auswirken. Halten Sie mindestens eine versionierte oder getrennt aufbewahrte Sicherung vor und testen Sie die Wiederherstellung.
+
 ---
 
 ## 🔐 Passwörter (KeePass)
@@ -38,7 +40,7 @@ Der Fokus liegt auf **Android (Google‑Ökosystem)** mit **klaren Backup‑Stra
 * [ ] KeePassDX installiert
 * [ ] Container auf PC gepflegt
 * [ ] Regelmäßige Übertragung auf Smartphone (USB / Sync‑Tool)
-* [ ] Zusätzliches Backup des Containers (Cloud + offline)
+* [ ] Zusätzliches verschlüsseltes Backup des Containers, darunter eine getrennt aufbewahrte Kopie
 
 #### ✅ Variante B – Synchronisiert (komfortabler)
 
@@ -48,6 +50,8 @@ Der Fokus liegt auf **Android (Google‑Ökosystem)** mit **klaren Backup‑Stra
 ⚠️ **Achtung:**
 
 > Konflikte möglich → saubere Sync‑Disziplin nötig
+
+Bearbeiten Sie dieselbe Datenbank nicht gleichzeitig auf mehreren Geräten. Warten Sie den Sync vollständig ab und bewahren Sie eine wiederherstellbare Sicherung der `.kdbx`-Datei auf.
 
 **Tipp 💡**
 
@@ -101,8 +105,7 @@ Der Fokus liegt auf **Android (Google‑Ökosystem)** mit **klaren Backup‑Stra
 * **KeePass = Tresor**
 * **Browser = Alltag**
 
-💡 Passwörter dürfen ruhig **an zwei Stellen existieren**,
-**solange KeePass die Referenz bleibt.**
+Vermeiden Sie unnötige Passwortkopien in mehreren Cloud-Diensten. Schützen Sie jedes verwendete Synchronisierungskonto mit einem starken, einzigartigen Passwort und Mehr-Faktor-Authentifizierung.
 
 ---
 
@@ -128,7 +131,7 @@ Der Fokus liegt auf **Android (Google‑Ökosystem)** mit **klaren Backup‑Stra
 
 ⚠️ **Achtung:**
 
-> Restore nur mit **gleicher Telefonnummer** möglich
+> Für die Wiederherstellung werden in der Regel dieselbe Telefonnummer und Zugriff auf das zugehörige Google-Konto benötigt. Bei aktivierter Ende-zu-Ende-verschlüsselter Sicherung müssen außerdem Schlüssel oder Passwort verfügbar sein.
 
 ---
 
@@ -137,7 +140,7 @@ Der Fokus liegt auf **Android (Google‑Ökosystem)** mit **klaren Backup‑Stra
 **Optionen:**
 
 * **A)** Lokales verschlüsseltes Backup
-* **B)** Neuer Signal Backup Dienst (30 Tage Medien)
+* **B)** Weitere Signal-Sicherungsoptionen können je nach App-Version und Region verfügbar sein. Folgen Sie der aktuellen offiziellen Anleitung, statt sich auf eine feste Laufzeit oder Funktion zu verlassen.
 
 🔗 Quelle: [https://support.signal.org/hc/de/articles/360007059752-Nachrichten-sichern-und-wiederherstellen#android_enable](https://support.signal.org/hc/de/articles/360007059752-Nachrichten-sichern-und-wiederherstellen#android_enable)
 
@@ -155,14 +158,9 @@ Der Fokus liegt auf **Android (Google‑Ökosystem)** mit **klaren Backup‑Stra
 
 ### Telegram
 
-* **Alles serverseitig gespeichert** → ✔ Kein Backup nötig
-* Besser als der Telegram Messenger vom Play Store ist die Open-Source-Variante **"Forkogram"** von F-Droid
-* Dort muss jedoch ein altes Zweit-Gerät oder der Browser im Telegram-Konto angemeldet sein, damit man über die "alte" Telegram-Instanz den Anmeldecode empfangen kann, um auf dem neuen **Forkogram**-Gerät den Account zu aktivieren
-
-**Tipp 💡**
-
-> 1. Ideal für Notizen & Selbst‑Chats
-> 2. Immer ein Zweitgerät oder den PC via https://web.telegram.org verbunden haben, um das neue Gerät kostenfrei mit der bestehenden Nummer zu verbinden
+* Normale Cloud-Chats werden mit dem Telegram-Konto synchronisiert. **Secret Chats** sind gerätegebunden und werden nicht auf neue Geräte übertragen.
+* Verlassen Sie sich für wichtige Daten nicht allein auf die Verfügbarkeit des Kontos oder des Dienstes. Exportieren Sie benötigte Inhalte regelmäßig und prüfen Sie die offiziellen Telegram-Apps und deren Bezugsquellen.
+* Aktivieren Sie zusätzliche Kontoschutzmaßnahmen und halten Sie Zugriff auf Ihre Telefonnummer und Wiederherstellungsmethoden.
 
 ---
 
@@ -190,27 +188,30 @@ Der Fokus liegt auf **Android (Google‑Ökosystem)** mit **klaren Backup‑Stra
 
 1. Smartphone → Dropbox (per App "Dropsync")
 2. PC → Dropbox Sync
-3. PC: Fotos **regelmäßig aus Sync‑Ordner verschieben**
+3. PC: Fotos regelmäßig in ein **separates Backup-Ziel kopieren** und die Sicherung prüfen
 
 **Checkliste:**
 
 * [ ] Dropsync App auf dem Smartphone installiert
 * [ ] Fotoordner des Telefons angebunden
 * [ ] Dropbox auf dem PC installiert: https://www.dropbox.com/de/install
-* [ ] Regelmäßige Bereinigung am PC
+* [ ] Unabhängiges, möglichst versioniertes Backup eingerichtet
 
 💡 **Tipp:**
 
-> Ordnerstruktur nach Jahr/Monat anlegen
+> Eine Ordnerstruktur nach Jahr/Monat erleichtert die spätere Prüfung.
+
+**Wichtig:** Löschen oder Verschieben im Dropbox-Sync-Ordner wird in der Regel mit der Cloud synchronisiert. Löschen Sie dort nichts, bevor eine unabhängige Sicherung erstellt und geprüft wurde.
 
 ---
 
 ## 📁 Daten & sensible Dokumente
 
-### Empfohlene Lösung: Nextcloud (Managed)
+### Mögliche Lösung: Nextcloud (Managed)
 
+* Prüfen Sie Speicherplatz, Datenschutzbedingungen, Aufbewahrung und Wiederherstellungsoptionen beim Anbieter; Tarife ändern sich.
 * Beispiel: hosting.de - **1000 MB kostenlos**
-* Ideal für:
+* * Geeignet für:
 
   * Pass‑Scans
   * Tickets
@@ -224,7 +225,7 @@ Der Fokus liegt auf **Android (Google‑Ökosystem)** mit **klaren Backup‑Stra
 * [ ] Ordnerstruktur definiert
 * [ ] Automatischen Upload konfiguriert
 
-🔐 **Pluspunkt:** Volle Datenkontrolle
+🔐 Bei einem Managed-Dienst verwaltet der Anbieter die Server. Verlassen Sie sich nicht auf Synchronisierung als einziges Backup und prüfen Sie, welche Ende-zu-Ende-Verschlüsselung tatsächlich aktiviert ist.
 
 ---
 
@@ -234,7 +235,7 @@ Der Fokus liegt auf **Android (Google‑Ökosystem)** mit **klaren Backup‑Stra
 | ------------------------ | -------------------------- | ---------------------------------- | ----------------- |
 | **Google Drive / Fotos** | Nahtlos, zuverlässig       | Datenschutz, Speicher schnell voll | Mainstream, Fotos |
 | **Dropbox**              | Sehr guter Sync, stabil    | Wenig Gratis‑Speicher              | Fotos + Daten     |
-| **Managed Nextcloud**    | Volle Kontrolle, DSGVO‑nah | Etwas Setup                        | Sensible Daten    |
+| **Managed Nextcloud**    | Anbieterwahl, konfigurierbare Freigaben | Vertrauen in Anbieter nötig; Datenschutz und Backups prüfen | Dateien und Daten |
 | **OneDrive**             | Windows‑Integration        | Android schwächer                  | Office‑lastig     |
 
 ---
@@ -272,7 +273,7 @@ Der Fokus liegt auf **Android (Google‑Ökosystem)** mit **klaren Backup‑Stra
 
 Auf dem Telefon: **Einstellungen** → **Google** → **Sicherung**
 
-**Sichert:**
+**Kann je nach Android-Version, Hersteller und Einstellungen sichern:**
 
 * App‑Liste
 * WLAN‑Passwörter
@@ -285,13 +286,13 @@ Auf dem Telefon: **Einstellungen** → **Google** → **Sicherung**
 
 ⚠️ **Achtung:**
 
-> App‑Daten nur teilweise
+> Die Sicherung ist unvollständig: Nicht alle App-Daten werden gesichert oder lassen sich auf einem anderen Gerät wiederherstellen. Prüfen Sie den Sicherungsstatus und die Anforderungen der jeweiligen Apps. Google-Backup setzt ein Google-Konto voraus und ist auf einem de-googelten Gerät möglicherweise nicht verfügbar.
 
 ---
 
 ## ➕ Weitere sinnvolle Aspekte
 
-* 🔑 **2FA‑Backups** (Aegis / Authy)
+* 🔑 **2FA-Notfallvorsorge:** Aegis-Export bzw. Wiederherstellungsmethode separat und verschlüsselt sichern; Wiederherstellungscodes offline aufbewahren. Prüfen Sie regelmäßig, ob der Export noch lesbar ist.
 * 🧾 **Export kritischer Daten** (CSV, PDF)
 * 💾 **Offline‑Backup** (USB‑Stick, verschlüsselt)
 * 🧪 **Restore‑Test auf Zweitgerät**
@@ -301,7 +302,7 @@ Auf dem Telefon: **Einstellungen** → **Google** → **Sicherung**
 ## 🧭 Empfohlene Minimal‑Strategie (praxisnah)
 
 * Google Backup → System
-* KeePass → PC‑Master + Cloud‑Backup
+* KeePass → PC-Master oder sorgfältig synchronisierte Datenbank plus unabhängiges Backup
 * Signal → Lokales Backup
 * Fotos → Google Fotos **oder** Dropbox‑Workflow
 * Daten → Nextcloud
@@ -309,4 +310,3 @@ Auf dem Telefon: **Einstellungen** → **Google** → **Sicherung**
 🎯 Ergebnis: **robust, übersichtlich, kontrollierbar** 🚀
 
 ---
-

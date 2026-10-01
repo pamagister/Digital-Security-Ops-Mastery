@@ -1,25 +1,24 @@
 # 🎬 Video Postprocessing Script
 
-A simple **Ubuntu/Linux shell script** for merging a video file with a background music track.  
-It automatically trims/pads audio to match video length and applies a smooth fade-out at the end of both video and audio.  
+A Bash script for post-processing video with FFmpeg. It can add music and an intro, trim the input, overlay a recording timestamp/title, limit output height, and apply fade effects. The current defaults are configured near the top of `scripts/postprocess_video.sh`.
 
 ---
 
 ## ✨ Features
-- 🎵 Merge video with background music (choose via `--music` or interactively).  
-- ⏳ Automatically trims audio if longer than video, or pads silence if shorter.  
-- 🌗 Fade-out effect for both video and audio (`FADEOUT_TIME` configurable).  
-- ⚙️ Configurable encoding options (CRF, preset, codec, audio bitrate).  
-- 💾 Output saved next to input video with `_processed` suffix.  
+- 🎵 Replace the source audio with a selected music track; audio is trimmed or padded to fit.
+- 🎞️ Optionally prepend an intro video.
+- 🕒 Overlay a timestamp derived from DJI filenames or video metadata, plus an optional title.
+- ✂️ Select a start time and duration; configure fade, encoding, output resolution, and thumbnail settings.
+- 💾 Save output to the configured output directory (default: `~/Videos/Output_small`).
 - 🖱️ Optional integration with **Kubuntu Dolphin right-click menu**.  
 
 ---
 
 ## 📦 Installation
-1. Clone or copy the script to your system, e.g.:
+1. Download the script and make it executable:
    ```bash
    mkdir -p ~/scripts
-   cp postprocess_video.sh ~/scripts/
+   curl -fL -o ~/scripts/postprocess_video.sh https://raw.githubusercontent.com/pamagister/Digital-Security-Ops-Mastery/main/docs/ubuntu-linux-automations/scripts/postprocess_video.sh
    chmod +x ~/scripts/postprocess_video.sh
     ```
 
@@ -36,13 +35,16 @@ It automatically trims/pads audio to match video length and applies a smooth fad
 ### Basic command
 
 ```bash
-./postprocess_video.sh <video_file> [--music <music_file>]
+~/scripts/postprocess_video.sh <video_file> [--music <audio_file>] [--intro <video_file>] [--title <text>] [--start <seconds>] [--duration <seconds>]
 ```
 
 ### Parameters
 
-* `<video_file>` → main video input.
-* `--music <music_file>` → optional audio track (if omitted, script will show a numbered list of files in `MUSIC_FOLDER`).
+* `<video_file>` is required. DJI `.LRF` input is supported; the default output is MP4.
+* `--music <audio_file>` selects a music track. Without it, the script prompts from `MUSIC_FOLDER`.
+* `--intro <video_file>` adds an intro; `--title <text>` adds a title.
+* `--start <seconds>` and `--duration <seconds>` select the source segment. A duration of `0` means the remaining duration.
+* The script can still prompt for values not supplied on the command line. Quote paths and titles containing spaces.
 
 ---
 
@@ -51,13 +53,16 @@ It automatically trims/pads audio to match video length and applies a smooth fad
 Inside the script you can adjust defaults:
 
 ```bash
-DEFAULT_CRF=27         # Quality (lower = better, 20–30 typical)
-PRESET="slow"          # Encoding speed (faster = lower compression)
-AUDIO_BITRATE="192k"   # Audio bitrate ("0" or "" to disable/copy)
-SUFFIX_PROCESSED="_processed"
-CODEC="libx264"        # Video codec
-MUSIC_FOLDER="$HOME/Music"
-FADEOUT_TIME=2.5       # Fade-out duration in seconds
+DEFAULT_CRF=27
+PRESET="Slow"
+AUDIO_BITRATE="160k"
+SUFFIX_PROCESSED=""
+CODEC="libx264"
+MUSIC_FOLDER="$HOME/Musik/Ambient"
+VIDEO_INTRO_FOLDER="$HOME/Videos/Intros"
+OUTPUT_FOLDER="$HOME/Videos/Output_small"
+LIMIT_HEIGHT=1080
+PRESERVE_LRF=false
 ```
 
 ---
@@ -67,17 +72,17 @@ FADEOUT_TIME=2.5       # Fade-out duration in seconds
 ### 1. Auto-select music interactively
 
 ```bash
-./postprocess_video.sh holiday.mp4
+~/scripts/postprocess_video.sh holiday.mp4
 ```
 
-👉 Script lists all audio files in `$HOME/Music` and lets you pick one.
+The script lists supported audio files in `$HOME/Musik/Ambient` and lets you choose one.
 
 ---
 
 ### 2. Provide music directly
 
 ```bash
-./postprocess_video.sh holiday.mp4 --music ~/Music/song.mp3
+~/scripts/postprocess_video.sh holiday.mp4 --music "$HOME/Musik/Ambient/song.mp3" --start 0 --duration 0
 ```
 
 ---
@@ -99,7 +104,7 @@ X-KDE-Priority=TopLevel
 
 [Desktop Action postprocessvideo]
 Name=Post Process Video
-Exec=konsole -e /home/username/scripts/postprocess_video.sh %F
+Exec=konsole -e /home/username/scripts/postprocess_video.sh %f
 Icon=video
 Terminal=true
 ```
@@ -110,7 +115,7 @@ Now, update the menu:
 kbuildsycoca5
 ```
 
-Now you can right-click any video in Dolphin → **Post Process Video**.
+Now you can right-click a single video in Dolphin → **Post Process Video**. This service-menu example passes one selected file.
 
 ---
 
@@ -124,8 +129,9 @@ Now you can right-click any video in Dolphin → **Post Process Video**.
 
 ## ✅ Output
 
-* Resulting file is saved in the **same directory as the input video**.
-* Example: `holiday.mp4` → `holiday_processed.mp4`
+* The default output directory is `~/Videos/Output_small`; change `OUTPUT_FOLDER` in the script to use another location.
+* `SUFFIX_PROCESSED` is empty by default. Set it in the script if you want a filename suffix. FFmpeg is run with overwrite enabled, so an existing output with the same name can be replaced; back up files or choose a distinct suffix/output directory.
+* The script also writes/reuses `video_processing.sh` beside itself as a batch of replay commands. Review it before running; it may contain local file paths and titles.
 
 ---
 

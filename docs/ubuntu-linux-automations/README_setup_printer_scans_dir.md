@@ -2,23 +2,31 @@
 
 This guide walks you through configuring a Brother MFC-9332CDW printer/scanner to save scanned documents directly to a Linux machine via Samba (SMB). It also covers firewall settings, editing `smb.conf`, and troubleshooting.
 
-✨ You can also use a script to setup a network device:
+The included script creates a Samba share under the current user's home directory. Review it before running because it changes `/etc/samba/smb.conf`, installs Samba if needed, and may add a firewall rule.
+When UFW is active, the script allows the Samba profile without restricting the source network. Replace that rule with a LAN-scoped rule if the share should only be reachable from your local network.
 
 ## 1. Download the script
 
 ```bash
-wget https://github.com/pamagister/Digital-Security-Ops-Mastery/blob/main/ubuntu-linux-automations/scripts/setup_shared_folder_samba.sh
+curl -fL -o setup_shared_folder_samba.sh https://raw.githubusercontent.com/pamagister/Digital-Security-Ops-Mastery/main/docs/ubuntu-linux-automations/scripts/setup_shared_folder_samba.sh
 ```
    
 ## 2. Make the Script Executable
 
 ```bash
-chmod +x ~/setup_shared_folder_samba.sh
+chmod +x setup_shared_folder_samba.sh
 ```
-## 2. Run the Script
+## 3. Run the script as your regular user
 
 ```bash
 ./setup_shared_folder_samba.sh
+```
+
+The script does not create a Samba password. Add/enable a Samba password for the Linux account that owns the share:
+
+```bash
+sudo smbpasswd -a "$USER"
+sudo smbpasswd -e "$USER"
 ```
 
 ---
@@ -98,14 +106,12 @@ create mask = 0664
 directory mask = 0775
 ```
 
-4. In the `[global]` section, add these lines to support both SMBv1 (for older Brother firmware) and SMBv2/3:
+4. Do not lower Samba's minimum protocol to SMB1/NT1. Use SMB2 or newer; if an old printer only supports SMB1, update its firmware or isolate/replace it rather than weakening the server for every client.
+5. Save and validate the configuration:
 
-```ini
-server min protocol = NT1
-server max protocol = SMB3
+```bash
+sudo testparm -s
 ```
-
-5. Save and close the file.
 
 6. Restart Samba:
 
@@ -134,60 +140,26 @@ or
 
 ---
 
-## Step 4: Configure Firewall
+## Step 4: Create or enable a Samba account
 
-1. Allow Samba through the firewall:
-
-```bash
-sudo ufw allow Samba
-sudo ufw status
-```
-
-### 🧪 Verification
-
-* You should see rules allowing Samba ports (137, 138, 139, 445) in the output of:
-
-```bash
-sudo ufw status
-```
-  
-* You should see something like
-
-```bash
-Status: active
-
-To                         Action      From
---                         ------      ----
-Samba                      ALLOW       Anywhere                  
-Samba (v6)                 ALLOW       Anywhere (v6)    
-```
-
-* From another machine, verify you can browse the share.
-
----
-
-## Step 5: Optionally for verification: Create a Samba User
+The share uses `valid users = USERNAME`, so the Linux account must also have a Samba password:
 
 ```bash
 sudo smbpasswd -a USERNAME
-```
-
-* Enter a password when prompted.
-* Enable the user:
-
-```bash
 sudo smbpasswd -e USERNAME
-```
-
-### 🧪 Verification
-
-* Test login:
-
-```bash
 smbclient //localhost/Scans -U USERNAME
 ```
 
-  You should be able to connect and list the folder contents.
+## Step 5: Configure the firewall
+
+Allow SMB only from your trusted local network. Replace the example subnet with your LAN's actual subnet:
+
+```bash
+sudo ufw allow from 192.168.1.0/24 to any app Samba
+sudo ufw status
+```
+
+Do not expose SMB ports to the public internet. If UFW is inactive, adding a rule alone does not enable the firewall; configure firewall policy deliberately before enabling it. Test access from another device on the trusted network.
 
 ---
 
@@ -220,7 +192,7 @@ Network → Protocol → CIFS
 
    * **Host-Adresse:** `linux-hostname` (do **not** include domain here)
    * **Zielordner:** `Scans`
-   * **Benutzername:** `local\USERNAME`
+   * **Benutzername:** `USERNAME` (or a workgroup-qualified form if required by the printer)
    * **Password:** The Samba password you set for `USERNAME`
    * **Dateityp, Qualität, etc.:** As preferred
 
@@ -251,23 +223,16 @@ sudo systemctl status smbd
   
 * Confirm the folder exists and has proper permissions.
 * Test access from another PC using the same credentials.
-* Make sure the firewall allows Samba.
+* Make sure the firewall permits SMB from the trusted local network only.
 
 ### 🔹 If SMB protocol mismatch occurs:
 
 * Update CIFS settings on the Brother printer to use SMBv2 or Auto.
-* Ensure Samba allows NT1 (SMBv1) if using older firmware:
-* In the [global] section, add:
+* Do not enable SMB1/NT1 globally. Update the printer firmware and select SMB2 or newer. If that is impossible, use an isolated network and understand the security risk.
+* Validate and restart Samba after configuration changes:
 
-```ini
-[global]
-server min protocol = NT1
-server max protocol = SMB3
-```
-
-* Now, Save and restart Samba:
-
-```ini
+```bash
+sudo testparm -s
 sudo systemctl restart smbd
 ```
 
@@ -281,5 +246,4 @@ sudo systemctl restart smbd
 
 ## ✅ Summary
 
-By following this guide, your MFC-9332CDW can scan directly to a Linux machine via Samba, accessible from other devices on the network, with proper firewall configuration and authentication.
-
+With a supported SMB version, a Samba account, and firewall access restricted to the trusted LAN, the printer can save scans directly to the Linux share.

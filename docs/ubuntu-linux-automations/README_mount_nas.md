@@ -6,13 +6,14 @@ This script allows you to mount, unmount, and configure automatic mounting of NA
 
 ## 📥 Prerequisites
 
-0. Download script file:
+1. Install the CIFS utilities and download the script:
 
 ```bash
-wget https://github.com/pamagister/Digital-Security-Ops-Mastery/blob/main/ubuntu-linux-automations/scripts/mount_nas.sh
+sudo apt install cifs-utils
+curl -fL -o mount_nas.sh https://raw.githubusercontent.com/pamagister/Digital-Security-Ops-Mastery/main/docs/ubuntu-linux-automations/scripts/mount_nas.sh
 ```
 
-1. Create a credentials file:
+2. Create a credentials file:
 
 ```bash
 sudo nano /etc/samba/credentials_nas
@@ -25,13 +26,15 @@ username=YOUR_NAS_USERNAME
 password=YOUR_NAS_PASSWORD
 ```
 
-2. Restrict permissions:
+Replace the second placeholder line with `password=YOUR_NAS_PASSWORD`; CIFS credential files require both `username=` and `password=` entries.
+
+3. Restrict permissions:
 
 ```bash
 sudo chmod 600 /etc/samba/credentials_nas
 ```
 
-3. Make the script executable:
+4. Make the script executable:
 
 ```bash
 chmod +x mount_nas.sh
@@ -56,7 +59,7 @@ SHARES=("book" "data" "music" "photo" "software" "video" "data_encrypt" "cloud")
 
 ## 🚀 Usage
 
-Run the script with `sudo`:
+Configure `NAS_HOST`, `MOUNT_BASE`, `CREDENTIALS`, and the share names in the script first. Then run it with `sudo`:
 
 ```bash
 sudo ./mount_nas.sh
@@ -78,8 +81,10 @@ When choosing option 3:
 
 * The script backs up `/etc/fstab` automatically.
 * Old NAS entries are removed.
-* New entries are added with dynamic UID and GID based on the calling user.
+* New entries are added with UID and GID from the invoking user (when run through `sudo`).
 * Shares will mount automatically at system boot via systemd.
+
+The script removes `/etc/fstab` content from its `# Synology NAS - Automount Shares` marker to the end of the file before writing new entries. Review and back up `/etc/fstab`; keep unrelated custom entries before that marker.
 
 Test the new fstab entries:
 
@@ -94,7 +99,8 @@ sudo mount -a
 * The script checks if the NAS host is reachable before mounting.
 * Existing mounts are unmounted first to avoid conflicts.
 * File and directory permissions are set to `0664` and `0775`, respectively.
-* Compatible with CIFS/SMBv2.
+* The script requests SMB 2.0 (`vers=2.0`). Confirm that the NAS supports it; do not enable SMB1 just to make a connection work.
+* Keep the credentials file readable only by root, and do not expose SMB/CIFS to the public internet.
 
 ---
 
@@ -114,4 +120,3 @@ sudo ./mount_nas.sh
 # Select 3
 sudo mount -a   # optional test
 ```
-

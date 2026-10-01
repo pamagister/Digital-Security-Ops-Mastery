@@ -1,4 +1,4 @@
-# ![app_image](../_static/ico/ubuntu.ico) [Linux (Ubuntu/Kubuntu) Automations](README_en.md)
+# ![app_image](../_static/ico/ubuntu.ico) [Linux (Ubuntu/Kubuntu) Automations](README.md)
 
 Automate Linux setup, app installations, and sync tasks.
 

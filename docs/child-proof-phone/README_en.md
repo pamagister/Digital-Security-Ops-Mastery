@@ -6,8 +6,8 @@ The aim of this chapter is to set up a mobile phone that can be used safely by c
 The focus is on ensuring the following features:
 
 - Limiting the screen time for certain apps and categories of apps
-- Preventing the installation and uninstallation of certain apps
-- Preventing the uninstallation of the app required to limit screen time
+- Making it harder to install or uninstall selected apps (depending on the Android version and device)
+- Protecting the screen-time app; a third-party app cannot reliably prevent bypass or uninstallation
 - Protection against inappropriate content
 - Localization of the phone in case of loss or to determine the location of the child
 
@@ -16,8 +16,8 @@ The focus is on ensuring the following features:
 
 - ![app_image](../_static/ico/timelimit.ico) **[TimeLimit](https://timelimit.io/)** on [f-droid](https://f-droid.org/packages/io.timelimit.android.aosp.direct/): Flexibly limit the period of use 
 - ![app_image](../_static/ico/adaway.ico) **[AdAway](https://adaway.org/)** on [f-droid](https://f-droid.org/de/packages/org.adaway/): A free and open-source ad blocker for Android
-- ![app_image](../_static/ico/applock.ico) **[App Lock](https://play.google.com/store/apps/details?id=applock.lockapps.fingerprint.password.lockit)**: AppLock easily secures apps and protects your private data with one click. Protect your phone with a PIN, pattern or fingerprint
-- ![app_image](../_static/ico/findmydevice.ico) **[Find My Device](https://f-droid.org/de/packages/de.nulide.findmydevice/)** on [f-droid]((https://f-droid.org/de/packages/de.nulide.findmydevice/)): Locate and control your device remotely
+- ![app_image](../_static/ico/applock.ico) **[App Lock](https://play.google.com/store/apps/details?id=applock.lockapps.fingerprint.password.lockit)**: Third-party app for locking selected apps. This is not a reliable parental-control boundary and may be bypassed depending on the device.
+- ![app_image](../_static/ico/findmydevice.ico) **[Find My Device](https://f-droid.org/packages/de.nulide.findmydevice/)**: Locate a device and issue selected remote commands by SMS
 
 
 ---
@@ -26,7 +26,7 @@ The focus is on ensuring the following features:
 
 ### Set up screen time limit app
 
-1. Install the required TimeLimit App [as mentioned above](#recommended)
+1. Install TimeLimit [as mentioned above](#recommended-apps)
 1. Grant the necessary authorizations
 1. Add at least the following apps as explicitly allowed apps so that these apps can work unhindered:
    1. AdAway content blocker
@@ -51,11 +51,11 @@ It is therefore necessary to combine the time limit app with an app for generall
 
 ### Set up content blocker
 
-1. Install the required ad-blocker App [as mentioned above](#recommended)
+1. Install AdAway [as mentioned above](#recommended-apps)
 1. Add some individual block lists as required:
    * StevenBlack Unified hosts: https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts
    * StevenBlack fakenews-gambling-porn: https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/fakenews-gambling-porn-only/hosts
-   * Online Gaming: https://raw.githubusercontent.com/pamagister/Digital-Security-Ops-Mastery/main/child-proof-phone/online-games-hosts-blocklist/hosts
+   * Online games: https://raw.githubusercontent.com/pamagister/Digital-Security-Ops-Mastery/main/docs/child-proof-phone/online-games-hosts-blocklist/hosts
 
 
 <details>
@@ -70,8 +70,8 @@ It is therefore necessary to combine the time limit app with an app for generall
 <details>
 <summary>Using unified blocked hosts</summary>
 
-In addition to the already preset blocked hosts, further special hosts can be [found here](https://github.com/StevenBlack/hosts#list-of-all-hosts-file-variants).
-The list of **Unified hosts** is often already pre-set so that specific categories like [gambling and porn](https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/gambling-porn-only/hosts) or further hosts from [Stephen Black Hosts](https://github.com/StevenBlack/hosts) can be added for children. 
+In addition to the default blocked hosts, further lists can be [found here](https://github.com/StevenBlack/hosts#list-of-all-hosts-file-variants).
+The **Unified hosts** list may already be enabled. Additional categories such as [gambling and adult content](https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/gambling-porn-only/hosts) can be added. Check each list for maintenance status and side effects.
 </details>
 
 
@@ -81,7 +81,7 @@ The list of **Unified hosts** is often already pre-set so that specific categori
 In some cases it will be necessary to block additional pages individually, like **online games**. 
 Further information on this can be found in the [AdAway Wiki](https://github.com/AdAway/AdAway/wiki/HostsSources).
 
-An additional [host list to block online games](https://raw.githubusercontent.com/pamagister/Digital-Security-Ops-Mastery/main/child-proof-phone/online-games-hosts-blocklist/hosts) has been created here in this repository using AdAway. 
+An additional [host list to block online games](https://raw.githubusercontent.com/pamagister/Digital-Security-Ops-Mastery/main/docs/child-proof-phone/online-games-hosts-blocklist/hosts) is available in this repository.
 This is based on the AdBlock-compatible list from [IREK-szef](https://raw.githubusercontent.com/IREK-szef/games-blocklist/main/lists/Adblock-dns/games.txt), which is adapted to the AdAway format and has been slightly expanded.
 </details>
 
@@ -90,20 +90,20 @@ This is based on the AdBlock-compatible list from [IREK-szef](https://raw.github
 
 ### Set up App locker
 
-1. Install the required App [as mentioned above](#recommended)
+1. Install the desired app [as mentioned above](#recommended-apps)
 1. Grant the necessary authorizations
 1. Block at least the following apps:
 
    * AdAway Content Blocker (to prevent deletions of host block lists)
-   * Screen time limit app (Even if the time limiter app has its own security, this increases security against unwanted manipulation)
-   * Settings (this prevents uninstallation)
+   * Screen-time limit app (this may make unwanted changes more difficult, but is not a reliable security boundary)
+   * Settings (this may make uninstallation more difficult, but does not prevent it reliably)
 
 1. Adjust App Settings
 
    * 🔴 **[off]** Use fingerprint (would allow unlocking with children fingerprint)
    * 🟢 **[on]** Lock new app
-   * 🟢 **[on]** Set a passwort or pin that differs from children pin
-   * 🔴 **[off]** Battery optimization (this might cause the app to run inactively in the background)
+   * 🟢 **[on]** Set a password or PIN that differs from the child's device PIN
+   * 🔴 **[off]** Battery optimization for the app (to allow it to keep running in the background; the setting name varies by Android version)
    * 🟢 **[on]** Symbol camouflage
    * 🟢 **[on]** Uninstall protection
 
@@ -111,20 +111,21 @@ This is based on the AdBlock-compatible list from [IREK-szef](https://raw.github
 <details>
 <summary>ℹ️ Tips and Details about App Locker</summary>
 
-* To prevent the above-mentioned app from being deactivated or even uninstalled, App Lock can be used to set up an access lock for certain apps.
-* The settings menu can also be secured via this app to prevent the lock app from being uninstalled. A recovery email must be set up for this.
+* An app lock may make changes harder, but cannot reliably prevent an app from being disabled or uninstalled. Device PIN, Android version, and permissions affect bypass options.
+* Locking Settings is not a reliable parental-control boundary. Check that the app remains active in the background and that its protections work on the specific device.
 * It can also be used to protect harmless apps that require a special configuration (e.g. nextcloud) that should not be changed by the child.
 </details>
 
 
 ---
 
-### Set up Find my Device
-The Find my Device app must be installed on the cell phone that is to be located, e.g. in the event of loss.
-In addition, all devices that have permission to locate the device via SMS must first be authorized on the device to be located.
+### Set up Find My Device
+Install Find My Device on the device to be located. First authorize on that device every device allowed to send remote commands by SMS.
 All settings must therefore be made on the device to be located, e.g. the child's phone. 
 
-On the previously authorized device on which the information about the location of the lost device is required, the corresponding command must be sent via SMS:
+Location and remote commands can expose sensitive location and device data or erase data. Use them transparently, with consent, and in accordance with applicable rules. Check the current app documentation before using commands; `fmd delete` resets the device and erases local data.
+
+Send the relevant command by SMS from a previously authorized device:
 
 ```
 fmd locate - sends the current GPS location
@@ -132,7 +133,7 @@ fmd ring - triggers the phone to ring
 fmd lock - locks the phone
 fmd stats - sends device details
 fmd delete - resets the phone to factory settings
-fmd camera (back/front) - captures a photo (using front or back camera) and sends it to the server
+fmd camera (back/front) - captures a photo with the selected camera and sends it to the configured server
 ```
 
 ## Further links

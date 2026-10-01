@@ -85,11 +85,11 @@ set -euo pipefail
 DEFAULT_CRF=27                # Default Constant Rate Factor (lower = better quality, 20–30 typical)
 PRESET="Slow"                 # Preset: ultrafast, superfast, veryfast, faster, fast, medium, slow, slower, veryslow
 AUDIO_BITRATE="160k"          # Audio bitrate (""=copy audio, "0", or "0k" = strip audio)
-SUFFIX_PROCESSED="_processed" # Default suffix for processed files (only used if not overwriting)
+SUFFIX_PROCESSED="" # Default suffix for processed files (only used if not overwriting)
 CODEC="libx264"               # Video codec
 MUSIC_FOLDER="$HOME/Musik/Ambient"    # Root folder to search for music tracks
 VIDEO_INTRO_FOLDER="$HOME/Videos/Intros"    # Root folder to search for intro videos
-OUTPUT_FOLDER="$HOME/Videos/Output"              # Leave empty to use input folder
+OUTPUT_FOLDER="$HOME/Videos/Output_small"              # Leave empty to use input folder
 BATCH_FILE_NAME="video_processing.sh" # File name that the prompts for reproducing rendering are being written. This is inside the Folder of this same script.
 FADE_IN_TIME=4.0              # Duration for fading in the video
 FADE_OUT_TIME=2.0             # Time (s) to fade out video (to black) and music (to silent)

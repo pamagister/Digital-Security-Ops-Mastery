@@ -23,16 +23,16 @@ This script automates the initial setup of a fresh Kubuntu 24.04 installation by
 
 1. **Download the script:**
    ```bash
-   wget https://github.com/pamagister/Digital-Security-Ops-Mastery/blob/main/ubuntu-linux-automations/scripts/setup_kubuntu.sh
+   curl -fL -o setup_kubuntu.sh https://raw.githubusercontent.com/pamagister/Digital-Security-Ops-Mastery/main/docs/ubuntu-linux-automations/scripts/setup_kubuntu.sh
    ```
 2. **Make it executable:**
    ```bash
-   chmod +x kubuntu_setup.sh
+   chmod +x setup_kubuntu.sh
    ```
 
 3. **Run the script:**
    ```bash
-   ./kubuntu_setup.sh
+   ./setup_kubuntu.sh
    ```
 
 ## ⚙️ Post-Installation Notes
@@ -40,7 +40,7 @@ This script automates the initial setup of a fresh Kubuntu 24.04 installation by
 ### Manual Steps Required
 
 1. **Reboot or logout/login** to activate Zsh as the default shell
-2. **Configure automatic updates** when prompted during installation
+2. Review the automatic-update settings; the script enables `unattended-upgrades` and mentions an optional separate scheduling script.
 3. **Set up your applications** (KeePassXC database, Signal account, etc.)
 
 ### Customization
@@ -52,17 +52,17 @@ The script can be easily customized by:
 
 ## Security Considerations
 
-- The firewall is enabled by default with no open ports
-- Automatic security updates are configured
+- UFW is enabled with its existing default rules; check them before relying on the firewall.
+- Automatic security updates are enabled, but the script also installs software from Snap, Flathub, and Signal's package repository.
 - ClamAV provides on-demand virus scanning
-- All software is installed from official repositories
+- Review the script before running it: it installs software, changes system settings, adds an external Signal repository, and configures shell startup.
 
 ## 📝 Troubleshooting
 
 ### Common Issues
 
 **Script fails during package installation:**
-Run `sudo apt update` and try again
+Review the failing package command, run `sudo apt update`, then retry the relevant step.
 
 **Flatpak applications don't appear in menu:**
 Log out and back in, or run `kbuildsycoca5 --noincremental`
