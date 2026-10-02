@@ -31,6 +31,10 @@ A simple Ubuntu/Linux shell script for merging a video file with a background mu
 
 Compress images by using the context menu in the file manager.
 
+## 🔄 [Update Ubuntu](README_system_update.md)
+
+Update Ubuntu packages and installed Snap/Flatpak applications from the terminal or desktop launcher.
+
 ## 🗺️ [GPX/KML-Dateien verarbeiten](README_process_gpx_kml.md)
 
 GPX- und KML-Dateien komprimieren, mergen oder POIs extrahieren – direkt über das Dolphin-Kontextmenü.

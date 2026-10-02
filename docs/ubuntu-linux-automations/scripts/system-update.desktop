@@ -1,0 +1,9 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=System Update
+Comment=Update Ubuntu packages and applications
+Exec="@HOME@/.local/bin/system-update.sh" --pause
+Icon=system-software-update
+Terminal=true
+Categories=System;
