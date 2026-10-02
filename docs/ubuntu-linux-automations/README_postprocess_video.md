@@ -15,18 +15,45 @@ A Bash script for post-processing video with FFmpeg. It can add music and an int
 ---
 
 ## 📦 Installation
-1. Download the script and make it executable:
-   ```bash
-   mkdir -p ~/scripts
-   curl -fL -o ~/scripts/postprocess_video.sh https://raw.githubusercontent.com/pamagister/Digital-Security-Ops-Mastery/main/docs/ubuntu-linux-automations/scripts/postprocess_video.sh
-   chmod +x ~/scripts/postprocess_video.sh
-    ```
 
-2. Make sure you have **ffmpeg** and **ffprobe** installed:
+The installation has three separate steps. The code snippets automate each step; a manual alternative is described below each snippet.
 
-   ```bash
-   sudo apt install ffmpeg
-   ```
+### 1. Install dependencies
+
+Install **ffmpeg** (which provides both `ffmpeg` and `ffprobe`) and **Konsole** for the Dolphin integration:
+
+```bash
+sudo apt update
+sudo apt install -y ffmpeg konsole
+```
+
+**Manual:** Install `ffmpeg` and `konsole` using your package manager. `ffprobe` is included with the `ffmpeg` package.
+
+### 2. Download the script and Dolphin menu file
+
+This downloads both files from the repository to the user-specific application and Dolphin menu directories:
+
+```bash
+set -e
+BASE_URL="https://raw.githubusercontent.com/pamagister/Digital-Security-Ops-Mastery/main/docs/ubuntu-linux-automations"
+mkdir -p "$HOME/.local/bin" "$HOME/.local/share/kservices5/ServiceMenus"
+curl -fL "$BASE_URL/scripts/postprocess_video.sh" -o "$HOME/.local/bin/postprocess_video.sh"
+curl -fL "$BASE_URL/scripts/postprocess_video.desktop" -o "$HOME/.local/share/kservices5/ServiceMenus/postprocess_video.desktop"
+```
+
+**Manual:** Copy [`postprocess_video.sh`](scripts/postprocess_video.sh) to `~/.local/bin/` and [`postprocess_video.desktop`](scripts/postprocess_video.desktop) to `~/.local/share/kservices5/ServiceMenus/`. Create the destination directories if needed.
+
+### 3. Set the path and activate the integration
+
+This replaces the home-directory placeholder in the menu file, makes the script executable, and refreshes KDE's menu cache:
+
+```bash
+sed -i "s|@HOME@|$HOME|g" "$HOME/.local/share/kservices5/ServiceMenus/postprocess_video.desktop"
+chmod +x "$HOME/.local/bin/postprocess_video.sh"
+kbuildsycoca5
+```
+
+**Manual:** Open `postprocess_video.desktop` in a text editor and replace `@HOME@` with the full path to your home directory. Then run `chmod +x ~/.local/bin/postprocess_video.sh` in a terminal and refresh the menu with `kbuildsycoca5`.
 
 ---
 
@@ -35,7 +62,7 @@ A Bash script for post-processing video with FFmpeg. It can add music and an int
 ### Basic command
 
 ```bash
-~/scripts/postprocess_video.sh <video_file> [--music <audio_file>] [--intro <video_file>] [--title <text>] [--start <seconds>] [--duration <seconds>]
+~/.local/bin/postprocess_video.sh <video_file> [--music <audio_file>] [--intro <video_file>] [--title <text>] [--start <seconds>] [--duration <seconds>]
 ```
 
 ### Parameters
@@ -72,7 +99,7 @@ PRESERVE_LRF=false
 ### 1. Auto-select music interactively
 
 ```bash
-~/scripts/postprocess_video.sh holiday.mp4
+~/.local/bin/postprocess_video.sh holiday.mp4
 ```
 
 The script lists supported audio files in `$HOME/Musik/Ambient` and lets you choose one.
@@ -82,40 +109,14 @@ The script lists supported audio files in `$HOME/Musik/Ambient` and lets you cho
 ### 2. Provide music directly
 
 ```bash
-~/scripts/postprocess_video.sh holiday.mp4 --music "$HOME/Musik/Ambient/song.mp3" --start 0 --duration 0
+~/.local/bin/postprocess_video.sh holiday.mp4 --music "$HOME/Musik/Ambient/song.mp3" --start 0 --duration 0
 ```
 
 ---
 
 ### 3. With Dolphin file explorer (Kubuntu)
 
-You can integrate the script into **KDE Dolphin** for right-click usage.
-
-Create the service menu file:
-
-```ini
-# ~/.local/share/kservices5/ServiceMenus/postprocess_video.desktop
-[Desktop Entry]
-Type=Service
-ServiceTypes=KonqPopupMenu/Plugin
-MimeType=video/mp4;video/x-matroska;video/avi;video/x-msvideo;video/webm;
-Actions=postprocessvideo;
-X-KDE-Priority=TopLevel
-
-[Desktop Action postprocessvideo]
-Name=Post Process Video
-Exec=konsole -e /home/username/scripts/postprocess_video.sh %f
-Icon=video
-Terminal=true
-```
-
-Now, update the menu:
-
-```bash
-kbuildsycoca5
-```
-
-Now you can right-click a single video in Dolphin → **Post Process Video**. This service-menu example passes one selected file.
+After installation, right-click a single video in Dolphin and select **Post Process Video**. The service-menu entry passes the selected file to the script.
 
 ---
 

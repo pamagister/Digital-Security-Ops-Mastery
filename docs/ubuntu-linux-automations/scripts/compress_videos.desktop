@@ -7,6 +7,6 @@ X-KDE-Priority=TopLevel
 
 [Desktop Action compressvideos]
 Name=Compress Videos
-Exec=konsole -e /home/username/scripts/compress_videos.sh %F
+Exec=konsole -e "@HOME@/.local/bin/compress_videos.sh" %F
 Icon=video
 Terminal=true

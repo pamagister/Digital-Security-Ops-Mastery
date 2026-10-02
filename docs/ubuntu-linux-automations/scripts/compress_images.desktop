@@ -7,6 +7,6 @@ X-KDE-Priority=TopLevel
 
 [Desktop Action compressimages]
 Name=Compress Images
-Exec=konsole -e /home/username/scripts/compress_images.sh %F
+Exec=konsole -e "@HOME@/.local/bin/compress_images.sh" %F
 Icon=image
 Terminal=true

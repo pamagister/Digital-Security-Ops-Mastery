@@ -8,67 +8,52 @@ A simple interactive script to process JPEG and PNG images without resizing. JPE
 
 * **Linux (Kubuntu)**
 * **Dolphin file manager**
-* **ImageMagick** (for image compression)
+* **ImageMagick** (required for image compression)
 * **pngquant** (optional; used for PNG palette compression)
+* **Konsole** (used to open the interactive script)
 
-Install ImageMagick if not already installed:
+## 📥 Installation
 
-```bash
-sudo apt install imagemagick
-```
+The installation has three separate steps. The code snippets automate each step; a manual alternative is described below each snippet.
 
----
+### 1. Install dependencies
 
-## ⚙️ Setup
-
-### 1. Download the script
-
-Download it to a convenient location, for example:
+Install ImageMagick and Konsole. Install `pngquant` as well if you want palette-based PNG compression:
 
 ```bash
-mkdir -p ~/scripts
-curl -fL -o ~/scripts/compress_images.sh https://raw.githubusercontent.com/pamagister/Digital-Security-Ops-Mastery/main/docs/ubuntu-linux-automations/scripts/compress_images.sh
-chmod +x ~/scripts/compress_images.sh
+sudo apt update
+sudo apt install -y imagemagick konsole
+# Optional, for palette-based PNG compression:
+# sudo apt install -y pngquant
 ```
 
----
+**Manual:** Install `imagemagick` and `konsole` using your package manager. Install `pngquant` there too if desired; without it, PNG files are converted to JPEG.
 
-### 2. Create a Dolphin Service Menu
+### 2. Download the script and Dolphin menu file
 
-1. Create the service menu folder if it doesn’t exist:
+This downloads both files from the repository to the user-specific application and Dolphin menu directories:
 
 ```bash
-mkdir -p ~/.local/share/kservices5/ServiceMenus
+set -e
+BASE_URL="https://raw.githubusercontent.com/pamagister/Digital-Security-Ops-Mastery/main/docs/ubuntu-linux-automations"
+mkdir -p "$HOME/.local/bin" "$HOME/.local/share/kservices5/ServiceMenus"
+curl -fL "$BASE_URL/scripts/compress_images.sh" -o "$HOME/.local/bin/compress_images.sh"
+curl -fL "$BASE_URL/scripts/compress_images.desktop" -o "$HOME/.local/share/kservices5/ServiceMenus/compress_images.desktop"
 ```
 
-2. Create a file named `compress_images.desktop`:
+**Manual:** Copy [`compress_images.sh`](scripts/compress_images.sh) to `~/.local/bin/` and [`compress_images.desktop`](scripts/compress_images.desktop) to `~/.local/share/kservices5/ServiceMenus/`. Create the destination directories if needed.
+
+### 3. Set the path and activate the integration
+
+This replaces the home-directory placeholder in the menu file, makes the script executable, and refreshes KDE's menu cache:
 
 ```bash
-nano ~/.local/share/kservices5/ServiceMenus/compress_images.desktop
-```
-
-3. Paste the following content (update the path to your script):
-
-```ini
-[Desktop Entry]
-Type=Service
-ServiceTypes=KonqPopupMenu/Plugin
-MimeType=image/jpeg;image/png;
-Actions=compressimages;
-X-KDE-Priority=TopLevel
-
-[Desktop Action compressimages]
-Name=Compress Images
-Exec=konsole -e /home/username/scripts/compress_images.sh %F
-Icon=image
-Terminal=true
-```
-
-4. Reload KDE services:
-
-```bash
+sed -i "s|@HOME@|$HOME|g" "$HOME/.local/share/kservices5/ServiceMenus/compress_images.desktop"
+chmod +x "$HOME/.local/bin/compress_images.sh"
 kbuildsycoca5
 ```
+
+**Manual:** Open `compress_images.desktop` in a text editor and replace `@HOME@` with the full path to your home directory. Then run `chmod +x ~/.local/bin/compress_images.sh` in a terminal and refresh the menu with `kbuildsycoca5`.
 
 ---
 
@@ -101,7 +86,7 @@ kbuildsycoca5
 You can also run the script manually in a terminal:
 
 ```bash
-./compress_images.sh image1.jpg image2.png
+~/.local/bin/compress_images.sh image1.jpg image2.png
 ```
 
 * Supports multiple files at once.

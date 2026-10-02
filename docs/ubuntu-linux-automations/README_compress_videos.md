@@ -29,29 +29,46 @@ It supports both direct file arguments and recursive folder scanning, while offe
 
 ## 📥 Installation
 
-Requires **ffmpeg**:
+The installation has three separate steps. The code snippets automate each step; a manual alternative is described below each snippet.
+
+### 1. Install dependencies
+
+Install **ffmpeg** and **Konsole** (used to open the interactive script):
 
 ```bash
-sudo apt install ffmpeg
+sudo apt update
+sudo apt install -y ffmpeg konsole
 ```
 
-Download and make the script executable:
+**Manual:** Install `ffmpeg` and `konsole` using your package manager.
+
+### 2. Download the script and Dolphin menu file
+
+This downloads both files from the repository to the user-specific application and Dolphin menu directories:
 
 ```bash
-# 1. Go to your home folder (or any directory you prefer)
-cd ~
-
-# 2. Download the script from GitHub
-curl -o compress_videos.sh \
-  https://raw.githubusercontent.com/pamagister/Digital-Security-Ops-Mastery/main/docs/ubuntu-linux-automations/scripts/compress_videos.sh
-
-# 3. Make the script executable
-chmod +x compress_videos.sh
-
-# 4. Run the script
-./compress_videos.sh
+set -e
+BASE_URL="https://raw.githubusercontent.com/pamagister/Digital-Security-Ops-Mastery/main/docs/ubuntu-linux-automations"
+mkdir -p "$HOME/.local/bin" "$HOME/.local/share/kservices5/ServiceMenus"
+curl -fL "$BASE_URL/scripts/compress_videos.sh" -o "$HOME/.local/bin/compress_videos.sh"
+curl -fL "$BASE_URL/scripts/compress_videos.desktop" -o "$HOME/.local/share/kservices5/ServiceMenus/compress_videos.desktop"
 ```
 
+**Manual:** Copy [`compress_videos.sh`](scripts/compress_videos.sh) to `~/.local/bin/` and [`compress_videos.desktop`](scripts/compress_videos.desktop) to `~/.local/share/kservices5/ServiceMenus/`. Create the destination directories if needed.
+
+### 3. Set the path and activate the integration
+
+This replaces the home-directory placeholder in the menu file, makes the script executable, and refreshes KDE's menu cache:
+
+```bash
+sed -i "s|@HOME@|$HOME|g" "$HOME/.local/share/kservices5/ServiceMenus/compress_videos.desktop"
+chmod +x "$HOME/.local/bin/compress_videos.sh"
+kbuildsycoca5
+```
+
+**Manual:** Open `compress_videos.desktop` in a text editor and replace `@HOME@` with the full path to your home directory. Then run `chmod +x ~/.local/bin/compress_videos.sh` in a terminal and refresh the menu with `kbuildsycoca5`.
+
+Run the script directly from a terminal with `~/.local/bin/compress_videos.sh`.
 
 ---
 
@@ -85,7 +102,7 @@ DRY_RUN=false                 # true = test mode (no ffmpeg executed)
 ### Compress all videos in `$VIDEO_FOLDER`
 
 ```bash
-./compress_videos.sh
+~/.local/bin/compress_videos.sh
 ```
 
 * Prompts for CRF (default 27).
@@ -94,7 +111,7 @@ DRY_RUN=false                 # true = test mode (no ffmpeg executed)
 ### Compress specific files
 
 ```bash
-./compress_videos.sh movie1.mp4 clip.avi
+~/.local/bin/compress_videos.sh movie1.mp4 clip.avi
 ```
 
 ### Enable dry-run mode
@@ -117,30 +134,7 @@ The configurable defaults are set inside the script; shell assignments entered s
 
 ## 📂 KDE / Dolphin Right-Click Menu Integration
 
-To integrate with the KDE context menu, create a `compress_videos.desktop` file in:
-
-```
-~/.local/share/kservices5/ServiceMenus/
-```
-
-### `compress_videos.desktop`
-
-```ini
-[Desktop Entry]
-Type=Service
-ServiceTypes=KonqPopupMenu/Plugin
-MimeType=video/mp4;video/x-matroska;video/avi;video/x-msvideo;video/webm;
-Actions=compressvideos;
-X-KDE-Priority=TopLevel
-
-[Desktop Action compressvideos]
-Name=Compress Videos
-Exec=konsole -e /home/username/scripts/compress_videos.sh %F
-Icon=video
-Terminal=true
-```
-
-Now you can **right-click on videos in Dolphin** → **Compress Videos**.
+After installation, right-click on videos in Dolphin and select **Compress Videos**.
 
 ---
 

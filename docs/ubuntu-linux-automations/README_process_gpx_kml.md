@@ -8,15 +8,26 @@ Mit dem KDE-Dolphin-Kontextmenü lassen sich eine oder mehrere GPX-/KML-Dateien 
 - `konsole`
 - `gpx-kml-converter` Version 1.0.9 oder neuer
 
-Falls das CLI noch nicht installiert ist:
+## Installation
+
+Die Installation besteht aus drei getrennten Schritten. Die Code-Blöcke richten die Installation automatisch ein; unter jedem Schritt steht die manuelle Alternative.
+
+### 1. Abhängigkeiten
+
+`pipx` und `konsole` installieren und anschließend das CLI einrichten:
 
 ```bash
+sudo apt update
+sudo apt install -y pipx konsole
+pipx ensurepath
 pipx install gpx-kml-converter
 ```
 
-## Installation mit einem Copy-paste-Snippet
+**Manuell:** `pipx` und `konsole` über die Paketverwaltung installieren. Danach `gpx-kml-converter` mit `pipx install gpx-kml-converter` installieren. Falls `pipx` noch nicht im Suchpfad liegt, ein neues Terminal öffnen.
 
-Den folgenden Block im Terminal ausführen. Er lädt das Skript und die Dolphin-Service-Menüdatei aus diesem Repository herunter, legt sie im Benutzerverzeichnis ab und aktiviert den Menüeintrag:
+### 2. Skript und Dolphin-Menüdatei herunterladen
+
+Der Block lädt beide Dateien aus diesem Repository in die benutzerspezifischen Installationsordner:
 
 ```bash
 set -e
@@ -28,12 +39,21 @@ BASE_URL="https://raw.githubusercontent.com/pamagister/Digital-Security-Ops-Mast
 mkdir -p "$HOME/.local/bin" "$HOME/.local/share/kservices5/ServiceMenus"
 curl -fL "$BASE_URL/scripts/process_gpx_kml.sh" -o "$HOME/.local/bin/process_gpx_kml.sh"
 curl -fL "$BASE_URL/scripts/process_gpx_kml.desktop" -o "$HOME/.local/share/kservices5/ServiceMenus/process_gpx_kml.desktop"
+```
+
+**Manuell:** [`process_gpx_kml.sh`](scripts/process_gpx_kml.sh) nach `~/.local/bin/` und [`process_gpx_kml.desktop`](scripts/process_gpx_kml.desktop) nach `~/.local/share/kservices5/ServiceMenus/` kopieren. Die Zielordner bei Bedarf vorher anlegen.
+
+### 3. Pfad anpassen und aktivieren
+
+Der Block setzt den Home-Verzeichnispfad in der Menüdatei, macht das Skript ausführbar und aktualisiert den KDE-Menü-Cache:
+
+```bash
 sed -i "s|@HOME@|$HOME|g" "$HOME/.local/share/kservices5/ServiceMenus/process_gpx_kml.desktop"
 chmod +x "$HOME/.local/bin/process_gpx_kml.sh"
 kbuildsycoca5
 ```
 
-`@HOME@` in der Desktop-Datei wird durch den tatsächlichen Pfad zum Home-Verzeichnis ersetzt. Die Dateien können alternativ manuell aus `docs/ubuntu-linux-automations/scripts/` in dieselben Zielverzeichnisse kopiert werden.
+**Manuell:** In `process_gpx_kml.desktop` den Platzhalter `@HOME@` durch den vollständigen Pfad zum Home-Verzeichnis ersetzen. Danach im Terminal `chmod +x ~/.local/bin/process_gpx_kml.sh` ausführen und mit `kbuildsycoca5` das Dolphin-Menü aktualisieren.
 
 ## Verwendung
 
