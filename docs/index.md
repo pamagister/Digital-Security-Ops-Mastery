@@ -23,7 +23,7 @@ Die deutschsprachige Übersicht behandelt Backups für Passwörter, Nachrichten,
 
 ## ![app_image](_static/ico/ubuntu.ico) [Linux (Ubuntu/Kubuntu) Automatisierungen ](ubuntu-linux-automations/README.md)
 
-Anleitungen und Skripte für Kubuntu, NAS-Einbindungen, verschlüsselte Synchronisierung und die Verarbeitung von Bildern und Videos.
+Anleitungen und Skripte für Kubuntu, NAS-Einbindungen, verschlüsselte Synchronisierung und die Verarbeitung von Bildern, Videos und GPX/KML-Dateien.
 
 ## ![app_image](_static/ico/ubuntu_children.ico) Kindersicherer Ubuntu PC<!--(kindersicher-ubuntu/README.md)-->
 

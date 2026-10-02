@@ -30,3 +30,7 @@ A simple Ubuntu/Linux shell script for merging a video file with a background mu
 ## 🎬 [Compress images](README_compress_images.md)
 
 Compress images by using the context menu in the file manager.
+
+## 🗺️ [GPX/KML-Dateien verarbeiten](README_process_gpx_kml.md)
+
+GPX- und KML-Dateien komprimieren, mergen oder POIs extrahieren – direkt über das Dolphin-Kontextmenü.

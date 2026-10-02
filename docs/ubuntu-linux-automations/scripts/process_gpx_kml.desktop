@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Service
+ServiceTypes=KonqPopupMenu/Plugin
+MimeType=application/gpx+xml;application/vnd.google-earth.kml+xml;inode/directory;
+Actions=processgpxkml;
+X-KDE-Priority=TopLevel
+
+[Desktop Action processgpxkml]
+Name=Process GPX/KML
+Exec=konsole -e "@HOME@/.local/bin/process_gpx_kml.sh" %F
+Icon=map
