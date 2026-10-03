@@ -6,8 +6,12 @@ authors = [
     {name = "pamagister"}
 ]
 readme = "README_en.md"
+requires-python = ">=3.13"
+dependencies = [
+    "fastmcp>=4.0.10",
+]
 
-# Dev dependencies as optional dependencies
+# Dev dependencies as optional dependenciesea
 [project.optional-dependencies]
 dev = [
     "pytest>=8.4.0",
