@@ -6,6 +6,7 @@ import os
 import shutil
 import stat
 import tempfile
+from collections import Counter
 from pathlib import Path
 from typing import Any
 
@@ -180,6 +181,135 @@ def create_inventory(
         "entry_count": len(entries),
         "tree_sha256": tree_hash,
         "entries": entries,
+        "errors": errors,
+    }
+
+
+@mcp.tool()
+def compare_files_by_content(
+    source_directories: list[str],
+    destination_directory: str,
+    max_entries: int = _DEFAULT_MAX_ENTRIES,
+) -> dict[str, Any]:
+    """Find source files not preserved in the destination by content, regardless of path."""
+    if not source_directories:
+        raise ValueError("At least one source directory is required")
+    if max_entries < 1:
+        raise ValueError("max_entries must be at least 1")
+
+    sources = sorted(
+        {
+            Path(directory).expanduser().resolve(strict=True)
+            for directory in source_directories
+        },
+        key=str,
+    )
+    destination = Path(destination_directory).expanduser().resolve(strict=True)
+    if not destination.is_dir():
+        raise ValueError(f"Not a directory: {destination}")
+    for source in sources:
+        if not source.is_dir():
+            raise ValueError(f"Not a directory: {source}")
+        if (
+            source == destination
+            or source.is_relative_to(destination)
+            or destination.is_relative_to(source)
+        ):
+            raise ValueError(
+                f"Source and destination directories must not overlap: {source}, {destination}"
+            )
+
+    scan_sources = [
+        source
+        for source in sources
+        if not any(
+            source != other and source.is_relative_to(other) for other in sources
+        )
+    ]
+    source_entries: dict[str, dict[str, Any]] = {}
+    errors: list[dict[str, str]] = []
+    unsupported_entries: list[dict[str, Any]] = []
+    for source in scan_sources:
+        inventory = create_inventory(str(source), max_entries=max_entries)
+        errors.extend(
+            {"root": str(source), **error} for error in inventory["errors"]
+        )
+        for entry in inventory["entries"]:
+            if entry["type"] not in {"file", "symlink"}:
+                if entry["type"] == "other":
+                    unsupported_entries.append(
+                        {"root": str(source), "path": entry["path"], "type": "other"}
+                    )
+                continue
+
+            absolute_file_path = source / entry["path"]
+            absolute_path = str(absolute_file_path)
+            origins = [
+                {
+                    "root": str(root),
+                    "path": absolute_file_path.relative_to(root).as_posix(),
+                }
+                for root in sources
+                if absolute_file_path.is_relative_to(root)
+            ]
+            record = source_entries.setdefault(
+                absolute_path,
+                {
+                    "type": entry["type"],
+                    "sha256": entry.get("sha256"),
+                    "target": entry.get("target"),
+                    "origins": origins,
+                },
+            )
+            record["origins"] = origins
+
+    destination_inventory = create_inventory(
+        str(destination), max_entries=max_entries
+    )
+    errors.extend(
+        {"root": str(destination), **error}
+        for error in destination_inventory["errors"]
+    )
+
+    def signature(entry: dict[str, Any]) -> tuple[str, str | None]:
+        value = entry["sha256"] if entry["type"] == "file" else entry["target"]
+        return entry["type"], value
+
+    available = Counter(
+        signature(entry)
+        for entry in destination_inventory["entries"]
+        if entry["type"] in {"file", "symlink"}
+    )
+    missing_entries: list[dict[str, Any]] = []
+    ordered_sources = sorted(
+        source_entries.values(),
+        key=lambda entry: (
+            entry["type"],
+            entry["sha256"] or entry["target"] or "",
+            entry["origins"][0]["root"],
+            entry["origins"][0]["path"],
+        ),
+    )
+    for entry in ordered_sources:
+        entry_signature = signature(entry)
+        if available[entry_signature]:
+            available[entry_signature] -= 1
+            continue
+        missing = {"type": entry["type"], "origins": entry["origins"]}
+        if entry["type"] == "file":
+            missing["sha256"] = entry["sha256"]
+        else:
+            missing["target"] = entry["target"]
+        missing_entries.append(missing)
+
+    complete = not errors and not unsupported_entries
+    return {
+        "complete": complete,
+        "source_entry_count": len(source_entries),
+        "matched_entry_count": len(source_entries) - len(missing_entries),
+        "missing_entry_count": len(missing_entries),
+        "missing_entries": missing_entries,
+        "unsupported_entries": unsupported_entries,
         "errors": errors,
     }
 

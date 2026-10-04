@@ -21,6 +21,7 @@ Configure the MCP client to launch that command in the repository's Python envir
 
 - `list_entries(directory, recursive, offset, limit, max_entries)` lists entries with relative paths and types. Pages are limited to 5,000 entries. Recursive scans do not follow symlinks; any scan or entry-limit errors are included and make `complete` false.
 - `create_inventory(directory, max_entries)` returns a deterministic sorted inventory. Each regular file has a SHA-256 of its content, symlinks include their target, and directories are represented (including empty directories). `tree_sha256` is only returned when the scan and all file hashes complete successfully.
+- `compare_files_by_content(source_directories, destination_directory, max_entries)` reports source files not preserved in the destination. It compares regular files by SHA-256 and symlinks by their literal link target, independent of names and paths; duplicate content is counted per file occurrence. Overlapping source directories are deduplicated by absolute file path, with all source locations included in `origins`. Source and destination trees must not overlap. `complete` is false if a scan fails or an unsupported special file is found; inspect `errors` and `unsupported_entries` before relying on the diff.
 - `get_file_info(path)` returns metadata without following the final path component when it is a symlink.
 - `read_text_file(path, max_bytes)` reads bounded UTF-8 text and rejects symlinks, non-regular files, and oversized inputs.
 - `create_directory(path)` creates a directory and missing parents; it fails if the target already exists.
@@ -31,10 +32,12 @@ All paths may be absolute or use `~`. The tools accept any local path supplied b
 
 ## Preservation verification workflow
 
-1. Call `create_inventory` for each source tree before moving files. Require `complete: true`; resolve every reported error rather than treating a partial inventory as proof.
-2. Let the agent plan and execute low-level operations. Review proposed destinations and ensure no files are unintentionally overwritten.
-3. Call `create_inventory` for the resulting tree or trees.
-4. Compare the returned relative paths, entry types, symlink targets, per-file SHA-256 values, and `tree_sha256`. A matching tree digest means the same relative structure and file contents were observed; expected path changes from a reorganization must be compared as explicit source-to-destination mappings instead of comparing the aggregate hashes directly.
+1. After copying or reorganizing, call `compare_files_by_content` with all source roots and the destination root. Require `complete: true`; resolve every reported error and unsupported entry rather than treating a partial scan as proof.
+2. Use `missing_entries` to locate source files without a matching destination copy. The comparison ignores changed names and paths, and counts identical-content files separately. If source roots overlap (for example, a parent and one of its subdirectories), each physical file is counted only once.
+3. The comparison checks regular-file contents and symlink target text. It does not verify that relative symlinks still resolve correctly, and it does not preserve or compare empty directories. Use `create_inventory` when exact tree structure also needs verification.
+4. This tool verifies preservation only; it does not copy files, enforce storage quotas, or prevent concurrent modifications. Plan the new layout to stay within any applicable storage limits, and avoid modifying files while the comparison is running.
+
+For the user's current cleanup, the planned destination is `/home/paul/Dokumente_NEU/`. Use only the source directories the user specifies. `/home/paul/Dokumente/pauldata/` is inside `/home/paul/Dokumente/`, so selecting both does not double-count its files. Account for the stated free-space limits when planning: 1,000 MB in `/home/paul/Nextcloud/` and 200 MB in the `pauldata` SVN repository. The verifier does not enforce these limits.
 
 The inventory is a point-in-time observation, not a filesystem lock. Avoid modifying files concurrently with inventory generation. Content is read to calculate hashes, so inventories can take time for large trees.
 
