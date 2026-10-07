@@ -35,54 +35,37 @@ The `mcp<2` constraint is a compatibility workaround for the reported startup er
 
 `uvx` runs the package in its own isolated environment. Installing `geocode-mcp` with `uv pip install` in a different environment does not control the dependencies used by this `uvx` configuration. If installing into a managed environment instead, apply the same `mcp<2` constraint there. Revisit the pin if the package is updated to support newer MCP SDK versions.
 
-## Prepare and geocode the YAML
+# Workflow
 
-For example, a list can be nested under a descriptive section key:
+## 1. Prepare and geocode the YAML
+
+e.g. Ask ChatGPT for a place list
+
+For example:
+
+> I'm planning a family holiday in Sardinia. Suggest around 40 places to visit, including towns, scenic spots, hikes, and historical sites. Do not include beaches. Return the list as YAML with each place's name, a short description, and a rating from 1 to 5.
+
+Save the result as a `.yaml` file, for example `highlights.yaml`.
+
+## 2. Use this YAML format
+
+Each place needs a `name`. Include a short `desc` and a `rating` from 1 to 5:
 
 ```yaml
-sardinia_beaches:
-  - name: "Spiaggia La Pelosa"
-    desc: "White sand and shallow turquoise water."
-    rating: 5
+- name: "Su Nuraxi di Barumini"
+  desc: "A remarkable Bronze Age archaeological site."
+  rating: 5
+- name: "Gola di Gorropu"
+  desc: "A dramatic canyon with hiking trails."
+  rating: 4
 ```
 
-Use geographic context in each geocoding request, for example `Spiaggia La Pelosa, Sardinia, Italy`. The context may come from the user's instructions, a location field, or a clearly informative section name. Do not rely on a place name alone when multiple matches are plausible.
+Use place names that are easy to recognize on a map. Keep the list in the region you asked ChatGPT about; the agent uses that context to find the places.
 
-Call `get_coordinates` once per place, or request several candidates when the result is uncertain. Check the returned coordinates are within valid latitude/longitude ranges and verify the match corresponds to the named place in the expected region. Geocoding can return an approximate feature point; it does not guarantee a beach entrance, parking area, or the best point for navigation. Ask the user to resolve material ambiguity instead of silently choosing a candidate.
+## 3. Ask your IDE agent to create the GPX file
 
-The `rating` is represented as stars appended to the waypoint name: `Spiaggia La Pelosa ★★★★★` for rating 5, down to one star for rating 1. Missing ratings leave names unchanged. Invalid ratings should be corrected or explicitly resolved; the converter has no native rating field.
+For example:
 
-## Write the GPX waypoints
+> Convert `highlights.yaml` into a GPX file named `highlights.gpx`. Use the skill `tools/gpx_poi_from_yaml/SKILL.md` and the geocoding MCP tool `get_coordinates`. The places are in Sardinia, Italy.
 
-Create a new file containing only the POIs by passing a not-yet-existing `.gpx` path as the input:
-
-```bash
-gpx-kml-converter --mode add-poi \
-  --lat 40.9631 --lon 8.1586 \
-  --name "Spiaggia La Pelosa ★★★★★" \
-  --desc "White sand and shallow turquoise water." \
-  --sym Beach sardinia-beaches.gpx
-```
-
-Repeat the command for each place, using the same output path. The first call creates the GPX file and subsequent calls append waypoints to it. The sample coordinates are illustrative only; use the results returned for the actual places.
-
-To add POIs to an existing GPX without changing the original, first make a working copy and use that copy as the input for every `add-poi` call:
-
-```bash
-cp holiday.gpx holiday-with-pois.gpx
-gpx-kml-converter --mode add-poi \
-  --lat 40.9631 --lon 8.1586 \
-  --name "Spiaggia La Pelosa ★★★★★" \
-  --desc "White sand and shallow turquoise water." \
-  --sym Beach holiday-with-pois.gpx
-```
-
-Do not provide elevation unless it is known and appropriate; it is optional. Use the converter's `--output` option only when intentionally writing to a separate destination, and consult the GPX CLI guide for its exact behavior.
-
-## Limitations and safe operation
-
-- Each command appends one waypoint. The converter does not deduplicate equivalent locations, so rerunning completed commands creates duplicates.
-- Without an output destination, the input GPX is modified in place. Work on a copy if the original must be preserved.
-- A sequence of commands may leave a partially populated file if interrupted. Track completed entries and inspect the output before resuming.
-- Names and descriptions are user data. Pass them as properly quoted, separate CLI arguments; avoid constructing an unquoted shell command from YAML values.
-- The geocoding MCP requires network access. Review the MCP/geocoding provider's terms and avoid sending sensitive location queries.
+Review the resulting places on a map. Ratings are shown as stars added to each waypoint name. If a place is ambiguous or appears in the wrong location, clarify it with the agent before using the GPX file.
