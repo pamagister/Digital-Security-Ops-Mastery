@@ -24,7 +24,7 @@ The backup overview is currently available in German and covers Android password
 
 ## ![app_image](_static/ico/ubuntu.ico) [Linux (Ubuntu/Kubuntu) automations](ubuntu-linux-automations/README.md)
 
-Guides and scripts for Kubuntu, NAS mounts, encrypted synchronization, and image and video processing.
+Guides and scripts for Kubuntu, NAS mounts, encrypted synchronization, image and video processing, and [creating GPX POIs from YAML place lists](gpx-poi-from-yaml/README.md).
 
 ## ![app_image](_static/ico/ubuntu_children.ico) Child-proof Ubuntu PC<!--(child-proof-ubuntu/README_en.md)-->
 
