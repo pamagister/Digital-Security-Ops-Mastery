@@ -62,8 +62,57 @@ sudo apt install -y imagemagick                  # Tool for image editing, espec
 # -----------------------------
 log "Installing desktop programs"
 
-sudo snap install firefox             # use standard web browser explicitly from snap
-# sudo apt install -y firefox           # Web browser (standard in Ubuntu/Kubuntu)
+log "Installing Firefox from the Mozilla APT repository"
+firefox_key_tmp="$(mktemp)"
+trap 'rm -f "$firefox_key_tmp"' EXIT
+curl -fsSL https://packages.mozilla.org/apt/repo-signing-key.gpg -o "$firefox_key_tmp"
+firefox_key_fingerprint="$(gpg --show-keys --with-colons "$firefox_key_tmp" | awk -F: '$1 == "fpr" { print $10; exit }')"
+if [[ "$firefox_key_fingerprint" != "35BAA0B33E9EB396F59CA838C0BA5CE6DC6315A3" ]]; then
+  echo "Mozilla APT signing-key fingerprint verification failed: ${firefox_key_fingerprint:-not found}" >&2
+  exit 1
+fi
+sudo install -d -m 0755 /etc/apt/keyrings
+sudo install -m 0644 "$firefox_key_tmp" /etc/apt/keyrings/packages.mozilla.org.asc
+rm -f "$firefox_key_tmp"
+trap - EXIT
+
+sudo tee /etc/apt/sources.list.d/mozilla.sources >/dev/null <<'EOF'
+Types: deb
+URIs: https://packages.mozilla.org/apt
+Suites: mozilla
+Components: main
+Signed-By: /etc/apt/keyrings/packages.mozilla.org.asc
+EOF
+
+sudo tee /etc/apt/preferences.d/mozilla-firefox >/dev/null <<'EOF'
+Package: firefox
+Pin: origin packages.mozilla.org
+Pin-Priority: 1000
+
+Package: firefox
+Pin: release o=Ubuntu
+Pin-Priority: -1
+EOF
+
+sudo apt update
+sudo apt install -y firefox
+
+if command -v snap >/dev/null && snap list firefox >/dev/null 2>&1; then
+  if pgrep -x firefox >/dev/null 2>&1; then
+    echo "Firefox is running. Close it and rerun the setup before removing the Snap." >&2
+    exit 1
+  fi
+  sudo snap remove firefox
+fi
+
+if command -v xdg-settings >/dev/null 2>&1; then
+  xdg-settings set default-web-browser firefox.desktop
+fi
+if command -v xdg-mime >/dev/null 2>&1; then
+  xdg-mime default firefox.desktop x-scheme-handler/http x-scheme-handler/https text/html
+fi
+rm -f ~/.local/share/applications/userapp-Firefox-*.desktop
+
 sudo apt install -y keepassxc         # Password manager with KeePass format database
 sudo apt install -y kdenlive          # Video editor (KDE/Qt-based)
 sudo apt install -y vlc               # Universal media player for audio/video
@@ -137,13 +186,13 @@ for app in \
 done
 
 
-if command -v snap >/dev/null && snap list firefox >/dev/null 2>&1; then
+if command -v firefox >/dev/null 2>&1; then
   mkdir -p ~/.config/autostart
   cat <<'EOF' > ~/.config/autostart/firefox.desktop
 [Desktop Entry]
 Type=Application
 Name=Firefox
-Exec=sh -c "sleep 10 && snap run firefox"
+Exec=sh -c "sleep 10 && exec firefox"
 Icon=firefox
 X-GNOME-Autostart-enabled=true
 EOF

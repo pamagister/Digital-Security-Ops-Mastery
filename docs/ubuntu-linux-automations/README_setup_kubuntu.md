@@ -8,16 +8,18 @@ This script automates the initial setup of a fresh Kubuntu 24.04 installation by
 
 - Updating the system and enabling automatic updates
 - Installing development tools and desktop applications
+- Installing Firefox from Mozilla's signed APT repository and preferring that package over Ubuntu's transitional Snap package
 - Setting up security features (firewall, antivirus)
 - Configuring shell environment (Zsh + Oh My Zsh)
 - Installing Flatpak applications and Snap packages
-- Autostart Configuration: add selected applications automatically to autostart menu
+- Configuring selected applications, including Firefox, to start automatically at login
 
 ## 📥 Prerequisites
 
 - Fresh Kubuntu installation
 - User account with sudo privileges
 - Active internet connection
+- The setup verifies Mozilla's APT signing-key fingerprint before adding the repository
 
 ## 🚀 Quick Start
 
@@ -41,7 +43,8 @@ This script automates the initial setup of a fresh Kubuntu 24.04 installation by
 
 1. **Reboot or logout/login** to activate Zsh as the default shell
 2. Review the automatic-update settings; the script enables `unattended-upgrades` and mentions an optional separate scheduling script.
-3. **Set up your applications** (KeePassXC database, Signal account, etc.)
+3. If Firefox was already open, close it and rerun the setup when prompted; the script does not remove a running Firefox Snap.
+4. **Set up your applications** (Firefox profile, KeePassXC database, Signal account, etc.)
 
 ### Customization
 
@@ -73,6 +76,10 @@ Reboot or manually run `chsh -s $(which zsh)`
 ### Manual Fixes
 
 If any step fails, you can run individual sections by copying the relevant commands from the script.
+
+### Firefox launcher after changing package source
+
+Firefox is installed from Mozilla's APT repository, not Ubuntu's transitional Snap package. The setup removes the Snap only after the APT package installs successfully. If an old KDE panel launcher still has a blank icon, remove that pinned launcher and pin **Firefox** again from the application menu; do not pin a launcher whose command contains a versioned `/snap/firefox/<revision>/` path.
 
 ## Contributing
 
