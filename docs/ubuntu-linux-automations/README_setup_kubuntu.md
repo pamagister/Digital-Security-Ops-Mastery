@@ -14,6 +14,31 @@ This script automates the initial setup of a fresh Kubuntu 24.04 installation by
 - Installing Flatpak applications and Snap packages
 - Configuring selected applications, including Firefox, to start automatically at login
 
+## 📱 Interactive App Selection
+
+At startup, the script asks which app groups should be set up and installed. All prompts come first; only afterwards are the selected packages installed in one batch.
+
+| Group | Included Programs |
+|-------|------------------|
+| **Developer** | git, subversion, kdesvn, vim, nano, build-essential, software-properties-common, PyCharm (Snap) |
+| **Internet / Browser** | Signal Messenger, Nextcloud-Desktop |
+| **Firefox** (separate) | Do not install / keep status quo / switch to Mozilla APT repository (incl. Snap removal, default browser, autostart) |
+| **Audio/Video Editing** | ffmpeg, kdenlive, vlc, digikam, imagemagick, gthumb |
+| **System Tools / Utilities** | curl, htop, unzip, p7zip-full, rsync, unison, unison-gtk, gocryptfs, **baobab**, keepassxc, veracrypt, tipp10 |
+| **Security** | ufw (Firewall), ClamAV (Antivirus) |
+| **Desktop / Shell** | Zsh + Oh My Zsh, Latte Dock (+ Autostart) |
+| **Flatpak Apps** | NewPipe, FreeTube |
+
+System update, automatic updates, and the Flatpak/Flathub base are always executed.
+
+### Firefox
+
+Kubuntu ships Firefox as a Snap by default. The options are:
+
+- **n** – Do not install Firefox (no changes to an existing Firefox)
+- **s** – Keep status quo (the script does not actively modify Firefox)
+- **m** – Switch to Mozilla APT repository (current Firefox version, Snap is removed, Firefox becomes default browser and is added to autostart)
+
 ## 📥 Prerequisites
 
 - Fresh Kubuntu installation
