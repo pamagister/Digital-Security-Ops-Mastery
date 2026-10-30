@@ -491,6 +491,7 @@ if "$INSTALL_DEVELOPER"; then
 
     apt_install \
         git \
+        npm \
         subversion \
         kdesvn \
         vim \
