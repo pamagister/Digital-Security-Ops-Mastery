@@ -297,6 +297,46 @@ update_flatpak() {
     fi
 }
 
+check_flatpak_eol() {
+    command -v flatpak >/dev/null 2>&1 || return 0
+
+    print_section "Checking Flatpak end-of-life runtimes"
+
+    local output
+
+    output=$(flatpak list --runtime --columns=application,branch 2>/dev/null || true)
+
+    if [[ -z "$output" ]]; then
+        print_info "No installed Flatpak runtimes found."
+        return 0
+    fi
+
+    local found=false
+
+    while IFS=$'\t' read -r runtime branch; do
+        [[ -n "$runtime" ]] || continue
+
+        local info
+
+        info=$(flatpak info "$runtime//$branch" 2>&1 || true)
+
+        if grep -Eiq 'end-of-life|end of life|nicht mehr unterstützt' <<< "$info"; then
+            if [[ "$found" == false ]]; then
+                print_warning "End-of-life Flatpak runtimes detected:"
+                found=true
+            fi
+
+            printf '    %s (%s)\n' "$runtime" "$branch"
+        fi
+    done <<< "$output"
+
+    if [[ "$found" == false ]]; then
+        print_info "No end-of-life Flatpak runtimes detected."
+    else
+        print_warning "Some Flatpak applications may require attention."
+    fi
+}
+
 # ------------------------------------------------------------------------------
 # Cleanup operations
 # ------------------------------------------------------------------------------
@@ -357,6 +397,7 @@ main() {
 
     update_snap
     update_flatpak
+    check_flatpak_eol
 
     cleanup_system
     check_reboot
