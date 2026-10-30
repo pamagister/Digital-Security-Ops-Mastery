@@ -176,7 +176,7 @@ http://192.168.0.155
 ```
 
    Login with admin credentials.
-   --> You can get the printer ip by navigating to Einstellungen - Alle Einstellungen - Ausdrucke in the printer and make a test print 
+   --> You can get the printer ip by navigating to Settings - All Settings - Print in the printer and make a test print 
 
 2. Navigate to (if available):
 
@@ -190,9 +190,9 @@ Network → Protocol → CIFS
 
 3. Configure a “Scan to Network” profile:
 
-   * **Host-Adresse:** `linux-hostname` (do **not** include domain here)
-   * **Zielordner:** `Scans`
-   * **Benutzername:** `USERNAME` (or a workgroup-qualified form if required by the printer)
+   * **Host address:** `linux-hostname` (do **not** include domain here)
+   * **Target folder:** `Scans`
+   * **Username:** `USERNAME` (or a workgroup-qualified form if required by the printer)
    * **Password:** The Samba password you set for `USERNAME`
    * **Dateityp, Qualität, etc.:** As preferred
 

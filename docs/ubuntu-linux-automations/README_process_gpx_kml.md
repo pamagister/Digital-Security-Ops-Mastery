@@ -1,20 +1,20 @@
-# GPX/KML-Dateien über das Dolphin-Kontextmenü verarbeiten
+# Process GPX/KML files via the Dolphin context menu
 
-Mit dem KDE-Dolphin-Kontextmenü lassen sich eine oder mehrere GPX-/KML-Dateien sowie Ordner an `gpx-kml-converter` übergeben. Ordner werden einschließlich aller Unterordner rekursiv durchsucht.
+The KDE Dolphin context menu passes one or more GPX/KML files or folders to `gpx-kml-converter`. Folders are searched recursively, including all subfolders.
 
-## Voraussetzungen
+## Prerequisites
 
-- Linux mit KDE Plasma und Dolphin
+- Linux with KDE Plasma and Dolphin
 - `konsole`
-- `gpx-kml-converter` Version 1.0.9 oder neuer
+- `gpx-kml-converter` version 1.0.9 or newer
 
 ## Installation
 
-Die Installation besteht aus drei getrennten Schritten. Die Code-Blöcke richten die Installation automatisch ein; unter jedem Schritt steht die manuelle Alternative.
+The installation consists of three separate steps. The code snippets automate each step; a manual alternative is described below each snippet.
 
-### 1. Abhängigkeiten
+### 1. Dependencies
 
-`pipx` und `konsole` installieren und anschließend das CLI einrichten:
+Install `pipx` and `konsole`, then set up the CLI:
 
 ```bash
 sudo apt update
@@ -23,16 +23,16 @@ pipx ensurepath
 pipx install gpx-kml-converter
 ```
 
-**Manuell:** `pipx` und `konsole` über die Paketverwaltung installieren. Danach `gpx-kml-converter` mit `pipx install gpx-kml-converter` installieren. Falls `pipx` noch nicht im Suchpfad liegt, ein neues Terminal öffnen.
+**Manual:** Install `pipx` and `konsole` via the package manager. Then install `gpx-kml-converter` with `pipx install gpx-kml-converter`. If `pipx` is not yet on the PATH, open a new terminal.
 
-### 2. Skript und Dolphin-Menüdatei herunterladen
+### 2. Download the script and Dolphin menu file
 
-Der Block lädt beide Dateien aus diesem Repository in die benutzerspezifischen Installationsordner:
+This block downloads both files from the repository into the user-specific installation directories:
 
 ```bash
 set -e
 command -v gpx-kml-converter >/dev/null || {
-    echo "Bitte zuerst installieren: pipx install gpx-kml-converter"
+    echo "Please install first: pipx install gpx-kml-converter"
     exit 1
 }
 BASE_URL="https://raw.githubusercontent.com/pamagister/Digital-Security-Ops-Mastery/main/docs/ubuntu-linux-automations"
@@ -41,11 +41,11 @@ curl -fL "$BASE_URL/scripts/process_gpx_kml.sh" -o "$HOME/.local/bin/process_gpx
 curl -fL "$BASE_URL/scripts/process_gpx_kml.desktop" -o "$HOME/.local/share/kservices5/ServiceMenus/process_gpx_kml.desktop"
 ```
 
-**Manuell:** [`process_gpx_kml.sh`](scripts/process_gpx_kml.sh) nach `~/.local/bin/` und [`process_gpx_kml.desktop`](scripts/process_gpx_kml.desktop) nach `~/.local/share/kservices5/ServiceMenus/` kopieren. Die Zielordner bei Bedarf vorher anlegen.
+**Manual:** Copy [`process_gpx_kml.sh`](scripts/process_gpx_kml.sh) to `~/.local/bin/` and [`process_gpx_kml.desktop`](scripts/process_gpx_kml.desktop) to `~/.local/share/kservices5/ServiceMenus/`. Create the destination directories if needed.
 
-### 3. Pfad anpassen und aktivieren
+### 3. Adjust the path and activate
 
-Der Block setzt den Home-Verzeichnispfad in der Menüdatei, macht das Skript ausführbar und aktualisiert den KDE-Menü-Cache:
+This block sets the home-directory path in the menu file, makes the script executable, and refreshes KDE's menu cache:
 
 ```bash
 sed -i "s|@HOME@|$HOME|g" "$HOME/.local/share/kservices5/ServiceMenus/process_gpx_kml.desktop"
@@ -53,26 +53,26 @@ chmod +x "$HOME/.local/bin/process_gpx_kml.sh"
 kbuildsycoca5
 ```
 
-**Manuell:** In `process_gpx_kml.desktop` den Platzhalter `@HOME@` durch den vollständigen Pfad zum Home-Verzeichnis ersetzen. Danach im Terminal `chmod +x ~/.local/bin/process_gpx_kml.sh` ausführen und mit `kbuildsycoca5` das Dolphin-Menü aktualisieren.
+**Manual:** In `process_gpx_kml.desktop`, replace the `@HOME@` placeholder with the full path to your home directory. Then run `chmod +x ~/.local/bin/process_gpx_kml.sh` in a terminal and refresh the Dolphin menu with `kbuildsycoca5`.
 
-## Verwendung
+## Usage
 
-1. In Dolphin eine oder mehrere GPX-/KML-Dateien oder einen Ordner auswählen.
-2. Rechtsklicken und **Process GPX/KML** auswählen.
-3. Im Terminal die Vereinfachungstoleranz in Metern und den gewünschten Modus eingeben.
+1. In Dolphin, select one or more GPX/KML files or a folder.
+2. Right-click and choose **Process GPX/KML**.
+3. In the terminal, enter the simplification tolerance in meters and the desired mode.
 
-Die Voreinstellungen sind **10 Meter** und **merge**. Für Ordner wird rekursiv `--recursive true` verwendet. Die verfügbaren Modi sind `compress`, `merge` und `extract-pois`. Die Ausgabedateien werden vom CLI entsprechend dessen Standardverhalten erstellt.
+The defaults are **10 meters** and **merge**. For folders, `--recursive true` is used. The available modes are `compress`, `merge`, and `extract-pois`. Output files are created according to the CLI's default behavior.
 
-Das Skript kann auch direkt im Terminal gestartet werden:
+The script can also be started directly in a terminal:
 
 ```bash
 ~/.local/bin/process_gpx_kml.sh route1.gpx route2.kml
 ~/.local/bin/process_gpx_kml.sh ~/Tracks
 ```
 
-Es fragt ausschließlich nach Toleranz und Modus. Eingaben und numerische Toleranz werden vor dem Aufruf geprüft; ungültige Werte brechen mit einer Fehlermeldung ab.
+It asks only for tolerance and mode. Inputs and the numeric tolerance are validated before invocation; invalid values abort with an error message.
 
-# Command Line Interface von gpx_kml_converter
+# Command Line Interface of gpx_kml_converter
 
 Command line options for gpx_kml_converter
 

@@ -85,7 +85,7 @@ PRESET="Slow"
 AUDIO_BITRATE="160k"
 SUFFIX_PROCESSED=""
 CODEC="libx264"
-MUSIC_FOLDER="$HOME/Musik/Ambient"
+MUSIC_FOLDER="$HOME/Music/Ambient"
 VIDEO_INTRO_FOLDER="$HOME/Videos/Intros"
 OUTPUT_FOLDER="$HOME/Videos/Output_small"
 LIMIT_HEIGHT=1080
@@ -102,14 +102,14 @@ PRESERVE_LRF=false
 ~/.local/bin/postprocess_video.sh holiday.mp4
 ```
 
-The script lists supported audio files in `$HOME/Musik/Ambient` and lets you choose one.
+The script lists supported audio files in `$HOME/Music/Ambient` and lets you choose one.
 
 ---
 
 ### 2. Provide music directly
 
 ```bash
-~/.local/bin/postprocess_video.sh holiday.mp4 --music "$HOME/Musik/Ambient/song.mp3" --start 0 --duration 0
+~/.local/bin/postprocess_video.sh holiday.mp4 --music "$HOME/Music/Ambient/song.mp3" --start 0 --duration 0
 ```
 
 ---

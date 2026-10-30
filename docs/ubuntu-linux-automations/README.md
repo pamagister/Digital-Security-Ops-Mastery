@@ -35,6 +35,6 @@ Compress images by using the context menu in the file manager.
 
 Update Ubuntu packages and installed Snap/Flatpak applications from the terminal or desktop launcher.
 
-## 🗺️ [GPX/KML-Dateien verarbeiten](README_process_gpx_kml.md)
+## 🗺️ [Process GPX/KML files](README_process_gpx_kml.md)
 
-GPX- und KML-Dateien komprimieren, mergen oder POIs extrahieren – direkt über das Dolphin-Kontextmenü.
+Compress, merge, or extract POIs from GPX and KML files directly via the Dolphin context menu.
