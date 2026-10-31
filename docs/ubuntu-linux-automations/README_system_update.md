@@ -1,74 +1,81 @@
 # Ubuntu System Update
 
-Update Ubuntu packages, remove packages that are no longer needed, clean the APT cache, and refresh installed Snap and Flatpak applications. Flatpak and Snap updates are skipped when their package managers are not installed.
+A convenient way to update Ubuntu and Ubuntu-based systems, including APT packages and, when installed, Snap and Flatpak applications.
 
-The script uses `apt full-upgrade`, which may remove packages to complete an upgrade. Review the APT output, and keep backups of important data.
+> **Note:** The script uses `apt-get full-upgrade`, which may remove packages to complete an upgrade. Review the proposed changes and keep backups of important data.
 
 ## Requirements
 
-* Ubuntu or a derivative such as Kubuntu
-* `sudo` access
-* `curl` for the copy-paste installation below
+- Ubuntu or an Ubuntu-based distribution (for example, Kubuntu)
+- `sudo` privileges
+- `curl` for the installation command below
 
-Install `curl` first if it is missing:
-
-```bash
-sudo apt install -y curl
-```
+If `curl` is not installed, install it using your package manager.
 
 ## Installation
 
 ### Copy-paste installation
 
-This installs the script in `~/.local/bin/` and a desktop launcher in `~/.local/share/applications/`:
+The following installs the update script, registers its application launcher, and places a separate copy of the launcher in `~/Applications/`.
 
 ```bash
 set -e
+
 BASE_URL="https://raw.githubusercontent.com/pamagister/Digital-Security-Ops-Mastery/main/docs/ubuntu-linux-automations"
-mkdir -p "$HOME/.local/bin" "$HOME/.local/share/applications"
-curl -fL "$BASE_URL/scripts/system-update.sh" -o "$HOME/.local/bin/system-update.sh"
-curl -fL "$BASE_URL/scripts/system-update.desktop" -o "$HOME/.local/share/applications/system-update.desktop"
-sed -i "s|@HOME@|$HOME|g" "$HOME/.local/share/applications/system-update.desktop"
-chmod +x "$HOME/.local/bin/system-update.sh"
+
+BIN_DIR="$HOME/.local/bin"
+APP_DIR="$HOME/.local/share/applications"
+PERSONAL_APP_DIR="$HOME/Applications"
+
+mkdir -p "$BIN_DIR" "$APP_DIR" "$PERSONAL_APP_DIR"
+
+curl -fL "$BASE_URL/scripts/system-update.sh" -o "$BIN_DIR/system-update.sh"
+
+curl -fL "$BASE_URL/scripts/system-update.desktop" -o "$APP_DIR/system-update.desktop"
+
+sed "s|@HOME@|$HOME|g" "$APP_DIR/system-update.desktop" > "$PERSONAL_APP_DIR/System Update.desktop"
+
+chmod +x "$BIN_DIR/system-update.sh"
 ```
+
+The launcher in `~/.local/share/applications/` is used by the desktop environment. The copy in `~/Applications/` is for convenient access and can also be copied to the desktop.
 
 ### Manual installation
 
-1. Copy [`system-update.sh`](scripts/system-update.sh) to `~/.local/bin/`.
-2. Copy [`system-update.desktop`](scripts/system-update.desktop) to `~/.local/share/applications/`.
-3. Replace `@HOME@` in `system-update.desktop` with the full path to your home directory.
+1. Download [`system-update.sh`](scripts/system-update.sh) to `~/.local/bin/`.
+2. Download [`system-update.desktop`](scripts/system-update.desktop) to `~/.local/share/applications/`.
+3. Replace `@HOME@` in the desktop file with your home directory path.
 4. Make the script executable:
 
    ```bash
    chmod +x ~/.local/bin/system-update.sh
    ```
 
+5. Optionally, place a configured copy of the desktop file in `~/Applications/`.
+
 ## Usage
 
-### From the desktop
+### From the application menu
 
-Open your application launcher and search for **System Update**. A terminal opens and waits for Enter after the update finishes, so the result remains visible.
+Search for **System Update** in your desktop environment's application launcher. A terminal window opens and remains available until you press Enter.
 
 ### From a terminal
-
-Run:
 
 ```bash
 ~/.local/bin/system-update.sh
 ```
 
-The script asks for your sudo password, then updates APT packages, Snap packages when available, and Flatpak packages when available. A reboot recommendation is shown if Ubuntu indicates one is required.
-
-To keep a terminal window open when launching manually, use:
+Use `--pause` to keep an interactive terminal open after the script finishes:
 
 ```bash
 ~/.local/bin/system-update.sh --pause
 ```
 
-## What it does
+## Features
 
-* Refreshes APT package lists and runs `apt full-upgrade`.
-* Removes unneeded packages and cleans the APT cache.
-* Refreshes Snap and Flatpak packages when those tools are installed.
-* Stops and reports an error if an update step fails.
-* Reports when a reboot is recommended.
+- Checks the system and APT repositories before upgrading.
+- Checks package dependencies and performs a full system upgrade.
+- Updates Snap and Flatpak applications when their package managers are available.
+- Offers optional cleanup of unused packages, cache files, and Flatpak runtimes.
+- Reports detected Flatpak end-of-life runtimes and whether a reboot is required.
+- Stops when an update step fails and reports the error.
