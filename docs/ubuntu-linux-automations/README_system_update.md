@@ -4,15 +4,24 @@ A convenient way to update Ubuntu and Ubuntu-based systems, including APT packag
 
 > **Note:** The script uses `apt-get full-upgrade`, which may remove packages to complete an upgrade. Review the proposed changes and keep backups of important data.
 
-## Requirements
+## Features
+
+- Checks the system and APT repositories before upgrading.
+- Checks package dependencies and performs a full system upgrade.
+- Updates Snap and Flatpak applications when their package managers are available.
+- Offers optional cleanup of unused packages, cache files, and Flatpak runtimes.
+- Reports detected Flatpak end-of-life runtimes and whether a reboot is required.
+- Stops when an update step fails and reports the error.
+
+## Installation
+
+### Requirements
 
 - Ubuntu or an Ubuntu-based distribution (for example, Kubuntu)
 - `sudo` privileges
 - `curl` for the installation command below
 
 If `curl` is not installed, install it using your package manager.
-
-## Installation
 
 ### Copy-paste installation
 
@@ -71,11 +80,4 @@ Use `--pause` to keep an interactive terminal open after the script finishes:
 ~/.local/bin/system-update.sh --pause
 ```
 
-## Features
 
-- Checks the system and APT repositories before upgrading.
-- Checks package dependencies and performs a full system upgrade.
-- Updates Snap and Flatpak applications when their package managers are available.
-- Offers optional cleanup of unused packages, cache files, and Flatpak runtimes.
-- Reports detected Flatpak end-of-life runtimes and whether a reboot is required.
-- Stops when an update step fails and reports the error.
