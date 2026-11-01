@@ -224,7 +224,7 @@ Avoid unnecessary password copies in multiple cloud services. Protect every sync
 * Central notes
 * Cross-platform
 
-📌 Details see: [Nextcloud](../nextcloud/README_en.md)
+📌 Details see: [Nextcloud](../nextcloud/README.md)
 
 ### Google Keep
 

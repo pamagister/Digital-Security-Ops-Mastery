@@ -5,15 +5,15 @@ Enhance your digital security expertise with Digital Security Ops Mastery and em
 
 # Topics
 
-## ![app_image](_static/ico/nextcloud.ico) [Nextcloud](nextcloud/README_en.md)
+## ![app_image](_static/ico/nextcloud.ico) [Nextcloud](nextcloud/README.md)
 
 Guidance for setting up and synchronizing files, contacts, calendars, and notes with self-hosted or managed Nextcloud.
 
-## ![app_image](_static/ico/android.ico) [De-Googled-phone](de-googled-phone/README_en.md)
+## ![app_image](_static/ico/android.ico) [De-Googled-phone](de-googled-phone/README.md)
 
 Compare alternative Android operating systems and privacy-conscious apps. Device support and security properties vary by operating system.
 
-## ![app_image](_static/ico/adaway.ico) [Child-proof phone](child-proof-phone/README_en.md)
+## ![app_image](_static/ico/adaway.ico) [Child-proof phone](child-proof-phone/README.md)
 
 The guide covers screen-time limits, app locks, content filters, and device location. These measures do not replace supervision or provide complete parental controls.
 
@@ -25,7 +25,7 @@ The backup overview is currently available in German and covers Android password
 
 Guides and scripts for Kubuntu, NAS mounts, encrypted synchronization, image and video processing, and [creating GPX POIs from YAML place lists](gpx-poi-from-yaml/README.md).
 
-## ![app_image](_static/ico/ubuntu_children.ico) Child-proof Ubuntu PC<!--(child-proof-ubuntu/README_en.md)-->
+## ![app_image](_static/ico/ubuntu_children.ico) Child-proof Ubuntu PC<!--(child-proof-ubuntu/README.md)-->
 
 In progress.
 
