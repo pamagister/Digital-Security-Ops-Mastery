@@ -2,14 +2,14 @@
 
 The KDE Dolphin context menu passes one or more GPX/KML files or folders to `gpx-kml-converter`. Folders are searched recursively, including all subfolders.
 
-## Features
+## ✨ Features
 
 - Process GPX and KML files or folders from the Dolphin context menu.
 - Modes: `compress`, `merge`, and `extract-pois`.
 - Configurable simplification tolerance.
 - Interactive prompts for tolerance and mode.
 
-## Set-Up
+## ⚙️ Set-Up
 
 ### Requirements
 

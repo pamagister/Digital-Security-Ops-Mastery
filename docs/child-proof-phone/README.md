@@ -1,5 +1,5 @@
 
-# Setting up a child-proof phone
+# ⚙️ Setting up a child-proof phone
 
 The aim of this chapter is to set up a mobile phone that can be used safely by children.
 The focus is on ensuring the following features:
@@ -135,6 +135,6 @@ fmd delete - resets the phone to factory settings
 fmd camera (back/front) - captures a photo with the selected camera and sends it to the configured server
 ```
 
-## Further links
+## 📚 Further links
 - AdAway: [Comprehensive description of the functionality (german)](https://www.kuketz-blog.de/adaway-werbe-und-trackingfrei-im-android-universum/)
 - FindMyDevice: [github Wiki](https://github.com/ColoursofOSINT/findmydevice/tree/main)

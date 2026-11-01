@@ -2,14 +2,14 @@
 
 This script configures KDE/Plasma to use **one language for the user interface** (e.g., English) and **another language for regional settings** (e.g., German for dates, numbers, currency, and spell-checking).
 
-## Features
+## ✨ Features
 
 - Set GUI language separately from locale formats.
 - Configure KDE/Plasma locale (time, numbers, currency, paper size).
 - Configure spell-checking language.
 - Optionally set environment variables in `~/.profile` for consistency.
 
-## Set-Up
+## ⚙️ Set-Up
 
 ### Requirements
 
@@ -38,7 +38,7 @@ chmod +x "$HOME/.local/bin/set_kde_language.sh"
    chmod +x ~/.local/bin/set_kde_language.sh
    ```
 
-## Usage
+## 🚀 Usage
 
 1. Edit the variables near the top of the script to set your preferred languages:
 
@@ -57,14 +57,14 @@ chmod +x "$HOME/.local/bin/set_kde_language.sh"
 
 3. Log out and back in to apply changes.
 
-## Example
+## 💡 Example
 
 - **GUI language**: English (`en_US`)
 - **Locale settings**: German (`de_DE`)
 
   → The KDE interface will be in English, but dates, currency, and spell-checking will follow German conventions.
 
-## Notes
+## 📝 Notes
 
 - The script modifies KDE configuration via `kwriteconfig5` and appends environment variables to the current user's `~/.profile`; it does not configure the system-wide locale.
 - Back up `~/.profile` first if you maintain locale settings there. The script adds entries but does not replace previous conflicting exports.

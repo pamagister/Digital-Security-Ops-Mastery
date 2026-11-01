@@ -1,5 +1,5 @@
 
-# Setting up a de-Googled phone
+# ⚙️ Setting up a de-Googled phone
 
 An alternative Android operating system can reduce reliance on Google services, but it is not automatically more secure or completely Google-free. Before switching, check device support, security updates, required apps, and the official installation instructions. Unlocking the bootloader and flashing a ROM can erase data or make a device unusable.
 
@@ -35,7 +35,7 @@ Open-source apps are not automatically secure: check the publisher, source, perm
 - ![app_image](../_static/ico/collabora.ico) **[Collabora Office](https://www.collaboraoffice.com/collabora-office-android-ios/)**: Open and edit documents, for example from Nextcloud. The office app is based on LibreOffice.
 
 
-## Further links
+## 📚 Further links
 - Digital self-defense (German): https://digitalcourage.de/digitale-selbstverteidigung
 - Google alternatives: https://restoreprivacy.com/google-alternatives/
 - Mail provider:

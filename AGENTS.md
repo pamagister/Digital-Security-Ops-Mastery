@@ -8,7 +8,7 @@ When instructions conflict, follow the most specific applicable instruction and 
 
 [] Finaly: Add with time and date a short report in english to temp/report.md that also can be used as commit message describing the changes made. Add this incrementally without modifying the previous report content.
 
-## General Guidelines
+## 🧭 General Guidelines
 
 - Keep documentation practical, concise, and accessible to users with different levels of Linux experience.
 - Prefer Bash for system automation and Python for tasks where it provides a clear advantage.
@@ -18,7 +18,7 @@ When instructions conflict, follow the most specific applicable instruction and 
 - Keep scripts, documentation, and installation instructions consistent.
 - Make the smallest change that fully solves the requested task.
 
-## Documentation
+## 📚 Documentation
 
 - Write documentation in English unless the user or the specific document requests another language.
 - Use Markdown headings in a logical hierarchy: one `#` title, followed by `##` sections and `###` subsections.
@@ -150,7 +150,7 @@ Document important notes, limitations, warnings or additional information.
 - Test shell scripts with `bash -n` and, when available, ShellCheck.
 - Consider interactive and non-interactive execution when prompts are involved.
 
-## Python (`.py`)
+## 🧑‍💻 Python (`.py`)
 
 - Follow PEP 8 and the conventions already used in the project.
 - Use four spaces for indentation and keep lines reasonably short (prefer a maximum of 100 characters).
@@ -193,7 +193,7 @@ Document important notes, limitations, warnings or additional information.
 - Summarize what changed and mention relevant checks or limitations.
 
 
-## Document Structure
+## 📚 Document Structure
 
 Use the following structure as the default for individual tool guides and README files:
 

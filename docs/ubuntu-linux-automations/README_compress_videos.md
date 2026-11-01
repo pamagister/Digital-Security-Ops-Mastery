@@ -2,7 +2,7 @@
 
 This script compresses videos using **ffmpeg**. It supports both direct file arguments and recursive folder scanning, while offering flexible control over quality, audio, and output handling.
 
-## Features
+## ✨ Features
 
 - **File arguments or folder scanning**:
   - Provide video files directly as arguments.
@@ -19,7 +19,7 @@ This script compresses videos using **ffmpeg**. It supports both direct file arg
 - Optional renaming of originals with a custom processed suffix.
 - KDE / Dolphin right-click menu integration via `.desktop` file.
 
-## Set-Up
+## ⚙️ Set-Up
 
 ### Requirements
 
@@ -62,7 +62,7 @@ kbuildsycoca5
    kbuildsycoca5
    ```
 
-## Usage
+## 🚀 Usage
 
 Run the script directly from a terminal:
 
@@ -95,7 +95,7 @@ Edit `SUFFIX_PROCESSED` near the top of the script; this renames the original af
 SUFFIX_PROCESSED="_old"
 ```
 
-## Configuration
+## ⚙️ Configuration
 
 Inside the script, you can adjust default values for CRF, preset, audio bitrate, suffixes, and more. 
 
@@ -109,7 +109,7 @@ Inside the script, you can adjust default values for CRF, preset, audio bitrate,
 
 After installation, right-click on videos in Dolphin and select **Compress Videos**.
 
-## Notes
+## 📝 Notes
 
 - Skips files already containing the compressed suffix.
 - Skips if a compressed version already exists (unless overwrite mode is chosen).

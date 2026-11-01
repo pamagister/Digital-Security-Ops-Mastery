@@ -211,7 +211,7 @@ Scan → to Network → [Configured Profile]
 
 ---
 
-## Troubleshooting
+## 🔧 Troubleshooting
 
 ### 🔹 If the printer cannot connect:
 

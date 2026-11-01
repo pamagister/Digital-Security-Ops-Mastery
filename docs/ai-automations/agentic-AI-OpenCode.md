@@ -1,6 +1,6 @@
 # Agentic AI and OpenCode
 
-## Introduction
+## 🧭 Introduction
 
 Agentic AI is a new way of working with artificial intelligence. Instead of merely answering questions, an AI agent can independently perform tasks, use tools, interact with software, and work toward a defined goal.
 
@@ -88,7 +88,7 @@ OpenCode can be used in several ways:
 
 The terminal-based interface is particularly flexible because it can be used both interactively and through automation.
 
-## Installation on Linux
+## 📦 Installation on Linux
 
 The official installation script is the recommended starting point.
 
@@ -331,7 +331,7 @@ This approach also makes it possible to integrate AI requests into shell scripts
 
 **Note:** One-shot requests are stateless. The model does not automatically remember previous requests. Conversation history must be explicitly included if a multi-step interaction is required.
 
-## Using OpenCode Without an IDE
+## 🚀 Using OpenCode Without an IDE
 
 OpenCode is not dependent on PyCharm or another development environment.
 
@@ -401,7 +401,7 @@ Official documentation:
 
 [**OpenCode MCP Servers**](https://opencode.ai/docs/mcp/)
 
-## Security and Responsible Usage
+## 🔐 Security and Responsible Usage
 
 Agentic AI can perform actions that have real consequences. Appropriate precautions are therefore essential.
 
@@ -428,7 +428,7 @@ In particular, Kilo's free model catalog warns that some providers may log promp
 
 For sensitive tasks, consider locally hosted models using Ollama or another inference backend.
 
-## Further Reading
+## 📚 Further Reading
 
 - [OpenCode – Official Website](https://opencode.ai/)
 - [OpenCode – Documentation](https://opencode.ai/v2/docs)

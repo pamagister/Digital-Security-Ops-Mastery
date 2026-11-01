@@ -2,7 +2,7 @@
 
 A comprehensive automated setup script for Kubuntu that installs essential software, configures system security, and sets up a productive desktop environment.
 
-## Features
+## ✨ Features
 
 - Updates the system and enables automatic updates.
 - Installs development tools and desktop applications.
@@ -13,7 +13,7 @@ A comprehensive automated setup script for Kubuntu that installs essential softw
 - Configures selected applications, including Firefox, to start automatically at login.
 - Interactive app group selection at startup; all prompts come first, then packages are installed in one batch.
 
-## Set-Up
+## ⚙️ Set-Up
 
 ### Requirements
 
@@ -49,7 +49,7 @@ chmod +x setup_kubuntu.sh
    ./setup_kubuntu.sh
    ```
 
-## Usage
+## 🚀 Usage
 
 The script runs interactively and asks which app groups to install:
 
@@ -72,7 +72,7 @@ System update, automatic updates, and the Flatpak/Flathub base are always execut
 - **s** – Keep status quo (the script does not actively modify Firefox).
 - **m** – Switch to Mozilla APT repository (current Firefox version, Snap is removed, Firefox becomes default browser and is added to autostart).
 
-## Post-installation notes
+## 📝 Post-installation notes
 
 ### Manual steps required
 
@@ -88,14 +88,14 @@ The script can be easily customized by:
 - Modifying the application list in each section.
 - Adding or removing autostart applications.
 
-## Security considerations
+## 🔐 Security considerations
 
 - UFW is enabled with its existing default rules; check them before relying on the firewall.
 - Automatic security updates are enabled, but the script also installs software from Snap, Flathub, and Signal's package repository.
 - ClamAV provides on-demand virus scanning.
 - Review the script before running it: it installs software, changes system settings, adds an external Signal repository, and configures shell startup.
 
-## Troubleshooting
+## 🔧 Troubleshooting
 
 ### Common issues
 

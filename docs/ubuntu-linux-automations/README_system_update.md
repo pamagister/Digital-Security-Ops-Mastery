@@ -4,7 +4,7 @@ A convenient way to update Ubuntu and Ubuntu-based systems, including APT packag
 
 > **Note:** The script uses `apt-get full-upgrade`, which may remove packages to complete an upgrade. Review the proposed changes and keep backups of important data.
 
-## Features
+## ✨ Features
 
 - Checks the system and APT repositories before upgrading.
 - Checks package dependencies and performs a full system upgrade.
@@ -13,7 +13,7 @@ A convenient way to update Ubuntu and Ubuntu-based systems, including APT packag
 - Reports detected Flatpak end-of-life runtimes and whether a reboot is required.
 - Stops when an update step fails and reports the error.
 
-## Set-Up
+## ⚙️ Set-Up
 
 ### Requirements
 
@@ -62,7 +62,7 @@ The launcher in `~/.local/share/applications/` is used by the desktop environmen
 
 5. Optionally, place a configured copy of the desktop file in `~/Applications/`.
 
-## Usage
+## 🚀 Usage
 
 ### From the application menu
 

@@ -1,6 +1,6 @@
 
 
-# Introduction
+# 🧭 Introduction
 
 ## Why Nextcloud?
 
@@ -21,13 +21,13 @@ Nextcloud is an open-source platform for file storage and collaboration. Dependi
 Consider your technical skills, resources, and ongoing maintenance before self-hosting. Synchronization is not an independent backup: plan and test separate backups.
 
 
-# Setting up Nextcloud
+# ⚙️ Setting up Nextcloud
 
 ## Set up a Nextcloud server
 As an alternative to cloud services, you can self-host Nextcloud or choose a managed provider. Check storage limits, privacy terms, backups, and recovery options with the provider; plans and features change.
 For syncing with your own PC, there is also Nextcloud PC client software to synchronize the files between Nextcloud, the phone and the PC.
 
-## Install the required apps on the mobile device
+## 📦 Install the required apps on the mobile device
 1. ![app_image](../_static/ico/fdroid.ico) **F-Droid**: Catalog of free and open-source apps. Open source alone is not a security guarantee; check publishers, permissions, and updates.
 1. ![app_image](../_static/ico/nextcloud.ico) **Nextcloud**: Client for synchronizing files and automatic uploads. Contacts, calendars, and tasks are usually synchronized through DAVx⁵ using CardDAV/CalDAV.
 1. ![app_image](../_static/ico/davx5.ico) **DAVx⁵**: DAVx⁵ is a CalDAV/CardDAV management and synchronization app for Android that integrates seamlessly with calendar and contacts apps. With DAVx⁵ you have your contacts, appointments and tasks on your own server or a trusted CalDAV/CardDAV service under your own control.

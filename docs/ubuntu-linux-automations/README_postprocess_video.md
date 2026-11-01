@@ -2,7 +2,7 @@
 
 A Bash script for post-processing video with FFmpeg. It can add music and an intro, trim the input, overlay a recording timestamp/title, limit output height, and apply fade effects. The current defaults are configured near the top of `scripts/postprocess_video.sh`.
 
-## Features
+## ✨ Features
 
 - 🎵 Replace the source audio with a selected music track; audio is trimmed or padded to fit.
 - 🎞️ Optionally prepend an intro video.
@@ -11,7 +11,7 @@ A Bash script for post-processing video with FFmpeg. It can add music and an int
 - 💾 Save output to the configured output directory (default: `~/Videos/Output_small`).
 - 🖱️ Optional integration with **Kubuntu Dolphin right-click menu**.
 
-## Set-Up
+## ⚙️ Set-Up
 
 ### Requirements
 
@@ -56,7 +56,7 @@ kbuildsycoca5
    kbuildsycoca5
    ```
 
-## Usage
+## 🚀 Usage
 
 ### Basic command
 
@@ -72,7 +72,7 @@ kbuildsycoca5
 * `--start <seconds>` and `--duration <seconds>` select the source segment. A duration of `0` means the remaining duration.
 * The script can still prompt for values not supplied on the command line. Quote paths and titles containing spaces.
 
-## Configuration
+## ⚙️ Configuration
 
 Inside the script you can adjust defaults:
 
@@ -89,7 +89,7 @@ LIMIT_HEIGHT=1080
 PRESERVE_LRF=false
 ```
 
-## Examples
+## 💡 Examples
 
 ### 1. Auto-select music interactively
 

@@ -2,14 +2,14 @@
 
 This script allows you to mount, unmount, and configure automatic mounting of NAS shares on Ubuntu Linux.
 
-## Features
+## ✨ Features
 
 - Mount and unmount multiple CIFS/SMB shares.
 - Check NAS reachability before mounting.
 - Enable automount on restart by writing entries to `/etc/fstab`.
 - Set file and directory permissions (`0664` / `0775`).
 
-## Set-Up
+## ⚙️ Set-Up
 
 ### Requirements
 
@@ -65,7 +65,7 @@ chmod +x "$HOME/.local/bin/mount_nas.sh"
    sudo chmod 600 /etc/samba/credentials_nas
    ```
 
-## Usage
+## 🚀 Usage
 
 Configure `NAS_HOST`, `MOUNT_BASE`, `CREDENTIALS`, and the share names in the script first. Then run it with `sudo`:
 
@@ -98,7 +98,7 @@ Test the new fstab entries:
 sudo mount -a
 ```
 
-## Examples
+## 💡 Examples
 
 Mount all shares manually:
 
@@ -115,7 +115,7 @@ sudo $HOME/.local/bin/mount_nas.sh
 sudo mount -a   # optional test
 ```
 
-## Notes
+## 📝 Notes
 
 - The script checks if the NAS host is reachable before mounting.
 - Existing mounts are unmounted first to avoid conflicts.

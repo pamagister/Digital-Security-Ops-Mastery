@@ -2,7 +2,7 @@
 
 A simple interactive script to process JPEG and PNG images without resizing. JPEG output is targeted to a selected file size. PNG handling depends on whether `pngquant` is installed: it may create a palette-based PNG, or convert the image to JPEG if `pngquant` is unavailable.
 
-## Features
+## ✨ Features
 
 - Process **JPEG and PNG** images without resizing.
 - Interactive **target size selection** (default: 500 KB).
@@ -11,7 +11,7 @@ A simple interactive script to process JPEG and PNG images without resizing. JPE
 - Integrated with Dolphin via **right-click context menu**.
 - Without `pngquant`, PNG files are converted to JPEG, which can discard transparency and image data.
 
-## Set-Up
+## ⚙️ Set-Up
 
 ### Requirements
 
@@ -57,7 +57,7 @@ kbuildsycoca5
    kbuildsycoca5
    ```
 
-## Usage
+## 🚀 Usage
 
 ### Right-click compression
 
@@ -85,6 +85,6 @@ You can also run the script manually in a terminal:
 * Supports multiple files at once.
 * Interactive prompts will appear in the terminal.
 
-## Notes
+## 📝 Notes
 
 **Warning:** Overwriting replaces the source image, and PNG-to-JPEG conversion is lossy. Keep a backup of originals if you may need them.

@@ -9,14 +9,14 @@ This guide describes a repeatable workflow for turning named places in a YAML fi
 
 The agent workflow is documented in [`tools/gpx_poi_from_yaml/SKILL.md`](../../tools/gpx_poi_from_yaml/SKILL.md).
 
-## Prerequisites
+## 📋 Prerequisites
 
 - An MCP client that supports local stdio MCP servers.
 - `uv` with `uvx` available.
 - `gpx-kml-converter` installed and on `PATH`. For installation and CLI details, see [Processing GPX/KML files](../ubuntu-linux-automations/README_process_gpx_kml.md).
 - A YAML file containing place records with at least a `name`. The workflow uses `desc` as a description and an optional integer `rating` from 1 through 5.
 
-## Configure the geocoding MCP server
+## ⚙️ Configure the geocoding MCP server
 
 The [geocode-mcp package](https://mcpservers.org/de/servers/X-McKay/geocode-mcp) can be launched with `uvx`. Configure the MCP client with:
 
