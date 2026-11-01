@@ -13,17 +13,17 @@ A convenient way to update Ubuntu and Ubuntu-based systems, including APT packag
 - Reports detected Flatpak end-of-life runtimes and whether a reboot is required.
 - Stops when an update step fails and reports the error.
 
-## Installation
+## Set-Up
 
 ### Requirements
 
-- Ubuntu or an Ubuntu-based distribution (for example, Kubuntu)
-- `sudo` privileges
-- `curl` for the installation command below
+- Ubuntu or an Ubuntu-based distribution (for example, Kubuntu).
+- `sudo` privileges.
+- `curl` for the installation command below.
 
 If `curl` is not installed, install it using your package manager.
 
-### Copy-paste installation
+### Installation
 
 The following installs the update script, registers its application launcher, and places a separate copy of the launcher in `~/Applications/`.
 

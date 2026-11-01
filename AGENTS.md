@@ -2,6 +2,8 @@
 # Repository Guidelines
 
 This repository primarily contains Linux guides, documentation, shell scripts, and a smaller amount of Python code. Changes should prioritize clarity, safety, maintainability, and consistency with the existing structure.
+These guidelines apply repository-wide. More specific instructions in a subdirectory or task may refine them. When instructions conflict, follow the most specific applicable instruction and preserve existing project conventions unless the requested change explicitly calls for updating them.
+
 
 ## General Guidelines
 
@@ -87,52 +89,26 @@ This repository primarily contains Linux guides, documentation, shell scripts, a
 
 ## Document Structure
 
-```
 Use the following structure as the default for individual tool guides and README files:
 
 # Title
 
-Brief introduction describing the purpose of the tool or guide.
+Brief introduction describing the purpose of the tool or guide. Do not hardcode distribution versions (e.g. "24.04"); assume a current Ubuntu/Kubuntu LTS.
 
-## Features
+## Features (OPTIONAL)
 
-## Set-Up
-
-### Requirements
-
-### Installation
-
-### Manual installation
-
-## Usage
-
-## Examples (OPTIONAL)
-
-```
-
-## Details for the chapter content
-
-Follow this structure consistently across the repository. Minor deviations and additional sections are acceptable when they improve clarity, readability, or completeness. Omit sections that are not relevant to a particular project.
-
-
-# Title
-
-Brief introduction describing the purpose of the tool or guide.
-
-## Features
-
-- List the main features and capabilities.
+List the main features and capabilities.
 
 ## Set-Up
 
 ### Requirements
-- List the prerequisites and specific dependencies
-- assume that Linux (Ubuntu or Kubuntu)  24.* 0r 26.* is installed, do not mention this explicitely since it is a given for all guides in this repository
+
+List the prerequisites and specific dependencies.
 
 ### Installation
 
-- Provide copy-paste installation instructions for the tool or script.
-- Use the following standard locations for user-level installations:
+Provide copy-paste installation instructions for the tool or script.
+Use the following standard locations for user-level installations:
 
 | File type / purpose | Recommended location |
 | --- | --- |
@@ -182,6 +158,7 @@ For standard application launchers, use `~/.local/share/applications/` instead o
 ### Manual installation
 
 Optionally provide manual installation instructions as an alternative to the copy-paste installation. Manual instructions should:
+
 - Provide manual installation instructions as an alternative to the copy-paste installation.
 - When manual installation is documented:
 
@@ -202,12 +179,11 @@ Optionally provide manual installation instructions as an alternative to the cop
 - Do not repeat implementation details that can change frequently. Document user-visible behavior instead.
 - Use examples that are valid, minimal, and copy-pasteable.
 
-## Examples
-- OPTIONAL: Provide minimal, copy-pasteable examples of usage.
-- 
----
+## Examples (OPTIONAL)
 
-## Scope and Priorities
+Provide minimal, copy-pasteable examples of usage.
 
-These guidelines apply repository-wide. More specific instructions in a subdirectory or task may refine them. When instructions conflict, follow the most specific applicable instruction and preserve existing project conventions unless the requested change explicitly calls for updating them.
+## Notes / Warnings (OPTIONAL)
+
+Clearly distinguish optional features, requirements, warnings, and desktop-environment-specific behavior. Explain potentially destructive operations prominently and plainly.
 
