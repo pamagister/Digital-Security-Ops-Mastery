@@ -31,6 +31,109 @@ When instructions conflict, follow the most specific applicable instruction and 
 - Clearly distinguish optional features, requirements, warnings, and desktop-environment-specific behavior.
 - Explain potentially destructive operations prominently and plainly.
 
+## Emojis in Documentation
+
+Emojis enrich documentation by making it more scannable and visually structured. Use them sparingly, consistently, and thematically appropriate.
+
+### Emoji categories
+
+| Category | Emoji | Usage |
+|---|---|---|
+| Overview / General | 🧭 | Overview, summary, introduction |
+| Features / Functions | ✨ | Functionality, key features |
+| Installation | 📦 | Installation, packaging |
+| Setup / Configuration | ⚙️ | Setup, settings |
+| Prerequisites | 📋 | Requirements, dependencies |
+| Usage | 🚀 | Usage, application |
+| Examples | 💡 | Examples, use cases |
+| Security | 🔐 | Security, protection measures |
+| Privacy | 🛡️ | Privacy, data control |
+| Network / Internet | 🌐 | Network, internet, connections |
+| Android / Smartphone | 📱 | Mobile devices, Android |
+| Linux / Operating System | 🐧 | Linux, system administration |
+| Backup / Restore | 💾 | Data backup, restore |
+| Files / Directories | 📁 | File management, folder structure |
+| Databases / Data | 🗄️ | Data storage, databases |
+| Automation | 🔄 | Scripts, workflows, automation |
+| Warnings / Risks | ⚠️ | Hazards, limitations, warnings |
+| Troubleshooting | 🔧 | Troubleshooting, repairs |
+| Documentation / Sources | 📚 | References, links, further information |
+| Notes / Hints | 📝 | Additions, general notes |
+
+### Additional optional emojis
+
+| Category | Emoji |
+|---|---|
+| Success / Result | ✅ |
+| Failed | ❌ |
+| Important / Priority | ❗ |
+| Tip / Recommendation | 🎯 |
+| Time / Planning | ⏱️ |
+| Terminal / CLI | 💻 |
+| Git / Version Control | 🔀 |
+| Development / Code | 🧑‍💻 |
+| Cloud / Online Storage | ☁️ |
+| Energy / Performance | ⚡ |
+
+Every standard heading receives its dedicated emoji immediately before the title.
+
+| Heading | Mandatory emoji |
+|---|---|
+| Overview / Übersicht | 🧭 |
+| Features | ✨ |
+| Set-Up | ⚙️ |
+| Requirements | 📋 |
+| Installation | 📦 |
+| Manual installation | 🔩 |
+| Usage | 🚀 |
+| Examples (optional) | 💡 |
+| Notes / Warnings (optional) | 📝 |
+
+'''
+Brief introduction and description of the project.
+
+## ✨ Features
+
+- Feature 1
+- Feature 2
+
+## ⚙️ Set-Up
+
+### 📋 Requirements
+
+List the prerequisites and specific dependencies.
+
+### 📦 Installation
+
+Describe the recommended installation procedure.
+
+### 🔩 Manual installation
+
+Describe alternative or manual installation procedures, if applicable.
+
+## 🚀 Usage
+
+Explain how to use the project.
+
+## 💡 Examples (OPTIONAL)
+
+Provide practical examples, if useful.
+
+## 📝 Notes / Warnings (OPTIONAL)
+
+Document important notes, limitations, warnings or additional information.
+'''
+
+### Additional rules
+
+- The defined emojis are mandatory for the named standard headings.
+- Additional topic-specific headings are expressly encouraged and should use matching emojis from the defined emoji system.
+- The order of the standard chapters should generally be followed.
+- Not relevant or not needed chapters (especially optional sections) may be omitted.
+- Sensible additions, subsections, or minor deviations are allowed as long as they improve overview and understandability.
+- Emojis serve orientation and should be used sparingly, consistently, and thematically appropriate.
+- Within body text, lists, and warnings, emojis may additionally be used if they meaningfully support the information content.
+
 ## Shell Scripts (`.sh`)
 
 - Use Bash when Bash features are required; start Bash scripts with `#!/usr/bin/env bash`.
@@ -102,7 +205,7 @@ Brief introduction describing the purpose of the tool or guide. Do not hardcode 
 
 List the main features and capabilities.
 
-## Set-Up
+##  Set-Up
 
 ### Requirements
 
