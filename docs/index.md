@@ -28,3 +28,7 @@ Anleitungen und Skripte für Kubuntu, NAS-Einbindungen, verschlüsselte Synchron
 ## ![app_image](_static/ico/ubuntu_children.ico) Kindersicherer Ubuntu PC<!--(kindersicher-ubuntu/README.md)-->
 
 In Arbeit.
+
+## [Agentic AI und OpenCode](ai-automations/agentic-AI-OpenCode.md)
+
+Agentic AI ermöglicht die Automatisierung komplexer Aufgaben mit KI-Agenten. Die Anleitung führt in OpenCode ein, zeigt die Installation unter Linux und den Anschluss freier oder selbst gehosteter Sprachmodelle.

@@ -29,3 +29,7 @@ Guides and scripts for Kubuntu, NAS mounts, encrypted synchronization, image and
 ## ![app_image](_static/ico/ubuntu_children.ico) Child-proof Ubuntu PC<!--(child-proof-ubuntu/README_en.md)-->
 
 In progress.
+
+## [Agentic AI and OpenCode](ai-automations/agentic-AI-OpenCode.md)
+
+Agentic AI enables automating complex tasks with AI agents. The guide introduces OpenCode, shows installation on Linux, and connecting free or self-hosted language models.
