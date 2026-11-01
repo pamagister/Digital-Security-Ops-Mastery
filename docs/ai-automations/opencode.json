@@ -1,0 +1,120 @@
+
+{
+  "$schema": "https://opencode.ai/config.json",
+  "provider": {
+    "kilo": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "Kilo AI Gateway (Free)",
+      "options": {
+        "baseURL": "https://api.kilo.ai/api/gateway"
+      },
+      "models": {
+        "kilo-auto/free": {
+          "name": "Kilo Auto Free",
+          "limit": {
+            "context": 262144,
+            "output": 32768
+          }
+        },
+        "cohere/north-mini-code:free": {
+          "name": "Cohere North Mini Code",
+          "limit": {
+            "context": 262144,
+            "output": 65536
+          }
+        },
+        "recursive/flint-v1.0:free": {
+          "name": "Recursive Flint v1.0",
+          "limit": {
+            "context": 262144,
+            "output": 235000
+          }
+        },
+        "poolside/laguna-s-2.1:free": {
+          "name": "Poolside Laguna S 2.1",
+          "limit": {
+            "context": 262144,
+            "output": 32000
+          }
+        },
+        "poolside/laguna-xs-2.1:free": {
+          "name": "Poolside Laguna XS 2.1",
+          "limit": {
+            "context": 262144,
+            "output": 32000
+          }
+        },
+        "nvidia/nemotron-3.5-lightning:free": {
+          "name": "NVIDIA Nemotron 3.5 Lightning",
+          "limit": {
+            "context": 1048576,
+            "output": 65536
+          }
+        },
+        "nvidia/nemotron-3-ultra-550b-a55b:free": {
+          "name": "NVIDIA Nemotron 3 Ultra",
+          "limit": {
+            "context": 1048576,
+            "output": 65536
+          }
+        },
+        "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free": {
+          "name": "NVIDIA Nemotron Nano Omni Reasoning",
+          "limit": {
+            "context": 262144,
+            "output": 65536
+          }
+        },
+        "nvidia/nemotron-3.5-super-vl:free": {
+          "name": "NVIDIA Nemotron 3.5 Super VL",
+          "limit": {
+            "context": 1048576,
+            "output": 131072
+          }
+        },
+        "nvidia/nemotron-3.5-content-safety:free": {
+          "name": "NVIDIA Nemotron Content Safety",
+          "limit": {
+            "context": 131072,
+            "output": 8192
+          }
+        },
+        "dots-studio/dots-3-note-preview:free": {
+          "name": "Dots 3 Note Preview",
+          "limit": {
+            "context": 524288,
+            "output": 460000
+          }
+        },
+        "xingchen-agi/xing4.0-29b-a4b:free": {
+          "name": "Xing 4.0 29B",
+          "limit": {
+            "context": 262144,
+            "output": 235000
+          }
+        },
+        "liquid/lfm-2.5-2.6b:free": {
+          "name": "Liquid LFM 2.5",
+          "limit": {
+            "context": 65536,
+            "output": 8192
+          }
+        },
+        "reflection/beam-free": {
+          "name": "Reflection Beam Free",
+          "limit": {
+            "context": 1048576,
+            "output": 131072
+          }
+        },
+        "openrouter/free": {
+          "name": "OpenRouter Free Router",
+          "limit": {
+            "context": 128000,
+            "output": 32000
+          }
+        }
+      }
+    }
+  }
+}
