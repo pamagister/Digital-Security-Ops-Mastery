@@ -1,9 +1,12 @@
 
 # Repository Guidelines
 
-This repository primarily contains Linux guides, documentation, shell scripts, and a smaller amount of Python code. Changes should prioritize clarity, safety, maintainability, and consistency with the existing structure.
-These guidelines apply repository-wide. More specific instructions in a subdirectory or task may refine them. When instructions conflict, follow the most specific applicable instruction and preserve existing project conventions unless the requested change explicitly calls for updating them.
+This repository primarily contains Linux guides, documentation, shell scripts, and a smaller amount of Python code. 
+Changes should prioritize clarity, safety, maintainability, and consistency with the existing structure.
+These guidelines apply repository-wide. More specific instructions in a subdirectory or task may refine them. 
+When instructions conflict, follow the most specific applicable instruction and preserve existing project conventions unless the requested change explicitly calls for updating them.
 
+[] Finaly: Add with time and date a short report in english to temp/report.md that also can be used as commit message describing the changes made. Add this incrementally without modifying the previous report content.
 
 ## General Guidelines
 
