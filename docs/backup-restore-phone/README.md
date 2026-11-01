@@ -1,312 +1,283 @@
-# 📱 Android Backup & Restore – Übersicht, Checkliste & Strategien
+# 📱 Android Backup & Restore – Overview, Checklist & Strategies
 
-Ziel: **Datenverlust vermeiden**, **Gerätewechsel vereinfachen** und **sensible Daten kontrolliert sichern**.
-Der Fokus liegt auf **Android (Google‑Ökosystem)** mit **klaren Backup‑Strategien**, **Checklisten** und **konkreten Anleitungen**.
-
----
-
-## 🧠 Grundprinzipien einer soliden Backup‑Strategie
-
-* 🔁 **Automatisch + manuell kombinieren**
-* 🧱 **Mehr als ein Speicherort** (Cloud + lokal)
-* 🔐 **Sensible Daten verschlüsseln**
-* 🧪 **Restore regelmäßig testen** (sonst zählt es nicht als Backup)
-
-**Faustregel (3‑2‑1):**
-
-* 3 Kopien
-* 2 unterschiedliche Medien
-* 1 Kopie extern/offsite
-
-Synchronisierung (z. B. Nextcloud, Dropbox oder ein Foto-Upload) ist kein unabhängiges Backup: versehentliches Löschen, Schadsoftware oder ein Kontoverlust können sich auf synchronisierte Kopien auswirken. Halten Sie mindestens eine versionierte oder getrennt aufbewahrte Sicherung vor und testen Sie die Wiederherstellung.
+Goal: **avoid data loss**, **simplify device change** and **back up sensitive data in a controlled manner**. The focus is on **Android (Google ecosystem)** with **clear backup strategies**, **checklists** and **concrete guides**.
 
 ---
 
-## 🔐 Passwörter (KeePass)
+## 🧠 Basic principles of a solid backup strategy
 
-### Empfohlene App
+* 🔁 **Combine automatic + manual**
+* 🧱 **More than one storage location** (cloud + local)
+* 🔐 **Encrypt sensitive data**
+* 🧪 **Test restore regularly** (otherwise it doesn't count as a backup)
 
-* **KeePassDX** (F‑Droid bevorzugt, alternativ Google Play)
+**Rule of thumb (3-2-1):**
 
-### Strategie‑Varianten
+* 3 copies
+* 2 different media
+* 1 copy external/offsite
 
-#### ✅ Variante A – PC ist Master (konservativ & robust)
-
-* PC hält den **führenden KeePass‑Container (.kdbx)**
-* Smartphone bekommt **regelmäßige Kopie**
-
-**Checkliste:**
-
-* [ ] KeePassDX installiert
-* [ ] Container auf PC gepflegt
-* [ ] Regelmäßige Übertragung auf Smartphone (USB / Sync‑Tool)
-* [ ] Zusätzliches verschlüsseltes Backup des Containers, darunter eine getrennt aufbewahrte Kopie
-
-#### ✅ Variante B – Synchronisiert (komfortabler)
-
-* KeePass‑Container liegt in Cloud (Nextcloud / Dropbox)
-* PC **und** Smartphone greifen darauf zu
-
-⚠️ **Achtung:**
-
-> Konflikte möglich → saubere Sync‑Disziplin nötig
-
-Bearbeiten Sie dieselbe Datenbank nicht gleichzeitig auf mehreren Geräten. Warten Sie den Sync vollständig ab und bewahren Sie eine wiederherstellbare Sicherung der `.kdbx`-Datei auf.
-
-**Tipp 💡**
-
-> Cloud‑Ordner nur für KeePass nutzen, nicht wild mischen
-
+Synchronization (e.g. Nextcloud, Dropbox or a photo upload) is not an independent backup: accidental deletion, malware or account loss can affect synchronized copies. Keep at least one versioned or separately stored backup and test the restoration.
 
 ---
 
-## 🌐 Browser-Sync als zusätzliches Sicherheitsnetz
+## 🔐 Passwords (KeePass)
 
-> 💡 **Ergänzung, kein Ersatz für KeePass.**
-> Hilft bei **Passwörtern, Logins und Lesezeichen** – besonders bequem bei Handy-Wechsel.
+### Recommended app
 
----
+* **KeePassDX** (F-Droid preferred, alternatively Google Play)
 
-### Warum das sinnvoll ist
+### Strategy variants
 
-* Ein Login → **gleiche Daten auf PC & Smartphone**
-* Wiederherstellung bei neuem Gerät in Minuten
-* Automatische Sicherung von:
-  * Passwörtern
-  * Lesezeichen
-  * Verlauf (optional)
+#### ✅ Variant A – PC is master (conservative & robust)
 
----
+* PC holds the **leading KeePass container (.kdbx)**
+* Smartphone gets a **regular copy**
 
-### Empfohlene Browser
+**Checklist:**
 
-* 🦊 Firefox (sehr gut geeignet)
-* 🌍 Google Chrome (falls ohnehin Google genutzt wird)
+* [ ] KeePassDX installed
+* [ ] Container maintained on PC
+* [ ] Regular transfer to smartphone (USB / sync tool)
+* [ ] Additional encrypted backup of the container, including a separately stored copy
 
+#### ✅ Variant B – Synchronized (more convenient)
 
-**Checkliste:**
+* KeePass container is in cloud (Nextcloud / Dropbox)
+* PC **and** smartphone access it
 
-☐ Browser (Firefox oder Chrome) auf PC & Smartphone identisch
-☐ Mit gleichem Login (Firefox) oder Google-Konto anmelden
-☐ Synchronisation aktivieren
+⚠️ **Caution:**
 
----
+> Conflicts possible → clean sync discipline needed
 
-### Wichtige Hinweise ⚠️
+Do not edit the same database simultaneously on multiple devices. Wait for the sync to complete fully and keep a restorable backup of the `.kdbx` file.
 
-* Browser-Sync **ersetzt KeePass nicht**
-* Kritische Logins (Bank, E-Mail, Apple/Google-ID) weiterhin in KeePass
+**💡 Tip**
 
+> Use cloud folder only for KeePass, don't mix wildly
 
 ---
 
-### Bewährte Praxis
+## 🌐 Browser sync as an additional safety net
 
-* **KeePass = Tresor**
-* **Browser = Alltag**
+> 💡 **Supplement, not a replacement for KeePass.**
+> Helps with **passwords, logins and bookmarks** – especially convenient when changing phones.
 
-Vermeiden Sie unnötige Passwortkopien in mehreren Cloud-Diensten. Schützen Sie jedes verwendete Synchronisierungskonto mit einem starken, einzigartigen Passwort und Mehr-Faktor-Authentifizierung.
+### Why this makes sense
 
----
+* One login → **same data on PC & smartphone**
+* Restoration on new device in minutes
+* Automatic backup of:
+  * Passwords
+  * Bookmarks
+  * History (optional)
 
-### Mini-Check (30 Sekunden)
+### Recommended browsers
 
-☐ Browser auf PC & Handy identisch
-☐ Login aktiv
-☐ Lesezeichen auf beiden Geräten sichtbar
-☐ Ein gespeichertes Passwort testweise abrufen
+* 🦊 Firefox (very suitable)
+* 🌍 Google Chrome (if Google is used anyway)
 
+**Checklist:**
 
-## 💬 Messenger & Nachrichten
+☐ Browser (Firefox or Chrome) identical on PC & smartphone
+☐ Sign in with same login (Firefox) or Google account
+☐ Enable synchronization
+
+### Important notes ⚠️
+
+* Browser sync **does not replace KeePass**
+* Critical logins (bank, email, Apple/Google-ID) continue in KeePass
+
+Avoid unnecessary password copies in multiple cloud services. Protect every synchronization account used with a strong, unique password and multi-factor authentication.
+
+### Mini-check (30 seconds)
+
+☐ Browser on PC & phone identical
+☐ Login active
+☐ Bookmarks visible on both devices
+☐ Retrieve a saved password as a test
+
+## 💬 Messenger & messages
 
 ### WhatsApp
 
 * Backup via **Google Drive**
 
-**Checkliste:**
+**Checklist:**
 
-* [ ] Google‑Konto verbunden
-* [ ] Backup aktiviert (täglich empfohlen)
-* [ ] Medien einbeziehen oder bewusst ausschließen
+* [ ] Google account connected
+* [ ] Backup enabled (daily recommended)
+* [ ] Include media or deliberately exclude
 
-⚠️ **Achtung:**
+⚠️ **Caution:**
 
-> Für die Wiederherstellung werden in der Regel dieselbe Telefonnummer und Zugriff auf das zugehörige Google-Konto benötigt. Bei aktivierter Ende-zu-Ende-verschlüsselter Sicherung müssen außerdem Schlüssel oder Passwort verfügbar sein.
-
----
+> For restoration, usually the same phone number and access to the associated Google account are needed. With activated end-to-end encrypted backup, keys or password must additionally be available.
 
 ### Signal
 
-**Optionen:**
+**Options:**
 
-* **A)** Lokales verschlüsseltes Backup
-* **B)** Weitere Signal-Sicherungsoptionen können je nach App-Version und Region verfügbar sein. Folgen Sie der aktuellen offiziellen Anleitung, statt sich auf eine feste Laufzeit oder Funktion zu verlassen.
+* **A)** Local encrypted backup
+* **B)** Further Signal backup options may be available depending on app version and region. Follow the current official instructions instead of relying on a fixed runtime or feature.
 
-🔗 Quelle: [https://support.signal.org/hc/de/articles/360007059752-Nachrichten-sichern-und-wiederherstellen#android_enable](https://support.signal.org/hc/de/articles/360007059752-Nachrichten-sichern-und-wiederherstellen#android_enable)
+🔗 Source: [https://support.signal.org/hc/de/articles/360007059752-Nachrichten-sichern-und-wiederherstellen#android_enable](https://support.signal.org/hc/de/articles/360007059752-Nachrichten-sichern-und-wiederherstellen#android_enable)
 
-**Checkliste (lokal):**
+**Checklist (local):**
 
-* [ ] Backup aktivieren
-* [ ] Backup‑Passphrase sicher speichern 💡 KeePass-Container
-* [ ] Backup‑Datei regelmäßig extern sichern
+* [ ] Enable backup
+* [ ] Securely store backup passphrase 💡 KeePass container
+* [ ] Regularly back up backup file externally
 
-⚠️ **Achtung:**
+⚠️ **Caution:**
 
-> Ohne Passphrase ist das Backup wertlos
-
----
+> Without passphrase the backup is worthless
 
 ### Telegram
 
-* Normale Cloud-Chats werden mit dem Telegram-Konto synchronisiert. **Secret Chats** sind gerätegebunden und werden nicht auf neue Geräte übertragen.
-* Verlassen Sie sich für wichtige Daten nicht allein auf die Verfügbarkeit des Kontos oder des Dienstes. Exportieren Sie benötigte Inhalte regelmäßig und prüfen Sie die offiziellen Telegram-Apps und deren Bezugsquellen.
-* Aktivieren Sie zusätzliche Kontoschutzmaßnahmen und halten Sie Zugriff auf Ihre Telefonnummer und Wiederherstellungsmethoden.
+* Normal cloud chats are synchronized with the Telegram account. **Secret Chats** are device-bound and not transferred to new devices.
+* Do not rely solely on account or service availability for important data. Export required content regularly and check official Telegram apps and their sources.
+* Enable additional account protection measures and keep access to your phone number and recovery methods.
 
----
+## 📸 Photos
 
-## 📸 Fotos
+### Variant A – Google Photos
 
-### Variante A – Google Fotos
+* Automatic upload
+* **Storage quality: "Save storage space"**
 
-* Automatischer Upload
-* **Speicherqualität: „Speicherplatz sparen“**
+**Checklist:**
 
-**Checkliste:**
+* [ ] Backup enabled
+* [ ] Correct quality set
 
-* [ ] Backup aktiviert
-* [ ] Richtige Qualität eingestellt
+⚠️ **Caution:**
 
-⚠️ **Achtung:**
+> Original quality consumes Google storage, reduced quality does too
 
-> Originalqualität frisst Google‑Speicher, reduzierte Qualität aber ebenfalls
-
----
-
-### Variante B – Dropbox + Dropsync
+### Variant B – Dropbox + Dropsync
 
 **Workflow:**
 
-1. Smartphone → Dropbox (per App "Dropsync")
-2. PC → Dropbox Sync
-3. PC: Fotos regelmäßig in ein **separates Backup-Ziel kopieren** und die Sicherung prüfen
+1. Smartphone → Dropbox (via "Dropsync" app)
+2. PC → Dropbox sync
+3. PC: regularly copy photos into a **separate backup target** and check the backup
 
-**Checkliste:**
+**Checklist:**
 
-* [ ] Dropsync App auf dem Smartphone installiert
-* [ ] Fotoordner des Telefons angebunden
-* [ ] Dropbox auf dem PC installiert: https://www.dropbox.com/de/install
-* [ ] Unabhängiges, möglichst versioniertes Backup eingerichtet
+* [ ] Dropsync app installed on smartphone
+* [ ] Phone photo folder connected
+* [ ] Dropbox installed on PC: https://www.dropbox.com/de/install
+* [ ] Independent, as versioned as possible backup set up
 
-💡 **Tipp:**
+💡 **Tip:**
 
-> Eine Ordnerstruktur nach Jahr/Monat erleichtert die spätere Prüfung.
+> A folder structure by year/month makes later checking easier.
 
-**Wichtig:** Löschen oder Verschieben im Dropbox-Sync-Ordner wird in der Regel mit der Cloud synchronisiert. Löschen Sie dort nichts, bevor eine unabhängige Sicherung erstellt und geprüft wurde.
+**Important:** Deleting or moving in the Dropbox sync folder is usually synchronized with the cloud. Do not delete anything there before an independent backup has been created and checked.
 
 ---
 
-## 📁 Daten & sensible Dokumente
+## 📁 Data & sensitive documents
 
-### Mögliche Lösung: Nextcloud (Managed)
+### Possible solution: Nextcloud (managed)
 
-* Prüfen Sie Speicherplatz, Datenschutzbedingungen, Aufbewahrung und Wiederherstellungsoptionen beim Anbieter; Tarife ändern sich.
-* Beispiel: hosting.de - **1000 MB kostenlos**
-* * Geeignet für:
+* Check storage space, privacy terms, retention and restoration options with the provider; tariffs change.
+* Example: hosting.de - **1000 MB free**
+* Suitable for:
 
-  * Pass‑Scans
+  * Passport scans
   * Tickets
-  * KeePass‑Container
-  * Regelmäßig benötigte Dokumente
+  * KeePass containers
+  * Regularly needed documents
 
-**Checkliste:**
+**Checklist:**
 
-* [ ] Nextcloud‑Konto erstellt
-* [ ] Android‑App installiert
-* [ ] Ordnerstruktur definiert
-* [ ] Automatischen Upload konfiguriert
+* [ ] Nextcloud account created
+* [ ] Android app installed
+* [ ] Folder structure defined
+* [ ] Automatic upload configured
 
-🔐 Bei einem Managed-Dienst verwaltet der Anbieter die Server. Verlassen Sie sich nicht auf Synchronisierung als einziges Backup und prüfen Sie, welche Ende-zu-Ende-Verschlüsselung tatsächlich aktiviert ist.
-
----
-
-## ☁️ Cloud‑Vergleich (Fotos & Daten)
-
-| Dienst                   | Vorteile                   | Nachteile                          | Geeignet für      |
-| ------------------------ | -------------------------- | ---------------------------------- | ----------------- |
-| **Google Drive / Fotos** | Nahtlos, zuverlässig       | Datenschutz, Speicher schnell voll | Mainstream, Fotos |
-| **Dropbox**              | Sehr guter Sync, stabil    | Wenig Gratis‑Speicher              | Fotos + Daten     |
-| **Managed Nextcloud**    | Anbieterwahl, konfigurierbare Freigaben | Vertrauen in Anbieter nötig; Datenschutz und Backups prüfen | Dateien und Daten |
-| **OneDrive**             | Windows‑Integration        | Android schwächer                  | Office‑lastig     |
+🔐 With a managed service, the provider manages the servers. Do not rely on synchronization as the only backup and check which end-to-end encryption is actually enabled.
 
 ---
 
-## 📝 Notizen
+## ☁️ Cloud comparison (photos & data)
 
-### Telegram‑Self‑Group
-
-* Eigene Gruppe nur mit sich selbst
-* Immer servergesichert, geht auch ohne Backup nicht verloren
-
-### Nextcloud Notes
-
-* Zentrale Notizen
-* Plattformübergreifend
-
-📌 Details siehe: [Nextcloud](../nextcloud/README.md)
-
-### Google Keep 
-
-* Cloud-basierter Notizdienst von Google: https://keep.google.com
-* Geeignet für: 
-  * Schnelle Notizen, Checklisten, temporäre Gedanken, Ideen, To-dos
-  * Sprach- und Bildnotizen (OCR inklusive)
-
-
-> ⚠️ **Achtung:** Kein dediziertes Backup pro Notiz möglich. Löschen = weg (nach Ablauf des Papierkorbs).
-
-> 📌  **Nicht** geeignet als alleinige Quelle für kritische Informationen.
-
+| Service | Advantages | Disadvantages | Suitable for |
+| ------- | ---------- | ------------- | ------------ |
+| **Google Drive / Photos** | Seamless, reliable | Data privacy, storage quickly full | Mainstream, photos |
+| **Dropbox** | Very good sync, stable | Little free storage | Photos + data |
+| **Managed Nextcloud** | Provider choice, configurable shares | Trust in provider needed; data privacy and backups must be checked | Files and data |
+| **OneDrive** | Windows integration | Android weaker | Office-heavy |
 
 ---
 
-## 🔄 System‑Backup (Android‑Bordmittel)
+## 📝 Notes
 
-Auf dem Telefon: **Einstellungen** → **Google** → **Sicherung**
+### Telegram self-group
 
-**Kann je nach Android-Version, Hersteller und Einstellungen sichern:**
+* Own group only with yourself
+* Always server-secured, not lost even without backup
 
-* App‑Liste
-* WLAN‑Passwörter
-* Einstellungen
+### Nextcloud notes
 
-**Checkliste:**
+* Central notes
+* Cross-platform
 
-* [ ] Google Backup aktiviert
-* [ ] Letztes Backup geprüft
+📌 Details see: [Nextcloud](../nextcloud/README.md)
 
-⚠️ **Achtung:**
+### Google Keep
 
-> Die Sicherung ist unvollständig: Nicht alle App-Daten werden gesichert oder lassen sich auf einem anderen Gerät wiederherstellen. Prüfen Sie den Sicherungsstatus und die Anforderungen der jeweiligen Apps. Google-Backup setzt ein Google-Konto voraus und ist auf einem de-googelten Gerät möglicherweise nicht verfügbar.
+* Cloud-based note service from Google: https://keep.google.com
+* Suitable for:
 
----
+  * Quick notes, checklists, temporary thoughts, ideas, to-dos
+  * Voice and image notes (OCR included)
 
-## ➕ Weitere sinnvolle Aspekte
+> ⚠️ **Caution:** No dedicated backup per note possible. Delete = gone (after trash expires).
 
-* 🔑 **2FA-Notfallvorsorge:** Aegis-Export bzw. Wiederherstellungsmethode separat und verschlüsselt sichern; Wiederherstellungscodes offline aufbewahren. Prüfen Sie regelmäßig, ob der Export noch lesbar ist.
-* 🧾 **Export kritischer Daten** (CSV, PDF)
-* 💾 **Offline‑Backup** (USB‑Stick, verschlüsselt)
-* 🧪 **Restore‑Test auf Zweitgerät**
+> 📌 **Not** suitable as sole source for critical information.
 
 ---
 
-## 🧭 Empfohlene Minimal‑Strategie (praxisnah)
+## 🔄 System backup (Android built-in)
 
-* Google Backup → System
-* KeePass → PC-Master oder sorgfältig synchronisierte Datenbank plus unabhängiges Backup
-* Signal → Lokales Backup
-* Fotos → Google Fotos **oder** Dropbox‑Workflow
-* Daten → Nextcloud
+On the phone: **Settings** → **Google** → **Backup**
 
-🎯 Ergebnis: **robust, übersichtlich, kontrollierbar** 🚀
+**Can back up depending on Android version, manufacturer and settings:**
+
+* App list
+* Wi-Fi passwords
+* Settings
+
+**Checklist:**
+
+* [ ] Google backup enabled
+* [ ] Last backup checked
+
+⚠️ **Caution:**
+
+> The backup is incomplete: not all app data is backed up or can be restored on another device. Check backup status and requirements of respective apps. Google backup requires a Google account and may not be available on a de-googled device.
+
+---
+
+## ➕ Further useful aspects
+
+* 🔑 **2FA emergency preparedness:** Back up Aegis export or recovery method separately and encrypted; keep recovery codes offline. Regularly check whether the export is still readable.
+* 🧾 **Export critical data** (CSV, PDF)
+* 💾 **Offline backup** (USB stick, encrypted)
+* 🧪 **Restore test on secondary device**
+
+---
+
+## 🧭 Recommended minimal strategy (practical)
+
+* Google backup → system
+* KeePass → PC master or carefully synchronized database plus independent backup
+* Signal → local backup
+* Photos → Google Photos **or** Dropbox workflow
+* Data → Nextcloud
+
+🎯 Result: **robust, clear, controllable** 🚀
 
 ---
