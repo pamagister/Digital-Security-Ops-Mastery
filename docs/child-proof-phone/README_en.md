@@ -1,4 +1,3 @@
-![English](../_static/ico/uk.ico)[English](README_en.md) | ![German](../_static/ico/germany.ico)[Deutsch](README.md) 
 
 # Setting up a child-proof phone
 

@@ -1,4 +1,3 @@
-![English](docs/_static/ico/uk.ico)[English](README_en.md) | ![Deutsch](docs/_static/ico/germany.ico)[Deutsch](README.md) [![Read the Docs](https://readthedocs.org/projects/Digital-Security-Ops-Mastery/badge/?version=latest)](https://Digital-Security-Ops-Mastery.readthedocs.io/en/latest/)
 
 # Digital-Security-Ops-Mastery
 

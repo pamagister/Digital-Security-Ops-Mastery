@@ -1,4 +1,3 @@
-![English](../_static/ico/uk.ico)[English](README_en.md) | ![Deutsch](../_static/ico/germany.ico)[Deutsch](README.md) 
 
 # Setting up a de-Googled phone
 
