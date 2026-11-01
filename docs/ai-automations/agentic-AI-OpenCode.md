@@ -287,11 +287,11 @@ A one-shot prompt sends a request directly to the model without starting an inte
 curl -s https://api.kilo.ai/api/gateway/chat/completions \
   -H "Content-Type: application/json" \
   -d '{
-    "model": "cohere/north-mini-code:free",
+    "model": "kilo-auto/free",
     "messages": [
       {
         "role": "user",
-        "content": "Write a Python function that calculates the factorial of a number."
+        "content": "Summarize the features and advantages of OpenCode."
       }
     ]
   }' | jq -r '.choices[0].message.content'
@@ -312,7 +312,7 @@ The model can be changed simply by modifying the `model` field.
 For repeated use, a prompt can be stored in a variable:
 
 ```bash
-MODEL="cohere/north-mini-code:free"
+MODEL="liquid/lfm-2.5-2.6b"
 PROMPT="Explain the purpose of Python virtual environments."
 
 curl -s https://api.kilo.ai/api/gateway/chat/completions \
