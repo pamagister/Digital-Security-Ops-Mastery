@@ -4,9 +4,13 @@ This script allows you to mount, unmount, and configure automatic mounting of NA
 
 ## ✨ Features
 
-- Mount and unmount multiple CIFS/SMB shares.
+- Mount and unmount multiple CIFS/SMB shares interactively.
 - Check NAS reachability before mounting.
-- Enable automount on restart by writing entries to `/etc/fstab`.
+- Configure persistent automount via `/etc/fstab` with systemd.
+- Mount shares once without persistent configuration.
+- Remove automount configuration and unmount shares.
+- Secure credential handling with restrictive permissions.
+- Atomic `/etc/fstab` updates with timestamped backups.
 - Set file and directory permissions (`0664` / `0775`).
 
 ## ⚙️ Set-Up
@@ -15,6 +19,7 @@ This script allows you to mount, unmount, and configure automatic mounting of NA
 
 - `cifs-utils`
 - Root/sudo privileges (mounting requires elevated permissions).
+- Ubuntu/Debian with systemd.
 
 ### Installation
 
@@ -46,79 +51,118 @@ chmod +x "$HOME/.local/bin/mount_nas.sh"
    chmod +x ~/.local/bin/mount_nas.sh
    ```
 
-4. Create a credentials file:
+## 🚀 Script Operation
 
-   ```bash
-   sudo nano /etc/samba/credentials_nas
-   ```
-
-   Contents:
-
-   ```
-   username=YOUR_NAS_USERNAME
-   password=YOUR_NAS_PASSWORD
-   ```
-
-5. Restrict permissions:
-
-   ```bash
-   sudo chmod 600 /etc/samba/credentials_nas
-   ```
-
-## 🚀 Usage
-
-Configure `NAS_HOST`, `MOUNT_BASE`, `CREDENTIALS`, and the share names in the script first. Then run it with `sudo`:
+Run the script with `sudo`:
 
 ```bash
 sudo $HOME/.local/bin/mount_nas.sh
 ```
 
-You will be prompted to select an action:
+The script provides an interactive menu with four options:
 
-| Option | Description                                          |
-| ------ | ---------------------------------------------------- |
-| 1      | Mount all shares (default)                           |
-| 2      | Unmount all shares                                   |
-| 3      | Enable automount on restart (writes to `/etc/fstab`) |
+| Option | Description |
+|:---:|---|
+| **1** | Configure automatic mounting via `/etc/fstab` (default). |
+| **2** | Mount all configured shares once, without enabling automount. |
+| **3** | Unmount NAS shares and remove the script-managed automount configuration. |
+| **4** | Exit without making changes. |
 
-### Automount details
+### Option 1: Configure Automount (Default)
 
-When choosing option 3:
+Configures persistent NAS mounting using `/etc/fstab` and systemd automount.
 
-- The script backs up `/etc/fstab` automatically.
-- Old NAS entries are removed.
-- New entries are added with UID and GID from the invoking user (when run through `sudo`).
-- Shares will mount automatically at system boot via systemd.
+1. Prompt for NAS host, SMB username, and shares.
+2. Create or update the credentials file.
+3. Create mount points under `/mnt/nas`.
+4. Back up `/etc/fstab`.
+5. Replace the script-managed configuration block.
+6. Reload systemd and activate automount units.
 
-The script removes `/etc/fstab` content from its `# Synology NAS - Automount Shares` marker to the end of the file before writing new entries. Review and back up `/etc/fstab`; keep unrelated custom entries before that marker.
+NAS shares mount automatically when their mount points are accessed, avoiding startup delays if the NAS is unreachable.
 
-Test the new fstab entries:
+### Option 2: Mount Shares Once
+
+Mounts configured NAS shares immediately without modifying `/etc/fstab`.
+
+- Existing mounts are detected and skipped.
+- Each share is processed independently.
+- Failures for individual shares do not block others.
+- Mounts persist until manually unmounted or system restart.
+
+### Option 3: Remove Automount Configuration
+
+Removes script-managed automount configuration and unmounts shares.
+
+1. Stop associated systemd automount units.
+2. Unmount NAS shares.
+3. Remove the managed block from `/etc/fstab`.
+4. Reload systemd configuration.
+
+The credentials file is preserved. Other `/etc/fstab` entries remain untouched.
+
+### `/etc/fstab` Safety
+
+The script manages only the section enclosed by its markers:
+
+```text
+# BEGIN NAS AUTOMOUNT CONFIGURATION (managed by mount_nas.sh)
+...
+# END NAS AUTOMOUNT CONFIGURATION
+```
+
+- A timestamped backup is created before changes.
+- Previous managed entries are replaced, not duplicated.
+- Content outside the managed section is preserved.
+- The updated file is written atomically.
+
+### Credentials
+
+Stored by default in `/etc/samba/credentials_nas` with secure permissions:
 
 ```bash
-sudo mount -a
+sudo chown root:root /etc/samba/credentials_nas
+sudo chmod 600 /etc/samba/credentials_nas
 ```
+
+### SMB Protocol
+
+The script does not force an SMB version. CIFS negotiates the highest mutually supported version between client and NAS.
 
 ## 💡 Examples
 
-Mount all shares manually:
+Configure automount (interactive, run with sudo):
 
 ```bash
 sudo $HOME/.local/bin/mount_nas.sh
-# Select 1
+# Select 1, then follow prompts
 ```
 
-Enable automount:
+Mount shares once (no persistence):
+
+```bash
+sudo $HOME/.local/bin/mount_nas.sh
+# Select 2
+```
+
+Remove automount and unmount:
 
 ```bash
 sudo $HOME/.local/bin/mount_nas.sh
 # Select 3
-sudo mount -a   # optional test
+```
+
+Check active CIFS mounts:
+
+```bash
+findmnt -t cifs
 ```
 
 ## 📝 Notes
 
-- The script checks if the NAS host is reachable before mounting.
-- Existing mounts are unmounted first to avoid conflicts.
-- File and directory permissions are set to `0664` and `0775`, respectively.
-- The script requests SMB 2.0 (`vers=2.0`). Confirm that the NAS supports it; do not enable SMB1 just to make a connection work.
-- Keep the credentials file readable only by root, and do not expose SMB/CIFS to the public internet.
+- The script checks NAS reachability (DNS resolution and port 445) before mounting.
+- Mount points are created automatically under `/mnt/nas/`.
+- File and directory permissions are set to `0664` and `0775`.
+- UID/GID are taken from the invoking user via `SUDO_UID`/`SUDO_GID`.
+- Keep the credentials file readable only by root.
+- Do not expose SMB/CIFS to the public internet.
