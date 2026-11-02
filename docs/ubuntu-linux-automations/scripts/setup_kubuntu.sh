@@ -575,7 +575,8 @@ if "$INSTALL_SYSTEM"; then
         veracrypt \
         tipp10 \
         partitionmanager \
-        skanlite
+        skanlite \
+        dolphin-plugins
 fi
 
 # ------------------------------------------------------------
