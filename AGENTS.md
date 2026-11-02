@@ -1,4 +1,3 @@
-
 # Repository Guidelines
 
 This repository primarily contains Linux guides, documentation, shell scripts, and a smaller amount of Python code. 
@@ -6,7 +5,8 @@ Changes should prioritize clarity, safety, maintainability, and consistency with
 These guidelines apply repository-wide. More specific instructions in a subdirectory or task may refine them. 
 When instructions conflict, follow the most specific applicable instruction and preserve existing project conventions unless the requested change explicitly calls for updating them.
 
-[] Finaly: Add with time and date a short report in english to temp/report.md that also can be used as commit message describing the changes made. Add this incrementally without modifying the previous report content.
+[] Finally: Add with time and date a short report in english to temp/report.md that also can be used as commit message describing the changes made. Add this incrementally without modifying the previous report content.
+
 
 ## 🧭 General Guidelines
 
@@ -161,36 +161,7 @@ Document important notes, limitations, warnings or additional information.
 - Keep dependencies and setup instructions documented.
 - Run relevant tests and available linting or formatting checks after changes.
 
-## General Engineering Practices
 
-### Think before implementing
-
-- Identify assumptions and constraints before making changes.
-- If a request has materially different interpretations, clarify them instead of silently choosing.
-- Consider the simplest viable solution and explain meaningful trade-offs.
-- Do not introduce features, configuration, or abstractions that were not requested.
-
-### Simplicity first
-
-- Implement only what is needed.
-- Avoid overengineering, unnecessary dependencies, and single-use abstractions.
-- Prefer straightforward code and documentation that a future contributor can easily maintain.
-
-### Surgical changes
-
-- Change only what is necessary for the task.
-- Match the surrounding style and established conventions.
-- Do not refactor unrelated code or documentation.
-- Remove only unused code or imports introduced by the changes.
-- Mention unrelated issues rather than fixing them without permission.
-
-### Verify the result
-
-- Define what success means for the task.
-- Check modified scripts, commands, links, paths, and documentation for consistency.
-- Run appropriate checks when possible (for example, `bash -n`, ShellCheck, Python tests, or Markdown/link checks).
-- Do not claim a test or verification was performed if it was not.
-- Summarize what changed and mention relevant checks or limitations.
 
 
 ## 📚 Document Structure
