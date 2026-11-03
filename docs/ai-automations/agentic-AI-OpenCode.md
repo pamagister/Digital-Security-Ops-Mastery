@@ -190,16 +190,54 @@ Base URL:
 https://api.kilo.ai/api/gateway
 ```
 
-The following endpoints are particularly useful:
-
-| Endpoint | Purpose |
-|---|---|
-| `/models` | Retrieve the currently available models. |
-| `/chat/completions` | Send a prompt and receive a response. |
-
 Anonymous access is restricted to free models and currently subject to a limit of approximately 200 requests per hour per IP address.
 
 This is a request limit, not a token allowance. Individual models may have additional restrictions or temporary availability issues.
+
+## OpenRouter
+
+[OpenRouter](https://openrouter.ai/) provides a unified API for accessing models from different providers through a single interface.
+
+The platform offers a selection of free models that can be accessed using an **API key**, subject to rate limits.
+
+### Free Models
+
+Current information and available models:
+
+[**OpenRouter Free Models**](https://openrouter.ai/models?max_price=0)
+
+OpenRouter provides an OpenAI-compatible API.
+
+Base URL:
+
+```text
+https://openrouter.ai/api/v1
+```
+
+### API Key
+
+An API key is required for authentication.
+
+Create and manage API keys here:
+
+[**OpenRouter API Keys**](https://openrouter.ai/keys)
+
+Configure the API key in OpenCode using:
+
+```bash
+opencode auth login
+```
+
+Select OpenRouter as the provider and enter the API key.
+
+Alternatively, use the environment variable:
+
+```bash
+export OPENROUTER_API_KEY="your-api-key"
+```
+
+
+## OpenCode Model Setup
 
 ### OpenCode Configuration
 
@@ -223,7 +261,7 @@ The configuration used in this repository is available here:
 
 [**TEMPLATE_opencode.jsonc**](../TEMPLATE_opencode.jsonc)
 
-It defines the Kilo AI Gateway as a provider and registers the available free models.
+It defines e.g. the Kilo AI Gateway as a provider and registers the available free models.
 
 The configuration can be reused across multiple projects. Once the provider is registered, its models can be selected within OpenCode.
 
@@ -243,7 +281,7 @@ Then open the model selection dialog:
 
 Select the desired provider and model.
 
-A few interesting models for experimentation include:
+E.g. at KILO, a few interesting models for experimentation include:
 
 | Model | Potential application |
 |---|---|

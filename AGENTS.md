@@ -20,7 +20,7 @@ Finally:
 GOAL: short description of the goal
 CONSTRAINS: short description of the constraints
 SOLUTION: describe the solution and changes made
-[] Stage all changed files and commit with the report content as the commit message.
+[] Stage all changed files and commit with the report content as the commit message, except temporary files like in temp/.
 
 
 ## 🧭 General Guidelines
