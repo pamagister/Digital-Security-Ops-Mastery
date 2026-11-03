@@ -1,0 +1,382 @@
+<?xml version="1.0"?>
+<gpx version="1.1" creator="GDAL 3.6.3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ogr="http://osgeo.org/gdal" xmlns="http://www.topografix.com/GPX/1/1" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd">
+<metadata><bounds minlat="35.924999999999997" minlon="26.283332999999999" maxlat="37.533720700000003" maxlon="27.299499999999998"/></metadata>                  
+<wpt lat="37.33" lon="26.608667">
+  <name>Skala Patmou (Ansteuerung 1)</name>
+  <extensions>
+    <ogr:Latitude>37.33</ogr:Latitude>
+    <ogr:Longitude>26.608667</ogr:Longitude>
+  </extensions>
+</wpt>
+<wpt lat="37.3135" lon="26.607333">
+  <name>Skala Patmou (Ansteuerung 2)</name>
+  <extensions>
+    <ogr:Latitude>37.3135</ogr:Latitude>
+    <ogr:Longitude>26.607333</ogr:Longitude>
+  </extensions>
+</wpt>
+<wpt lat="37.322833" lon="26.549167">
+  <name>Skala Patmou</name>
+  <extensions>
+    <ogr:Latitude>37.322833</ogr:Latitude>
+    <ogr:Longitude>26.549167</ogr:Longitude>
+  </extensions>
+</wpt>
+<wpt lat="37.260667" lon="26.7325">
+  <name>Ormos Grikou</name>
+  <extensions>
+    <ogr:Latitude>37.260667</ogr:Latitude>
+    <ogr:Longitude>26.7325</ogr:Longitude>
+  </extensions>
+</wpt>
+<wpt lat="37.29" lon="26.555">
+  <name>Ormos Stavros</name>
+  <extensions>
+    <ogr:Latitude>37.29</ogr:Latitude>
+    <ogr:Longitude>26.555</ogr:Longitude>
+  </extensions>
+</wpt>
+<wpt lat="37.3765" lon="26.731333">
+  <name>Porto Augusta (Arki)</name>
+  <extensions>
+    <ogr:Latitude>37.3765</ogr:Latitude>
+    <ogr:Longitude>26.731333</ogr:Longitude>
+  </extensions>
+</wpt>
+<wpt lat="37.372" lon="26.737167">
+  <name>Porto Stretto (Arki)</name>
+  <extensions>
+    <ogr:Latitude>37.372</ogr:Latitude>
+    <ogr:Longitude>26.737167</ogr:Longitude>
+  </extensions>
+</wpt>
+<wpt lat="37.3665" lon="26.728333">
+  <name>NISIS MARATHO</name>
+  <extensions>
+    <ogr:Latitude>37.3665</ogr:Latitude>
+    <ogr:Longitude>26.728333</ogr:Longitude>
+  </extensions>
+</wpt>
+<wpt lat="37.2945" lon="26.764333">
+  <name>Ormos Sokoro (Lipso)</name>
+  <extensions>
+    <ogr:Latitude>37.2945</ogr:Latitude>
+    <ogr:Longitude>26.764333</ogr:Longitude>
+  </extensions>
+</wpt>
+<wpt lat="37.274333" lon="26.7735">
+  <name>Ormos Kouloura (Lira-Reede Lipso)</name>
+  <extensions>
+    <ogr:Latitude>37.274333</ogr:Latitude>
+    <ogr:Longitude>26.7735</ogr:Longitude>
+  </extensions>
+</wpt>
+<wpt lat="37.444167" lon="26.965167">
+  <name>Limin A. Georgiou (Agathonisi)</name>
+  <extensions>
+    <ogr:Latitude>37.444167</ogr:Latitude>
+    <ogr:Longitude>26.965167</ogr:Longitude>
+  </extensions>
+</wpt>
+<wpt lat="37.455" lon="26.995">
+  <name>Ormos Poros (SE-Bucht Agathonisi)</name>
+  <extensions>
+    <ogr:Latitude>37.455</ogr:Latitude>
+    <ogr:Longitude>26.995</ogr:Longitude>
+  </extensions>
+</wpt>
+<wpt lat="37.295" lon="27.108333">
+  <name>NISIS PHARMAKONISI</name>
+  <extensions>
+    <ogr:Latitude>37.295</ogr:Latitude>
+    <ogr:Longitude>27.108333</ogr:Longitude>
+  </extensions>
+</wpt>
+<wpt lat="37.2" lon="26.791667">
+  <name>Ormos Partheni (Leros)</name>
+  <extensions>
+    <ogr:Latitude>37.2</ogr:Latitude>
+    <ogr:Longitude>26.791667</ogr:Longitude>
+  </extensions>
+</wpt>
+<wpt lat="37.160333" lon="26.853833">
+  <name>Ormos Alintas (Agia Marina Leros)</name>
+  <extensions>
+    <ogr:Latitude>37.160333</ogr:Latitude>
+    <ogr:Longitude>26.853833</ogr:Longitude>
+  </extensions>
+</wpt>
+<wpt lat="37.15" lon="26.863333">
+  <name>Ormos Panteli (Leros)</name>
+  <extensions>
+    <ogr:Latitude>37.15</ogr:Latitude>
+    <ogr:Longitude>26.863333</ogr:Longitude>
+  </extensions>
+</wpt>
+<wpt lat="37.0935" lon="26.886333">
+  <name>Stenon Lerou Fahrwasser (Leros)</name>
+  <extensions>
+    <ogr:Latitude>37.0935</ogr:Latitude>
+    <ogr:Longitude>26.886333</ogr:Longitude>
+  </extensions>
+</wpt>
+<wpt lat="36.947333" lon="26.994833">
+  <name>Limin Kalymnou</name>
+  <extensions>
+    <ogr:Latitude>36.947333</ogr:Latitude>
+    <ogr:Longitude>26.994833</ogr:Longitude>
+  </extensions>
+</wpt>
+<wpt lat="36.961667" lon="27.046667">
+  <name>Ormos Akti (Kalymnos)</name>
+  <extensions>
+    <ogr:Latitude>36.961667</ogr:Latitude>
+    <ogr:Longitude>27.046667</ogr:Longitude>
+  </extensions>
+</wpt>
+<wpt lat="36.973667" lon="27.035333">
+  <name>Ormos Vathy (Kalymnos)</name>
+  <extensions>
+    <ogr:Latitude>36.973667</ogr:Latitude>
+    <ogr:Longitude>27.035333</ogr:Longitude>
+  </extensions>
+</wpt>
+<wpt lat="37.032" lon="26.993833">
+  <name>Ormos Palaio (Kalymnos)</name>
+  <extensions>
+    <ogr:Latitude>37.032</ogr:Latitude>
+    <ogr:Longitude>26.993833</ogr:Longitude>
+  </extensions>
+</wpt>
+<wpt lat="37.031833" lon="26.923833">
+  <name>Ormos Emporio (Kalymnos Punkt 1)</name>
+  <extensions>
+    <ogr:Latitude>37.031833</ogr:Latitude>
+    <ogr:Longitude>26.923833</ogr:Longitude>
+  </extensions>
+</wpt>
+<wpt lat="37.045167" lon="26.928333">
+  <name>Ormos Emporio (Kalymnos Punkt 2)</name>
+  <extensions>
+    <ogr:Latitude>37.045167</ogr:Latitude>
+    <ogr:Longitude>26.928333</ogr:Longitude>
+  </extensions>
+</wpt>
+<wpt lat="36.995" lon="26.93">
+  <name>Myrtia (Kalymnos)</name>
+  <extensions>
+    <ogr:Latitude>36.995</ogr:Latitude>
+    <ogr:Longitude>26.93</ogr:Longitude>
+  </extensions>
+</wpt>
+<wpt lat="36.997833" lon="26.9245">
+  <name>Nisis Telendos</name>
+  <extensions>
+    <ogr:Latitude>36.997833</ogr:Latitude>
+    <ogr:Longitude>26.9245</ogr:Longitude>
+  </extensions>
+</wpt>
+<wpt lat="36.925" lon="26.966667">
+  <name>Ormos Vlychadia (Kalymnos)</name>
+  <extensions>
+    <ogr:Latitude>36.925</ogr:Latitude>
+    <ogr:Longitude>26.966667</ogr:Longitude>
+  </extensions>
+</wpt>
+<wpt lat="36.928333" lon="27.128333">
+  <name>Ormos Pserimos</name>
+  <extensions>
+    <ogr:Latitude>36.928333</ogr:Latitude>
+    <ogr:Longitude>27.128333</ogr:Longitude>
+  </extensions>
+</wpt>
+<wpt lat="36.953333" lon="27.095">
+  <name>Nisis Platy Leuchtfeuer Vr Nekrothikes</name>
+  <extensions>
+    <ogr:Latitude>36.953333</ogr:Latitude>
+    <ogr:Longitude>27.095</ogr:Longitude>
+  </extensions>
+</wpt>
+<wpt lat="36.935" lon="27.16">
+  <name>Ormos Vathy (Pserimos)</name>
+  <extensions>
+    <ogr:Latitude>36.935</ogr:Latitude>
+    <ogr:Longitude>27.16</ogr:Longitude>
+  </extensions>
+</wpt>
+<wpt lat="36.898833" lon="27.289667">
+  <name>KOS (Stadt)</name>
+  <extensions>
+    <ogr:Latitude>36.898833</ogr:Latitude>
+    <ogr:Longitude>27.289667</ogr:Longitude>
+  </extensions>
+</wpt>
+<wpt lat="36.898" lon="27.289">
+  <name>KOS MARINA (Ansteuerung)</name>
+  <extensions>
+    <ogr:Latitude>36.898</ogr:Latitude>
+    <ogr:Longitude>27.289</ogr:Longitude>
+  </extensions>
+</wpt>
+<wpt lat="36.897333" lon="27.2995">
+  <name>KOS MARINA</name>
+  <extensions>
+    <ogr:Latitude>36.897333</ogr:Latitude>
+    <ogr:Longitude>27.2995</ogr:Longitude>
+  </extensions>
+</wpt>
+<wpt lat="36.7825" lon="27.146667">
+  <name>KARDAMENA (Kos)</name>
+  <extensions>
+    <ogr:Latitude>36.7825</ogr:Latitude>
+    <ogr:Longitude>27.146667</ogr:Longitude>
+  </extensions>
+</wpt>
+<wpt lat="36.736667" lon="26.973333">
+  <name>KEPHALOS (Ormos Kamari Kos)</name>
+  <extensions>
+    <ogr:Latitude>36.736667</ogr:Latitude>
+    <ogr:Longitude>26.973333</ogr:Longitude>
+  </extensions>
+</wpt>
+<wpt lat="36.775" lon="26.963333">
+  <name>Limnionas (Kos)</name>
+  <extensions>
+    <ogr:Latitude>36.775</ogr:Latitude>
+    <ogr:Longitude>26.963333</ogr:Longitude>
+  </extensions>
+</wpt>
+<wpt lat="36.853333" lon="27.076667">
+  <name>Masticharion (Kos)</name>
+  <extensions>
+    <ogr:Latitude>36.853333</ogr:Latitude>
+    <ogr:Longitude>27.076667</ogr:Longitude>
+  </extensions>
+</wpt>
+<wpt lat="36.679833" lon="27.1435">
+  <name>Nisis Gyali</name>
+  <extensions>
+    <ogr:Latitude>36.679833</ogr:Latitude>
+    <ogr:Longitude>27.1435</ogr:Longitude>
+  </extensions>
+</wpt>
+<wpt lat="36.615" lon="27.141667">
+  <name>Mandrakion (Limin Mandraki Nisyros)</name>
+  <extensions>
+    <ogr:Latitude>36.615</ogr:Latitude>
+    <ogr:Longitude>27.141667</ogr:Longitude>
+  </extensions>
+</wpt>
+<wpt lat="36.620667" lon="27.174">
+  <name>Paloi (Nisyros)</name>
+  <extensions>
+    <ogr:Latitude>36.620667</ogr:Latitude>
+    <ogr:Longitude>27.174</ogr:Longitude>
+  </extensions>
+</wpt>
+<wpt lat="36.547667" lon="26.356667">
+  <name>SKALA ASTYPALAIA</name>
+  <extensions>
+    <ogr:Latitude>36.547667</ogr:Latitude>
+    <ogr:Longitude>26.356667</ogr:Longitude>
+  </extensions>
+</wpt>
+<wpt lat="36.5405" lon="26.348833">
+  <name>Ormos Leivadia (Astypalaia)</name>
+  <extensions>
+    <ogr:Latitude>36.5405</ogr:Latitude>
+    <ogr:Longitude>26.348833</ogr:Longitude>
+  </extensions>
+</wpt>
+<wpt lat="36.5675" lon="26.405833">
+  <name>Ormos Maltezana (Ansteuerung Astypalaia)</name>
+  <extensions>
+    <ogr:Latitude>36.5675</ogr:Latitude>
+    <ogr:Longitude>26.405833</ogr:Longitude>
+  </extensions>
+</wpt>
+<wpt lat="36.574667" lon="26.387167">
+  <name>Ormos Maltezana (Astypalaia)</name>
+  <extensions>
+    <ogr:Latitude>36.574667</ogr:Latitude>
+    <ogr:Longitude>26.387167</ogr:Longitude>
+  </extensions>
+</wpt>
+<wpt lat="36.583333" lon="26.423333">
+  <name>PORTO AGRILITHI (Astypalaia)</name>
+  <extensions>
+    <ogr:Latitude>36.583333</ogr:Latitude>
+    <ogr:Longitude>26.423333</ogr:Longitude>
+  </extensions>
+</wpt>
+<wpt lat="36.533333" lon="26.47">
+  <name>Nisis Kounoupoi</name>
+  <extensions>
+    <ogr:Latitude>36.533333</ogr:Latitude>
+    <ogr:Longitude>26.47</ogr:Longitude>
+  </extensions>
+</wpt>
+<wpt lat="36.608333" lon="26.383333">
+  <name>Porto Vathy (Astypalaia)</name>
+  <extensions>
+    <ogr:Latitude>36.608333</ogr:Latitude>
+    <ogr:Longitude>26.383333</ogr:Longitude>
+  </extensions>
+</wpt>
+<wpt lat="36.596667" lon="26.283333">
+  <name>Ormos Panormou (Astypalaia)</name>
+  <extensions>
+    <ogr:Latitude>36.596667</ogr:Latitude>
+    <ogr:Longitude>26.283333</ogr:Longitude>
+  </extensions>
+</wpt>
+<wpt lat="36.283333" lon="26.741667">
+  <name>Leuchtturm Nisis Plakida</name>
+  <extensions>
+    <ogr:Latitude>36.283333</ogr:Latitude>
+    <ogr:Longitude>26.741667</ogr:Longitude>
+  </extensions>
+</wpt>
+<wpt lat="36.075" lon="26.408333">
+  <name>Nisis Sophrano</name>
+  <extensions>
+    <ogr:Latitude>36.075</ogr:Latitude>
+    <ogr:Longitude>26.408333</ogr:Longitude>
+  </extensions>
+</wpt>
+<wpt lat="36.0" lon="26.433333">
+  <name>Karavonisia</name>
+  <extensions>
+    <ogr:Latitude>36.0</ogr:Latitude>
+    <ogr:Longitude>26.433333</ogr:Longitude>
+  </extensions>
+</wpt>
+<wpt lat="35.925" lon="26.508333">
+  <name>Avganisi</name>
+  <extensions>
+    <ogr:Latitude>35.925</ogr:Latitude>
+    <ogr:Longitude>26.508333</ogr:Longitude>
+  </extensions>
+</wpt>
+<wpt lat="37.5337207" lon="26.5036799">
+  <name>Vlychada Beach (Fournoi)</name>
+  <extensions>
+    <ogr:Latitude>37.5337207</ogr:Latitude>
+    <ogr:Longitude>26.5036799</ogr:Longitude>
+  </extensions>
+</wpt>
+<wpt lat="37.1756655" lon="26.8499608">
+  <name>Baja Anita - Krifos Bay (Leros)</name>
+  <extensions>
+    <ogr:Latitude>37.1756655</ogr:Latitude>
+    <ogr:Longitude>26.8499608</ogr:Longitude>
+  </extensions>
+</wpt>
+<wpt lat="36.9969638" lon="26.4583892">
+  <name>Levitha</name>
+  <extensions>
+    <ogr:Latitude>36.9969638</ogr:Latitude>
+    <ogr:Longitude>26.4583892</ogr:Longitude>
+  </extensions>
+</wpt>
+</gpx>

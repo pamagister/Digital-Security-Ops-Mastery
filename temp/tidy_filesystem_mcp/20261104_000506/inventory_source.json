@@ -1,0 +1,591 @@
+{
+  "root": "/home/paul/PycharmProjects/Digital-Security-Ops-Mastery/temp/Segeln_JTC",
+  "complete": true,
+  "entry_count": 98,
+  "tree_sha256": "cfa09f88f1182ec28007fbf8884dc537a7ae05728ae2157f32d92032d9094e88",
+  "entries": [
+    {
+      "path": "0_Inhaltsverzeichnis_24_07_15.pdf",
+      "type": "file",
+      "size": 73093,
+      "sha256": "8e6f4ff2efdeeee786392de12443c26be0dbba3d247f69ca25b70e34b9eb46e8"
+    },
+    {
+      "path": "25158-jtc-authority-crewlist-Sardinien-2023-06-17.pdf",
+      "type": "file",
+      "size": 4271,
+      "sha256": "6263cc1c40bc7eb3b55c02b105fa17254f534dfa43f0eddc0801fdb7e6f0cdfa"
+    },
+    {
+      "path": "25158-jtc-charter_company-crewlist-Sardinien-2023-06-17.pdf",
+      "type": "file",
+      "size": 17388,
+      "sha256": "2e9da83fef96c95d9c2a470633c4bb71a775ac26343a5646744b30dd9f712cac"
+    },
+    {
+      "path": "25158-jtc-skipper-crewlist-Sardinien-2023-06-17.pdf",
+      "type": "file",
+      "size": 17793,
+      "sha256": "350404026efa39abd25ca42540bb4838a0ec1e03ab6940b7210f8e15edcf2e6d"
+    },
+    {
+      "path": "26202-jtc-authority-crewlist-Sardinien-2023-06-10.pdf",
+      "type": "file",
+      "size": 3949,
+      "sha256": "cfe2faf610ddc30f0c401dceb693916d8aeae0b7dd5fc2ddd7d36b9476e5c875"
+    },
+    {
+      "path": "26202-jtc-charter_company-crewlist-Sardinien-2023-06-10.pdf",
+      "type": "file",
+      "size": 15482,
+      "sha256": "a37bfeaa464e47db51afef1863c5d567b43b79bc47129a278485783cfc784f40"
+    },
+    {
+      "path": "26202-jtc-skipper-crewlist-Sardinien-2023-06-10.pdf",
+      "type": "file",
+      "size": 15415,
+      "sha256": "7fdd8dc91216f8f1fb9c80186cba8d15e7f1a447d312b98820ad198a8f70b926"
+    },
+    {
+      "path": "3_Einkaufsliste_Mittelmeer_01_09_15.pdf",
+      "type": "file",
+      "size": 178628,
+      "sha256": "bf8455ffcc766fe60250bd37df0be9eafb1642d1039e413c8a1cecfbd5468d14"
+    },
+    {
+      "path": "40488-jtc-authority-crewlist-Schwedische Schären-2026-08-15.pdf",
+      "type": "file",
+      "size": 12070,
+      "sha256": "2389aaad51bee51ddedf6ab82ce0004625f76cab531f89dc08a1a579497ecec2"
+    },
+    {
+      "path": "40488-jtc-partner-crewlist-Schwedische Schären-2026-08-15.pdf",
+      "type": "file",
+      "size": 88314,
+      "sha256": "0e7dad3da627b71d5d171d9645a43881a08b81e6402d0f6ee4e41368594e20fe"
+    },
+    {
+      "path": "40488-jtc-skipper-crewlist-Schwedische Schären-2026-08-15.pdf",
+      "type": "file",
+      "size": 88694,
+      "sha256": "093f1988db7a9ea323e7ac9d174c2f2eb873f9275e165392eec464ca1418c645"
+    },
+    {
+      "path": "41172-jtc-authority-crewlist-Schwedische Schären-2026-08-08.pdf",
+      "type": "file",
+      "size": 12535,
+      "sha256": "6a57569f9dd21ae2f157c6987b121e83c261c91af6093dedd1182f0abb220cf9"
+    },
+    {
+      "path": "5_Checklisten_Komplett_09_05_16.pdf",
+      "type": "file",
+      "size": 279552,
+      "sha256": "bab3ac4d68bc68bb4a232f51dde09c60da318f6a27f7c8bc0f94abc25ecb7b01"
+    },
+    {
+      "path": "6_Aufhangen_im_Boot_Komplett_21_02_17.pdf",
+      "type": "file",
+      "size": 1169235,
+      "sha256": "ce8d8e20d394a71839df7ef4ce9ad1816f2c6f591c2f09e5822295db67378fc5"
+    },
+    {
+      "path": "7_Seemeilennachweis_18_07_14.pdf",
+      "type": "file",
+      "size": 138833,
+      "sha256": "79112b16c66b75801f45f73764e8fec92f441f57a03f01870ea8280504026241"
+    },
+    {
+      "path": "8_mitteldalmatien-kornaten_TTY.pdf",
+      "type": "file",
+      "size": 306734,
+      "sha256": "6744414545d5722650618715fc7a860367c9c256e17288c7df065691f2a03585"
+    },
+    {
+      "path": "Aufhängen_an_Bord.pdf",
+      "type": "file",
+      "size": 320120,
+      "sha256": "1814879c9b04a786af38b8d182bffd5f45aac615911808cc02c1986f6f06c0ac"
+    },
+    {
+      "path": "Checkliste_Segelreise.pdf",
+      "type": "file",
+      "size": 989771,
+      "sha256": "c98bc555c9eef454a184df24ce03f424a667e13239a47fa1fd8bcc7a43350175"
+    },
+    {
+      "path": "Checklisten_JTC_1HROGlC.pdf",
+      "type": "file",
+      "size": 675905,
+      "sha256": "4489109a8e4d37d02fdfdce95e20dafbf2a1150ede74c69ec7d5926b7707b724"
+    },
+    {
+      "path": "Crew-Einweisung.pdf",
+      "type": "file",
+      "size": 41197,
+      "sha256": "6674c5c0e2211c8f83fcad5e41f5c927036bf09f6fcc2e1c9703c1fea330861c"
+    },
+    {
+      "path": "DYC-Base-Details-Trogir-20.4.2016.pdf",
+      "type": "file",
+      "size": 453769,
+      "sha256": "63032e59ca747f885c2dbe2e412d56606902b5790caa22ec4f3ce7ad23f26b5c"
+    },
+    {
+      "path": "Dodekanes-Kos",
+      "type": "directory",
+      "size": null
+    },
+    {
+      "path": "Dodekanes-Kos/GR-Dodekanes-Kos.jpg",
+      "type": "file",
+      "size": 291953,
+      "sha256": "c4d2a0a2086196e8c8887b7404964f44dce2887ef0c96ac4dfed3aee3226cde9"
+    },
+    {
+      "path": "Dodekanes-Kos/Skipper View Kos Griechenland Buchten Liste.csv",
+      "type": "file",
+      "size": 2139,
+      "sha256": "7d10f4628a2420810340e904521cc62be9f13377e50825336c6df1b92621f699"
+    },
+    {
+      "path": "Dodekanes-Kos/Skipper View Kos Griechenland.gpx",
+      "type": "file",
+      "size": 11135,
+      "sha256": "bff0bb39b399f09a6f5ff7e12ffcb75c597403425d0b6ef9ff90b9997395083c"
+    },
+    {
+      "path": "Dodekanes-Kos/Skipper View Kos Griechenland.kml",
+      "type": "file",
+      "size": 29171,
+      "sha256": "1ccd72ffa147c286f9d4a5fff79a393fede2fb1011ecf19938a8959cad6f65ac"
+    },
+    {
+      "path": "Dänische Südsee",
+      "type": "directory",
+      "size": null
+    },
+    {
+      "path": "Dänische Südsee/Dänische Südsee Route - 1.png",
+      "type": "file",
+      "size": 465765,
+      "sha256": "e0c43d8260b607ffff90ef727215746b7b98928d692d1684c388e8bdac5d50e4"
+    },
+    {
+      "path": "Dänische Südsee/Dänische Südsee Route - 2.png",
+      "type": "file",
+      "size": 465389,
+      "sha256": "84a160ddb1606c9400032cb9cc1b7353ca3a59675955220f3b02b54634e13a33"
+    },
+    {
+      "path": "Dänische Südsee/Dänische Südsee Route - 3 Sonnenaufgang-Option Fynshav mit Option Faborg oder Avernakö.png",
+      "type": "file",
+      "size": 465216,
+      "sha256": "d720f2c666b9d45f8359c444e6962fc1ec98b3a051fbedaff9924887b775337d"
+    },
+    {
+      "path": "Dänische Südsee/Dänische Südsee Route - 4 Sonnenaufgang Avernakö ohne Faborg.png",
+      "type": "file",
+      "size": 465871,
+      "sha256": "d82ffad0eaca54750eacd3cda8805fa7cf2d09e196b36355190c564a23058670"
+    },
+    {
+      "path": "Dänische Südsee/Dänische Südsee Route - 5 Weiter Schlag am Sonntag nach Avernakö.png",
+      "type": "file",
+      "size": 465827,
+      "sha256": "9339946e75186af9a4f93de1c0d0bb40aec91821a7d9328c4338606745f210de"
+    },
+    {
+      "path": "Dänische Südsee/Dänische Südsee Route.png",
+      "type": "file",
+      "size": 440697,
+      "sha256": "071bb3b34c0de0d6e600df40a3438b4e8e1d8fb4074f918552696d663d59553a"
+    },
+    {
+      "path": "Einkaufsliste Essenplanung Kykladen 2026 - Einkaufsliste.pdf",
+      "type": "file",
+      "size": 258018,
+      "sha256": "bbec3ae22587f800a6ef349d309767423e6bb6c7e5558d06c96120ea233d3c7b"
+    },
+    {
+      "path": "Infomaterial",
+      "type": "directory",
+      "size": null
+    },
+    {
+      "path": "Infomaterial/Checklisten_komplett.pdf",
+      "type": "file",
+      "size": 448372,
+      "sha256": "3a0ac903f1a7926917420d4fde70c49585d2befe2231c49f0a4e488b127de005"
+    },
+    {
+      "path": "Infomaterial/Einkaufsliste_Mittelmeer.pdf",
+      "type": "file",
+      "size": 568273,
+      "sha256": "07c433371a1aaf07c6aad29e60327b5cf7108248a97d549a5ab877b2dd486ddb"
+    },
+    {
+      "path": "Infomaterial/Einkaufsliste_Mittelmeer_NEU.pdf",
+      "type": "file",
+      "size": 1977394,
+      "sha256": "f30a256784413ea407145f89bb985da9d2063736cfe222c1fab5f81ae61917d3"
+    },
+    {
+      "path": "Infomaterial/Guidelines 5_2025.pdf",
+      "type": "file",
+      "size": 392166,
+      "sha256": "6ec7c31d07c79cca8e2ee35ff79a45197408ffab110797f93703499d64e08531"
+    },
+    {
+      "path": "Infomaterial/Hafenmanoever.pdf",
+      "type": "file",
+      "size": 599766,
+      "sha256": "c88b50b3b2745e297db1d6df8fee94cf28b4d3ffc3e4b840061c731be52eb4e6"
+    },
+    {
+      "path": "Infomaterial/Haftungsfreistellung_Medikamentengabe.pdf",
+      "type": "file",
+      "size": 45336,
+      "sha256": "7d481067e2920ba2eb3a2d1bd2e896e301733d6e2e255f271aee4fb2ccba03f0"
+    },
+    {
+      "path": "Infomaterial/MOB-Manöver.pdf",
+      "type": "file",
+      "size": 410946,
+      "sha256": "5b2f8db8c22ceb462e5c5279a5ab8062d67c7205c169f26bd2b5f8527f9e909d"
+    },
+    {
+      "path": "Infomaterial/Manöverkunde Hafenmanöver 9 Anlege-Varianten für Einhandsegler YACHT.pdf",
+      "type": "file",
+      "size": 32528879,
+      "sha256": "d1aa4fc6b1840a0180905d337b4b0205686ddd55fcf803819cb0c6a95a40d47a"
+    },
+    {
+      "path": "Infomaterial/Packliste.pdf",
+      "type": "file",
+      "size": 58485,
+      "sha256": "77fd9aabec6b3454d09f6000f63e95e85b90f51e55459a3b3e8a0d720ccf3a7d"
+    },
+    {
+      "path": "Infomaterial/Schiffsknoten.pdf",
+      "type": "file",
+      "size": 87779,
+      "sha256": "818bd94c811a8640566a6d6afdb2ef8fac90b1af7f8e5ec00f8db31c6a7c1f84"
+    },
+    {
+      "path": "Infomaterial/Segelbuch Kiel.pdf",
+      "type": "file",
+      "size": 1227833,
+      "sha256": "b7159b7d7e9695d646a51e3219a265ddcade84a657c0636546d74dd283398ca6"
+    },
+    {
+      "path": "Infomaterial/Segelmanoever-Kurzfassung.pdf",
+      "type": "file",
+      "size": 83456,
+      "sha256": "c5ef44f472245a1e9e8bf83360c2057422f7c8a14340b613c52b39ee7cd544b5"
+    },
+    {
+      "path": "Infomaterial/Trimmfiebel.pdf",
+      "type": "file",
+      "size": 1353317,
+      "sha256": "62f68cc5ea570949afcbba03e268c76ab423e96bf6dedac24f60480273d25425"
+    },
+    {
+      "path": "Infomaterial/Trimmtabelle.pdf",
+      "type": "file",
+      "size": 36188,
+      "sha256": "bfef32edef70f872d78f36b39cb769340f4e14d80171c5f0a83eb18a8535fc6a"
+    },
+    {
+      "path": "Infomaterial/Trimtabelle2.pdf",
+      "type": "file",
+      "size": 116250,
+      "sha256": "02777b01948e0b595a0d7caafe4ed9a005d6641ee1e4c466f59089019ee2e9ab"
+    },
+    {
+      "path": "Infos Balearen",
+      "type": "directory",
+      "size": null
+    },
+    {
+      "path": "Infos Balearen/Ibiza Strände.pdf",
+      "type": "file",
+      "size": 594738,
+      "sha256": "d5f1d5f3b5031d05df5710f48c857addfce7dbecf92cd72748b536ced8ff098e"
+    },
+    {
+      "path": "Infos Balearen/Mallorca 10 Schönste Strände Geheimtipps.pdf",
+      "type": "file",
+      "size": 2713552,
+      "sha256": "f868da850febbe33988c5e643310c4e809ebde7033e537f5eaf2baa42aeb6119"
+    },
+    {
+      "path": "Infos Balearen/Mallorca 12 schönste Strände.pdf",
+      "type": "file",
+      "size": 2832232,
+      "sha256": "2f376ea51625d7b27075de94fd527d07ee6c9e3ac28cd47c67410a28274a127b"
+    },
+    {
+      "path": "Infos Balearen/Satellit",
+      "type": "directory",
+      "size": null
+    },
+    {
+      "path": "Infos Balearen/Satellit/Cavallet.jpg",
+      "type": "file",
+      "size": 271747,
+      "sha256": "3a98b26fc1b608ffc7bf1f0bf6abc6a736c5463737e4b4d655c1c6e22368abbd"
+    },
+    {
+      "path": "Infos Balearen/Satellit/Es Trenc Sant Jordi.jpg",
+      "type": "file",
+      "size": 271978,
+      "sha256": "9a57e507e84f87f7c39c35c383e3fa6377b005bb55eff5020d9b578c76ba96f5"
+    },
+    {
+      "path": "Infos Balearen/Satellit/Espalmador.jpg",
+      "type": "file",
+      "size": 297001,
+      "sha256": "07a1fbb90d0c54356b7edad80bcf54e15d86dc2f1169767a5187a1c48579860c"
+    },
+    {
+      "path": "Infos Balearen/Satellit/Llombaro.jpg",
+      "type": "file",
+      "size": 281216,
+      "sha256": "0e4facf49f079fa212dbba1eb71acc17e3506da0eeaa9fd5141ea18c00b138b6"
+    },
+    {
+      "path": "Infos Balearen/Satellit/Llonga Blanca.jpg",
+      "type": "file",
+      "size": 297359,
+      "sha256": "7d3919bdb2be3ae844a4d7a58fcea5446e64a76d25a108af2d127d58abb6166a"
+    },
+    {
+      "path": "Infos Balearen/Satellit/Mitjana.jpg",
+      "type": "file",
+      "size": 295529,
+      "sha256": "043082e8a3d0947064fe41213db8f10e7bd96ed00c1de50f0dee0a988b98c36d"
+    },
+    {
+      "path": "Infos Balearen/Satellit/Moro Almunia.jpg",
+      "type": "file",
+      "size": 288045,
+      "sha256": "fbe38ab7529a13cfe8ea57ddb387b3032744691565e05be529a113add75d6ce7"
+    },
+    {
+      "path": "Infos Balearen/Satellit/Portals Vells.jpg",
+      "type": "file",
+      "size": 286951,
+      "sha256": "e24368160d7dfc5a58206c0a1d7c87629fcebef47834972a222b063e24211ffa"
+    },
+    {
+      "path": "Infos Balearen/Satellit/Porto Christo.jpg",
+      "type": "file",
+      "size": 292612,
+      "sha256": "e60da50b6b3da292138b767e65dae6b08d2e6f4566726a58831b1218d28fbea1"
+    },
+    {
+      "path": "Infos Balearen/Satellit/Sa Nau.jpg",
+      "type": "file",
+      "size": 296247,
+      "sha256": "2462f651dd2ff3040de36baec16f24c7c279218bf9a7138c23e6a38e4391bd74"
+    },
+    {
+      "path": "Infos Balearen/Satellit/Ses Salines.jpg",
+      "type": "file",
+      "size": 257184,
+      "sha256": "7e11a85f2fcac5ced0007a338c7f8977097c30e398c0f7ba7b574b15f1bbfece"
+    },
+    {
+      "path": "Infos Balearen/Satellit/Tagomago.jpg",
+      "type": "file",
+      "size": 292080,
+      "sha256": "6b4d44465633cffe4c227a5993b222f39b1cdc13c7837799e0d379b05d00f2ef"
+    },
+    {
+      "path": "Infos Balearen/Satellit/Talamanca.jpg",
+      "type": "file",
+      "size": 291462,
+      "sha256": "e029ea45a2ef1ab94e3fc7eb048bfb1a798c900472dadd878f0ac2bdab5da990"
+    },
+    {
+      "path": "Infos Balearen/jtc-skipper_agreement-Paul-Magister-Mallorca-2021-08-28.pdf",
+      "type": "file",
+      "size": 312513,
+      "sha256": "6f71c86bc7db0d01f8bea9325d0e4c48cf505391f0c05fa0818e066148270bcc"
+    },
+    {
+      "path": "Infos Balearen/jtc-skipper_agreement-Paul-Magister-Mallorca-2021-08-28_signed.pdf",
+      "type": "file",
+      "size": 2694415,
+      "sha256": "986f16ad81d774c9123f87fbdba8fc615a34c05f161d2ce54c0914aa9b12ca35"
+    },
+    {
+      "path": "JTC-Skipper-View Dänische Südsee",
+      "type": "file",
+      "size": 987452,
+      "sha256": "7e235ced223bc6950d00e7f03d446d55204b66a59a1e01913e924e278d78dfc0"
+    },
+    {
+      "path": "JTC-Skipper-View Dänische Südsee 2023.pdf",
+      "type": "file",
+      "size": 6059516,
+      "sha256": "28f6fbfa61ee43b5b190b50bdad2d6a4d14e1288bced0a4bd53dd8bc1f8b22a4"
+    },
+    {
+      "path": "JTC-Skipper-View Dänische Südsee.pdf",
+      "type": "file",
+      "size": 2236240,
+      "sha256": "26b0d0af49ed22d2d14f1327b1758babf84b0c9ad10f0611594ba1c1dc230dbd"
+    },
+    {
+      "path": "JTC-Skipper-View Kykladen small.pdf",
+      "type": "file",
+      "size": 1917157,
+      "sha256": "f5f8223a3effd8ca2d5f25ee6781a6eb86bdd47db653dffde06ebdb515cfad52"
+    },
+    {
+      "path": "JTC-Skipper-View Kykladen.pdf",
+      "type": "file",
+      "size": 21828420,
+      "sha256": "4b0acac070233a28d512064fd747b8b7d1ee85f4ef8f78243d04f16727349b88"
+    },
+    {
+      "path": "JTC-Skipper-View Mallorca + Ibiza + Menorca",
+      "type": "file",
+      "size": 1105538,
+      "sha256": "92e1e3e557371076ba951b98d7d560aebe88895fc1a4307ebdfd838cefbd6cfb"
+    },
+    {
+      "path": "JTC-Skipper-View Peloponnes",
+      "type": "file",
+      "size": 2033170,
+      "sha256": "378c364a5d80d4deaef08e1c1e75c95197eadc3d34f2e0d3940675e3c6002913"
+    },
+    {
+      "path": "JTC-Skipper-View Peloponnes 2",
+      "type": "file",
+      "size": 2033170,
+      "sha256": "164e65247d8dabc81f6d4ff0325469f98fa2264d81462aa6d54b85ebaa312b0c"
+    },
+    {
+      "path": "Korfu Crewliste.pdf",
+      "type": "file",
+      "size": 106056,
+      "sha256": "473f3e3327f7a37532d2829beb44e7ec418c4a2bf4d17af97d4a1310a77a0623"
+    },
+    {
+      "path": "Stockholm",
+      "type": "directory",
+      "size": null
+    },
+    {
+      "path": "Stockholm/Kontakte_JTC_Stockholm.vcf",
+      "type": "file",
+      "size": 1481,
+      "sha256": "9f5a710feae448e78b5f7a117f07e973f6c0146850432c1e683bbd61378f315f"
+    },
+    {
+      "path": "Stockholm/Stockholm_Skipperview_JTC.gpx",
+      "type": "file",
+      "size": 3303,
+      "sha256": "d538a715326c06fbb414f21628aa32aa608da0ded11d2893d13c72c0effd4492"
+    },
+    {
+      "path": "Stockholm/Stockholm_Skipperview_JTC.md",
+      "type": "file",
+      "size": 56252,
+      "sha256": "6317a17651da1801ab3ce9bf2dc0f0219d9b7603c2655052f080acdd933c7dc0"
+    },
+    {
+      "path": "Unterschrift Paul.png",
+      "type": "file",
+      "size": 60132,
+      "sha256": "9f4225abb58452a10f786f8c85e59c5c1247acfddd4f91686f852d184f3922d8"
+    },
+    {
+      "path": "besucher-guide-nationalpark-kornati.pdf",
+      "type": "file",
+      "size": 104686,
+      "sha256": "453ac7fc9266d52aa45127a4e50dfc807d118f59847121a829583cdb6d06ffa6"
+    },
+    {
+      "path": "jtc-skipper-crewlist-Sardinien & Korsika-2020-08-29-VERDI.pdf",
+      "type": "file",
+      "size": 22389,
+      "sha256": "569648561ff5fe6766f135828ae4bfe057fbab390c5251915eccd9c962b3a8d7"
+    },
+    {
+      "path": "jtc-skipper_agreement-Paul-Magister-Dänische Südsee-2022-08-20.pdf",
+      "type": "file",
+      "size": 306229,
+      "sha256": "6df3db03147c27ae22e1e4ca3166a4f50d8a51f9511a721fb510a5fc70fd7f85"
+    },
+    {
+      "path": "jtc-skipper_agreement-Paul-Magister-Dänische Südsee-2022-08-20_SIGNED.pdf",
+      "type": "file",
+      "size": 2805902,
+      "sha256": "44094e3d3471ea93030b7b82ee087932b86129e525d8ce40124886f9131a85c4"
+    },
+    {
+      "path": "jtc-skipper_agreement-Paul-Magister-Dänische Südsee-2022-08-27.pdf",
+      "type": "file",
+      "size": 306230,
+      "sha256": "0e3a4c9b3c0dfcd44fee60a0ef44eead87121946edb940634ebace13ba1f0a8b"
+    },
+    {
+      "path": "jtc-skipper_agreement-Paul-Magister-Dänische Südsee-2022-08-27_SIGNED.pdf",
+      "type": "file",
+      "size": 2922491,
+      "sha256": "f290ceb32043d99915f40057e2bb7dfe1feaa12fceeeffa80e33e03399c1e81f"
+    },
+    {
+      "path": "jtc-skipper_agreement-Paul-Magister-Ibiza & Formentera-2021-08-21.pdf",
+      "type": "file",
+      "size": 312521,
+      "sha256": "b1c1b502693978c606ebc2edbe800a77d4247351a6e88691a7a69e8e3445d824"
+    },
+    {
+      "path": "jtc-skipper_agreement-Paul-Magister-Ibiza & Formentera-2021-08-21_signed.pdf",
+      "type": "file",
+      "size": 2663305,
+      "sha256": "b73c6f5e26d0ed0b98905583df51b3ec8831bcfb01861b9538b5c63a59bf4545"
+    },
+    {
+      "path": "jtc-skipper_agreement-Paul-Magister-Kykladen-2026-09-05.pdf",
+      "type": "file",
+      "size": 110469,
+      "sha256": "f45f665997db91fac2b74b91f282a8a4b9bb9d974c50c46ec4f43e82037e8db9"
+    },
+    {
+      "path": "jtc-skipper_agreement-Paul-Magister-Kykladen-2026-09-05_signed.odg",
+      "type": "file",
+      "size": 165654,
+      "sha256": "df684950fa73aff444fcc73ac3570805a9e6a975b7754cfe5e248a0a7b79cb97"
+    },
+    {
+      "path": "jtc-skipper_agreement-Paul-Magister-Kykladen-2026-09-05_signed.pdf",
+      "type": "file",
+      "size": 212310,
+      "sha256": "578bb3f983fd20ff68c718459381a4bdd49b8e1dddbf9ca7313a0eb4c4702add"
+    },
+    {
+      "path": "jtc-skipper_agreement-Paul-Magister-Kykladen-2026-09-12.pdf",
+      "type": "file",
+      "size": 124412,
+      "sha256": "d6d662b8e11194168dca296dd1c20c4a6421fc9232184f05513458c278591ccd"
+    },
+    {
+      "path": "jtc-skipper_agreement-Paul-Magister-Kykladen-2026-09-12_signed.odg",
+      "type": "file",
+      "size": 207970,
+      "sha256": "82fab4d95d2e2e0519a686b4f87dd99873ee61077d38bb19e412a8ba1dc4013e"
+    },
+    {
+      "path": "jtc-skipper_agreement-Paul-Magister-Kykladen-2026-09-12_signed.pdf",
+      "type": "file",
+      "size": 233538,
+      "sha256": "46a59d39b1a04593162735b90e4f6e711ed429c6c9bb8da572f66a5d30e8547a"
+    }
+  ],
+  "errors": []
+}

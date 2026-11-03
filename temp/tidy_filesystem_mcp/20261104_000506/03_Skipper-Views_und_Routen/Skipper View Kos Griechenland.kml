@@ -1,0 +1,1014 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+  <Document>
+    <name>Skipper View Kos Griechenland Buchten Liste.csv</name>
+    <Style id="icon-1899-0288D1-normal">
+      <IconStyle>
+        <color>ffd18802</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+        <hotSpot x="32" xunits="pixels" y="64" yunits="insetPixels"/>
+      </IconStyle>
+      <LabelStyle>
+        <scale>0</scale>
+      </LabelStyle>
+    </Style>
+    <Style id="icon-1899-0288D1-highlight">
+      <IconStyle>
+        <color>ffd18802</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+        <hotSpot x="32" xunits="pixels" y="64" yunits="insetPixels"/>
+      </IconStyle>
+      <LabelStyle>
+        <scale>1</scale>
+      </LabelStyle>
+    </Style>
+    <StyleMap id="icon-1899-0288D1">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#icon-1899-0288D1-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#icon-1899-0288D1-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Placemark>
+      <name>Skala Patmou (Ansteuerung 1)</name>
+      <description><![CDATA[Latitude: 37.33<br>Longitude: 26.608667]]></description>
+      <styleUrl>#icon-1899-0288D1</styleUrl>
+      <ExtendedData>
+        <Data name="Latitude">
+          <value>37.33</value>
+        </Data>
+        <Data name="Longitude">
+          <value>26.608667</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          26.608667,37.33,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Skala Patmou (Ansteuerung 2)</name>
+      <description><![CDATA[Latitude: 37.3135<br>Longitude: 26.607333]]></description>
+      <styleUrl>#icon-1899-0288D1</styleUrl>
+      <ExtendedData>
+        <Data name="Latitude">
+          <value>37.3135</value>
+        </Data>
+        <Data name="Longitude">
+          <value>26.607333</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          26.607333,37.3135,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Skala Patmou</name>
+      <description><![CDATA[Latitude: 37.322833<br>Longitude: 26.549167]]></description>
+      <styleUrl>#icon-1899-0288D1</styleUrl>
+      <ExtendedData>
+        <Data name="Latitude">
+          <value>37.322833</value>
+        </Data>
+        <Data name="Longitude">
+          <value>26.549167</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          26.549167,37.322833,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Ormos Grikou</name>
+      <description><![CDATA[Latitude: 37.260667<br>Longitude: 26.7325]]></description>
+      <styleUrl>#icon-1899-0288D1</styleUrl>
+      <ExtendedData>
+        <Data name="Latitude">
+          <value>37.260667</value>
+        </Data>
+        <Data name="Longitude">
+          <value>26.7325</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          26.7325,37.260667,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Ormos Stavros</name>
+      <description><![CDATA[Latitude: 37.29<br>Longitude: 26.555]]></description>
+      <styleUrl>#icon-1899-0288D1</styleUrl>
+      <ExtendedData>
+        <Data name="Latitude">
+          <value>37.29</value>
+        </Data>
+        <Data name="Longitude">
+          <value>26.555</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          26.555,37.29,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Porto Augusta (Arki)</name>
+      <description><![CDATA[Latitude: 37.3765<br>Longitude: 26.731333]]></description>
+      <styleUrl>#icon-1899-0288D1</styleUrl>
+      <ExtendedData>
+        <Data name="Latitude">
+          <value>37.3765</value>
+        </Data>
+        <Data name="Longitude">
+          <value>26.731333</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          26.731333,37.3765,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Porto Stretto (Arki)</name>
+      <description><![CDATA[Latitude: 37.372<br>Longitude: 26.737167]]></description>
+      <styleUrl>#icon-1899-0288D1</styleUrl>
+      <ExtendedData>
+        <Data name="Latitude">
+          <value>37.372</value>
+        </Data>
+        <Data name="Longitude">
+          <value>26.737167</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          26.737167,37.372,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>NISIS MARATHO</name>
+      <description><![CDATA[Latitude: 37.3665<br>Longitude: 26.728333]]></description>
+      <styleUrl>#icon-1899-0288D1</styleUrl>
+      <ExtendedData>
+        <Data name="Latitude">
+          <value>37.3665</value>
+        </Data>
+        <Data name="Longitude">
+          <value>26.728333</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          26.728333,37.3665,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Ormos Sokoro (Lipso)</name>
+      <description><![CDATA[Latitude: 37.2945<br>Longitude: 26.764333]]></description>
+      <styleUrl>#icon-1899-0288D1</styleUrl>
+      <ExtendedData>
+        <Data name="Latitude">
+          <value>37.2945</value>
+        </Data>
+        <Data name="Longitude">
+          <value>26.764333</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          26.764333,37.2945,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Ormos Kouloura (Lira-Reede Lipso)</name>
+      <description><![CDATA[Latitude: 37.274333<br>Longitude: 26.7735]]></description>
+      <styleUrl>#icon-1899-0288D1</styleUrl>
+      <ExtendedData>
+        <Data name="Latitude">
+          <value>37.274333</value>
+        </Data>
+        <Data name="Longitude">
+          <value>26.7735</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          26.7735,37.274333,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Limin A. Georgiou (Agathonisi)</name>
+      <description><![CDATA[Latitude: 37.444167<br>Longitude: 26.965167]]></description>
+      <styleUrl>#icon-1899-0288D1</styleUrl>
+      <ExtendedData>
+        <Data name="Latitude">
+          <value>37.444167</value>
+        </Data>
+        <Data name="Longitude">
+          <value>26.965167</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          26.965167,37.444167,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Ormos Poros (SE-Bucht Agathonisi)</name>
+      <description><![CDATA[Latitude: 37.455<br>Longitude: 26.995]]></description>
+      <styleUrl>#icon-1899-0288D1</styleUrl>
+      <ExtendedData>
+        <Data name="Latitude">
+          <value>37.455</value>
+        </Data>
+        <Data name="Longitude">
+          <value>26.995</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          26.995,37.455,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>NISIS PHARMAKONISI</name>
+      <description><![CDATA[Latitude: 37.295<br>Longitude: 27.108333]]></description>
+      <styleUrl>#icon-1899-0288D1</styleUrl>
+      <ExtendedData>
+        <Data name="Latitude">
+          <value>37.295</value>
+        </Data>
+        <Data name="Longitude">
+          <value>27.108333</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          27.108333,37.295,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Ormos Partheni (Leros)</name>
+      <description><![CDATA[Latitude: 37.2<br>Longitude: 26.791667]]></description>
+      <styleUrl>#icon-1899-0288D1</styleUrl>
+      <ExtendedData>
+        <Data name="Latitude">
+          <value>37.2</value>
+        </Data>
+        <Data name="Longitude">
+          <value>26.791667</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          26.791667,37.2,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Ormos Alintas (Agia Marina Leros)</name>
+      <description><![CDATA[Latitude: 37.160333<br>Longitude: 26.853833]]></description>
+      <styleUrl>#icon-1899-0288D1</styleUrl>
+      <ExtendedData>
+        <Data name="Latitude">
+          <value>37.160333</value>
+        </Data>
+        <Data name="Longitude">
+          <value>26.853833</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          26.853833,37.160333,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Ormos Panteli (Leros)</name>
+      <description><![CDATA[Latitude: 37.15<br>Longitude: 26.863333]]></description>
+      <styleUrl>#icon-1899-0288D1</styleUrl>
+      <ExtendedData>
+        <Data name="Latitude">
+          <value>37.15</value>
+        </Data>
+        <Data name="Longitude">
+          <value>26.863333</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          26.863333,37.15,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Stenon Lerou Fahrwasser (Leros)</name>
+      <description><![CDATA[Latitude: 37.0935<br>Longitude: 26.886333]]></description>
+      <styleUrl>#icon-1899-0288D1</styleUrl>
+      <ExtendedData>
+        <Data name="Latitude">
+          <value>37.0935</value>
+        </Data>
+        <Data name="Longitude">
+          <value>26.886333</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          26.886333,37.0935,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Limin Kalymnou</name>
+      <description><![CDATA[Latitude: 36.947333<br>Longitude: 26.994833]]></description>
+      <styleUrl>#icon-1899-0288D1</styleUrl>
+      <ExtendedData>
+        <Data name="Latitude">
+          <value>36.947333</value>
+        </Data>
+        <Data name="Longitude">
+          <value>26.994833</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          26.994833,36.947333,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Ormos Akti (Kalymnos)</name>
+      <description><![CDATA[Latitude: 36.961667<br>Longitude: 27.046667]]></description>
+      <styleUrl>#icon-1899-0288D1</styleUrl>
+      <ExtendedData>
+        <Data name="Latitude">
+          <value>36.961667</value>
+        </Data>
+        <Data name="Longitude">
+          <value>27.046667</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          27.046667,36.961667,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Ormos Vathy (Kalymnos)</name>
+      <description><![CDATA[Latitude: 36.973667<br>Longitude: 27.035333]]></description>
+      <styleUrl>#icon-1899-0288D1</styleUrl>
+      <ExtendedData>
+        <Data name="Latitude">
+          <value>36.973667</value>
+        </Data>
+        <Data name="Longitude">
+          <value>27.035333</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          27.035333,36.973667,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Ormos Palaio (Kalymnos)</name>
+      <description><![CDATA[Latitude: 37.032<br>Longitude: 26.993833]]></description>
+      <styleUrl>#icon-1899-0288D1</styleUrl>
+      <ExtendedData>
+        <Data name="Latitude">
+          <value>37.032</value>
+        </Data>
+        <Data name="Longitude">
+          <value>26.993833</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          26.993833,37.032,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Ormos Emporio (Kalymnos Punkt 1)</name>
+      <description><![CDATA[Latitude: 37.031833<br>Longitude: 26.923833]]></description>
+      <styleUrl>#icon-1899-0288D1</styleUrl>
+      <ExtendedData>
+        <Data name="Latitude">
+          <value>37.031833</value>
+        </Data>
+        <Data name="Longitude">
+          <value>26.923833</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          26.923833,37.031833,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Ormos Emporio (Kalymnos Punkt 2)</name>
+      <description><![CDATA[Latitude: 37.045167<br>Longitude: 26.928333]]></description>
+      <styleUrl>#icon-1899-0288D1</styleUrl>
+      <ExtendedData>
+        <Data name="Latitude">
+          <value>37.045167</value>
+        </Data>
+        <Data name="Longitude">
+          <value>26.928333</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          26.928333,37.045167,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Myrtia (Kalymnos)</name>
+      <description><![CDATA[Latitude: 36.995<br>Longitude: 26.93]]></description>
+      <styleUrl>#icon-1899-0288D1</styleUrl>
+      <ExtendedData>
+        <Data name="Latitude">
+          <value>36.995</value>
+        </Data>
+        <Data name="Longitude">
+          <value>26.93</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          26.93,36.995,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Nisis Telendos</name>
+      <description><![CDATA[Latitude: 36.997833<br>Longitude: 26.9245]]></description>
+      <styleUrl>#icon-1899-0288D1</styleUrl>
+      <ExtendedData>
+        <Data name="Latitude">
+          <value>36.997833</value>
+        </Data>
+        <Data name="Longitude">
+          <value>26.9245</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          26.9245,36.997833,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Ormos Vlychadia (Kalymnos)</name>
+      <description><![CDATA[Latitude: 36.925<br>Longitude: 26.966667]]></description>
+      <styleUrl>#icon-1899-0288D1</styleUrl>
+      <ExtendedData>
+        <Data name="Latitude">
+          <value>36.925</value>
+        </Data>
+        <Data name="Longitude">
+          <value>26.966667</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          26.966667,36.925,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Ormos Pserimos</name>
+      <description><![CDATA[Latitude: 36.928333<br>Longitude: 27.128333]]></description>
+      <styleUrl>#icon-1899-0288D1</styleUrl>
+      <ExtendedData>
+        <Data name="Latitude">
+          <value>36.928333</value>
+        </Data>
+        <Data name="Longitude">
+          <value>27.128333</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          27.128333,36.928333,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Nisis Platy Leuchtfeuer Vr Nekrothikes</name>
+      <description><![CDATA[Latitude: 36.953333<br>Longitude: 27.095]]></description>
+      <styleUrl>#icon-1899-0288D1</styleUrl>
+      <ExtendedData>
+        <Data name="Latitude">
+          <value>36.953333</value>
+        </Data>
+        <Data name="Longitude">
+          <value>27.095</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          27.095,36.953333,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Ormos Vathy (Pserimos)</name>
+      <description><![CDATA[Latitude: 36.935<br>Longitude: 27.16]]></description>
+      <styleUrl>#icon-1899-0288D1</styleUrl>
+      <ExtendedData>
+        <Data name="Latitude">
+          <value>36.935</value>
+        </Data>
+        <Data name="Longitude">
+          <value>27.16</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          27.16,36.935,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>KOS (Stadt)</name>
+      <description><![CDATA[Latitude: 36.898833<br>Longitude: 27.289667]]></description>
+      <styleUrl>#icon-1899-0288D1</styleUrl>
+      <ExtendedData>
+        <Data name="Latitude">
+          <value>36.898833</value>
+        </Data>
+        <Data name="Longitude">
+          <value>27.289667</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          27.289667,36.898833,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>KOS MARINA (Ansteuerung)</name>
+      <description><![CDATA[Latitude: 36.898<br>Longitude: 27.289]]></description>
+      <styleUrl>#icon-1899-0288D1</styleUrl>
+      <ExtendedData>
+        <Data name="Latitude">
+          <value>36.898</value>
+        </Data>
+        <Data name="Longitude">
+          <value>27.289</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          27.289,36.898,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>KOS MARINA</name>
+      <description><![CDATA[Latitude: 36.897333<br>Longitude: 27.2995]]></description>
+      <styleUrl>#icon-1899-0288D1</styleUrl>
+      <ExtendedData>
+        <Data name="Latitude">
+          <value>36.897333</value>
+        </Data>
+        <Data name="Longitude">
+          <value>27.2995</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          27.2995,36.897333,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>KARDAMENA (Kos)</name>
+      <description><![CDATA[Latitude: 36.7825<br>Longitude: 27.146667]]></description>
+      <styleUrl>#icon-1899-0288D1</styleUrl>
+      <ExtendedData>
+        <Data name="Latitude">
+          <value>36.7825</value>
+        </Data>
+        <Data name="Longitude">
+          <value>27.146667</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          27.146667,36.7825,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>KEPHALOS (Ormos Kamari Kos)</name>
+      <description><![CDATA[Latitude: 36.736667<br>Longitude: 26.973333]]></description>
+      <styleUrl>#icon-1899-0288D1</styleUrl>
+      <ExtendedData>
+        <Data name="Latitude">
+          <value>36.736667</value>
+        </Data>
+        <Data name="Longitude">
+          <value>26.973333</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          26.973333,36.736667,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Limnionas (Kos)</name>
+      <description><![CDATA[Latitude: 36.775<br>Longitude: 26.963333]]></description>
+      <styleUrl>#icon-1899-0288D1</styleUrl>
+      <ExtendedData>
+        <Data name="Latitude">
+          <value>36.775</value>
+        </Data>
+        <Data name="Longitude">
+          <value>26.963333</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          26.963333,36.775,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Masticharion (Kos)</name>
+      <description><![CDATA[Latitude: 36.853333<br>Longitude: 27.076667]]></description>
+      <styleUrl>#icon-1899-0288D1</styleUrl>
+      <ExtendedData>
+        <Data name="Latitude">
+          <value>36.853333</value>
+        </Data>
+        <Data name="Longitude">
+          <value>27.076667</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          27.076667,36.853333,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Nisis Gyali</name>
+      <description><![CDATA[Latitude: 36.679833<br>Longitude: 27.1435]]></description>
+      <styleUrl>#icon-1899-0288D1</styleUrl>
+      <ExtendedData>
+        <Data name="Latitude">
+          <value>36.679833</value>
+        </Data>
+        <Data name="Longitude">
+          <value>27.1435</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          27.1435,36.679833,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Mandrakion (Limin Mandraki Nisyros)</name>
+      <description><![CDATA[Latitude: 36.615<br>Longitude: 27.141667]]></description>
+      <styleUrl>#icon-1899-0288D1</styleUrl>
+      <ExtendedData>
+        <Data name="Latitude">
+          <value>36.615</value>
+        </Data>
+        <Data name="Longitude">
+          <value>27.141667</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          27.141667,36.615,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Paloi (Nisyros)</name>
+      <description><![CDATA[Latitude: 36.620667<br>Longitude: 27.174]]></description>
+      <styleUrl>#icon-1899-0288D1</styleUrl>
+      <ExtendedData>
+        <Data name="Latitude">
+          <value>36.620667</value>
+        </Data>
+        <Data name="Longitude">
+          <value>27.174</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          27.174,36.620667,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>SKALA ASTYPALAIA</name>
+      <description><![CDATA[Latitude: 36.547667<br>Longitude: 26.356667]]></description>
+      <styleUrl>#icon-1899-0288D1</styleUrl>
+      <ExtendedData>
+        <Data name="Latitude">
+          <value>36.547667</value>
+        </Data>
+        <Data name="Longitude">
+          <value>26.356667</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          26.356667,36.547667,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Ormos Leivadia (Astypalaia)</name>
+      <description><![CDATA[Latitude: 36.5405<br>Longitude: 26.348833]]></description>
+      <styleUrl>#icon-1899-0288D1</styleUrl>
+      <ExtendedData>
+        <Data name="Latitude">
+          <value>36.5405</value>
+        </Data>
+        <Data name="Longitude">
+          <value>26.348833</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          26.348833,36.5405,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Ormos Maltezana (Ansteuerung Astypalaia)</name>
+      <description><![CDATA[Latitude: 36.5675<br>Longitude: 26.405833]]></description>
+      <styleUrl>#icon-1899-0288D1</styleUrl>
+      <ExtendedData>
+        <Data name="Latitude">
+          <value>36.5675</value>
+        </Data>
+        <Data name="Longitude">
+          <value>26.405833</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          26.405833,36.5675,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Ormos Maltezana (Astypalaia)</name>
+      <description><![CDATA[Latitude: 36.574667<br>Longitude: 26.387167]]></description>
+      <styleUrl>#icon-1899-0288D1</styleUrl>
+      <ExtendedData>
+        <Data name="Latitude">
+          <value>36.574667</value>
+        </Data>
+        <Data name="Longitude">
+          <value>26.387167</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          26.387167,36.574667,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>PORTO AGRILITHI (Astypalaia)</name>
+      <description><![CDATA[Latitude: 36.583333<br>Longitude: 26.423333]]></description>
+      <styleUrl>#icon-1899-0288D1</styleUrl>
+      <ExtendedData>
+        <Data name="Latitude">
+          <value>36.583333</value>
+        </Data>
+        <Data name="Longitude">
+          <value>26.423333</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          26.423333,36.583333,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Nisis Kounoupoi</name>
+      <description><![CDATA[Latitude: 36.533333<br>Longitude: 26.47]]></description>
+      <styleUrl>#icon-1899-0288D1</styleUrl>
+      <ExtendedData>
+        <Data name="Latitude">
+          <value>36.533333</value>
+        </Data>
+        <Data name="Longitude">
+          <value>26.47</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          26.47,36.533333,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Porto Vathy (Astypalaia)</name>
+      <description><![CDATA[Latitude: 36.608333<br>Longitude: 26.383333]]></description>
+      <styleUrl>#icon-1899-0288D1</styleUrl>
+      <ExtendedData>
+        <Data name="Latitude">
+          <value>36.608333</value>
+        </Data>
+        <Data name="Longitude">
+          <value>26.383333</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          26.383333,36.608333,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Ormos Panormou (Astypalaia)</name>
+      <description><![CDATA[Latitude: 36.596667<br>Longitude: 26.283333]]></description>
+      <styleUrl>#icon-1899-0288D1</styleUrl>
+      <ExtendedData>
+        <Data name="Latitude">
+          <value>36.596667</value>
+        </Data>
+        <Data name="Longitude">
+          <value>26.283333</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          26.283333,36.596667,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Leuchtturm Nisis Plakida</name>
+      <description><![CDATA[Latitude: 36.283333<br>Longitude: 26.741667]]></description>
+      <styleUrl>#icon-1899-0288D1</styleUrl>
+      <ExtendedData>
+        <Data name="Latitude">
+          <value>36.283333</value>
+        </Data>
+        <Data name="Longitude">
+          <value>26.741667</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          26.741667,36.283333,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Nisis Sophrano</name>
+      <description><![CDATA[Latitude: 36.075<br>Longitude: 26.408333]]></description>
+      <styleUrl>#icon-1899-0288D1</styleUrl>
+      <ExtendedData>
+        <Data name="Latitude">
+          <value>36.075</value>
+        </Data>
+        <Data name="Longitude">
+          <value>26.408333</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          26.408333,36.075,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Karavonisia</name>
+      <description><![CDATA[Latitude: 36.0<br>Longitude: 26.433333]]></description>
+      <styleUrl>#icon-1899-0288D1</styleUrl>
+      <ExtendedData>
+        <Data name="Latitude">
+          <value>36.0</value>
+        </Data>
+        <Data name="Longitude">
+          <value>26.433333</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          26.433333,36,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Avganisi</name>
+      <description><![CDATA[Latitude: 35.925<br>Longitude: 26.508333]]></description>
+      <styleUrl>#icon-1899-0288D1</styleUrl>
+      <ExtendedData>
+        <Data name="Latitude">
+          <value>35.925</value>
+        </Data>
+        <Data name="Longitude">
+          <value>26.508333</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          26.508333,35.925,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Vlychada Beach (Fournoi)</name>
+      <description><![CDATA[Latitude: 37.5337207<br>Longitude: 26.5036799]]></description>
+      <styleUrl>#icon-1899-0288D1</styleUrl>
+      <ExtendedData>
+        <Data name="Latitude">
+          <value>37.5337207</value>
+        </Data>
+        <Data name="Longitude">
+          <value>26.5036799</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          26.5036799,37.5337207,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Baja Anita - Krifos Bay (Leros)</name>
+      <description><![CDATA[Latitude: 37.1756655<br>Longitude: 26.8499608]]></description>
+      <styleUrl>#icon-1899-0288D1</styleUrl>
+      <ExtendedData>
+        <Data name="Latitude">
+          <value>37.1756655</value>
+        </Data>
+        <Data name="Longitude">
+          <value>26.8499608</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          26.8499608,37.1756655,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Levitha</name>
+      <description><![CDATA[Latitude: 36.9969638<br>Longitude: 26.4583892]]></description>
+      <styleUrl>#icon-1899-0288D1</styleUrl>
+      <ExtendedData>
+        <Data name="Latitude">
+          <value>36.9969638</value>
+        </Data>
+        <Data name="Longitude">
+          <value>26.4583892</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          26.4583892,36.9969638,0
+        </coordinates>
+      </Point>
+    </Placemark>
+  </Document>
+</kml>

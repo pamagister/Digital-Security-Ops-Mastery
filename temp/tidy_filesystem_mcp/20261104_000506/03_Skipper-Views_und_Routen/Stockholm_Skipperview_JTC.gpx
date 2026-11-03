@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gpx xmlns="http://www.topografix.com/GPX/1/1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd" version="1.1" creator="gpx_kml_converter">
+  <metadata>
+    <name>Merged GPX</name>
+  </metadata>
+  <wpt lat="59.30111" lon="18.33528">
+    <ele>0</ele>
+    <name>Artipelag [Kunstmuseum]</name>
+  </wpt>
+  <wpt lat="59.29783" lon="18.64967">
+    <ele>1</ele>
+    <name>Bullandö</name>
+  </wpt>
+  <wpt lat="59.44565" lon="18.78748">
+    <ele>0</ele>
+    <name>Grytholmskobben, Träskö-Storö</name>
+  </wpt>
+  <wpt lat="59.13499" lon="18.67122">
+    <ele>1</ele>
+    <name>Grönskärsfladen, Grönskär</name>
+  </wpt>
+  <wpt lat="59.16597" lon="18.8336">
+    <ele>5</ele>
+    <name>Hallskär</name>
+  </wpt>
+  <wpt lat="59.36662" lon="19.12592">
+    <ele>3</ele>
+    <name>Hemsundet, Björkskär</name>
+  </wpt>
+  <wpt lat="59.08088" lon="18.3852">
+    <ele>10</ele>
+    <name>Kolnäsviken, Ornö</name>
+  </wpt>
+  <wpt lat="59.3904" lon="18.79808">
+    <ele>9</ele>
+    <name>Krokholmsviken / Säck</name>
+  </wpt>
+  <wpt lat="59.39879" lon="18.63335">
+    <ele>0</ele>
+    <name>Lammskaret, Gällnö</name>
+  </wpt>
+  <wpt lat="59.2027" lon="18.71202">
+    <ele>2</ele>
+    <name>Langviksviken, Namdö</name>
+  </wpt>
+  <wpt lat="59.4145" lon="18.55467">
+    <ele>9</ele>
+    <name>Marina Grinda, Grinda</name>
+  </wpt>
+  <wpt lat="59.05012" lon="18.52178">
+    <ele>15</ele>
+    <name>Mörkviken, Fjärdlång</name>
+  </wpt>
+  <wpt lat="59.13238" lon="18.5919">
+    <ele>0</ele>
+    <name>Mörtö-Bunsön</name>
+  </wpt>
+  <wpt lat="59.23745" lon="18.40013">
+    <ele>9</ele>
+    <name>Napoleonviken, Ägnö</name>
+  </wpt>
+  <wpt lat="59.30485" lon="19.1422">
+    <ele>1</ele>
+    <name>Nord, Horssten</name>
+  </wpt>
+  <wpt lat="59.21512" lon="18.42308">
+    <ele>0</ele>
+    <name>Norra Hamn, Härsö</name>
+  </wpt>
+  <wpt lat="59.47833" lon="18.80833">
+    <ele>0</ele>
+    <name>Paradiset, Finnhamn</name>
+  </wpt>
+  <wpt lat="59.289" lon="18.91864">
+    <ele>0</ele>
+    <name>Sandhamn Harbour [KSSS], Sandön</name>
+  </wpt>
+  <wpt lat="59.2925" lon="18.91967">
+    <ele>0</ele>
+    <name>Sandhamn, Telegrafholmen [Sauna]</name>
+  </wpt>
+  <wpt lat="59.133" lon="18.84522">
+    <ele>0</ele>
+    <name>Sandviken, Tärnskär</name>
+  </wpt>
+  <wpt lat="59.43445" lon="18.42113">
+    <ele>2</ele>
+    <name>Storön/Kalvholmen</name>
+  </wpt>
+  <wpt lat="59.08167" lon="18.59667">
+    <ele>0</ele>
+    <name>Söderholmsgrund, Söderholm</name>
+  </wpt>
+  <wpt lat="59.2595" lon="18.6505">
+    <ele>8</ele>
+    <name>Tyssgryteviken</name>
+  </wpt>
+  <wpt lat="58.97067" lon="18.325">
+    <ele>7</ele>
+    <name>Utö Marina, Utö</name>
+  </wpt>
+  <wpt lat="59.401" lon="18.35133">
+    <ele>6</ele>
+    <name>Vaxholm Marina</name>
+  </wpt>
+  <wpt lat="59.04422" lon="18.51122">
+    <ele>0</ele>
+    <name>Vedviken, Fjärdlång</name>
+  </wpt>
+  <wpt lat="59.35462" lon="18.32363">
+    <ele>2</ele>
+    <name>Velamsundsviken/Kärrtorpsviken</name>
+  </wpt>
+  <wpt lat="59.40602" lon="18.95947">
+    <ele>0</ele>
+    <name>Värmdö [Sauna]</name>
+  </wpt>
+  <wpt lat="59.406" lon="18.9595">
+    <ele>0</ele>
+    <name>Österviken, Lökaön</name>
+  </wpt>
+</gpx>

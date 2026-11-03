@@ -1,0 +1,103 @@
+Sortierlog - 20261104_000506
+Werkzeug: filesystem_mcp
+Quelle: temp/Segeln_JTC
+Ziel: temp/tidy_filesystem_mcp/20261104_000506
+Quelldateien insgesamt: 98
+Erfolgreich kopiert: 92
+Fehlgeschlagen: 0
+Vergleich vollständig: ja
+Fehlende Einträge nach Vergleich: 0
+
+Kopierte Dateien:
+  25158-jtc-authority-crewlist-Sardinien-2023-06-17.pdf -> 01_Crewlisten/25158-jtc-authority-crewlist-Sardinien-2023-06-17.pdf
+  25158-jtc-charter_company-crewlist-Sardinien-2023-06-17.pdf -> 01_Crewlisten/25158-jtc-charter_company-crewlist-Sardinien-2023-06-17.pdf
+  25158-jtc-skipper-crewlist-Sardinien-2023-06-17.pdf -> 01_Crewlisten/25158-jtc-skipper-crewlist-Sardinien-2023-06-17.pdf
+  26202-jtc-authority-crewlist-Sardinien-2023-06-10.pdf -> 01_Crewlisten/26202-jtc-authority-crewlist-Sardinien-2023-06-10.pdf
+  26202-jtc-charter_company-crewlist-Sardinien-2023-06-10.pdf -> 01_Crewlisten/26202-jtc-charter_company-crewlist-Sardinien-2023-06-10.pdf
+  26202-jtc-skipper-crewlist-Sardinien-2023-06-10.pdf -> 01_Crewlisten/26202-jtc-skipper-crewlist-Sardinien-2023-06-10.pdf
+  40488-jtc-authority-crewlist-Schwedische Schären-2026-08-15.pdf -> 01_Crewlisten/40488-jtc-authority-crewlist-Schwedische Schären-2026-08-15.pdf
+  40488-jtc-partner-crewlist-Schwedische Schären-2026-08-15.pdf -> 01_Crewlisten/40488-jtc-partner-crewlist-Schwedische Schären-2026-08-15.pdf
+  40488-jtc-skipper-crewlist-Schwedische Schären-2026-08-15.pdf -> 01_Crewlisten/40488-jtc-skipper-crewlist-Schwedische Schären-2026-08-15.pdf
+  41172-jtc-authority-crewlist-Schwedische Schären-2026-08-08.pdf -> 01_Crewlisten/41172-jtc-authority-crewlist-Schwedische Schären-2026-08-08.pdf
+  Korfu Crewliste.pdf -> 01_Crewlisten/Korfu Crewliste.pdf
+  jtc-skipper-crewlist-Sardinien & Korsika-2020-08-29-VERDI.pdf -> 01_Crewlisten/jtc-skipper-crewlist-Sardinien & Korsika-2020-08-29-VERDI.pdf
+  Infos Balearen/jtc-skipper_agreement-Paul-Magister-Mallorca-2021-08-28.pdf -> 02_Skipper-Verträge/jtc-skipper_agreement-Paul-Magister-Mallorca-2021-08-28.pdf
+  Infos Balearen/jtc-skipper_agreement-Paul-Magister-Mallorca-2021-08-28_signed.pdf -> 02_Skipper-Verträge/jtc-skipper_agreement-Paul-Magister-Mallorca-2021-08-28_signed.pdf
+  jtc-skipper_agreement-Paul-Magister-Dänische Südsee-2022-08-20.pdf -> 02_Skipper-Verträge/jtc-skipper_agreement-Paul-Magister-Dänische Südsee-2022-08-20.pdf
+  jtc-skipper_agreement-Paul-Magister-Dänische Südsee-2022-08-20_SIGNED.pdf -> 02_Skipper-Verträge/jtc-skipper_agreement-Paul-Magister-Dänische Südsee-2022-08-20_SIGNED.pdf
+  jtc-skipper_agreement-Paul-Magister-Dänische Südsee-2022-08-27.pdf -> 02_Skipper-Verträge/jtc-skipper_agreement-Paul-Magister-Dänische Südsee-2022-08-27.pdf
+  jtc-skipper_agreement-Paul-Magister-Dänische Südsee-2022-08-27_SIGNED.pdf -> 02_Skipper-Verträge/jtc-skipper_agreement-Paul-Magister-Dänische Südsee-2022-08-27_SIGNED.pdf
+  jtc-skipper_agreement-Paul-Magister-Ibiza & Formentera-2021-08-21.pdf -> 02_Skipper-Verträge/jtc-skipper_agreement-Paul-Magister-Ibiza & Formentera-2021-08-21.pdf
+  jtc-skipper_agreement-Paul-Magister-Ibiza & Formentera-2021-08-21_signed.pdf -> 02_Skipper-Verträge/jtc-skipper_agreement-Paul-Magister-Ibiza & Formentera-2021-08-21_signed.pdf
+  jtc-skipper_agreement-Paul-Magister-Kykladen-2026-09-05.pdf -> 02_Skipper-Verträge/jtc-skipper_agreement-Paul-Magister-Kykladen-2026-09-05.pdf
+  jtc-skipper_agreement-Paul-Magister-Kykladen-2026-09-05_signed.odg -> 02_Skipper-Verträge/jtc-skipper_agreement-Paul-Magister-Kykladen-2026-09-05_signed.odg
+  jtc-skipper_agreement-Paul-Magister-Kykladen-2026-09-05_signed.pdf -> 02_Skipper-Verträge/jtc-skipper_agreement-Paul-Magister-Kykladen-2026-09-05_signed.pdf
+  jtc-skipper_agreement-Paul-Magister-Kykladen-2026-09-12.pdf -> 02_Skipper-Verträge/jtc-skipper_agreement-Paul-Magister-Kykladen-2026-09-12.pdf
+  jtc-skipper_agreement-Paul-Magister-Kykladen-2026-09-12_signed.odg -> 02_Skipper-Verträge/jtc-skipper_agreement-Paul-Magister-Kykladen-2026-09-12_signed.odg
+  jtc-skipper_agreement-Paul-Magister-Kykladen-2026-09-12_signed.pdf -> 02_Skipper-Verträge/jtc-skipper_agreement-Paul-Magister-Kykladen-2026-09-12_signed.pdf
+  Dodekanes-Kos/GR-Dodekanes-Kos.jpg -> 03_Skipper-Views_und_Routen/GR-Dodekanes-Kos.jpg
+  Dodekanes-Kos/Skipper View Kos Griechenland Buchten Liste.csv -> 03_Skipper-Views_und_Routen/Skipper View Kos Griechenland Buchten Liste.csv
+  Dodekanes-Kos/Skipper View Kos Griechenland.gpx -> 03_Skipper-Views_und_Routen/Skipper View Kos Griechenland.gpx
+  Dodekanes-Kos/Skipper View Kos Griechenland.kml -> 03_Skipper-Views_und_Routen/Skipper View Kos Griechenland.kml
+  Dänische Südsee/Dänische Südsee Route - 1.png -> 03_Skipper-Views_und_Routen/Dänische Südsee Route - 1.png
+  Dänische Südsee/Dänische Südsee Route - 2.png -> 03_Skipper-Views_und_Routen/Dänische Südsee Route - 2.png
+  Dänische Südsee/Dänische Südsee Route - 3 Sonnenaufgang-Option Fynshav mit Option Faborg oder Avernakö.png -> 03_Skipper-Views_und_Routen/Dänische Südsee Route - 3 Sonnenaufgang-Option Fynshav mit Option Faborg oder Avernakö.png
+  Dänische Südsee/Dänische Südsee Route - 4 Sonnenaufgang Avernakö ohne Faborg.png -> 03_Skipper-Views_und_Routen/Dänische Südsee Route - 4 Sonnenaufgang Avernakö ohne Faborg.png
+  Dänische Südsee/Dänische Südsee Route - 5 Weiter Schlag am Sonntag nach Avernakö.png -> 03_Skipper-Views_und_Routen/Dänische Südsee Route - 5 Weiter Schlag am Sonntag nach Avernakö.png
+  Dänische Südsee/Dänische Südsee Route.png -> 03_Skipper-Views_und_Routen/Dänische Südsee Route.png
+  JTC-Skipper-View Dänische Südsee -> 03_Skipper-Views_und_Routen/JTC-Skipper-View Dänische Südsee
+  JTC-Skipper-View Dänische Südsee 2023.pdf -> 03_Skipper-Views_und_Routen/JTC-Skipper-View Dänische Südsee 2023.pdf
+  JTC-Skipper-View Dänische Südsee.pdf -> 03_Skipper-Views_und_Routen/JTC-Skipper-View Dänische Südsee.pdf
+  JTC-Skipper-View Kykladen small.pdf -> 03_Skipper-Views_und_Routen/JTC-Skipper-View Kykladen small.pdf
+  JTC-Skipper-View Kykladen.pdf -> 03_Skipper-Views_und_Routen/JTC-Skipper-View Kykladen.pdf
+  JTC-Skipper-View Mallorca + Ibiza + Menorca -> 03_Skipper-Views_und_Routen/JTC-Skipper-View Mallorca + Ibiza + Menorca
+  JTC-Skipper-View Peloponnes -> 03_Skipper-Views_und_Routen/JTC-Skipper-View Peloponnes
+  JTC-Skipper-View Peloponnes 2 -> 03_Skipper-Views_und_Routen/JTC-Skipper-View Peloponnes 2
+  Stockholm/Stockholm_Skipperview_JTC.gpx -> 03_Skipper-Views_und_Routen/Stockholm_Skipperview_JTC.gpx
+  Stockholm/Stockholm_Skipperview_JTC.md -> 03_Skipper-Views_und_Routen/Stockholm_Skipperview_JTC.md
+  5_Checklisten_Komplett_09_05_16.pdf -> 04_Checklisten/5_Checklisten_Komplett_09_05_16.pdf
+  Checkliste_Segelreise.pdf -> 04_Checklisten/Checkliste_Segelreise.pdf
+  Checklisten_JTC_1HROGlC.pdf -> 04_Checklisten/Checklisten_JTC_1HROGlC.pdf
+  Infomaterial/Checklisten_komplett.pdf -> 04_Checklisten/Checklisten_komplett.pdf
+  3_Einkaufsliste_Mittelmeer_01_09_15.pdf -> 05_Einkaufslisten/3_Einkaufsliste_Mittelmeer_01_09_15.pdf
+  Einkaufsliste Essenplanung Kykladen 2026 - Einkaufsliste.pdf -> 05_Einkaufslisten/Einkaufsliste Essenplanung Kykladen 2026 - Einkaufsliste.pdf
+  Infomaterial/Einkaufsliste_Mittelmeer.pdf -> 05_Einkaufslisten/Einkaufsliste_Mittelmeer.pdf
+  Infomaterial/Einkaufsliste_Mittelmeer_NEU.pdf -> 05_Einkaufslisten/Einkaufsliste_Mittelmeer_NEU.pdf
+  0_Inhaltsverzeichnis_24_07_15.pdf -> 06_Infomaterial_und_Reisefuehrer/0_Inhaltsverzeichnis_24_07_15.pdf
+  8_mitteldalmatien-kornaten_TTY.pdf -> 06_Infomaterial_und_Reisefuehrer/8_mitteldalmatien-kornaten_TTY.pdf
+  DYC-Base-Details-Trogir-20.4.2016.pdf -> 06_Infomaterial_und_Reisefuehrer/DYC-Base-Details-Trogir-20.4.2016.pdf
+  Infomaterial/Guidelines 5_2025.pdf -> 06_Infomaterial_und_Reisefuehrer/Guidelines 5_2025.pdf
+  Infomaterial/Hafenmanoever.pdf -> 06_Infomaterial_und_Reisefuehrer/Hafenmanoever.pdf
+  Infomaterial/Haftungsfreistellung_Medikamentengabe.pdf -> 06_Infomaterial_und_Reisefuehrer/Haftungsfreistellung_Medikamentengabe.pdf
+  Infomaterial/MOB-Manöver.pdf -> 06_Infomaterial_und_Reisefuehrer/MOB-Manöver.pdf
+  Infomaterial/Manöverkunde Hafenmanöver 9 Anlege-Varianten für Einhandsegler YACHT.pdf -> 06_Infomaterial_und_Reisefuehrer/Manöverkunde Hafenmanöver 9 Anlege-Varianten für Einhandsegler YACHT.pdf
+  Infomaterial/Packliste.pdf -> 06_Infomaterial_und_Reisefuehrer/Packliste.pdf
+  Infomaterial/Schiffsknoten.pdf -> 06_Infomaterial_und_Reisefuehrer/Schiffsknoten.pdf
+  Infomaterial/Segelbuch Kiel.pdf -> 06_Infomaterial_und_Reisefuehrer/Segelbuch Kiel.pdf
+  Infomaterial/Segelmanoever-Kurzfassung.pdf -> 06_Infomaterial_und_Reisefuehrer/Segelmanoever-Kurzfassung.pdf
+  Infomaterial/Trimmfiebel.pdf -> 06_Infomaterial_und_Reisefuehrer/Trimmfiebel.pdf
+  Infomaterial/Trimmtabelle.pdf -> 06_Infomaterial_und_Reisefuehrer/Trimmtabelle.pdf
+  Infomaterial/Trimtabelle2.pdf -> 06_Infomaterial_und_Reisefuehrer/Trimtabelle2.pdf
+  Infos Balearen/Ibiza Strände.pdf -> 06_Infomaterial_und_Reisefuehrer/Ibiza Strände.pdf
+  Infos Balearen/Mallorca 10 Schönste Strände Geheimtipps.pdf -> 06_Infomaterial_und_Reisefuehrer/Mallorca 10 Schönste Strände Geheimtipps.pdf
+  Infos Balearen/Mallorca 12 schönste Strände.pdf -> 06_Infomaterial_und_Reisefuehrer/Mallorca 12 schönste Strände.pdf
+  Infos Balearen/Satellit/Cavallet.jpg -> 06_Infomaterial_und_Reisefuehrer/Cavallet.jpg
+  Infos Balearen/Satellit/Es Trenc Sant Jordi.jpg -> 06_Infomaterial_und_Reisefuehrer/Es Trenc Sant Jordi.jpg
+  Infos Balearen/Satellit/Espalmador.jpg -> 06_Infomaterial_und_Reisefuehrer/Espalmador.jpg
+  Infos Balearen/Satellit/Llombaro.jpg -> 06_Infomaterial_und_Reisefuehrer/Llombaro.jpg
+  Infos Balearen/Satellit/Llonga Blanca.jpg -> 06_Infomaterial_und_Reisefuehrer/Llonga Blanca.jpg
+  Infos Balearen/Satellit/Mitjana.jpg -> 06_Infomaterial_und_Reisefuehrer/Mitjana.jpg
+  Infos Balearen/Satellit/Moro Almunia.jpg -> 06_Infomaterial_und_Reisefuehrer/Moro Almunia.jpg
+  Infos Balearen/Satellit/Portals Vells.jpg -> 06_Infomaterial_und_Reisefuehrer/Portals Vells.jpg
+  Infos Balearen/Satellit/Porto Christo.jpg -> 06_Infomaterial_und_Reisefuehrer/Porto Christo.jpg
+  Infos Balearen/Satellit/Sa Nau.jpg -> 06_Infomaterial_und_Reisefuehrer/Sa Nau.jpg
+  Infos Balearen/Satellit/Ses Salines.jpg -> 06_Infomaterial_und_Reisefuehrer/Ses Salines.jpg
+  Infos Balearen/Satellit/Tagomago.jpg -> 06_Infomaterial_und_Reisefuehrer/Tagomago.jpg
+  Infos Balearen/Satellit/Talamanca.jpg -> 06_Infomaterial_und_Reisefuehrer/Talamanca.jpg
+  besucher-guide-nationalpark-kornati.pdf -> 06_Infomaterial_und_Reisefuehrer/besucher-guide-nationalpark-kornati.pdf
+  6_Aufhangen_im_Boot_Komplett_21_02_17.pdf -> 07_Segelpraxis_Aufhaengen/6_Aufhangen_im_Boot_Komplett_21_02_17.pdf
+  Aufhängen_an_Bord.pdf -> 07_Segelpraxis_Aufhaengen/Aufhängen_an_Bord.pdf
+  7_Seemeilennachweis_18_07_14.pdf -> 08_Nachweise_und_Dokumente/7_Seemeilennachweis_18_07_14.pdf
+  Crew-Einweisung.pdf -> 08_Nachweise_und_Dokumente/Crew-Einweisung.pdf
+  Stockholm/Kontakte_JTC_Stockholm.vcf -> 08_Nachweise_und_Dokumente/Kontakte_JTC_Stockholm.vcf
+  Unterschrift Paul.png -> 08_Nachweise_und_Dokumente/Unterschrift Paul.png
