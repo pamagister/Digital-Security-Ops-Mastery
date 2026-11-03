@@ -12,15 +12,19 @@ First
 [] If the request is a documentation update, provide a clear description of the changes made and any relevant context.
 
 Finally:
+[] NEVER execute `git push`. Pushing is forbidden.
+[] NEVER stage files from `temp/` or other temporary / ephemeral files created by the agent with `git add`. Temporäre Agent-Dateien dürfen NIEMALS in die Stage kommen.
 [] Add with time and date a short report in english to temp/report.md 
    thats SOLUTION also can be used as commit message describing the changes made. 
    Add this incrementally without modifying the previous report content.
    Use this structure: 
-# TIMESTAP YYYY-MM-DD HH:MM - NAME of the task 
+
+# TIMESTAMP YYYY-MM-DD HH:MM - NAME of the task 
 GOAL: short description of the goal
 CONSTRAINS: short description of the constraints
 SOLUTION: describe the solution and changes made
-[] Stage all changed files and commit with the report content as the commit message, except temporary files like in temp/.
+
+[] Stage all changed files (EXCEPT TEMP Files and temporary / ephemeral agent files) and commit with the report content as the commit message, except temporary files like in temp/. NEVER run `git push`.
 
 
 ## 🧭 General Guidelines
