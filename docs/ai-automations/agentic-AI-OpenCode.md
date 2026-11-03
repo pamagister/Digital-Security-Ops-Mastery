@@ -221,7 +221,7 @@ The JSONC format allows comments and is particularly convenient for maintaining 
 
 The configuration used in this repository is available here:
 
-[**opencode.jsonc**](../opencode.jsonc)
+[**TEMPLATE_opencode.jsonc**](../TEMPLATE_opencode.jsonc)
 
 It defines the Kilo AI Gateway as a provider and registers the available free models.
 
