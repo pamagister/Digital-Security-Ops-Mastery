@@ -236,6 +236,24 @@ Alternatively, use the environment variable:
 export OPENROUTER_API_KEY="your-api-key"
 ```
 
+## OpenCode (Included Provider)
+
+OpenCode ships with its own `opencode` provider. It needs no `provider` block in the configuration, only a signed-in
+OpenCode Console account or an API key.
+
+Sign in with:
+
+```text
+/connect
+```
+
+Alternatively, provide an API key through `OPENCODE_API_KEY`.
+
+The provider includes free models that are available for a limited time. 
+
+Free model availability and privacy conditions are documented here:
+
+[**OpenCode Console – Models and Free Models**](https://opencode.ai/v2/docs/console/models#free-models)
 
 ## OpenCode Model Setup
 
@@ -259,9 +277,9 @@ The JSONC format allows comments and is particularly convenient for maintaining 
 
 The configuration used in this repository is available here:
 
-[**TEMPLATE_opencode.jsonc**](../TEMPLATE_opencode.jsonc)
+[**TEMPLATE_opencode.jsonc**](./TEMPLATE_opencode.jsonc)
 
-It defines e.g. the Kilo AI Gateway as a provider and registers the available free models.
+It defines e.g. the Kilo AI Gateway and OpenRouter as providers and registers the available free models.
 
 The configuration can be reused across multiple projects. Once the provider is registered, its models can be selected within OpenCode.
 
@@ -281,17 +299,13 @@ Then open the model selection dialog:
 
 Select the desired provider and model.
 
-E.g. at KILO, a few interesting models for experimentation include:
-
-| Model | Potential application |
-|---|---|
-| `cohere/north-mini-code:free` | Coding and software development |
-| `recursive/flint-v1.0:free` | Coding and agentic workflows |
-| `poolside/laguna-s-2.1:free` | Code-oriented tasks |
-| `nvidia/nemotron-3.5-lightning:free` | General-purpose tasks |
-| `kilo-auto/free` | Automatic routing between available free models |
+E.g. at KILO, a few interesting models for experimentation:
+https://kilo.ai/landing/free-models#latest-free-models
 
 Model quality varies considerably. A model that performs well in a simple conversation may struggle with complex agentic tasks involving multiple tools.
+
+A broader comparison of models for coding and agentic work is available in
+[Coding and Agentic Models](./coding-agentic-models.md).
 
 For software development, prioritize reliable tool calling, code quality, and the ability to complete multi-step tasks.
 

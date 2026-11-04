@@ -2,8 +2,10 @@
   "$schema": "https://opencode.ai/config.json",
 
   // Default models for NEW sessions
-  "model": "kilo/nvidia/nemotron-3.5-super-vl:free",
-  "small_model": "kilo/cohere/north-mini-code:free",
+  // "opencode" is a built-in provider and needs no entry in "provider" below.
+  // Free models are available after `/connect` or with OPENCODE_API_KEY.
+  "model": "opencode/deepseek-v4.1-flash-free",
+  "small_model": "kilo/nvidia/nemotron-3-ultra-550b-a55b:free",
 
   "provider": {
     // ============================================================

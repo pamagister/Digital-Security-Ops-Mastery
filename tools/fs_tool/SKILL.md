@@ -70,5 +70,3 @@ directories; use `inventory` when exact tree structure also matters.
 Inventory and comparison are point-in-time observations, not filesystem locks.
 Avoid concurrent modifications while hashing. The tool does not enforce storage
 quotas; account for available space before copying.
-
-
