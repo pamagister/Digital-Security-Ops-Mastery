@@ -4,8 +4,22 @@
   // Default models for NEW sessions
   // "opencode" is a built-in provider and needs no entry in "provider" below.
   // Free models are available after `/connect` or with OPENCODE_API_KEY.
-  "model": "opencode/deepseek-v4.1-flash-free",
-  "small_model": "kilo/nvidia/nemotron-3-ultra-550b-a55b:free",
+
+  //"model": "kilo/nvidia/nemotron-3.5-super-vl:free",
+  //"model": "kilo/nvidia/nemotron-3-ultra-550b-a55b:free",
+  //"model": "openrouter/nvidia/nemotron-3.5-super-vl:free",
+  "model": "openrouter/thinkingmachines/inkling:free",
+  //"model": "openrouter/thinkingmachines/inkling-small:free",
+  //"model": "opencode/nemotron-3.5-super-vl-free",
+  //"model": "opencode/deepseek-v4.1-flash-free",
+  //"model": "opencode/mimo-v2.6-flash-free",
+  //"model": "openrouter/nvidia/nemotron-3-ultra-550b-a55b:free",
+  //"model": "google/gemini-flash-lite-latest",
+  //"model": "google/gemini-flash-latest",
+
+  //"small_model": "gemini-flash-lite-latest",
+  //"small_model": "opencode/mimo-v2.6-flash-free",
+  "small_model": "kilo/cohere/north-mini-code:free",
 
   "provider": {
     // ============================================================
