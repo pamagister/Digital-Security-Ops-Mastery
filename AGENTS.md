@@ -5,26 +5,20 @@ Changes should prioritize clarity, safety, maintainability, and consistency with
 These guidelines apply repository-wide. More specific instructions in a subdirectory or task may refine them. 
 When instructions conflict, follow the most specific applicable instruction and preserve existing project conventions unless the requested change explicitly calls for updating them.
 
-First
-[] determine if there is already an issue related to this request, if not, ask if an issue should be created. If an issue is created, link it in the commit message using the #id. 
-[] If the request is a bug report, provide a minimal reproducible example and describe the expected behavior.
-[] If the request is a feature request, describe the desired behavior and any constraints or requirements.
-[] If the request is a documentation update, provide a clear description of the changes made and any relevant context.
-
 Finally:
 [] NEVER execute `git push`. Pushing is forbidden.
 [] NEVER stage files from `temp/` or other temporary / ephemeral files created by the agent with `git add`. Temporäre Agent-Dateien dürfen NIEMALS in die Stage kommen.
-[] Add with time and date a short report in english to temp/report.md 
-   thats SOLUTION also can be used as commit message describing the changes made. 
-   Add this incrementally without modifying the previous report content.
-   Use this structure: 
+[] Add with time and date a short report in english to temp/report.md
+   Add this incrementally without modifying the previous report content. Use this structure: 
 
 # TIMESTAMP YYYY-MM-DD HH:MM - NAME of the task 
 GOAL: short description of the goal
 CONSTRAINS: short description of the constraints
 SOLUTION: describe the solution and changes made
 
-[] Stage all changed files (EXCEPT TEMP Files and temporary / ephemeral agent files) and commit with the report content as the commit message, except temporary files like in temp/. NEVER run `git push`.
+[] Stage all changed files (EXCEPT TEMP/ Files and temporary / ephemeral agent files) and add them to prepare the next commit 
+with the report content as the commit message, except temporary files like in temp/. NEVER run `git push`. Do not actually commit. 
+Wait for the user to confirm the staged files or commit manually. If possible, suggest an english commit message in the IDEs commit message window.
 
 
 ## 🧭 General Guidelines
