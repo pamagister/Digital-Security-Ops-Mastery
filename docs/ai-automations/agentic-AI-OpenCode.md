@@ -88,6 +88,48 @@ OpenCode can be used in several ways:
 
 The terminal-based interface is particularly flexible because it can be used both interactively and through automation.
 
+### Sub Agents
+
+OpenCode supports sub agents — specialized assistant profiles that the primary agent 
+can launch in child sessions to work on subtasks independently. 
+A sub agent combines a system prompt, model preference, permissions, display details, 
+and a step limit into a named profile, 
+for example a reviewer that only reads files and never edits them.
+
+The primary agent can then be asked to use it:
+
+```text
+Use the reviewer subagent to review my current changes.
+```
+
+Sub agents are stored as Markdown files:
+
+- `~/.config/opencode/agents/<name>.md` — available for all projects
+- `.opencode/agents/<name>.md` — project-specific
+
+Built-in sub agents include `general` (research and multi-step work) and `explore` (searching and reading sources). Agents can also be defined in JSONC under the `agents` key of the OpenCode configuration.
+
+Official documentation:
+
+- [OpenCode – Agents](https://dev.opencode.ai/v2/docs/agents/)
+
+#### Using sub agents with a goal
+
+Sub agents are especially useful together with OpenCode's `/goal` command. A goal keeps the session working, turn after turn, until a reviewer decides that the objective has been met:
+
+```text
+/goal Implement the new feature and run the tests.
+```
+
+While background sub agents are still running, the goal waits for their results 
+before continuing. The goal can be paused, resumed, or cleared at any time 
+with `/goal pause`, `/goal resume`, or `/goal clear`.
+
+The `/goal` command was added through:
+
+- [anomalyco/opencode#59437](https://github.com/anomalyco/opencode/pull/59437) — `/goal` with a client-side done check (merged)
+- [anomalyco/opencode#58508](https://github.com/anomalyco/opencode/pull/58508) — earlier variant based on `session.settled` notifications (superseded by #59437)
+
 ## 📦 Installation on Linux
 
 The official installation script is the recommended starting point.
@@ -298,6 +340,12 @@ Then open the model selection dialog:
 ```
 
 Select the desired provider and model.
+
+If you want to get a list of all available models, run this command in your terminal:
+
+```bash
+opencode models
+```
 
 E.g. at KILO, a few interesting models for experimentation:
 https://kilo.ai/landing/free-models#latest-free-models
