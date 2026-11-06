@@ -36,7 +36,13 @@
   //"small_model": "openrouter/nvidia/nemotron-3.5-lightning:free", // G: 84 | C: 80 | Params: 30B/3B | Fast agent execution; lightweight sub-agent.
   //"small_model": "openrouter/nvidia/nemotron-3.5-super-vl:free", // G: 94 | C: 92 | Params: 120B/12B | Powerful, but unnecessarily large for simple subtasks.
 
-
+  "compaction": {
+    "auto": true,
+    "keep": {
+      "tokens": 20000
+    },
+    "buffer": "60%"
+  },
   "provider": {
     // ============================================================
     // KILO AI GATEWAY
