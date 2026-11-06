@@ -9,6 +9,10 @@ readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
     "fastmcp>=4.0.10",
+    "keyring>=25.7.0",
+    "rapidfuzz>=3.14.6",
+    "requests>=2.34.2",
+    "urllib3>=2.8.0",
 ]
 
 # Dev dependencies as optional dependenciesea
