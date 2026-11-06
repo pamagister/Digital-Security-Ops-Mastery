@@ -294,6 +294,13 @@ def normalize_name(value: str) -> str:
     return value
 
 
+def normalize_match_id(value: str, *, strip_date_suffix: bool = False) -> str:
+    """Normalize a model ID, optionally ignoring a trailing YYYYMMDD version stamp."""
+    if strip_date_suffix:
+        value = re.sub(r"[-_]\\d{8}$", "", value.strip())
+    return normalize_model_id(value)
+
+
 def add_candidate(
     models: dict[str, Model],
     provider: str,
@@ -466,6 +473,7 @@ def find_best_match(
     candidates: list[tuple[str, dict[str, Any]]],
     *,
     exact_alias: str | None = None,
+    strip_date_suffix: bool = False,
 ) -> tuple[
     dict[str, Any] | None,
     str | None,
@@ -477,14 +485,23 @@ def find_best_match(
         return None, None, None, []
 
     if exact_alias:
-        alias_key = normalize_model_id(exact_alias)
+        alias_key = normalize_match_id(
+            exact_alias,
+            strip_date_suffix=strip_date_suffix,
+        )
         for key, item in candidates:
-            if normalize_model_id(key) == alias_key:
+            if normalize_match_id(
+                key,
+                strip_date_suffix=strip_date_suffix,
+            ) == alias_key:
                 return item, key, "alias", [(100.0, key, _candidate_name(item))]
 
     # Model IDs and display names need different normalization rules.
     target_ids = {
-        normalize_model_id(model.model_id),
+        normalize_match_id(
+            model.model_id,
+            strip_date_suffix=strip_date_suffix,
+        ),
         normalize_name(model.name),
     }
     target_ids.discard("")
@@ -492,7 +509,10 @@ def find_best_match(
     scored: list[tuple[float, str, dict[str, Any]]] = []
     for key, item in candidates:
         choices = [
-            normalize_model_id(key),
+            normalize_match_id(
+                key,
+                strip_date_suffix=strip_date_suffix,
+            ),
             normalize_name(_candidate_name(item)),
         ]
         score = max(
@@ -587,6 +607,7 @@ def enrich_from_benchmarks(
             model,
             candidates,
             exact_alias=alias,
+            strip_date_suffix=True,
         )
         if not item:
             suggestions = "; ".join(
