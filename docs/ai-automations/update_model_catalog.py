@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Update the free-model section in TEMPLATE_opencode.jsonc.
+"""Update the generated model catalog in TEMPLATE_opencode.jsonc.
 
 Data sources:
 - Kilo AI Gateway: free model discovery and provider metadata
@@ -421,7 +421,7 @@ def parse_existing_models(template_text: str) -> dict[str, Model]:
 
     section = template_text[begin:end]
     existing: dict[str, Model] = {}
-    pattern = re.compile(r'^\\s*//\\s*"model"\\s*:\\s*"([^"]+)"', re.MULTILINE)
+    pattern = re.compile(r'^\s*//\s*"model"\s*:\s*"([^"]+)"', re.MULTILINE)
     for match in pattern.finditer(section):
         opencode_id = match.group(1).strip()
         if "/" not in opencode_id:
@@ -891,7 +891,7 @@ def main() -> int:
         enrich_from_openrouter_catalog(models, catalog)
 
         if not models:
-            logging.error("No free models discovered; template was not changed.")
+            logging.error("No models discovered; template was not changed.")
             return 3
 
         generated = generate_section(models, benchmark_as_of)
