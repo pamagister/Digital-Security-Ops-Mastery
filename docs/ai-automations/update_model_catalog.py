@@ -457,42 +457,43 @@ def get_benchmarks(
     return items, str(as_of) if as_of else None
 
 
+def _candidate_name(item: dict[str, Any]) -> str:
+    return str(item.get("display_name") or item.get("name") or "")
+
+
 def find_best_match(
     model: Model,
     candidates: list[tuple[str, dict[str, Any]]],
     *,
     exact_alias: str | None = None,
-) -> tuple[dict[str, Any] | None, str | None, str | None]:
+) -> tuple[
+    dict[str, Any] | None,
+    str | None,
+    str | None,
+    list[tuple[float, str, str]],
+]:
+    """Find a conservative match and return the three best diagnostic candidates."""
     if not candidates:
-        return None, None, None
+        return None, None, None, []
 
     if exact_alias:
         alias_key = normalize_model_id(exact_alias)
         for key, item in candidates:
             if normalize_model_id(key) == alias_key:
-                return item, key, "alias"
+                return item, key, "alias", [(100.0, key, _candidate_name(item))]
 
+    # Model IDs and display names need different normalization rules.
     target_ids = {
         normalize_model_id(model.model_id),
-        normalize_model_id(model.name),
+        normalize_name(model.name),
     }
     target_ids.discard("")
 
-    for key, item in candidates:
-        candidate_ids = {
-            normalize_model_id(key),
-            normalize_name(str(item.get("display_name") or item.get("name") or "")),
-        }
-        if target_ids.intersection(candidate_ids):
-            return item, key, "exact"
-
-    # Fuzzy matching is deliberately conservative. A false match is worse
-    # than missing benchmark data in a generated configuration.
     scored: list[tuple[float, str, dict[str, Any]]] = []
     for key, item in candidates:
         choices = [
             normalize_model_id(key),
-            normalize_name(str(item.get("display_name") or item.get("name") or "")),
+            normalize_name(_candidate_name(item)),
         ]
         score = max(
             (
@@ -505,17 +506,29 @@ def find_best_match(
         )
         scored.append((float(score), key, item))
 
-    scored.sort(key=lambda row: row[0], reverse=True)
+    scored.sort(key=lambda row: (-row[0], row[1].casefold()))
+    diagnostics = [
+        (score, key, _candidate_name(item))
+        for score, key, item in scored[:3]
+    ]
+    if not scored:
+        return None, None, None, diagnostics
+
     best = scored[0]
     second_score = scored[1][0] if len(scored) > 1 else 0.0
 
+    if best[0] >= 100:
+        return best[2], best[1], "exact", diagnostics
+
+    # Fuzzy matching remains deliberately conservative. Diagnostics expose
+    # near misses without silently assigning a potentially incorrect score.
     if (
         best[0] >= FUZZY_MATCH_THRESHOLD
         and best[0] - second_score >= FUZZY_MATCH_MARGIN
     ):
-        return best[2], best[1], f"fuzzy:{best[0]:.0f}"
+        return best[2], best[1], f"fuzzy:{best[0]:.0f}", diagnostics
 
-    return None, None, None
+    return None, None, None, diagnostics
 
 
 def enrich_from_openrouter_catalog(
@@ -527,7 +540,7 @@ def enrich_from_openrouter_catalog(
 
     for model in models.values():
         alias = MODEL_ALIASES.get(model.opencode_id)
-        item, matched_id, method = find_best_match(
+        item, matched_id, method, _ = find_best_match(
             model,
             catalog_candidates,
             exact_alias=alias,
@@ -566,15 +579,25 @@ def enrich_from_benchmarks(
         if item.get("model_permaslug")
     ]
     matched = 0
+    scored = 0
 
     for model in models.values():
         alias = MODEL_ALIASES.get(model.opencode_id)
-        item, matched_id, method = find_best_match(
+        item, matched_id, method, top_candidates = find_best_match(
             model,
             candidates,
             exact_alias=alias,
         )
         if not item:
+            suggestions = "; ".join(
+                f"{key} ({score:.0f}: {name})"
+                for score, key, name in top_candidates
+            ) or "no benchmark candidates returned"
+            logging.info(
+                "Benchmark: NO MATCH  %s | closest: %s",
+                model.opencode_id,
+                suggestions,
+            )
             continue
 
         model.intelligence = _to_float(item.get("intelligence_index"))
@@ -583,11 +606,28 @@ def enrich_from_benchmarks(
         model.benchmark_match = matched_id
         model.match_method = method
         matched += 1
+        if any(
+            value is not None
+            for value in (model.intelligence, model.coding, model.agentic)
+        ):
+            scored += 1
+
+        logging.info(
+            "Benchmark: MATCH     %s -> %s [%s] "
+            "(I=%s, C=%s, A=%s)",
+            model.opencode_id,
+            matched_id,
+            method,
+            format_score(model.intelligence),
+            format_score(model.coding),
+            format_score(model.agentic),
+        )
 
     logging.info(
-        "Matched benchmark data for %d/%d free model entries.",
+        "Benchmark summary: %d/%d matched; %d have at least one score.",
         matched,
         len(models),
+        scored,
     )
 
 
