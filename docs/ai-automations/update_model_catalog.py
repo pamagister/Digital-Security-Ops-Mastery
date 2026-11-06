@@ -297,7 +297,7 @@ def normalize_name(value: str) -> str:
 def normalize_match_id(value: str, *, strip_date_suffix: bool = False) -> str:
     """Normalize a model ID, optionally ignoring a trailing YYYYMMDD version stamp."""
     if strip_date_suffix:
-        value = re.sub(r"[-_]\\d{8}$", "", value.strip())
+        value = re.sub(r"[-_]\d{8}$", "", value.strip())
     return normalize_model_id(value)
 
 
