@@ -5,28 +5,34 @@
   // "opencode" is a built-in provider and needs no entry in "provider" below.
   // Free models are available after `/connect` or with OPENCODE_API_KEY.
 
-  //"model": "google/gemini-flash-lite-latest",
-  //"model": "google/gemini-flash-latest",
-  "model": "kilo/nvidia/nemotron-3.5-super-vl:free",
-  //"model": "kilo/nvidia/nemotron-3-ultra-550b-a55b:free",
-  //"model": "openrouter/nvidia/nemotron-3.5-super-vl:free",
-  //"model": "openrouter/nvidia/nemotron-3-ultra-550b-a55b:free",
-  //"model": "openrouter/thinkingmachines/inkling:free",
-  //"model": "openrouter/thinkingmachines/inkling-small:free",
-  //"model": "openrouter/openai/gpt-6-luna",
-  //"model": "openrouter/openai/gpt-6.1-terra",
-  //"model": "opencode/nemotron-3.5-super-vl-free",
-  //"model": "opencode/deepseek-v4.1-flash-free",
-  //"model": "opencode/mimo-v2.6-flash-free",
+
+  // === Default models === for NEW sessions
+  // General | Code | Parameters       | Assessment
+
+  //"model": "google/gemini-flash-lite-latest",            // G: 72 | C: 58 | Params: n/a          | Fast, cheap; basic coding and simple tasks.
+  //"model": "google/gemini-flash-latest",                 // G: 85 | C: 80 | Params: n/a          | Strong allrounder; good reasoning and coding.
+  "model": "kilo/nvidia/nemotron-3.5-super-vl:free",       // G: 94 | C: 92 | Params: 120B/12B     | Excellent agentic coding, reasoning and multimodal.
+  //"model": "kilo/nvidia/nemotron-3-ultra-550b-a55b:free",// G: 97 | C: 95 | Params: 550B/55B     | Frontier reasoning; excellent complex agent workflows.
+  //"model": "openrouter/nvidia/nemotron-3.5-super-vl:free",// G: 94 | C: 92 | Params: 120B/12B    | Excellent coding and tool use; multimodal.
+  //"model": "openrouter/nvidia/nemotron-3-ultra-550b-a55b:free", // G: 97 | C: 95 | Params: 550B/55B | Frontier reasoning; complex agentic tasks.
+  //"model": "openrouter/thinkingmachines/inkling:free",  // G: 97 | C: 94 | Params: 975B/41B     | Frontier-class MoE; excellent reasoning and coding.
+  //"model": "openrouter/thinkingmachines/inkling-small:free", // G: 92 | C: 89 | Params: 276B/12B | Strong compact alternative; good agentic capabilities.
+  //"model": "openrouter/openai/gpt-6-luna",               // G: 93 | C: 92 | Params: undisclosed  | Fast, efficient; strong coding with higher reasoning.
+  //"model": "openrouter/openai/gpt-6.1-terra",            // G: 97 | C: 97 | Params: undisclosed  | Excellent allrounder; complex coding and agent workflows.
+  //"model": "opencode/nemotron-3.5-super-vl-free",         // G: 94 | C: 92 | Params: 120B/12B     | Excellent agentic coding; multimodal reasoning.
+  //"model": "opencode/deepseek-v4.1-flash-free",           // G: 97 | C: 97 | Params: 552B/8-16B   | Exceptional reasoning and coding; asymmetric MoE.
+  //"model": "opencode/mimo-v2.6-flash-free",              // G: 95 | C: 94 | Params: 309B/15B     | Excellent coding and reasoning; strong agent capabilities.
 
 
-  // ===Small models===
-  //"small_model": "google/gemini-flash-lite-latest",
-  "small_model": "kilo/cohere/north-mini-code:free",
-  //"small_model": "opencode/mimo-v2.6-flash-free",
-  //"small_model": "openrouter/cohere/north-mini-code:free",
-  //"small_model": "openrouter/nvidia/nemotron-3.5-lightning:free",
-  //"small_model": "openrouter/nvidia/nemotron-3.5-super-vl:free",
+  // === Small models ===
+
+  //"small_model": "google/gemini-flash-lite-latest",      // G: 72 | C: 58 | Params: n/a          | Fast, inexpensive; simple subtasks.
+  "small_model": "kilo/cohere/north-mini-code:free",      // G: 82 | C: 90 | Params: 30B/3B       | Specifically trained for agentic coding; efficient sub-agent.
+  //"small_model": "opencode/mimo-v2.6-flash-free",        // G: 95 | C: 94 | Params: 309B/15B     | Powerful alternative; probably overkill for small tasks.
+  //"small_model": "openrouter/cohere/north-mini-code:free",// G: 82 | C: 90 | Params: 30B/3B     | Excellent coding specialist; tool-use optimized.
+  //"small_model": "openrouter/nvidia/nemotron-3.5-lightning:free", // G: 84 | C: 80 | Params: 30B/3B | Fast agent execution; lightweight sub-agent.
+  //"small_model": "openrouter/nvidia/nemotron-3.5-super-vl:free", // G: 94 | C: 92 | Params: 120B/12B | Powerful, but unnecessarily large for simple subtasks.
+
 
   "provider": {
     // ============================================================
