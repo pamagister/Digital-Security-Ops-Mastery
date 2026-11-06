@@ -9,6 +9,9 @@
   // === Default models === for NEW sessions
   // General | Code | Parameters       | Assessment
 
+  // === Default models === for NEW sessions
+  // General | Code | Parameters       | Assessment
+
   //"model": "google/gemini-flash-lite-latest",            // G: 72 | C: 58 | Params: n/a          | Fast, cheap; basic coding and simple tasks.
   //"model": "google/gemini-flash-latest",                 // G: 85 | C: 80 | Params: n/a          | Strong allrounder; good reasoning and coding.
   "model": "kilo/nvidia/nemotron-3.5-super-vl:free",       // G: 94 | C: 92 | Params: 120B/12B     | Excellent agentic coding, reasoning and multimodal.
