@@ -86,8 +86,4 @@ before treating a comparison as proof of preservation.
 - Root restrictions apply only to `fs-tool`; they cannot restrict a separate
   shell process or another tool used by an agent.
 
-## 📚 MCP compatibility
 
-The existing MCP adapter remains available at
-[`../filesystem_mcp/`](../filesystem_mcp/). It is separate from the CLI package
-and still depends on the repository's `fastmcp` dependency.

@@ -71,5 +71,4 @@ Inventory and comparison are point-in-time observations, not filesystem locks.
 Avoid concurrent modifications while hashing. The tool does not enforce storage
 quotas; account for available space before copying.
 
-The MCP adapter remains in `server.py` for compatibility, but new local
-filesystem workflows should use the CLI.
+
