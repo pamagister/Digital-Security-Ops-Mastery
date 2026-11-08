@@ -17,12 +17,12 @@
 //  "model": "kilo/nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free",  // I:     — | C:  13.8 | A:     — | Params: 30B/3B active      | Ctx: 256K
 //  "model": "kilo/dots-studio/dots-3-note-preview:free",                // I:     — | C:     — | A:     — | Params: 280B/16B active    | Ctx: 512K
 //  "model": "kilo/kilo-auto/free",                                      // I:     — | C:     — | A:     — | Params: n/a                | Ctx: 256K
+//  "model": "kilo/liquid/lfm-3-1.7b:free",                              // I:     — | C:     — | A:     — | Params: n/a                | Ctx: 262.144K
 //  "model": "kilo/openrouter/free",                                     // I:     — | C:     — | A:     — | Params: n/a                | Ctx: 200K
-//  "model": "kilo/reflection/beam-free",                                // I:     — | C:     — | A:     — | Params: n/a                | Ctx: 1.04858M
 //  "model": "kilo/stealth/crouton-alpha",                               // I:     — | C:     — | A:     — | Params: n/a                | Ctx: 1.04858M
 //  "model": "kilo/stealth/glyph-cluster",                               // I:     — | C:     — | A:     — | Params: n/a                | Ctx: 256K
 
-// === OPENROUTER (11 free, 2 retained paid models) ===
+// === OPENROUTER (12 free, 2 retained paid models) ===
 //  "model": "openrouter/openai/gpt-6.1-terra",                                // I:  51.3 | C:     — | A:     — | Params: n/a                | Ctx: 1.05M
 //  "model": "openrouter/openai/gpt-6-luna",                                   // I:  27.9 | C:     — | A:     — | Params: n/a                | Ctx: 1.05M
 //  "model": "openrouter/nvidia/nemotron-3.5-super-vl:free",                   // I:  13.6 | C:     — | A:     — | Params: 120B/12B active    | Ctx: 1M
@@ -34,6 +34,7 @@
 //  "model": "openrouter/nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free",  // I:     — | C:  13.8 | A:     — | Params: 30B/3B active      | Ctx: 256K
 //  "model": "openrouter/liquid/lfm-2.5-2.6b:free",                            // I:     — | C:   7.7 | A:     — | Params: n/a                | Ctx: 65.536K
 //  "model": "openrouter/dots-studio/dots-3-note-preview:free",                // I:     — | C:     — | A:     — | Params: 280B/16B active    | Ctx: 512K
+//  "model": "openrouter/liquid/lfm-3-1.7b:free",                              // I:     — | C:     — | A:     — | Params: n/a                | Ctx: 262.144K
 //  "model": "openrouter/recursive/flint-v1.0:free",                           // I:     — | C:     — | A:     — | Params: 40B/2.5B active    | Ctx: 262.144K
 //  "model": "openrouter/xingchen-agi/xing4.0-29b-a4b:free",                   // I:     — | C:     — | A:     — | Params: 29B/4B active      | Ctx: 262.144K
 
@@ -47,17 +48,39 @@
 //  "model": "opencode/crouton-alpha-free",           // I:     — | C:     — | A:     — | Params: n/a                | Ctx: 1.04858M
 //  "model": "opencode/flint-40b-free",               // I:     — | C:     — | A:     — | Params: n/a                | Ctx: n/a
 
+// === GOOGLE (0 free, 6 retained paid models) ===
+//  "model": "google/gemini-3.8-flash",       // I:  30.8 | C:  76.3 | A:  40.2 | Params: n/a                | Ctx: n/a
+//  "model": "google/gemini-3.5-flash-lite",  // I:  11.7 | C:  49.3 | A:  14.3 | Params: n/a                | Ctx: n/a
+//  "model": "google/gemini-3.1-flash-lite",  // I:   6.2 | C:  34.7 | A:   1.6 | Params: n/a                | Ctx: n/a
+//  "model": "google/gemini-3.7-flash",       // I:     — | C:  76.1 | A:  35.2 | Params: n/a                | Ctx: n/a
+//  "model": "google/gemini-3.5-flash",       // I:     — | C:  70.1 | A:  26.0 | Params: n/a                | Ctx: n/a
+//  "model": "google/gemini-3.6-flash",       // I:     — | C:  69.2 | A:  29.0 | Params: n/a                | Ctx: n/a
+
 // END AUTO-GENERATED FREE MODELS
 
   // Actually used models
   "model": "openrouter/nvidia/nemotron-3.5-super-vl:free",
-  "small_model": "gemma-4-31b-it",
+  "small_model": "openrouter/nvidia/nemotron-3.5-lightning:free",
 
   "compaction": {
     "auto": true,
     "keep": {
       "tokens": 20000
     },
-    "buffer": "60%"
+    "buffer": "30%"
+  },
+  // In V2, use permissions, shell, and subagent instead of permission, bash, and task.
+  "agent": {
+    "reviewer": {  // Specialized review subagent. Choose a different model than build, just to have a "second pair of eyes"
+      "description": "Reviews current changes for best practices and potential issues",
+      "mode": "subagent",
+      "model": "opencode/deepseek-v4.1-flash-free",
+      "system": "You are a professional reviewer. Focus on security, performance, and maintainability. Report findings in severity order.",
+      "permissions": [
+        { "action": "edit", "resource": "*", "effect": "deny" },
+        { "action": "shell", "resource": "git diff *", "effect": "allow" },
+        { "action": "shell", "resource": "git push *", "effect": "deny" }
+      ]
+    }
   }
 }
