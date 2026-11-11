@@ -3,8 +3,12 @@
 
 Data sources:
 - Kilo AI Gateway: free model discovery and provider metadata
-- OpenRouter: model metadata and Artificial Analysis benchmark indices
+- OpenRouter: model metadata, Artificial Analysis indices and OpenRouter evals
 - OpenCode CLI: locally available models with an explicit free suffix
+
+Successful API responses are cached under ~/.cache/opencode-model-catalog and
+reused when a source is temporarily unreachable, so a network problem never
+truncates the catalog.
 
 The OpenRouter API key is read from OPENROUTER_API_KEY or the OS keyring.
 No secrets are stored in this source file or in a .env file.
@@ -46,11 +50,22 @@ KILO_MODELS_URL = "https://ai-gateway.kilo.ai/api/v1/models"
 OPENROUTER_MODELS_URL = "https://openrouter.ai/api/v1/models"
 OPENROUTER_BENCHMARKS_URL = "https://openrouter.ai/api/v1/benchmarks"
 
+# Each source exposes a different benchmark family via the same endpoint.
+BENCHMARK_SOURCES = {
+    "artificial-analysis": "Artificial Analysis",
+    "openrouter": "OpenRouter evals",
+}
+
 BEGIN_MARKER = "// BEGIN AUTO-GENERATED FREE MODELS"
 END_MARKER = "// END AUTO-GENERATED FREE MODELS"
 
 KEYRING_SERVICE = "opencode-model-catalog"
 KEYRING_USERNAME = "openrouter-api-key"
+
+CACHE_DIR = Path(
+    os.getenv("XDG_CACHE_HOME", str(Path.home() / ".cache"))
+) / "opencode-model-catalog"
+MAX_BACKUPS = 5
 
 # Explicit aliases can be added here when two providers use substantially
 # different identifiers for the same underlying model.
@@ -72,6 +87,8 @@ class Model:
     intelligence: float | None = None
     coding: float | None = None
     agentic: float | None = None
+    gpqa: float | None = None
+    tau_bench: float | None = None
     description: str = ""
     metadata_source: str | None = None
     benchmark_match: str | None = None
@@ -193,6 +210,74 @@ def data_list(payload: dict[str, Any], source: str) -> list[dict[str, Any]]:
     if not isinstance(data, list):
         raise ValueError(f"Unexpected response from {source}: missing data[]")
     return [item for item in data if isinstance(item, dict)]
+
+
+def _cache_path(key: str) -> Path:
+    safe_key = re.sub(r"[^a-z0-9._-]+", "-", key.casefold())
+    return CACHE_DIR / f"{safe_key}.json"
+
+
+def write_cache(key: str, payload: dict[str, Any]) -> None:
+    """Persist a successful response for later fallback. Never fatal."""
+    path = _cache_path(key)
+    try:
+        CACHE_DIR.mkdir(parents=True, exist_ok=True)
+        path.write_text(
+            json.dumps(
+                {
+                    "fetched_at": datetime.now().isoformat(timespec="seconds"),
+                    "payload": payload,
+                },
+                ensure_ascii=False,
+            ),
+            encoding="utf-8",
+        )
+    except OSError as exc:  # A read-only or full cache must not break a run.
+        logging.debug("Could not write cache %s: %s", path, exc)
+
+
+def read_cache(key: str) -> tuple[dict[str, Any], str] | None:
+    path = _cache_path(key)
+    try:
+        raw = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        logging.debug("No usable cache at %s: %s", path, exc)
+        return None
+    payload = raw.get("payload")
+    if not isinstance(payload, dict):
+        return None
+    return payload, str(raw.get("fetched_at") or "unknown")
+
+
+def load_json(
+    session: requests.Session,
+    url: str,
+    cache_key: str,
+    *,
+    params: dict[str, Any] | None = None,
+    headers: dict[str, str] | None = None,
+    stale_sources: list[str] | None = None,
+) -> dict[str, Any]:
+    """Fetch JSON, falling back to the last successful cached response."""
+    try:
+        payload = get_json(session, url, params=params, headers=headers)
+    except (requests.RequestException, ValueError) as exc:
+        cached = read_cache(cache_key)
+        if cached is None:
+            raise
+        payload, fetched_at = cached
+        logging.warning(
+            "Request for %s failed (%s); using cache from %s.",
+            cache_key,
+            exc,
+            fetched_at,
+        )
+        if stale_sources is not None:
+            stale_sources.append(f"{cache_key} (cached {fetched_at})")
+        return payload
+
+    write_cache(cache_key, payload)
+    return payload
 
 
 def is_free_kilo(item: dict[str, Any]) -> bool:
@@ -350,8 +435,14 @@ def add_candidate(
 def discover_kilo(
     session: requests.Session,
     models: dict[str, Model],
+    stale_sources: list[str],
 ) -> None:
-    payload = get_json(session, KILO_MODELS_URL)
+    payload = load_json(
+        session,
+        KILO_MODELS_URL,
+        "kilo-models",
+        stale_sources=stale_sources,
+    )
     items = data_list(payload, "Kilo")
     count = 0
 
@@ -376,8 +467,14 @@ def discover_kilo(
 def discover_openrouter(
     session: requests.Session,
     models: dict[str, Model],
+    stale_sources: list[str],
 ) -> dict[str, dict[str, Any]]:
-    payload = get_json(session, OPENROUTER_MODELS_URL)
+    payload = load_json(
+        session,
+        OPENROUTER_MODELS_URL,
+        "openrouter-models",
+        stale_sources=stale_sources,
+    )
     items = data_list(payload, "OpenRouter")
     catalog: dict[str, dict[str, Any]] = {}
     count = 0
@@ -421,7 +518,12 @@ def parse_existing_models(template_text: str) -> dict[str, Model]:
 
     section = template_text[begin:end]
     existing: dict[str, Model] = {}
-    pattern = re.compile(r'^\s*//\s*"model"\s*:\s*"([^"]+)"', re.MULTILINE)
+    # Accept both commented and already-uncommented entries so that a user who
+    # selected a model does not lose it during regeneration.
+    pattern = re.compile(
+        r'^\s*(?://\s*)?"model"\s*:\s*"([^"]+)"',
+        re.MULTILINE,
+    )
     for match in pattern.finditer(section):
         opencode_id = match.group(1).strip()
         if "/" not in opencode_id:
@@ -438,60 +540,145 @@ def parse_existing_models(template_text: str) -> dict[str, Model]:
     return existing
 
 
-def discover_opencode_cli(
-    models: dict[str, Model],
-    existing_models: dict[str, Model],
-) -> None:
-    """Retain existing entries that are still available in the local CLI."""
+def resolve_opencode_binary(explicit: str | None = None) -> Path | None:
+    """Locate the OpenCode CLI even when PATH lacks the usual install dirs.
+
+    IDEs and service managers often run Python with a reduced PATH, so relying
+    on a bare "opencode" lookup makes the catalog silently lose its opencode/*
+    entries.
+    """
+    candidates: list[str] = []
+    for value in (explicit, os.getenv("OPENCODE_BIN")):
+        if value:
+            candidates.append(value)
+    found = shutil.which("opencode")
+    if found:
+        candidates.append(found)
+    candidates += [
+        str(Path.home() / ".opencode" / "bin" / "opencode"),
+        str(Path.home() / ".local" / "bin" / "opencode"),
+        str(Path.home() / ".bun" / "bin" / "opencode"),
+        "/usr/local/bin/opencode",
+        "/usr/bin/opencode",
+    ]
+
+    for candidate in candidates:
+        path = Path(candidate).expanduser()
+        if path.is_file() and os.access(path, os.X_OK):
+            return path
+    return None
+
+
+def query_opencode_models(binary: Path | None) -> list[str] | None:
+    """Return the model IDs reported by the CLI, or None when unavailable."""
     try:
         result = subprocess.run(
-            ["opencode", "models"],
+            [str(binary), "models"],
             check=True,
             capture_output=True,
             text=True,
             timeout=30,
         )
     except (FileNotFoundError, subprocess.SubprocessError) as exc:
-        logging.warning("Could not query 'opencode models': %s", exc)
-        return
+        name = str(binary) if binary else "no executable found"
+        logging.warning(
+            "Could not run '%s models': %s", name, exc or type(exc).__name__
+        )
+        return None
 
-    available_ids = {
-        line.strip().casefold()
+    return [
+        line.strip()
         for line in result.stdout.splitlines()
         if "/" in line.strip()
-    }
-    retained = 0
-    for opencode_id, model in existing_models.items():
-        if opencode_id not in available_ids:
-            continue
-        key = model.opencode_id.casefold()
-        if key not in models:
-            model.metadata_source = "Existing template + OpenCode CLI"
+    ]
+
+
+def discover_opencode_cli(
+    models: dict[str, Model],
+    existing_models: dict[str, Model],
+    binary: Path | None,
+) -> bool:
+    """Add free CLI models and retain existing entries that are still listed.
+
+    Returns True when the CLI was queried successfully. When it is not
+    available, every existing entry is retained unchanged instead of being
+    dropped, so a broken PATH cannot truncate the catalog.
+    """
+    available = query_opencode_models(binary)
+    if available is None:
+        retained = 0
+        for key, model in existing_models.items():
+            if key in models:
+                continue
+            model.metadata_source = "Existing template (CLI unavailable)"
             models[key] = model
             retained += 1
+        logging.warning(
+            "OpenCode CLI unavailable (%s); kept %d existing entries unverified. "
+            "Set OPENCODE_BIN or --opencode-bin to refresh them.",
+            binary or "no executable found",
+            retained,
+        )
+        return False
+
+    available_ids = {line.casefold() for line in available}
+    retained = 0
+    for key, model in existing_models.items():
+        if key not in available_ids or key in models:
+            continue
+        model.metadata_source = "Existing template + OpenCode CLI"
+        models[key] = model
+        retained += 1
+
+    added = 0
+    for line in available:
+        if line.casefold() in models:
+            continue
+        provider, _, model_id = line.partition("/")
+        if not provider or not model_id.strip():
+            continue
+        if not model_id.strip().endswith((":free", "-free")):
+            continue
+        add_candidate(
+            models,
+            provider,
+            model_id.strip(),
+            model_id.strip(),
+            metadata_source="OpenCode CLI",
+        )
+        added += 1
 
     logging.info(
-        "Retained %d existing model entries still available in OpenCode CLI.",
+        "OpenCode CLI: %d entries retained, %d new free models added.",
         retained,
+        added,
     )
+    return True
 
 
 def get_benchmarks(
     session: requests.Session,
     api_key: str,
+    source: str,
+    stale_sources: list[str],
 ) -> tuple[list[dict[str, Any]], str | None]:
-    payload = get_json(
+    """Fetch one benchmark family from the OpenRouter rankings API."""
+    payload = load_json(
         session,
         OPENROUTER_BENCHMARKS_URL,
-        params={
-            "source": "artificial-analysis",
-            "max_results": 500,
-        },
+        f"benchmarks-{source}",
+        params={"source": source, "max_results": 5000},
         headers={"Authorization": f"Bearer {api_key}"},
+        stale_sources=stale_sources,
     )
-    items = data_list(payload, "OpenRouter benchmarks")
+    items = data_list(payload, f"OpenRouter benchmarks ({source})")
     as_of = (payload.get("meta") or {}).get("as_of")
-    logging.info("Retrieved %d benchmark records (as of %s).", len(items), as_of)
+    logging.info(
+        "Retrieved %d %s records (as of %s).",
+        len(items),
+        BENCHMARK_SOURCES[source],
+        as_of,
+    )
     return items, str(as_of) if as_of else None
 
 
@@ -628,66 +815,145 @@ def enrich_from_openrouter_catalog(
     )
 
 
-def enrich_from_benchmarks(
-    models: dict[str, Model],
-    benchmarks: list[dict[str, Any]],
-) -> None:
-    candidates = [
-        (str(item.get("model_permaslug") or ""), item)
-        for item in benchmarks
-        if item.get("model_permaslug")
-    ]
-    matched = 0
-    scored = 0
+def aa_candidates(
+    catalog: dict[str, dict[str, Any]],
+    aa_items: list[dict[str, Any]],
+) -> list[tuple[str, dict[str, Any]]]:
+    """Merge Artificial Analysis records from the benchmark endpoint with the
+    records embedded in the OpenRouter models catalog.
 
+    The endpoint carries 176 records; the catalog embeds 204, including
+    :free variants keyed by canonical_slug. Endpoint records take precedence
+    when both sources describe the same model permaslug.
+    """
+    candidates: dict[str, dict[str, Any]] = {}
+    for item in catalog.values():
+        slug = item.get("canonical_slug")
+        aa = (item.get("benchmarks") or {}).get("artificial_analysis")
+        if slug and isinstance(aa, dict):
+            candidates.setdefault(str(slug), aa)
+    for item in aa_items:
+        slug = str(item.get("model_permaslug") or "")
+        if slug:
+            candidates[str(slug)] = item
+    return sorted(candidates.items())
+
+
+def openrouter_eval_candidates(
+    eval_items: list[dict[str, Any]],
+) -> list[tuple[str, dict[str, Any]]]:
+    """Collapse OpenRouter eval records into one entry per model, keeping the
+    gpqa_diamond and tau_bench_verified_airline results when present."""
+    by_slug: dict[str, dict[str, Any]] = {}
+    for item in eval_items:
+        slug = str(item.get("model_permaslug") or "")
+        if not slug:
+            continue
+        entry = by_slug.setdefault(
+            slug, {"gpqa_diamond": None, "tau_bench_verified_airline": None}
+        )
+        benchmark_type = str(item.get("benchmark_type") or "")
+        if benchmark_type in entry and entry[benchmark_type] is None:
+            entry[benchmark_type] = item
+
+    candidates: list[tuple[str, dict[str, Any]]] = []
+    for slug, entry in by_slug.items():
+        merged: dict[str, Any] = {"model_permaslug": slug}
+        for benchmark_type, record in entry.items():
+            if record is not None:
+                merged[f"eval_{benchmark_type}"] = record
+        candidates.append((slug, merged))
+    return sorted(candidates)
+
+
+def _enrich_from_source(
+    models: dict[str, Model],
+    candidates: list[tuple[str, dict[str, Any]]],
+    *,
+    apply: Any,
+    source_label: str,
+    strip_date_suffix: bool = False,
+) -> int:
+    """Match models against benchmark candidates and apply one source's fields.
+
+    Matching is conservative: near misses are logged as diagnostics, never
+    silently assigned.
+    """
+    matched = 0
     for model in models.values():
         alias = MODEL_ALIASES.get(model.opencode_id)
         item, matched_id, method, top_candidates = find_best_match(
             model,
             candidates,
             exact_alias=alias,
-            strip_date_suffix=True,
+            strip_date_suffix=strip_date_suffix,
         )
         if not item:
             suggestions = "; ".join(
                 f"{key} ({score:.0f}: {name})"
                 for score, key, name in top_candidates
-            ) or "no benchmark candidates returned"
+            ) or "no candidates"
             logging.info(
-                "Benchmark: NO MATCH  %s | closest: %s",
+                "%s: NO MATCH  %s | closest: %s",
+                source_label,
                 model.opencode_id,
                 suggestions,
             )
             continue
 
-        model.intelligence = _to_float(item.get("intelligence_index"))
-        model.coding = _to_float(item.get("coding_index"))
-        model.agentic = _to_float(item.get("agentic_index"))
+        apply(model, item)
         model.benchmark_match = matched_id
-        model.match_method = method
+        model.match_method = f"{source_label}:{method}"
         matched += 1
-        if any(
-            value is not None
-            for value in (model.intelligence, model.coding, model.agentic)
-        ):
-            scored += 1
-
         logging.info(
-            "Benchmark: MATCH     %s -> %s [%s] "
-            "(I=%s, C=%s, A=%s)",
+            "%s: MATCH     %s -> %s [%s]",
+            source_label,
             model.opencode_id,
             matched_id,
             method,
-            format_score(model.intelligence),
-            format_score(model.coding),
-            format_score(model.agentic),
         )
 
-    logging.info(
-        "Benchmark summary: %d/%d matched; %d have at least one score.",
-        matched,
-        len(models),
-        scored,
+    logging.info("%s: matched %d/%d models.", source_label, matched, len(models))
+    return matched
+
+
+def enrich_from_aa(
+    models: dict[str, Model],
+    candidates: list[tuple[str, dict[str, Any]]],
+) -> int:
+    def apply(model: Model, item: dict[str, Any]) -> None:
+        model.intelligence = _to_float(item.get("intelligence_index"))
+        model.coding = _to_float(item.get("coding_index"))
+        model.agentic = _to_float(item.get("agentic_index"))
+
+    return _enrich_from_source(
+        models,
+        candidates,
+        apply=apply,
+        source_label="Artificial Analysis",
+        strip_date_suffix=True,
+    )
+
+
+def enrich_from_openrouter_evals(
+    models: dict[str, Model],
+    candidates: list[tuple[str, dict[str, Any]]],
+    strip_date_suffix: bool = False,
+) -> int:
+    def apply(model: Model, item: dict[str, Any]) -> None:
+        gpqa = item.get("eval_gpqa_diamond")
+        if gpqa is not None:
+            model.gpqa = _to_float(gpqa.get("accuracy"))
+        tau = item.get("eval_tau_bench_verified_airline")
+        if tau is not None:
+            model.tau_bench = _to_float(tau.get("accuracy"))
+
+    return _enrich_from_source(
+        models,
+        candidates,
+        apply=apply,
+        source_label="OpenRouter evals",
+        strip_date_suffix=strip_date_suffix,
     )
 
 
@@ -712,7 +978,16 @@ def format_score(value: float | None) -> str:
     return f"{value:.1f}" if value is not None else "—"
 
 
-def generate_section(models: dict[str, Model], benchmark_as_of: str | None) -> str:
+def format_percent(value: float | None) -> str:
+    return f"{value * 100:.1f}%" if value is not None else "—"
+
+
+def generate_section(
+    models: dict[str, Model],
+    benchmark_as_of: str | None,
+    used_sources: list[str],
+    stale_sources: list[str],
+) -> str:
     grouped: dict[str, list[Model]] = {}
     for model in models.values():
         grouped.setdefault(model.provider, []).append(model)
@@ -722,9 +997,15 @@ def generate_section(models: dict[str, Model], benchmark_as_of: str | None) -> s
         "// Automatically generated by update_model_catalog.py.",
         "// Scores: Artificial Analysis indices (0-100); higher is better.",
         f"// Benchmark snapshot: {benchmark_as_of or 'unavailable'}",
-        "// Uncomment a model line to select it; existing entries are retained while available.",
-        "",
     ]
+    if used_sources:
+        names = ", ".join(BENCHMARK_SOURCES[source] for source in used_sources)
+        lines.append(f"// Benchmark sources: {names}")
+    for note in stale_sources:
+        if note.startswith("benchmarks-"):
+            lines.append(f"// NOTE: {note} — served from cache (stale).")
+    lines.append("// Uncomment a model line to select it; existing entries are retained while available.")
+    lines.append("")
 
     provider_order = {"kilo": 0, "openrouter": 1, "opencode": 2}
     for provider in sorted(
@@ -751,6 +1032,7 @@ def generate_section(models: dict[str, Model], benchmark_as_of: str | None) -> s
                 f"I: {format_score(model.intelligence):>5} | "
                 f"C: {format_score(model.coding):>5} | "
                 f"A: {format_score(model.agentic):>5} | "
+                f"GPQA: {format_percent(model.gpqa):>6} | "
                 f"Params: {params:<18} | "
                 f"Ctx: {format_context(model.context_length)}"
             )
@@ -779,6 +1061,20 @@ def replace_managed_section(template_text: str, generated: str) -> str:
     return template_text[:begin] + generated + template_text[end:]
 
 
+def prune_backups(path: Path) -> None:
+    """Keep only the most recent MAX_BACKUPS backups."""
+    backups = sorted(
+        path.parent.glob(f"{path.name}.bak.*"),
+        key=lambda item: item.stat().st_mtime,
+        reverse=True,
+    )
+    for old in backups[MAX_BACKUPS:]:
+        try:
+            old.unlink()
+        except OSError as exc:
+            logging.debug("Could not remove old backup %s: %s", old, exc)
+
+
 def write_atomically(path: Path, content: str) -> None:
     original_mode = path.stat().st_mode
     backup = path.with_name(
@@ -797,6 +1093,7 @@ def write_atomically(path: Path, content: str) -> None:
             handle.write(content)
         os.chmod(temporary_name, original_mode)
         os.replace(temporary_name, path)
+        prune_backups(path)
     except Exception:
         try:
             os.unlink(temporary_name)
@@ -839,6 +1136,12 @@ def parse_args() -> argparse.Namespace:
         help="Do not discover free models from the local 'opencode models' list.",
     )
     parser.add_argument(
+        "--opencode-bin",
+        type=Path,
+        metavar="PATH",
+        help="Path to the OpenCode CLI binary (default: auto-detect via PATH and common locations).",
+    )
+    parser.add_argument(
         "--store-api-key",
         action="store_true",
         help="Store the OpenRouter API key in the OS keyring and exit.",
@@ -863,19 +1166,25 @@ def main() -> int:
         return 1
 
     models: dict[str, Model] = {}
+    stale_sources: list[str] = []
+    benchmark_sources: dict[str, list[dict[str, Any]]] = {}
     session = make_session()
 
     try:
-        discover_kilo(session, models)
-        catalog = discover_openrouter(session, models)
+        discover_kilo(session, models, stale_sources)
+        catalog = discover_openrouter(session, models, stale_sources)
 
         original = template_path.read_text(encoding="utf-8")
         existing_models = parse_existing_models(original)
+        existing_keys = set(existing_models)
 
+        binary = resolve_opencode_binary(args.opencode_bin)
+        cli_available = False
         if not args.no_opencode_cli:
-            discover_opencode_cli(models, existing_models)
+            cli_available = discover_opencode_cli(models, existing_models, binary)
 
         benchmark_as_of = None
+        used_sources: list[str] = []
         if not args.skip_benchmarks:
             api_key = get_openrouter_key()
             if not api_key:
@@ -885,16 +1194,43 @@ def main() -> int:
                 )
                 return 2
 
-            benchmarks, benchmark_as_of = get_benchmarks(session, api_key)
-            enrich_from_benchmarks(models, benchmarks)
+            # Each source is fetched independently: one failing source is
+            # logged and skipped instead of truncating the whole catalog.
+            for source in ("artificial-analysis", "openrouter"):
+                try:
+                    items, as_of = get_benchmarks(
+                        session, api_key, source, stale_sources
+                    )
+                    benchmark_sources[source] = items
+                    used_sources.append(source)
+                    if as_of and benchmark_as_of is None:
+                        benchmark_as_of = as_of
+                except Exception as exc:  # Cache may soften the failure.
+                    logging.warning("Benchmark source %s unavailable: %s", source, exc)
 
         enrich_from_openrouter_catalog(models, catalog)
+
+        if benchmark_sources.get("artificial-analysis"):
+            enrich_from_aa(
+                models,
+                aa_candidates(catalog, benchmark_sources["artificial-analysis"]),
+            )
+        if benchmark_sources.get("openrouter"):
+            enrich_from_openrouter_evals(
+                models,
+                openrouter_eval_candidates(benchmark_sources["openrouter"]),
+                strip_date_suffix=True,
+            )
 
         if not models:
             logging.error("No models discovered; template was not changed.")
             return 3
 
-        generated = generate_section(models, benchmark_as_of)
+        kept = sum(1 for key in existing_keys if key in models)
+        removed = sorted(key for key in existing_keys if key not in models)
+        generated = generate_section(
+            models, benchmark_as_of, used_sources, stale_sources
+        )
         updated = replace_managed_section(original, generated)
 
         if updated == original:
@@ -907,11 +1243,23 @@ def main() -> int:
             return 0
 
         write_atomically(template_path, updated)
+        free = sum(model.is_free for model in models.values())
+        paid = sum(not model.is_free for model in models.values())
+        providers = {model.provider for model in models.values()}
         print(
-            f"Catalog contains {sum(model.is_free for model in models.values())} free and "
-            f"{sum(not model.is_free for model in models.values())} retained paid model entries "
-            f"across {len({model.provider for model in models.values()})} providers."
+            f"Catalog contains {free} free and {paid} retained paid model entries "
+            f"across {len(providers)} providers."
         )
+        print(f"Existing entries: {kept} retained, {len(removed)} dropped.")
+        if removed:
+            print(f"Dropped entries: {', '.join(removed)}")
+        if stale_sources:
+            print("Stale sources (cache used): " + "; ".join(stale_sources))
+        if not cli_available and not args.no_opencode_cli:
+            print(
+                "Hint: the OpenCode CLI was not found; opencode/* entries were "
+                "kept unverified. Use --opencode-bin PATH or set OPENCODE_BIN."
+            )
         return 0
 
     except requests.RequestException as exc:
