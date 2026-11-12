@@ -6,7 +6,6 @@ These guidelines apply repository-wide. More specific instructions in a subdirec
 When instructions conflict, follow the most specific applicable instruction and preserve existing project conventions unless the requested change explicitly calls for updating them.
 
 Finally:
-[] NEVER execute `git push`. Pushing is forbidden.
 [] NEVER stage files from `temp/` or other temporary / ephemeral files created by the agent with `git add`. Temporäre Agent-Dateien dürfen NIEMALS in die Stage kommen.
 [] Add with time and date a short report in english to temp/report.md
    Add this incrementally without modifying the previous report content. Use this structure: 
@@ -16,10 +15,7 @@ GOAL: short description of the goal
 CONSTRAINS: short description of the constraints
 SOLUTION: describe the solution and changes made
 
-[] Stage all changed files (EXCEPT TEMP/ Files and temporary / ephemeral agent files) and add them to prepare the next commit 
-with the report content as the commit message, except temporary files like in temp/. NEVER run `git push`. Do not actually commit. 
-Wait for the user to confirm the staged files or commit manually. If possible, suggest an english commit message in the IDEs commit message window.
-
+[] Stage all changed files (EXCEPT TEMP/ Files and temporary / ephemeral agent files) and add them to prepare the next commit.
 
 ## 🧭 General Guidelines
 

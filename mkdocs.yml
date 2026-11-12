@@ -1,14 +1,14 @@
 site_name: Digital-Security-Ops-Mastery
 site_url: !ENV READTHEDOCS_CANONICAL_URL
-site_description: Ein moderner Praxis-Guide für souveräne, sichere und datensparsame Setups von PC und Smartphone – vom Linux-Automaten über kindersichere Geräte bis zur Google-freien Selbstbestimmung.
+site_description: Practical guides for secure, privacy-conscious PC and smartphone setups, from Android and Nextcloud to Linux automation and AI agents.
 repo_url: https://github.com/pamagister/Digital-Security-Ops-Mastery
 repo_name: GitHub
+edit_uri: edit/main/docs/
 
 # See also:
 #  https://squidfunk.github.io/mkdocs-material/
 #  https://www.mkdocs.org/user-guide/
 #  Extensions: https://python-markdown.github.io/extensions/
-#  - CodeHilite: https://python-markdown.github.io/extensions/code_hilite/
 
 theme:
   name: readthedocs
@@ -19,15 +19,43 @@ theme:
     - navigation.instant
 
 extra_css:
-  - css/custom.css
+  - _static/css/custom.css
 
 markdown_extensions:
   - toc:
       permalink: "#"
   - tables
   - admonition
+  - attr_list
+  - md_in_html
   - codehilite:
       use_pygments: True
 
-plugins:
-   - awesome-nav
+nav:
+  - Home: index.md
+  - Android & mobile:
+      - Overview: android/index.md
+      - De-Googled Android: android/de-googled-android.md
+      - Child-proof phone: android/child-proof-phone.md
+      - Backup & restore: android/backup-restore.md
+  - Linux & automation:
+      - Overview: linux/index.md
+      - Kubuntu setup: linux/kubuntu-setup.md
+      - System update: linux/system-update.md
+      - Automatic updates: linux/auto-update.md
+      - Encrypt a backup: linux/encrypt-backup.md
+      - NAS mount: linux/nas-mount.md
+      - Encrypted sync: linux/encrypted-sync.md
+      - KDE language: linux/kde-language.md
+      - Printer scan to Samba: linux/printer-scan-samba.md
+      - Compress images: linux/compress-images.md
+      - Compress videos: linux/compress-videos.md
+      - Post-process video: linux/postprocess-video.md
+      - GPX/KML files: linux/gpx-kml.md
+      - GPX POIs from YAML: linux/gpx-pois-from-yaml.md
+  - Nextcloud: nextcloud/index.md
+  - AI & agents:
+      - Overview: ai/index.md
+      - Agentic AI & OpenCode: ai/agentic-opencode.md
+      - Coding & agentic models: ai/coding-agentic-models.md
+  - Credits: credits.md

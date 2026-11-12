@@ -1,0 +1,9 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Encrypt Backup
+Comment=Create a password-protected tar.gz backup
+Exec=konsole -e "@HOME@/.local/bin/encrypt_backup.sh"
+Icon=utilities-terminal
+Terminal=false
+Categories=Utility;

@@ -1,0 +1,18 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+
+# Documentation build
+site/
+
+# Temporary agent files and reports
+temp/
+
+# Backups created by repository scripts
+*.bak.*
+
+# IDE files
+.idea/
+.vscode/
