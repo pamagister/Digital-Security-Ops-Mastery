@@ -2,10 +2,16 @@
 
 Practical guides for secure, privacy-conscious smartphone and PC setups: Android without Google, child-safe devices, Nextcloud, Linux automation, encrypted backups, and AI agents.
 
-The full documentation is available at:
+## Documentation
 
-- [Read the Docs](https://digital-security-ops-mastery.readthedocs.io/en/latest/)
-- [Documentation source](docs/index.md)
+- [Documentation home](docs/index.md)
+- [Android &amp; mobile](docs/android/index.md)
+- [Linux &amp; automation](docs/linux/index.md)
+- [Nextcloud](docs/nextcloud/index.md)
+- [AI &amp; agents](docs/ai/index.md)
+- [Credits and licenses](docs/credits.md)
+
+The full documentation is also available at [Read the Docs](https://digital-security-ops-mastery.readthedocs.io/en/latest/).
 
 ## Topics
 
@@ -13,8 +19,6 @@ The full documentation is available at:
 - Linux and automation
 - Nextcloud
 - AI agents and OpenCode
-
-See the [documentation home page](docs/index.md) for the complete chapter overview, requirements, and installation instructions.
 
 ## Contributing
 

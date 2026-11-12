@@ -16,7 +16,7 @@ This documentation uses icons and images from several sources. They are included
 
 ## 🗺️ Generic icons
 
-- Generic icons for media, system, cloud, sync, printer, map, and tools are from [Twemoji](https://github.com/jdecked/twemoji), licensed under [CC-BY 4.0](https://creativecommons.org/licenses/by/4.0/).
+- Generic icons for media, optical discs, system, cloud, sync, printer, map, and tools are from [Twemoji](https://github.com/jdecked/twemoji), licensed under [CC-BY 4.0](https://creativecommons.org/licenses/by/4.0/).
 - Twemoji graphics are based on the original Twitter emoji artwork. The license requires attribution; this page provides it.
 
 ## 🐙 GitHub

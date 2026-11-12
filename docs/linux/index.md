@@ -89,6 +89,13 @@ Guides and scripts for Ubuntu/Kubuntu setup, system maintenance, network storage
     <strong>Post-process video</strong>
     <span>Add music, an intro, a title, fades, and a timestamp overlay.</span>
   </a>
+
+  <a class="dsom-card" href="https://digital-security-ops-mastery.readthedocs.io/en/latest/linux/dvd-playback/">
+    <img src="../_static/img/icons/dvd.svg" alt="" width="48" height="48">
+    <span class="dsom-kicker">Optical media</span>
+    <strong>Play DVDs</strong>
+    <span>Install libdvdcss and play commercial DVDs in VLC.</span>
+  </a>
 </div>
 
 ## 🗺️ Navigation and map data

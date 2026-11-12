@@ -51,6 +51,7 @@ nav:
       - Compress images: linux/compress-images.md
       - Compress videos: linux/compress-videos.md
       - Post-process video: linux/postprocess-video.md
+      - Play DVDs: linux/dvd-playback.md
       - GPX/KML files: linux/gpx-kml.md
       - GPX POIs from YAML: linux/gpx-pois-from-yaml.md
   - Nextcloud: nextcloud/index.md
