@@ -4,23 +4,23 @@ Agentic AI uses language models, tools, and permissions to work toward a goal. T
 
 <div class="dsom-grid">
   <a class="dsom-card" href="https://digital-security-ops-mastery.readthedocs.io/en/latest/ai/agentic-opencode/">
-    <img src="../_static/img/opencode.png" alt="" width="48" height="48">
-    <span class="dsom-kicker">Guide</span>
-    <strong>Agentic AI &amp; OpenCode</strong>
+    <img src="../_static/img/opencode.png" alt="" width="48" height="48"><br>
+    <span class="dsom-kicker">Guide</span><br>
+    <strong>Agentic AI &amp; OpenCode</strong><br>
     <span>Install OpenCode, connect providers, and use MCP tools and sub-agents.</span>
   </a>
 
   <a class="dsom-card" href="https://digital-security-ops-mastery.readthedocs.io/en/latest/ai/coding-agentic-models/">
-    <img src="../_static/img/icons/robot.svg" alt="" width="48" height="48">
-    <span class="dsom-kicker">Models</span>
-    <strong>Coding &amp; agentic models</strong>
+    <img src="../_static/img/icons/robot.svg" alt="" width="48" height="48"><br>
+    <span class="dsom-kicker">Models</span><br>
+    <strong>Coding &amp; agentic models</strong><br>
     <span>A short comparison of models for software development and tool use.</span>
   </a>
 
   <a class="dsom-card" href="https://digital-security-ops-mastery.readthedocs.io/en/latest/ai/opencode-template.jsonc">
-    <img src="../_static/img/icons/tools.svg" alt="" width="48" height="48">
-    <span class="dsom-kicker">Configuration</span>
-    <strong>OpenCode template</strong>
+    <img src="../_static/img/icons/tools.svg" alt="" width="48" height="48"><br>
+    <span class="dsom-kicker">Configuration</span><br>
+    <strong>OpenCode template</strong><br>
     <span>The JSONC template used by this repository, including the generated free-model catalog.</span>
   </a>
 </div>

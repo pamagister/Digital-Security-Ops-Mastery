@@ -4,23 +4,23 @@ Android can be configured to reduce dependence on Google services, protect child
 
 <div class="dsom-grid">
   <a class="dsom-card" href="https://digital-security-ops-mastery.readthedocs.io/en/latest/android/de-googled-android/">
-    <img src="../_static/img/android.png" alt="" width="48" height="48">
-    <span class="dsom-kicker">Operating system</span>
-    <strong>De-Googled Android</strong>
+    <img src="../_static/img/android.png" alt="" width="48" height="48"><br>
+    <span class="dsom-kicker">Operating system</span><br>
+    <strong>De-Googled Android</strong><br>
     <span>Compare GrapheneOS, CalyxOS, and LineageOS, and choose privacy-conscious apps.</span>
   </a>
 
   <a class="dsom-card" href="https://digital-security-ops-mastery.readthedocs.io/en/latest/android/child-proof-phone/">
-    <img src="../_static/img/child-proof.png" alt="" width="48" height="48">
-    <span class="dsom-kicker">Family</span>
-    <strong>Child-proof phone</strong>
+    <img src="../_static/img/child-proof.png" alt="" width="48" height="48"><br>
+    <span class="dsom-kicker">Family</span><br>
+    <strong>Child-proof phone</strong><br>
     <span>Set screen-time limits, app locks, content filters, and device location.</span>
   </a>
 
   <a class="dsom-card" href="https://digital-security-ops-mastery.readthedocs.io/en/latest/android/backup-restore/">
-    <img src="../_static/img/backup.png" alt="" width="48" height="48">
-    <span class="dsom-kicker">Backup</span>
-    <strong>Backup &amp; restore</strong>
+    <img src="../_static/img/backup.png" alt="" width="48" height="48"><br>
+    <span class="dsom-kicker">Backup</span><br>
+    <strong>Backup &amp; restore</strong><br>
     <span>Protect passwords, messages, photos, documents, and app data.</span>
   </a>
 </div>
