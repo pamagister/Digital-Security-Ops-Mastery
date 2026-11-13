@@ -140,6 +140,13 @@
     vertical-align: middle;
 }
 
+/* Text block right of the icon: kicker, heading and description stacked,
+   vertically centered together with the icon. */
+.dsom-card > div {
+    display: flex;
+    flex-direction: column;
+}
+
 /* Make the whole card clickable through the title link, so the markup also
    stays readable when the stylesheet is unavailable. */
 .dsom-card a,
