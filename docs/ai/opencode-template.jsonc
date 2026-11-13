@@ -67,18 +67,28 @@
 // END AUTO-GENERATED FREE MODELS
 
   // Actually used models
-  "model": "openrouter/nvidia/nemotron-3.5-super-vl:free",
-  "small_model": "openrouter/nvidia/nemotron-3.5-lightning:free",
+  "model": "openrouter/baidu/ernie-5.5-flash-preview:free",
 
   "compaction": {
     "auto": true,
     "keep": {
-      "tokens": 20000
+      "tokens": 10000
     },
-    "buffer": "30%"
+    "buffer": "50%"
   },
 
   "agents": {
+  "plan": {
+    "permissions": [
+      // Allow creating and updating Markdown plan files anywhere
+      // within the active project.
+      {
+        "action": "edit",
+        "resource": "**/*plan*.md",
+        "effect": "allow"
+      }
+    ]
+  },
     // Use a lightweight model for context maintenance.
     "compaction": {
       "model": "kilo/nvidia/nemotron-3.5-lightning:free"
