@@ -93,5 +93,219 @@
     "summary": {
       "model": "kilo/nvidia/nemotron-3.5-lightning:free"
     }
-  }
+  },
+  "permissions": [
+    // --------------------------------------------------
+    // External filesystem access
+    // --------------------------------------------------
+
+    // Require approval before accessing files outside the
+    // active project and its worktree.
+    {
+      "action": "external_directory",
+      "resource": "*",
+      "effect": "ask"
+    },
+
+    // --------------------------------------------------
+    // Protect personal and system configuration
+    // --------------------------------------------------
+
+    // Never modify Linux system configuration.
+    {
+      "action": "edit",
+      "resource": "/etc/**",
+      "effect": "deny"
+    },
+    {
+      "action": "edit",
+      "resource": "/usr/**",
+      "effect": "deny"
+    },
+    {
+      "action": "edit",
+      "resource": "/boot/**",
+      "effect": "deny"
+    },
+
+    // Never modify user desktop and application settings.
+    {
+      "action": "edit",
+      "resource": "$HOME/.config/**",
+      "effect": "deny"
+    },
+    {
+      "action": "edit",
+      "resource": "$HOME/.local/**",
+      "effect": "deny"
+    },
+
+    // Never modify personal documents and media.
+    {
+      "action": "edit",
+      "resource": "$HOME/Documents/**",
+      "effect": "deny"
+    },
+    {
+      "action": "edit",
+      "resource": "$HOME/Pictures/**",
+      "effect": "deny"
+    },
+    {
+      "action": "edit",
+      "resource": "$HOME/Videos/**",
+      "effect": "deny"
+    },
+    {
+      "action": "edit",
+      "resource": "$HOME/Music/**",
+      "effect": "deny"
+    },
+
+    // Never modify SSH and GPG credentials.
+    {
+      "action": "edit",
+      "resource": "$HOME/.ssh/**",
+      "effect": "deny"
+    },
+    {
+      "action": "edit",
+      "resource": "$HOME/.gnupg/**",
+      "effect": "deny"
+    },
+
+    // Require approval before reading sensitive credentials.
+    {
+      "action": "read",
+      "resource": "$HOME/.ssh/**",
+      "effect": "ask"
+    },
+    {
+      "action": "read",
+      "resource": "$HOME/.gnupg/**",
+      "effect": "ask"
+    },
+    {
+      "action": "read",
+      "resource": "$HOME/.password-store/**",
+      "effect": "ask"
+    },
+
+    // --------------------------------------------------
+    // Dangerous shell commands
+    // --------------------------------------------------
+
+    // Never allow recursive deletion through rm.
+    {
+      "action": "shell",
+      "resource": "rm -rf *",
+      "effect": "deny"
+    },
+    {
+      "action": "shell",
+      "resource": "rm -r *",
+      "effect": "deny"
+    },
+
+    // Never allow commands that can destroy disks or data.
+    {
+      "action": "shell",
+      "resource": "shred *",
+      "effect": "deny"
+    },
+    {
+      "action": "shell",
+      "resource": "wipefs *",
+      "effect": "deny"
+    },
+    {
+      "action": "shell",
+      "resource": "mkfs*",
+      "effect": "deny"
+    },
+    {
+      "action": "shell",
+      "resource": "dd *",
+      "effect": "deny"
+    },
+
+    // Require approval for ordinary file deletion.
+    {
+      "action": "shell",
+      "resource": "rm *",
+      "effect": "ask"
+    },
+
+    // Require approval for privileged operations.
+    {
+      "action": "shell",
+      "resource": "sudo *",
+      "effect": "ask"
+    },
+    {
+      "action": "shell",
+      "resource": "pkexec *",
+      "effect": "ask"
+    },
+
+    // Require approval for system administration.
+    {
+      "action": "shell",
+      "resource": "systemctl *",
+      "effect": "ask"
+    },
+    {
+      "action": "shell",
+      "resource": "apt *",
+      "effect": "ask"
+    },
+    {
+      "action": "shell",
+      "resource": "apt-get *",
+      "effect": "ask"
+    },
+    {
+      "action": "shell",
+      "resource": "dpkg *",
+      "effect": "ask"
+    },
+
+    // Require approval before changing filesystem permissions.
+    {
+      "action": "shell",
+      "resource": "chmod -R *",
+      "effect": "ask"
+    },
+    {
+      "action": "shell",
+      "resource": "chown -R *",
+      "effect": "ask"
+    },
+
+    // --------------------------------------------------
+    // Git safety
+    // --------------------------------------------------
+
+    // Protect uncommitted changes from destructive Git operations.
+    {
+      "action": "shell",
+      "resource": "git reset --hard *",
+      "effect": "ask"
+    },
+    {
+      "action": "shell",
+      "resource": "git clean *",
+      "effect": "ask"
+    },
+    {
+      "action": "shell",
+      "resource": "git checkout -- *",
+      "effect": "ask"
+    },
+    {
+      "action": "shell",
+      "resource": "git push *",
+      "effect": "allow"  //  FYI: consider to set git push to ask or deny
+    }
+  ]
 }
