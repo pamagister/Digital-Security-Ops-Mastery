@@ -10,13 +10,12 @@
 // Benchmark sources: Artificial Analysis, OpenRouter evals
 // Uncomment a model line to select it; existing entries are retained while available.
 
-// === KILO (14 free models) ===
+// === KILO (13 free models) ===
 //  "model": "kilo/nvidia/nemotron-3.5-super-vl:free",                   // I:  13.6 | C:     — | A:     — | GPQA:  86.8% | Params: 120B/12B active    | Ctx: 1M
 //  "model": "kilo/nvidia/nemotron-3-ultra-550b-a55b:free",              // I:  11.8 | C:  49.3 | A:  20.1 | GPQA:      — | Params: 550B/55B active    | Ctx: 1M
 //  "model": "kilo/nvidia/nemotron-3.5-lightning:free",                  // I:   5.5 | C:  26.8 | A:   3.5 | GPQA:  70.6% | Params: 30B/3B active      | Ctx: 1M
 //  "model": "kilo/cohere/north-mini-code:free",                         // I:   3.4 | C:  36.5 | A:   1.1 | GPQA:      — | Params: 30B/3B active      | Ctx: 256K
 //  "model": "kilo/nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free",  // I:     — | C:  13.8 | A:     — | GPQA:      — | Params: 30B/3B active      | Ctx: 256K
-//  "model": "kilo/apodex/apodex-1.1-mini:free",                         // I:     — | C:     — | A:     — | GPQA:      — | Params: n/a                | Ctx: n/a
 //  "model": "kilo/baidu/ernie-5.5-flash-preview:free",                  // I:     — | C:     — | A:     — | GPQA:      — | Params: n/a                | Ctx: 1.024M
 //  "model": "kilo/dots-studio/dots-3-note-preview:free",                // I:     — | C:     — | A:     — | GPQA:      — | Params: 280B/16B active    | Ctx: 512K
 //  "model": "kilo/kilo-auto/free",                                      // I:     — | C:     — | A:     — | GPQA:      — | Params: n/a                | Ctx: 256K
@@ -26,7 +25,7 @@
 //  "model": "kilo/reflection/beam-free",                                // I:     — | C:     — | A:     — | GPQA:      — | Params: n/a                | Ctx: 1.04858M
 //  "model": "kilo/stealth/glyph-cluster",                               // I:     — | C:     — | A:     — | GPQA:      — | Params: n/a                | Ctx: 256K
 
-// === OPENROUTER (15 free, 2 retained paid models) ===
+// === OPENROUTER (14 free, 2 retained paid models) ===
 //  "model": "openrouter/openai/gpt-6.1-terra",                                // I:  51.3 | C:     — | A:     — | GPQA:  91.1% | Params: n/a                | Ctx: 1.05M
 //  "model": "openrouter/thinkingmachines/inkling-2-small:free",               // I:  30.6 | C:     — | A:     — | GPQA:  91.1% | Params: 594B/17B active    | Ctx: 1.04858M
 //  "model": "openrouter/openai/gpt-6-luna",                                   // I:  27.9 | C:     — | A:     — | GPQA:  87.4% | Params: n/a                | Ctx: 1.05M
@@ -37,8 +36,7 @@
 //  "model": "openrouter/cohere/north-mini-code:free",                         // I:   3.4 | C:  36.5 | A:   1.1 | GPQA:      — | Params: 30B/3B active      | Ctx: 256K
 //  "model": "openrouter/google/gemma-4-26b-a4b-it:free",                      // I:     — | C:  39.3 | A:   2.9 | GPQA:  69.3% | Params: 26B/4B active      | Ctx: 262.144K
 //  "model": "openrouter/nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free",  // I:     — | C:  13.8 | A:     — | GPQA:      — | Params: 30B/3B active      | Ctx: 256K
-//  "model": "openrouter/liquid/lfm-2.5-2.6b:free",                            // I:     — | C:   7.7 | A:     — | GPQA:      — | Params: n/a                | Ctx: 65.536K
-//  "model": "openrouter/apodex/apodex-1.1-mini:free",                         // I:     — | C:     — | A:     — | GPQA:      — | Params: n/a                | Ctx: n/a
+//  "model": "openrouter/liquid/lfm-2.5-2.6b:free",                            // I:     — | C:   7.7 | A:     — | GPQA:      — | Params: n/a                | Ctx: n/a
 //  "model": "openrouter/baidu/ernie-5.5-flash-preview:free",                  // I:     — | C:     — | A:     — | GPQA:      — | Params: n/a                | Ctx: 1.024M
 //  "model": "openrouter/dots-studio/dots-3-note-preview:free",                // I:     — | C:     — | A:     — | GPQA:      — | Params: 280B/16B active    | Ctx: 512K
 //  "model": "openrouter/liquid/lfm-3-1.7b:free",                              // I:     — | C:     — | A:     — | GPQA:      — | Params: n/a                | Ctx: 262.144K
@@ -79,18 +77,21 @@
     },
     "buffer": "30%"
   },
-  // In V2, use permissions, shell, and subagent instead of permission, bash, and task.
-  "agent": {
-    "reviewer": {  // Specialized review subagent. Choose a different model than build, just to have a "second pair of eyes"
-      "description": "Reviews current changes for best practices and potential issues",
-      "mode": "subagent",
-      "model": "opencode/deepseek-v4.1-flash-free",
-      "system": "You are a professional reviewer. Focus on security, performance, and maintainability. Report findings in severity order.",
-      "permissions": [
-        { "action": "edit", "resource": "*", "effect": "deny" },
-        { "action": "shell", "resource": "git diff *", "effect": "allow" },
-        { "action": "shell", "resource": "git push *", "effect": "deny" }
-      ]
+
+  "agents": {
+    // Use a lightweight model for context maintenance.
+    "compaction": {
+      "model": "kilo/nvidia/nemotron-3.5-lightning:free"
+    },
+
+    // Use a lightweight model for session titles.
+    "title": {
+      "model": "kilo/nvidia/nemotron-3.5-lightning:free"
+    },
+
+    // Use a lightweight model for session summaries.
+    "summary": {
+      "model": "kilo/nvidia/nemotron-3.5-lightning:free"
     }
   }
 }
