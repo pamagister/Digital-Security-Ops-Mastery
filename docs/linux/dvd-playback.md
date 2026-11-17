@@ -69,6 +69,32 @@ vlc dvd:///dev/sr0
 
 ## 🔧 Troubleshooting
 
+### Drive not detected (no `/dev/sr0`)
+
+If VLC reports `Can't stat /dev/sr0` or `DVDRead cannot open source: /dev/sr0`, the operating system does not see the drive at all. This is a connection problem, not a CSS, `libdvdcss`, or video-output problem.
+
+Check whether the drive is visible:
+
+```bash
+ls -l /dev/sr0
+lsusb
+```
+
+`/dev/sr0` must exist. For a USB DVD drive, `lsusb` should also list its bridge, for example:
+
+```text
+Bus 001 Device 003: ID 152d:2329 JMicron Technology Corp. ...
+```
+
+If either is missing:
+
+- **Use the data plug.** Many portable DVD drives ship with a Y-cable that has **two USB-A plugs**: one carries data and power, the second supplies extra power only. A drive connected with only the power plug never appears as `/dev/sr0`.
+
+
+A working connection shows a line such as `Attached SCSI CD-ROM sr0`. No output at all means the drive receives no power, or the cable or port is faulty.
+
+After the drive appears, insert the disc and open it as a DVD (`dvd:///dev/sr0`), not through the mounted folder.
+
 ### Green, flickering, or flashing frames
 
 This is usually a video-output or hardware-acceleration problem, not a damaged DVD. It is most common on Ubuntu with Wayland.
