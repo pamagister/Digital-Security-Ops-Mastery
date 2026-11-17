@@ -72,36 +72,49 @@
   "compaction": {
     "auto": true,
     "keep": {
-      "tokens": 10000
+      "tokens": 12000
     },
-    "buffer": "50%"
+    "buffer": "18%"
   },
 
   "agents": {
-  "plan": {
-    "permissions": [
-      // Allow creating and updating Markdown plan files anywhere
-      // within the active project.
-      {
-        "action": "edit",
-        "resource": "**/*plan*.md",
-        "effect": "allow"
-      }
-    ]
-  },
-    // Use a lightweight model for context maintenance.
+    "plan": {
+      "permissions": [
+        // Allow creating and updating Markdown plan files anywhere
+        // within the active project.
+        {
+          "action": "edit",
+          "resource": "**/*plan*.md",
+          "effect": "allow"
+        }
+      ]
+    },
+
+    // Read-only exploration: use a free model and return a concise file/symbol map.
+    "explore": {
+      "description": "Read-only code exploration with a concise file and symbol map",
+      "mode": "subagent",
+      "model": "openrouter/nvidia/nemotron-3.5-super-vl:free",
+      "permissions": [
+        { "action": "edit", "resource": "*", "effect": "deny" },
+        { "action": "shell", "resource": "*", "effect": "deny" }
+      ]
+    },
+
+    // General-purpose research subagent.
+    "general": {
+      "description": "Research and multi-step work with broad tool access",
+      "mode": "subagent",
+      "model": "openrouter/nvidia/nemotron-3.5-super-vl:free"
+    },
+
+    // Context maintenance and session titles use a lightweight model.
     "compaction": {
-      "model": "kilo/nvidia/nemotron-3.5-lightning:free"
+      "model": "openrouter/nvidia/nemotron-3.5-super-vl:free"
     },
 
-    // Use a lightweight model for session titles.
     "title": {
-      "model": "kilo/nvidia/nemotron-3.5-lightning:free"
-    },
-
-    // Use a lightweight model for session summaries.
-    "summary": {
-      "model": "kilo/nvidia/nemotron-3.5-lightning:free"
+      "model": "openrouter/nvidia/nemotron-3.5-super-vl:free"
     }
   },
   "permissions": [
