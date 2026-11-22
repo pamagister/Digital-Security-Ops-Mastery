@@ -1,0 +1,12 @@
+# Optional: run the offline documentation checks before every commit.
+# Install once with:  pre-commit install
+# Skip the network checks on purpose so commits also work without internet.
+repos:
+  - repo: local
+    hooks:
+      - id: docs-checks
+        name: documentation checks (offline)
+        entry: python -m pytest -q -m "not network"
+        language: system
+        pass_filenames: false
+        files: ^(docs/|mkdocs\.yml|tests/|README\.md)

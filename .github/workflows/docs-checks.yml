@@ -1,0 +1,45 @@
+name: Docs checks
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: docs-checks-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  checks:
+    name: Markdown links, snippets and docs build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      # The project itself is not installed: pyproject.toml has no
+      # [build-system] section and declares a dynamic version, so an editable
+      # install would fail. The checks only need the tools below.
+      - name: Install check dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install "pytest>=8.4.0" "pyyaml>=6.0" "mkdocs>=1.6.1" "pygments>=2.19.1"
+
+      - name: Run documentation checks
+        run: pytest
+
+      - name: Build documentation
+        env:
+          READTHEDOCS_CANONICAL_URL: https://digital-security-ops-mastery.readthedocs.io/en/latest/
+        run: mkdocs build --strict
