@@ -201,9 +201,16 @@ Passphrase    : $PASSPHRASE_FILE
 Recovery key  : $key_file
 
 IMPORTANT:
-- Store the passphrase in your password manager.
-- Copy the recovery key to a separate, secure offline location.
+- Store the passphrase in your password manager. The passphrase file is plain
+  text and protected only by file permissions (0600/0700) and full-disk
+  encryption. Keep it out of Git, cloud sync, and unencrypted home backups;
+  for stronger protection, read it from a secret manager via BORG_PASSCOMMAND.
+- Copy the recovery key to a separate, secure offline location. It is not needed
+  for daily operation, so you can delete $key_file afterwards. While the
+  repository is accessible, re-export it with: borg key export "$BORG_REPO" <file>
 - Do not store the recovery key only on the NAS or in this Git repository.
+- For repokey-blake2 the passphrase is the critical secret: without it, neither
+  the recovery key nor the repository can be used.
 - Test a restore before relying on this backup.
 
 Start a backup with:
