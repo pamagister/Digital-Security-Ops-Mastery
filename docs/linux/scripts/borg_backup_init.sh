@@ -168,8 +168,8 @@ printf '%s\n' "$passphrase" > "$PASSPHRASE_FILE"
 unset passphrase passphrase_confirm
 chmod 600 "$PASSPHRASE_FILE"
 
-printf -v BORG_PASSCOMMAND 'cat %q' "$PASSPHRASE_FILE"
-export BORG_PASSCOMMAND
+export BORG_PASSPHRASE_FILE="$PASSPHRASE_FILE"
+export BORG_PASSCOMMAND='cat -- "$BORG_PASSPHRASE_FILE"'
 info "Initializing repository"
 borg init --encryption="$ENCRYPTION" "$BORG_REPO"
 
