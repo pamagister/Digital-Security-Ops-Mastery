@@ -68,12 +68,13 @@ info "Borg Backup – interactive setup"
 require_borg
 
 if [[ -e "$CONFIG_FILE" ]]; then
-    printf 'Existing configuration found: %s\n' "$CONFIG_FILE"
-    confirm "Replace it?" || die "Setup cancelled; existing configuration left unchanged."
+    die "Configuration already exists: $CONFIG_FILE. This initializer only creates a new repository/configuration; move the existing configuration aside or choose a separate XDG_CONFIG_HOME."
 fi
 
 mkdir -p "$CONFIG_DIR"
 chmod 700 "$CONFIG_DIR"
+[[ ! -e "$PASSPHRASE_FILE" ]] || die "Passphrase file already exists: $PASSPHRASE_FILE. Refusing to overwrite it."
+[[ ! -e "$CONFIG_DIR/repository-key.txt" ]] || die "Recovery key file already exists. Refusing to overwrite it."
 
 info "Choose directories to back up"
 printf 'Enter one directory per prompt. Leave empty when finished.\n'
@@ -153,11 +154,6 @@ read -r -s -p "Passphrase: " passphrase; printf '\n'
 read -r -s -p "Repeat passphrase: " passphrase_confirm; printf '\n'
 [[ -n "$passphrase" ]] || die "Passphrase must not be empty."
 [[ "$passphrase" == "$passphrase_confirm" ]] || die "Passphrases do not match."
-umask 077
-printf '%s\n' "$passphrase" > "$PASSPHRASE_FILE"
-unset passphrase passphrase_confirm
-chmod 600 "$PASSPHRASE_FILE"
-
 info "Review setup"
 printf 'Repository type : %s\nRepository      : %s\n' "$REPOSITORY_TYPE" "$BORG_REPO"
 [[ "$REPOSITORY_TYPE" != "local" ]] || printf 'Mount point     : %s\n' "$MOUNTPOINT"
@@ -165,7 +161,12 @@ printf 'Archive prefix  : %s\nSources:\n' "$ARCHIVE_PREFIX"
 printf '  - %s\n' "${SOURCES[@]}"
 printf 'Retention       : daily=%s weekly=%s monthly=%s\n' "$KEEP_DAILY" "$KEEP_WEEKLY" "$KEEP_MONTHLY"
 printf 'Encryption      : %s\n' "$ENCRYPTION"
-confirm "Initialize this new repository now?" || die "Setup cancelled. Remove $PASSPHRASE_FILE if abandoning setup."
+confirm "Initialize this new repository now?" || die "Setup cancelled."
+
+umask 077
+printf '%s\n' "$passphrase" > "$PASSPHRASE_FILE"
+unset passphrase passphrase_confirm
+chmod 600 "$PASSPHRASE_FILE"
 
 printf -v BORG_PASSCOMMAND 'cat %q' "$PASSPHRASE_FILE"
 export BORG_PASSCOMMAND
@@ -176,7 +177,6 @@ write_config
 
 info "Export recovery key"
 key_file="$CONFIG_DIR/repository-key.txt"
-[[ ! -e "$key_file" ]] || die "Key export file already exists; refusing to overwrite: $key_file"
 umask 077
 borg key export "$BORG_REPO" "$key_file"
 chmod 600 "$key_file"
