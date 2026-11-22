@@ -1,319 +1,230 @@
-# Borg backup to a NAS repository
+# Borg Backup on Linux (local NAS or SSH)
 
-[Borg](https://www.borgbackup.org/) is a deduplicating backup program. It stores only changed blocks, compresses them, and encrypts and authenticates every archive. This guide sets up a repository on a mounted NAS share and shows how to create, inspect, restore, and prune backups. It also installs a small wrapper script and an optional KDE launcher.
+This setup provides an interactive first-time configuration and a separate command for manual backups. It targets **Borg 1.x** (recommended: a current 1.4.x release); Borg 2 is not supported by these scripts.
 
-## ✨ Features
+## Features
 
-- Incremental, deduplicated backups of a directory.
-- Compression (`lz4` by default) and authenticated encryption (`repokey-blake2`).
-- Retention rules for daily, weekly, and monthly archives.
-- Repository check and restore instructions.
-- `borg_backup.sh` wrapper with a default source, repository, and retention policy.
-- Optional KDE launcher that runs the backup in a terminal window.
+- Interactive setup for one or more source directories.
+- Destination choice: a local repository on a mounted NAS share or a remote Borg repository over SSH.
+- repokey-blake2 encryption.
+- Private per-user configuration and passphrase files (0700 directory, 0600 files).
+- Manual backup command with locking, dry-run mode, retention scoped to its own archive prefix, and optional compaction.
+- Separate repository connectivity/integrity check.
 
-## ⚙️ Set-Up
+## Requirements
 
-### 📋 Requirements
+- Kubuntu/Ubuntu with Bash, borgbackup, openssh-client (for SSH destinations), util-linux (flock), and coreutils.
+- For a local destination: the NAS share must already be mounted and writable.
+- For an SSH destination: SSH key-based login should work without an interactive password prompt, and a compatible Borg 1.x executable must be installed for the remote SSH user on the NAS/server. The remote parent directory must already exist.
+- A long, unique repository passphrase stored separately in a password manager.
 
-- `borgbackup` (package `borgbackup` on Ubuntu/Kubuntu).
-- Bash.
-- A mounted, writable target. This guide uses the NAS share at `/mnt/nas/data_encrypt/Borg-Backup`.
-- `konsole` only for the optional KDE launcher.
-- A long, unique repository passphrase stored in a password manager.
+Install Borg and SSH client:
 
-Check the target first:
-
-```bash
+~~~bash
+sudo apt update
+sudo apt install borgbackup openssh-client util-linux
 borg --version
-mountpoint /mnt/nas
-test -w /mnt/nas/data_encrypt/Borg-Backup && echo writable
-```
+~~~
 
-See [NAS mount](nas-mount.md) if the share is not mounted yet.
+## Installation
 
-### 📦 Installation
+Download the scripts from this feature branch (or copy them from this repository):
 
-```bash
+~~~bash
 set -e
-
-BASE_URL="https://raw.githubusercontent.com/pamagister/Digital-Security-Ops-Mastery/main/docs/linux"
-
-sudo apt install -y borgbackup
+BASE_URL="https://raw.githubusercontent.com/pamagister/Digital-Security-Ops-Mastery/feature/borg-backup-setup/docs/linux/scripts"
 
 mkdir -p "$HOME/.local/bin"
+for script in borg_backup_init.sh borg_backup.sh borg_backup_check.sh; do
+    curl -fL "$BASE_URL/$script" -o "$HOME/.local/bin/$script"
+    chmod 700 "$HOME/.local/bin/$script"
+done
+~~~
 
-curl -fL "$BASE_URL/scripts/borg_backup.sh" \
-    -o "$HOME/.local/bin/borg_backup.sh"
-chmod +x "$HOME/.local/bin/borg_backup.sh"
-```
+## First-time setup
 
-Optional KDE launcher:
+Run the interactive setup:
 
-```bash
-set -e
+~~~bash
+~/.local/bin/borg_backup_init.sh
+~~~
 
-BASE_URL="https://raw.githubusercontent.com/pamagister/Digital-Security-Ops-Mastery/main/docs/linux"
+The wizard asks for:
 
-mkdir -p "$HOME/.local/share/applications"
+1. One or more source directories. Enter an empty line to finish.
+2. Destination type:
+   - **Local mount:** mount point (default /mnt/nas) and repository path (default /mnt/nas/data_encrypt/Borg-Backup).
+   - **SSH:** Borg URL, for example ssh://backupuser@nas.example:22/volume1/backup/borg.
+3. Archive prefix and retention values.
+4. A repository passphrase (entered twice).
 
-curl -fL "$BASE_URL/scripts/borg_backup.desktop" \
-    -o "$HOME/.local/share/applications/borg_backup.desktop"
+The wizard verifies the local mount before proceeding. It will not silently create a repository in the local directory underneath an unmounted NAS mount point.
 
-sed -i "s|@HOME@|$HOME|g" "$HOME/.local/share/applications/borg_backup.desktop"
-```
+For SSH, first configure and verify SSH access yourself:
 
-### 🔩 Manual installation
+~~~bash
+ssh backupuser@nas.example
+~~~
 
-1. Install Borg:
+Verify the host-key fingerprint before accepting it. Configure public-key authentication and test that login works without a password. Borg then runs its remote server process over SSH; do not disable SSH host-key checking. The remote account needs permission to create and write the repository, and Borg 1.x must be installed and executable for that account.
 
-   ```bash
-   sudo apt install -y borgbackup
-   ```
+Example remote repository URL:
 
-2. Download [`borg_backup.sh`](scripts/borg_backup.sh) to `~/.local/bin/` and make it executable:
+~~~text
+ssh://backupuser@nas.example:22/volume1/backup/borg
+~~~
 
-   ```bash
-   chmod +x ~/.local/bin/borg_backup.sh
-   ```
+The parent directory (/volume1/backup in this example) must exist on the NAS. Create it through the NAS administration interface or an authenticated SSH session before running the wizard. The final Borg repository directory itself must not already contain a repository or unrelated files.
 
-3. Optional: download [`borg_backup.desktop`](scripts/borg_backup.desktop) to `~/.local/share/applications/` and replace `@HOME@` with your home directory.
+The wizard creates:
 
-### 🔐 Create the repository
+~~~text
+~/.config/borg-backup/
+├── config                 # source directories, destination and retention (0600)
+├── passphrase             # repository passphrase (0600)
+└── repository-key.txt     # exported recovery key (0600)
+~~~
 
-Borg refuses to write into a non-empty directory. Create the repository once, before the first backup:
+The directory itself is mode 0700. The configuration is shell syntax generated by the wizard; do not put untrusted content into it or edit it with values copied from untrusted sources.
 
-```bash
-mkdir -p /mnt/nas/data_encrypt/Borg-Backup
+**Recovery material:** Store the passphrase in your password manager. Copy repository-key.txt to a separate secure offline location (for example, an encrypted removable medium kept separately). Do not leave the only recovery-key copy on the same computer or NAS as the repository. The repokey is stored in the repository too; the exported file is an additional recovery copy, not a substitute for the passphrase.
 
-borg init --encryption=repokey-blake2 \
-    /mnt/nas/data_encrypt/Borg-Backup
-```
+## Manual backup
 
-Borg asks for a repository passphrase twice. With `repokey-blake2` the encryption key is stored inside the repository and protected by that passphrase. Export the key and store it offline, separately from the repository:
+Start a backup at any time:
 
-```bash
-borg key export /mnt/nas/data_encrypt/Borg-Backup \
-    > "$HOME/borg-repo-key.txt"
-chmod 600 "$HOME/borg-repo-key.txt"
-```
-
-Without the passphrase, and on another machine without the exported key, the repository cannot be read. Store both in your password manager.
-
-### 🔑 Passphrase handling
-
-For interactive use, set the passphrase once per shell:
-
-```bash
-read -r -s BORG_PASSPHRASE
-export BORG_PASSPHRASE
-```
-
-For scripts and automation, use a permission-restricted file:
-
-```bash
-install -m 600 /dev/null "$HOME/.config/borg/passphrase"
-nano "$HOME/.config/borg/passphrase"
-
-export BORG_PASSCOMMAND="cat $HOME/.config/borg/passphrase"
-```
-
-`BORG_PASSCOMMAND` is evaluated by Borg; the command string should not contain spaces in the file path. Put the export line in your shell profile or in the automation environment, not in a script that is stored with the repository.
-
-## 🚀 Usage
-
-### The wrapper script
-
-Create a backup with the defaults (`~/Documents` into `/mnt/nas/data_encrypt/Borg-Backup`):
-
-```bash
+~~~bash
 ~/.local/bin/borg_backup.sh
-```
+~~~
 
-Create the repository on the first run:
+Useful options:
 
-```bash
-~/.local/bin/borg_backup.sh --init
-```
+~~~bash
+# Show the files Borg would process; do not create an archive or prune.
+~/.local/bin/borg_backup.sh --dry-run
 
-Back up a different directory:
+# Create an archive but skip retention pruning and compaction.
+~/.local/bin/borg_backup.sh --no-prune
 
-```bash
-~/.local/bin/borg_backup.sh /home/paul/Dokumente
-```
+# Use an alternate configuration.
+BORG_BACKUP_CONFIG="$HOME/.config/borg-backup/other-config" \
+    ~/.local/bin/borg_backup.sh
+~~~
 
-Override the repository or archive prefix:
+The backup runner checks the configured source directories and destination, verifies that a local mount is still mounted, obtains a per-user lock, creates one timestamped archive containing all configured source directories, prunes only archives matching this configuration's archive prefix, and compacts the repository if enabled.
 
-```bash
-BORG_REPO=/mnt/backup/borg \
-BORG_ARCHIVE_PREFIX=laptop-docs \
-    ~/.local/bin/borg_backup.sh /home/paul/Dokumente
-```
+The prefix filter is important when multiple machines or backup jobs share one Borg repository: this job must not prune another job's archives.
 
-The script creates one archive per run, named `<hostname>-documents-<timestamp>`, then applies the retention policy. If neither `BORG_PASSPHRASE` nor `BORG_PASSCOMMAND` is set, it asks for the passphrase once.
+## Test the repository
 
-Show the options:
+Run the access check after setup and whenever changing the NAS or SSH configuration:
 
-```bash
-~/.local/bin/borg_backup.sh --help
-```
+~~~bash
+~/.local/bin/borg_backup_check.sh
+~~~
 
-### Borg commands directly
+This runs borg info, which verifies repository access, SSH transport (if used), repository metadata and passphrase access.
 
-List repositories and archives:
+Run a repository-only structural check periodically:
 
-```bash
-borg list /mnt/nas/data_encrypt/Borg-Backup
-borg info /mnt/nas/data_encrypt/Borg-Backup
-```
+~~~bash
+~/.local/bin/borg_backup_check.sh --repository-check
+~~~
 
-Create an archive:
+This does not read and verify every archived data chunk. For a more thorough integrity check, use borg check --verify-data REPOSITORY during a maintenance window; it can take a long time and substantial I/O. A successful repository check still does not replace a restore test.
 
-```bash
-borg create \
-    --stats \
-    --show-rc \
-    --compression lz4 \
-    --exclude-caches \
-    /mnt/nas/data_encrypt/Borg-Backup::docs-2026-11-22 \
-    /home/paul/Dokumente
-```
+### Local NAS / SMB locking test
 
-Borg stores absolute paths without the leading slash. List the content of one archive:
+Borg relies on repository locks. SMB/CIFS implementations and NAS configurations can differ in how reliably they implement the locking semantics Borg expects. Before relying on a local SMB repository:
 
-```bash
-borg list /mnt/nas/data_encrypt/Borg-Backup::docs-2026-11-22
-```
+1. Run borg_backup_check.sh.
+2. Run a small test backup to the NAS.
+3. Run borg_backup_check.sh --repository-check.
+4. Confirm that two concurrent backup attempts do not both proceed (the local script lock protects this machine; Borg's own repository lock protects repository access from other clients).
+5. Restore a few test files and compare their contents.
 
-Compare two archives:
+If Borg reports lock errors, stale locks, or repository corruption, stop using that SMB target for backups until the cause is resolved. Prefer the SSH repository mode if the NAS can run a compatible Borg 1.x server process.
 
-```bash
-borg diff \
-    /mnt/nas/data_encrypt/Borg-Backup::docs-2026-11-20 \
-    /mnt/nas/data_encrypt/Borg-Backup::docs-2026-11-22
-```
+### SSH test
 
-Check the repository for damage:
+Before initializing the repository, verify SSH login and host-key trust:
 
-```bash
-borg check /mnt/nas/data_encrypt/Borg-Backup
-```
+~~~bash
+ssh -o BatchMode=yes backupuser@nas.example true
+~~~
 
-## 🔓 Restore
+Then use the SSH destination in the setup wizard. The wizard's borg init is the end-to-end test of the remote Borg command, permissions, path and repository creation. After setup, borg_backup_check.sh tests the full connection again. If it fails, check SSH host key and public-key authentication; that the NAS account can log in and execute Borg; that remote Borg is installed and compatible with the local Borg 1.x version; that the parent directory exists and is writable; and whether the NAS restricts SSH users to a shell or forced command that blocks Borg's remote server process.
 
-Always restore into a dedicated directory and compare before replacing live data.
+Do not work around SSH failures by disabling host-key checking.
 
-List available archives and pick one:
+## Restore test
 
-```bash
-borg list /mnt/nas/data_encrypt/Borg-Backup
-```
+List archives:
 
-Restore a single directory into `~/borg-restore`:
+~~~bash
+borg list REPOSITORY
+~~~
 
-```bash
-mkdir -p "$HOME/borg-restore"
-cd "$HOME/borg-restore"
+Extract a selected archive into a temporary directory first:
 
-borg extract \
-    /mnt/nas/data_encrypt/Borg-Backup::docs-2026-11-22 \
-    home/paul/Dokumente
-```
+~~~bash
+mkdir -p "$HOME/borg-restore-test"
+cd "$HOME/borg-restore-test"
+borg extract REPOSITORY::ARCHIVE_NAME
+~~~
 
-Restore the whole archive:
+Inspect the restored files and compare important contents before using them to replace live data. For a partial restore, use the archived relative path shown by borg list REPOSITORY::ARCHIVE_NAME.
 
-```bash
-borg extract /mnt/nas/data_encrypt/Borg-Backup::docs-2026-11-22
-```
+For recovery on a new machine:
+1. Install a compatible Borg 1.x version.
+2. Make the repository accessible (mount or SSH).
+3. Import the exported key only if the key stored in the repository is missing or damaged; for a normal repokey repository, the key is stored in the repository.
+4. Supply the original passphrase.
+5. Run borg list and restore into a separate directory.
 
-Browse an archive read-only without extracting it:
+## Retention and repository maintenance
 
-```bash
-mkdir -p "$HOME/borg-mount"
-borg mount /mnt/nas/data_encrypt/Borg-Backup::docs-2026-11-22 \
-    "$HOME/borg-mount"
+Default retention set by the wizard:
 
-# Work on the files, then unmount
-fusermount -u "$HOME/borg-mount"
-```
+| Interval | Archives |
+|---|---:|
+| Daily | 14 |
+| Weekly | 8 |
+| Monthly | 12 |
 
-To restore on another machine, install Borg, import the exported key, and set the passphrase:
+The values are configurable in ~/.config/borg-backup/config. Pruning is filtered by the configured archive prefix (--glob-archives 'PREFIX-*'). Review this filter before changing the prefix or sharing a repository with another backup job.
 
-```bash
-borg key import /mnt/nas/data_encrypt/Borg-Backup \
-    < "$HOME/borg-repo-key.txt"
-```
+Manual repository check:
 
-## 🔄 Retention and automation
+~~~bash
+borg check REPOSITORY
+~~~
 
-### Retention policy
+Thorough data verification (schedule during quiet hours):
 
-The wrapper script prunes after every successful backup with these defaults:
+~~~bash
+borg check --verify-data REPOSITORY
+~~~
 
-| Archive interval | Keep |
-|---|---|
-| Daily | 7 |
-| Weekly | 4 |
-| Monthly | 6 |
+Compaction reclaims space from segments after pruning. The runner does this automatically when COMPACT_AFTER_PRUNE=yes; it can also be run manually:
 
-Run pruning manually:
+~~~bash
+borg compact REPOSITORY
+~~~
 
-```bash
-borg prune --list --show-rc \
-    --keep-daily=7 --keep-weekly=4 --keep-monthly=6 \
-    /mnt/nas/data_encrypt/Borg-Backup
-```
+## Troubleshooting
 
-`borg prune` deletes archives. Review the `--list` output and the retention values before running it on the only copy of important data.
+- **Local mount not active:** mount the NAS first. The script deliberately refuses to write into the bare mount-point directory.
+- **SSH connection fails:** run the SSH test above, then check remote Borg installation, remote path permissions and NAS SSH restrictions.
+- **Passphrase file rejected:** check that it belongs to the current user and has mode 0600.
+- **Configuration rejected:** run chmod 600 ~/.config/borg-backup/config.
+- **Lock already held:** check whether another backup is running before removing or changing any lock.
+- **Borg lock or I/O errors on SMB:** do not repeatedly retry destructive maintenance commands. Resolve the filesystem/locking issue or move to SSH.
 
-### Scheduled backup with cron
+## Security and operational notes
 
-Make sure the NAS is mounted, `~/.cache` exists, and the passphrase is available non-interactively:
-
-```cron
-0 2 * * * flock -n "$HOME/.cache/borg_backup.lock" BORG_PASSCOMMAND="cat $HOME/.config/borg/passphrase" "$HOME/.local/bin/borg_backup.sh" >> "$HOME/.local/share/borg_backup.log" 2>&1
-```
-
-`flock` prevents overlapping runs. Check the log if a scheduled backup fails.
-
-### Free space
-
-Borg keeps deleted and replaced chunks until the repository is compacted:
-
-```bash
-borg compact /mnt/nas/data_encrypt/Borg-Backup
-```
-
-Run `borg compact` only when the repository needs space, and keep a second copy of important data while doing so.
-
-## 💡 Examples
-
-Nightly backup of the documents directory into the NAS repository:
-
-```bash
-~/.local/bin/borg_backup.sh /home/paul/Dokumente
-```
-
-Inspect the newest archive before a restore:
-
-```bash
-borg list --sort=timestamp /mnt/nas/data_encrypt/Borg-Backup | tail -3
-```
-
-Restore one folder from a specific archive:
-
-```bash
-borg extract /mnt/nas/data_encrypt/Borg-Backup::docs-2026-11-22 \
-    home/paul/Dokumente/Steuer
-```
-
-## 📝 Notes / Warnings
-
-- The repository directory must be mounted and writable before a backup. A backup into the mount point directory on the local disk is not a backup.
-- `repokey-blake2` stores the key inside the repository. Export it with `borg key export` and keep a copy outside the repository.
-- The passphrase is not recoverable. If it is lost, the repository is unreadable.
-- Borg uses file locks. Some SMB/CIFS versions do not handle them reliably; test `borg check` and `borg create` on your share before relying on scheduled backups. If locking fails, mount the share differently or use an SSH repository.
-- The NAS share name `data_encrypt` suggests encryption at the storage layer. Borg encryption is independent of that; keep both layers if the threat model requires it.
-- `borg prune`, `borg compact`, and `--init` can remove or change data. Do not point them at a repository that holds the only copy.
-- Test the restore before relying on the backup. A backup that has never been restored is an assumption, not a backup.
-- On German systems the documents folder is usually `~/Dokumente` instead of `~/Documents`. Adjust the source path accordingly.
-- The KDE launcher runs the script in `konsole` and uses `@HOME@` as a placeholder. Replace it during installation.
+- Borg encryption (repokey-blake2) is independent of NAS volume encryption.
+- Keep the passphrase and exported recovery key separately from the repository.
+- Never commit the generated config, passphrase or recovery key to Git.
+- borg prune, borg compact, and repository initialization change repository state. Keep another copy of important data and test restores.
+- A backup is not proven until files have been restored successfully.
