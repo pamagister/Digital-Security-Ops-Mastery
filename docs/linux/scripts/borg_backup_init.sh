@@ -167,7 +167,8 @@ printf 'Retention       : daily=%s weekly=%s monthly=%s\n' "$KEEP_DAILY" "$KEEP_
 printf 'Encryption      : %s\n' "$ENCRYPTION"
 confirm "Initialize this new repository now?" || die "Setup cancelled. Remove $PASSPHRASE_FILE if abandoning setup."
 
-export BORG_PASSCOMMAND="cat '$PASSPHRASE_FILE'"
+printf -v BORG_PASSCOMMAND 'cat %q' "$PASSPHRASE_FILE"
+export BORG_PASSCOMMAND
 info "Initializing repository"
 borg init --encryption="$ENCRYPTION" "$BORG_REPO"
 
