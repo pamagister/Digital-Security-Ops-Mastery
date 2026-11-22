@@ -44,6 +44,7 @@ nav:
       - System update: linux/system-update.md
       - Automatic updates: linux/auto-update.md
       - Encrypt a backup: linux/backup-encrypt.md
+      - Borg backup: linux/backup-borg.md
       - NAS mount: linux/nas-mount.md
       - Encrypted sync: linux/encrypted-sync.md
       - KDE language: linux/kde-language.md

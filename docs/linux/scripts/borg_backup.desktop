@@ -1,0 +1,9 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Borg Backup
+Comment=Create an incremental Borg backup to the NAS repository
+Exec=konsole -e "@HOME@/.local/bin/borg_backup.sh"
+Icon=utilities-terminal
+Terminal=false
+Categories=Utility;
