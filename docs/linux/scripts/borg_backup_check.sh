@@ -6,11 +6,11 @@
 set -Eeuo pipefail
 IFS=$'\n\t'
 
-CONFIG_FILE="\${BORG_BACKUP_CONFIG:-\${XDG_CONFIG_HOME:-$HOME/.config}/borg-backup/config}"
+CONFIG_FILE="${BORG_BACKUP_CONFIG:-${XDG_CONFIG_HOME:-$HOME/.config}/borg-backup/config}"
 DEEP_CHECK=0
 
 usage() {
-    printf 'Usage: %s [--repository-check] [--help]\n' "\${0##*/}"
+    printf 'Usage: %s [--repository-check] [--help]\n' "${0##*/}"
     printf '  --repository-check  Also run borg check --repository-only (can take time).\n'
 }
 die() { printf 'Error: %s\n' "$*" >&2; exit 1; }
@@ -31,9 +31,9 @@ mode="$(stat -c '%a' "$CONFIG_FILE")"
 # shellcheck source=/dev/null
 source "$CONFIG_FILE"
 
-: "\${REPOSITORY_TYPE:?Missing REPOSITORY_TYPE}"
-: "\${BORG_REPO:?Missing BORG_REPO}"
-: "\${PASSPHRASE_FILE:?Missing PASSPHRASE_FILE}"
+: "${REPOSITORY_TYPE:?Missing REPOSITORY_TYPE}"
+: "${BORG_REPO:?Missing BORG_REPO}"
+: "${PASSPHRASE_FILE:?Missing PASSPHRASE_FILE}"
 [[ -f "$PASSPHRASE_FILE" && -r "$PASSPHRASE_FILE" ]] || die "Passphrase file missing or unreadable."
 [[ "$(stat -c '%u' "$PASSPHRASE_FILE")" == "$(id -u)" ]] || die "Passphrase file is not owned by the current user."
 mode="$(stat -c '%a' "$PASSPHRASE_FILE")"
@@ -45,7 +45,7 @@ version="$(borg --version)"
 
 case "$REPOSITORY_TYPE" in
     local)
-        : "\${MOUNTPOINT:?Missing MOUNTPOINT}"
+        : "${MOUNTPOINT:?Missing MOUNTPOINT}"
         mountpoint -q "$MOUNTPOINT" || die "Mount is not active: $MOUNTPOINT"
         [[ -d "$BORG_REPO" && -r "$BORG_REPO" && -w "$BORG_REPO" ]] ||
             die "Repository directory is not accessible: $BORG_REPO"
@@ -59,7 +59,10 @@ case "$REPOSITORY_TYPE" in
 esac
 
 export BORG_PASSPHRASE_FILE="$PASSPHRASE_FILE"
-export BORG_PASSCOMMAND='cat -- "$BORG_PASSPHRASE_FILE"'
+# Borg executes the passcommand without a shell, so expand the path here instead
+# of relying on "$BORG_PASSPHRASE_FILE" being substituted at runtime.
+printf -v BORG_PASSCOMMAND 'cat -- %q' "$PASSPHRASE_FILE"
+export BORG_PASSCOMMAND
 printf 'Borg version : %s\nRepository   : %s\nType         : %s\n' "$version" "$BORG_REPO" "$REPOSITORY_TYPE"
 printf '\nChecking repository access and authentication...\n'
 borg info "$BORG_REPO"

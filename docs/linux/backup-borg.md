@@ -53,7 +53,7 @@ The wizard asks for:
 
 1. One or more source directories. Enter an empty line to finish.
 2. Destination type:
-   - **Local mount:** mount point (default /mnt/nas) and repository path (default /mnt/nas/data_encrypt/Borg-Backup).
+   - **Local mount:** a single backup target directory (default /mnt/nas/data_encrypt/Borg-Backup). The actual filesystem mount is detected automatically, so nested mounts (for example autofs/CIFS shares below /mnt/nas) are supported.
    - **SSH:** Borg URL, for example ssh://backupuser@nas.example:22/volume1/backup/borg.
 3. Archive prefix and retention values.
 4. A repository passphrase (entered twice).

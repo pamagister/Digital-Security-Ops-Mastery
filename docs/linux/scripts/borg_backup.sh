@@ -87,7 +87,10 @@ case "$REPOSITORY_TYPE" in
 esac
 
 export BORG_PASSPHRASE_FILE="$PASSPHRASE_FILE"
-export BORG_PASSCOMMAND='cat -- "$BORG_PASSPHRASE_FILE"'
+# Borg executes the passcommand without a shell, so expand the path here instead
+# of relying on "$BORG_PASSPHRASE_FILE" being substituted at runtime.
+printf -v BORG_PASSCOMMAND 'cat -- %q' "$PASSPHRASE_FILE"
+export BORG_PASSCOMMAND
 
 lock_dir="${XDG_CACHE_HOME:-$HOME/.cache}/borg-backup"
 mkdir -p "$lock_dir"

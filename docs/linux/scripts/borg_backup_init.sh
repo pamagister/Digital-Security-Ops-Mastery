@@ -105,20 +105,28 @@ MOUNTPOINT=""
 case "$destination_choice" in
     1)
         REPOSITORY_TYPE="local"
-        prompt MOUNTPOINT "Mount point to verify" "/mnt/nas"
-        [[ "$MOUNTPOINT" == /* ]] || die "Mount point must be absolute."
-        prompt BORG_REPO "Repository directory (must be inside the mount point)" "$MOUNTPOINT/data_encrypt/Borg-Backup"
+        prompt BORG_REPO "Backup target directory (absolute path)" "/mnt/nas/data_encrypt/Borg-Backup"
         [[ "$BORG_REPO" == /* ]] || die "Repository path must be absolute."
-        MOUNTPOINT="$(realpath -m "$MOUNTPOINT")"
         BORG_REPO="$(realpath -m "$BORG_REPO")"
-        [[ "$BORG_REPO" == "$MOUNTPOINT/"* ]] || die "Repository must be below the selected mount point."
-        mountpoint -q "$MOUNTPOINT" || die "$MOUNTPOINT is not mounted. Mount the NAS first; no local fallback is allowed."
-        [[ -d "$MOUNTPOINT" && -w "$MOUNTPOINT" ]] || die "Mount point is not writable: $MOUNTPOINT"
         repo_parent="$(dirname "$BORG_REPO")"
         if [[ ! -d "$repo_parent" ]]; then
             confirm "Create parent directory $repo_parent?" || die "Setup cancelled."
-            mkdir -p "$repo_parent"
+            mkdir -p "$repo_parent" ||
+                die "Cannot create directory $repo_parent. Check permissions and that the NAS is mounted."
         fi
+        # Trigger automounts (for example autofs shares below /mnt/nas) and verify
+        # writability with a real write probe. A plain -w test is unreliable on
+        # autofs trigger directories.
+        probe_file="$(mktemp "$repo_parent/.borg_write_test.XXXXXX" 2>/dev/null || true)"
+        [[ -n "$probe_file" ]] || die "Target directory is not writable: $repo_parent"
+        rm -f -- "$probe_file"
+        # Resolve the real filesystem mount that backs the target. The deepest mount
+        # is used, so nested mounts (for example autofs/CIFS shares below /mnt/nas)
+        # are supported. A target on the local root filesystem is rejected.
+        actual_mount="$(findmnt -f -T "$repo_parent" -n -o TARGET 2>/dev/null || true)"
+        [[ -n "$actual_mount" && "$actual_mount" != "/" ]] ||
+            die "$BORG_REPO is not on a mounted NAS/filesystem (found mount point: ${actual_mount:-none}). Mount the NAS first; no local fallback is allowed."
+        MOUNTPOINT="$actual_mount"
         [[ ! -e "$BORG_REPO" ]] || die "Repository path already exists. Choose a new path or inspect it manually."
         ;;
     2)
@@ -169,7 +177,10 @@ unset passphrase passphrase_confirm
 chmod 600 "$PASSPHRASE_FILE"
 
 export BORG_PASSPHRASE_FILE="$PASSPHRASE_FILE"
-export BORG_PASSCOMMAND='cat -- "$BORG_PASSPHRASE_FILE"'
+# Borg executes the passcommand without a shell, so expand the path here instead
+# of relying on "$BORG_PASSPHRASE_FILE" being substituted at runtime.
+printf -v BORG_PASSCOMMAND 'cat -- %q' "$PASSPHRASE_FILE"
+export BORG_PASSCOMMAND
 info "Initializing repository"
 borg init --encryption="$ENCRYPTION" "$BORG_REPO"
 
