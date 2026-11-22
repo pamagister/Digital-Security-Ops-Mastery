@@ -58,8 +58,8 @@ case "$REPOSITORY_TYPE" in
     *) die "Unknown repository type: $REPOSITORY_TYPE" ;;
 esac
 
-printf -v BORG_PASSCOMMAND 'cat %q' "$PASSPHRASE_FILE"
-export BORG_PASSCOMMAND
+export BORG_PASSPHRASE_FILE="$PASSPHRASE_FILE"
+export BORG_PASSCOMMAND='cat -- "$BORG_PASSPHRASE_FILE"'
 printf 'Borg version : %s\nRepository   : %s\nType         : %s\n' "$version" "$BORG_REPO" "$REPOSITORY_TYPE"
 printf '\nChecking repository access and authentication...\n'
 borg info "$BORG_REPO"
