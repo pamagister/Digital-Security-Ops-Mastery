@@ -7,7 +7,7 @@
 # users could read it from the process list.
 #
 # Usage:
-#   ./encrypt_backup.sh [SOURCE_DIR] [OUTPUT_FILE]
+#   ./backup_encrypt.sh [SOURCE_DIR] [OUTPUT_FILE]
 #
 # Restore:
 #   openssl enc -d -aes-256-cbc -pbkdf2 -iter 600000 -salt \

@@ -63,7 +63,7 @@ Guides and scripts for Ubuntu/Kubuntu setup, system maintenance, network storage
     </div>
   </a>
 
-  <a class="dsom-card" href="https://digital-security-ops-mastery.readthedocs.io/en/latest/linux/encrypt-backup/">
+  <a class="dsom-card" href="https://digital-security-ops-mastery.readthedocs.io/en/latest/linux/backup-encrypt/">
     <img src="../_static/img/icons/tools.svg" alt="" width="48" height="48">
     <div>
     <span class="dsom-kicker">Backup</span><br>

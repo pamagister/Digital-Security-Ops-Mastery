@@ -1,6 +1,6 @@
 # Encrypt a directory backup
 
-`encrypt_backup.sh` creates a password-protected `tar.gz` archive of a directory and encrypts it with OpenSSL AES-256-CBC and PBKDF2.
+`backup_encrypt.sh` creates a password-protected `tar.gz` archive of a directory and encrypts it with OpenSSL AES-256-CBC and PBKDF2.
 
 ## ✨ Features
 
@@ -28,8 +28,8 @@ BASE_URL="https://raw.githubusercontent.com/pamagister/Digital-Security-Ops-Mast
 
 mkdir -p "$HOME/.local/bin"
 
-curl -fL "$BASE_URL/encrypt_backup.sh" -o "$HOME/.local/bin/encrypt_backup.sh"
-chmod +x "$HOME/.local/bin/encrypt_backup.sh"
+curl -fL "$BASE_URL/backup_encrypt.sh" -o "$HOME/.local/bin/backup_encrypt.sh"
+chmod +x "$HOME/.local/bin/backup_encrypt.sh"
 ```
 
 Optional KDE launcher:
@@ -41,29 +41,29 @@ BASE_URL="https://raw.githubusercontent.com/pamagister/Digital-Security-Ops-Mast
 
 mkdir -p "$HOME/.local/share/applications"
 
-curl -fL "$BASE_URL/encrypt_backup.desktop" \
-    -o "$HOME/.local/share/applications/encrypt_backup.desktop"
+curl -fL "$BASE_URL/backup_encrypt.desktop" \
+    -o "$HOME/.local/share/applications/backup_encrypt.desktop"
 
-sed -i "s|@HOME@|$HOME|g" "$HOME/.local/share/applications/encrypt_backup.desktop"
+sed -i "s|@HOME@|$HOME|g" "$HOME/.local/share/applications/backup_encrypt.desktop"
 ```
 
 ### 🔩 Manual installation
 
-1. Download [`encrypt_backup.sh`](scripts/encrypt_backup.sh) to `~/.local/bin/`.
+1. Download [`backup_encrypt.sh`](scripts/backup_encrypt.sh) to `~/.local/bin/`.
 2. Make it executable:
 
    ```bash
-   chmod +x ~/.local/bin/encrypt_backup.sh
+   chmod +x ~/.local/bin/backup_encrypt.sh
    ```
 
-3. Optional: download [`encrypt_backup.desktop`](scripts/encrypt_backup.desktop) to `~/.local/share/applications/` and replace `@HOME@` with your home directory.
+3. Optional: download [`backup_encrypt.desktop`](scripts/backup_encrypt.desktop) to `~/.local/share/applications/` and replace `@HOME@` with your home directory.
 
 ## 🚀 Usage
 
 Create a backup of a directory in the current directory:
 
 ```bash
-~/.local/bin/encrypt_backup.sh ~/Documents
+~/.local/bin/backup_encrypt.sh ~/Documents
 ```
 
 The output name defaults to `<source-name>_backup_<timestamp>.tar.gz.enc`.
@@ -71,7 +71,7 @@ The output name defaults to `<source-name>_backup_<timestamp>.tar.gz.enc`.
 Specify an output path:
 
 ```bash
-~/.local/bin/encrypt_backup.sh ~/Documents /tmp/documents.tar.gz.enc
+~/.local/bin/backup_encrypt.sh ~/Documents /tmp/documents.tar.gz.enc
 ```
 
 Enter the passphrase twice. Use a long, unique passphrase and store it in a password manager.

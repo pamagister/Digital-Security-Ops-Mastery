@@ -43,7 +43,7 @@ nav:
       - Kubuntu setup: linux/kubuntu-setup.md
       - System update: linux/system-update.md
       - Automatic updates: linux/auto-update.md
-      - Encrypt a backup: linux/encrypt-backup.md
+      - Encrypt a backup: linux/backup-encrypt.md
       - NAS mount: linux/nas-mount.md
       - Encrypted sync: linux/encrypted-sync.md
       - KDE language: linux/kde-language.md
