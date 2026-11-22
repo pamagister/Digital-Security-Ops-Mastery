@@ -86,7 +86,8 @@ case "$REPOSITORY_TYPE" in
     *) die "Unknown repository type: $REPOSITORY_TYPE" ;;
 esac
 
-export BORG_PASSCOMMAND="cat '$PASSPHRASE_FILE'"
+printf -v BORG_PASSCOMMAND 'cat %q' "$PASSPHRASE_FILE"
+export BORG_PASSCOMMAND
 
 lock_dir="${XDG_CACHE_HOME:-$HOME/.cache}/borg-backup"
 mkdir -p "$lock_dir"
