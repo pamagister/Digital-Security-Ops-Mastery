@@ -30,7 +30,7 @@ The following installs the update script, registers its application launcher, an
 ```bash
 set -e
 
-BASE_URL="https://raw.githubusercontent.com/pamagister/Digital-Security-Ops-Mastery/main/docs/linux"
+BASE_URL="https://raw.githubusercontent.com/pamagister/Digital-Security-Ops-Mastery/main/docs/linux/system-update"
 
 BIN_DIR="$HOME/.local/bin"
 APP_DIR="$HOME/.local/share/applications"
@@ -38,9 +38,9 @@ PERSONAL_APP_DIR="$HOME/Applications"
 
 mkdir -p "$BIN_DIR" "$APP_DIR" "$PERSONAL_APP_DIR"
 
-curl -fL "$BASE_URL/scripts/system-update.sh" -o "$BIN_DIR/system-update.sh"
+curl -fL "$BASE_URL/system-update.sh" -o "$BIN_DIR/system-update.sh"
 
-curl -fL "$BASE_URL/scripts/system-update.desktop" -o "$APP_DIR/system-update.desktop"
+curl -fL "$BASE_URL/system-update.desktop" -o "$APP_DIR/system-update.desktop"
 
 sed -i "s|@HOME@|$HOME|g" "$APP_DIR/system-update.desktop"
 
@@ -53,8 +53,8 @@ The launcher in `~/.local/share/applications/` is used by the desktop environmen
 
 ### Manual installation
 
-1. Download [`system-update.sh`](scripts/system-update.sh) to `~/.local/bin/`.
-2. Download [`system-update.desktop`](scripts/system-update.desktop) to `~/.local/share/applications/`.
+1. Download [`system-update.sh`](system-update.sh) to `~/.local/bin/`.
+2. Download [`system-update.desktop`](system-update.desktop) to `~/.local/share/applications/`.
 3. Replace `@HOME@` in the desktop file with your home directory path.
 4. Make the script executable:
 

@@ -27,7 +27,7 @@ A comprehensive automated setup script for Kubuntu that installs essential softw
 ```bash
 set -e
 
-BASE_URL="https://raw.githubusercontent.com/pamagister/Digital-Security-Ops-Mastery/main/docs/linux/scripts/setup_kubuntu.sh"
+BASE_URL="https://raw.githubusercontent.com/pamagister/Digital-Security-Ops-Mastery/main/docs/linux/kubuntu-setup/setup_kubuntu.sh"
 
 curl -fL "$BASE_URL" -o setup_kubuntu.sh
 chmod +x setup_kubuntu.sh
@@ -36,7 +36,7 @@ chmod +x setup_kubuntu.sh
 
 ### Manual installation
 
-1. Download [`setup_kubuntu.sh`](scripts/setup_kubuntu.sh).
+1. Download [`setup_kubuntu.sh`](setup_kubuntu.sh).
 2. Make it executable:
 
    ```bash
@@ -77,7 +77,7 @@ System update, automatic updates, and the Flatpak/Flathub base are always execut
 ### Manual steps required
 
 1. **Reboot or logout/login** to activate Zsh as the default shell.
-2. Review the automatic-update settings; the script enables `unattended-upgrades`. For scheduled automatic reboots, see [Automatic security updates](auto-update.md).
+2. Review the automatic-update settings; the script enables `unattended-upgrades`. For scheduled automatic reboots, see [Automatic security updates](../auto-update/index.md).
 3. If Firefox was already open, close it and rerun the setup when prompted; the script does not remove a running Firefox Snap.
 4. **Set up your applications** (Firefox profile, KeePassXC database, Signal account, etc.).
 

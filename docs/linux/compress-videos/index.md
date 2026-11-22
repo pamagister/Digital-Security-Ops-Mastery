@@ -31,14 +31,14 @@ This script compresses videos using **ffmpeg**. It supports both direct file arg
 ```bash
 set -e
 
-BASE_URL="https://raw.githubusercontent.com/pamagister/Digital-Security-Ops-Mastery/main/docs/linux"
+BASE_URL="https://raw.githubusercontent.com/pamagister/Digital-Security-Ops-Mastery/main/docs/linux/compress-videos"
 
 mkdir -p "$HOME/.local/bin" "$HOME/.local/share/kservices5/ServiceMenus"
 
 sudo apt install -y ffmpeg konsole
 
-curl -fL "$BASE_URL/scripts/compress_videos.sh" -o "$HOME/.local/bin/compress_videos.sh"
-curl -fL "$BASE_URL/scripts/compress_videos.desktop" -o "$HOME/.local/share/kservices5/ServiceMenus/compress_videos.desktop"
+curl -fL "$BASE_URL/compress_videos.sh" -o "$HOME/.local/bin/compress_videos.sh"
+curl -fL "$BASE_URL/compress_videos.desktop" -o "$HOME/.local/share/kservices5/ServiceMenus/compress_videos.desktop"
 
 sed -i "s|@HOME@|$HOME|g" "$HOME/.local/share/kservices5/ServiceMenus/compress_videos.desktop"
 chmod +x "$HOME/.local/bin/compress_videos.sh"
@@ -48,7 +48,7 @@ kbuildsycoca5
 ### Manual installation
 
 1. Install `ffmpeg` and `konsole` using your package manager.
-2. Copy [`compress_videos.sh`](scripts/compress_videos.sh) to `~/.local/bin/` and [`compress_videos.desktop`](scripts/compress_videos.desktop) to `~/.local/share/kservices5/ServiceMenus/`. Create the destination directories if needed.
+2. Copy [`compress_videos.sh`](compress_videos.sh) to `~/.local/bin/` and [`compress_videos.desktop`](compress_videos.desktop) to `~/.local/share/kservices5/ServiceMenus/`. Create the destination directories if needed.
 3. Replace `@HOME@` in the desktop file with the full path to your home directory.
 4. Make the script executable:
 

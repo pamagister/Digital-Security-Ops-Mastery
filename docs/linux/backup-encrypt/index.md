@@ -24,7 +24,7 @@
 ```bash
 set -e
 
-BASE_URL="https://raw.githubusercontent.com/pamagister/Digital-Security-Ops-Mastery/main/docs/linux/scripts"
+BASE_URL="https://raw.githubusercontent.com/pamagister/Digital-Security-Ops-Mastery/main/docs/linux/backup-encrypt"
 
 mkdir -p "$HOME/.local/bin"
 
@@ -37,7 +37,7 @@ Optional KDE launcher:
 ```bash
 set -e
 
-BASE_URL="https://raw.githubusercontent.com/pamagister/Digital-Security-Ops-Mastery/main/docs/linux/scripts"
+BASE_URL="https://raw.githubusercontent.com/pamagister/Digital-Security-Ops-Mastery/main/docs/linux/backup-encrypt"
 
 mkdir -p "$HOME/.local/share/applications"
 
@@ -49,14 +49,14 @@ sed -i "s|@HOME@|$HOME|g" "$HOME/.local/share/applications/backup_encrypt.deskto
 
 ### 🔩 Manual installation
 
-1. Download [`backup_encrypt.sh`](scripts/backup_encrypt.sh) to `~/.local/bin/`.
+1. Download [`backup_encrypt.sh`](backup_encrypt.sh) to `~/.local/bin/`.
 2. Make it executable:
 
    ```bash
    chmod +x ~/.local/bin/backup_encrypt.sh
    ```
 
-3. Optional: download [`backup_encrypt.desktop`](scripts/backup_encrypt.desktop) to `~/.local/share/applications/` and replace `@HOME@` with your home directory.
+3. Optional: download [`backup_encrypt.desktop`](backup_encrypt.desktop) to `~/.local/share/applications/` and replace `@HOME@` with your home directory.
 
 ## 🚀 Usage
 

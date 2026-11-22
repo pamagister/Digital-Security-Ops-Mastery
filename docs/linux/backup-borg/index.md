@@ -28,11 +28,11 @@ borg --version
 
 ## Installation
 
-Download the scripts from this feature branch (or copy them from this repository):
+Download the scripts from this repository:
 
 ~~~bash
 set -e
-BASE_URL="https://raw.githubusercontent.com/pamagister/Digital-Security-Ops-Mastery/feature/borg-backup-setup/docs/linux/scripts"
+BASE_URL="https://raw.githubusercontent.com/pamagister/Digital-Security-Ops-Mastery/main/docs/linux/backup-borg"
 
 mkdir -p "$HOME/.local/bin"
 for script in borg_backup_init.sh borg_backup.sh borg_backup_check.sh; do

@@ -24,7 +24,7 @@ A simple interactive script to process JPEG and PNG images without resizing. JPE
 ```bash
 set -e
 
-BASE_URL="https://raw.githubusercontent.com/pamagister/Digital-Security-Ops-Mastery/main/docs/linux"
+BASE_URL="https://raw.githubusercontent.com/pamagister/Digital-Security-Ops-Mastery/main/docs/linux/compress-images"
 
 mkdir -p "$HOME/.local/bin" "$HOME/.local/share/kservices5/ServiceMenus"
 
@@ -32,8 +32,8 @@ sudo apt install -y imagemagick konsole
 # Optional, for palette-based PNG compression:
 # sudo apt install -y pngquant
 
-curl -fL "$BASE_URL/scripts/compress_images.sh" -o "$HOME/.local/bin/compress_images.sh"
-curl -fL "$BASE_URL/scripts/compress_images.desktop" -o "$HOME/.local/share/kservices5/ServiceMenus/compress_images.desktop"
+curl -fL "$BASE_URL/compress_images.sh" -o "$HOME/.local/bin/compress_images.sh"
+curl -fL "$BASE_URL/compress_images.desktop" -o "$HOME/.local/share/kservices5/ServiceMenus/compress_images.desktop"
 
 sed -i "s|@HOME@|$HOME|g" "$HOME/.local/share/kservices5/ServiceMenus/compress_images.desktop"
 chmod +x "$HOME/.local/bin/compress_images.sh"
@@ -43,7 +43,7 @@ kbuildsycoca5
 ### Manual installation
 
 1. Install `imagemagick` and `konsole` using your package manager. Install `pngquant` there too if desired; without it, PNG files are converted to JPEG.
-2. Copy [`compress_images.sh`](scripts/compress_images.sh) to `~/.local/bin/` and [`compress_images.desktop`](scripts/compress_images.desktop) to `~/.local/share/kservices5/ServiceMenus/`. Create the destination directories if needed.
+2. Copy [`compress_images.sh`](compress_images.sh) to `~/.local/bin/` and [`compress_images.desktop`](compress_images.desktop) to `~/.local/share/kservices5/ServiceMenus/`. Create the destination directories if needed.
 3. Replace `@HOME@` in the desktop file with the full path to your home directory.
 4. Make the script executable:
 

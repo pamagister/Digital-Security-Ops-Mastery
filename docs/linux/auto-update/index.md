@@ -29,7 +29,7 @@ Download and inspect the script first:
 ```bash
 set -e
 
-BASE_URL="https://raw.githubusercontent.com/pamagister/Digital-Security-Ops-Mastery/main/docs/linux/scripts"
+BASE_URL="https://raw.githubusercontent.com/pamagister/Digital-Security-Ops-Mastery/main/docs/linux/auto-update"
 
 curl -fL "$BASE_URL/auto-update-setup.sh" -o /tmp/auto-update-setup.sh
 less /tmp/auto-update-setup.sh
@@ -43,7 +43,7 @@ sudo bash /tmp/auto-update-setup.sh
 
 ### 🔩 Manual installation
 
-1. Download [`auto-update-setup.sh`](scripts/auto-update-setup.sh).
+1. Download [`auto-update-setup.sh`](auto-update-setup.sh).
 2. Review the configuration it writes, especially the automatic-reboot settings.
 3. Back up the existing files:
 

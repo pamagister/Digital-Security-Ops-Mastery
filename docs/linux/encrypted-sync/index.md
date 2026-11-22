@@ -34,11 +34,11 @@ command -v gocryptfs unison rsync fusermount
 ```bash
 set -e
 
-BASE_URL="https://raw.githubusercontent.com/pamagister/Digital-Security-Ops-Mastery/main/docs/linux"
+BASE_URL="https://raw.githubusercontent.com/pamagister/Digital-Security-Ops-Mastery/main/docs/linux/encrypted-sync"
 
 mkdir -p "$HOME/.local/bin"
 
-curl -fL "$BASE_URL/scripts/sync_dir.sh" \
+curl -fL "$BASE_URL/sync_dir.sh" \
     -o "$HOME/.local/bin/sync_dir.sh"
 
 chmod +x "$HOME/.local/bin/sync_dir.sh"
@@ -46,7 +46,7 @@ chmod +x "$HOME/.local/bin/sync_dir.sh"
 
 ### Manual installation
 
-1. Download [`scripts/sync_dir.sh`](scripts/sync_dir.sh) to `~/.local/bin/sync_dir.sh`.
+1. Download [`sync_dir.sh`](sync_dir.sh) to `~/.local/bin/sync_dir.sh`.
 2. Make the script executable:
 
    ```bash

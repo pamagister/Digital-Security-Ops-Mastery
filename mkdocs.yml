@@ -40,21 +40,21 @@ nav:
       - Backup & restore: android/backup-restore.md
   - Linux & automation:
       - Overview: linux/index.md
-      - Kubuntu setup: linux/kubuntu-setup.md
-      - System update: linux/system-update.md
-      - Automatic updates: linux/auto-update.md
-      - Encrypt a backup: linux/backup-encrypt.md
-      - Borg backup: linux/backup-borg.md
-      - NAS mount: linux/nas-mount.md
-      - Encrypted sync: linux/encrypted-sync.md
-      - KDE language: linux/kde-language.md
-      - Printer scan to Samba: linux/printer-scan-samba.md
-      - Compress images: linux/compress-images.md
-      - Compress videos: linux/compress-videos.md
-      - Post-process video: linux/postprocess-video.md
-      - Play DVDs: linux/dvd-playback.md
-      - GPX/KML files: linux/gpx-kml.md
-      - GPX POIs from YAML: linux/gpx-pois-from-yaml.md
+      - Kubuntu setup: linux/kubuntu-setup/index.md
+      - System update: linux/system-update/index.md
+      - Automatic updates: linux/auto-update/index.md
+      - Encrypt a backup: linux/backup-encrypt/index.md
+      - Borg backup: linux/backup-borg/index.md
+      - NAS mount: linux/nas-mount/index.md
+      - Encrypted sync: linux/encrypted-sync/index.md
+      - KDE language: linux/kde-language/index.md
+      - Printer scan to Samba: linux/printer-scan-samba/index.md
+      - Compress images: linux/compress-images/index.md
+      - Compress videos: linux/compress-videos/index.md
+      - Post-process video: linux/postprocess-video/index.md
+      - Play DVDs: linux/dvd-playback/index.md
+      - GPX/KML files: linux/gpx-kml/index.md
+      - GPX POIs from YAML: linux/gpx-pois-from-yaml/index.md
   - Nextcloud: nextcloud/index.md
   - AI & agents:
       - Overview: ai/index.md

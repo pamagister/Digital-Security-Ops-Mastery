@@ -1,6 +1,6 @@
 # 🎬 Video Postprocessing Script
 
-A Bash script for post-processing video with FFmpeg. It can add music and an intro, trim the input, overlay a recording timestamp/title, limit output height, and apply fade effects. The current defaults are configured near the top of `scripts/postprocess_video.sh`.
+A Bash script for post-processing video with FFmpeg. It can add music and an intro, trim the input, overlay a recording timestamp/title, limit output height, and apply fade effects. The current defaults are configured near the top of `postprocess_video.sh`.
 
 ## ✨ Features
 
@@ -25,14 +25,14 @@ A Bash script for post-processing video with FFmpeg. It can add music and an int
 ```bash
 set -e
 
-BASE_URL="https://raw.githubusercontent.com/pamagister/Digital-Security-Ops-Mastery/main/docs/linux"
+BASE_URL="https://raw.githubusercontent.com/pamagister/Digital-Security-Ops-Mastery/main/docs/linux/postprocess-video"
 
 mkdir -p "$HOME/.local/bin" "$HOME/.local/share/kservices5/ServiceMenus"
 
 sudo apt install -y ffmpeg konsole
 
-curl -fL "$BASE_URL/scripts/postprocess_video.sh" -o "$HOME/.local/bin/postprocess_video.sh"
-curl -fL "$BASE_URL/scripts/postprocess_video.desktop" -o "$HOME/.local/share/kservices5/ServiceMenus/postprocess_video.desktop"
+curl -fL "$BASE_URL/postprocess_video.sh" -o "$HOME/.local/bin/postprocess_video.sh"
+curl -fL "$BASE_URL/postprocess_video.desktop" -o "$HOME/.local/share/kservices5/ServiceMenus/postprocess_video.desktop"
 
 sed -i "s|@HOME@|$HOME|g" "$HOME/.local/share/kservices5/ServiceMenus/postprocess_video.desktop"
 chmod +x "$HOME/.local/bin/postprocess_video.sh"
@@ -42,7 +42,7 @@ kbuildsycoca5
 ### Manual installation
 
 1. Install `ffmpeg` and `konsole` using your package manager. `ffprobe` is included with the `ffmpeg` package.
-2. Copy [`postprocess_video.sh`](scripts/postprocess_video.sh) to `~/.local/bin/` and [`postprocess_video.desktop`](scripts/postprocess_video.desktop) to `~/.local/share/kservices5/ServiceMenus/`. Create the destination directories if needed.
+2. Copy [`postprocess_video.sh`](postprocess_video.sh) to `~/.local/bin/` and [`postprocess_video.desktop`](postprocess_video.desktop) to `~/.local/share/kservices5/ServiceMenus/`. Create the destination directories if needed.
 3. Replace `@HOME@` in the desktop file with the full path to your home directory.
 4. Make the script executable:
 

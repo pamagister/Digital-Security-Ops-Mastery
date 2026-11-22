@@ -8,7 +8,7 @@ When UFW is active, the script allows the Samba profile without restricting the 
 ## 1. Download the script
 
 ```bash
-curl -fL -o setup_shared_folder_samba.sh https://raw.githubusercontent.com/pamagister/Digital-Security-Ops-Mastery/main/docs/linux/scripts/setup_shared_folder_samba.sh
+curl -fL -o setup_shared_folder_samba.sh https://raw.githubusercontent.com/pamagister/Digital-Security-Ops-Mastery/main/docs/linux/printer-scan-samba/setup_shared_folder_samba.sh
 ```
    
 ## 2. Make the Script Executable

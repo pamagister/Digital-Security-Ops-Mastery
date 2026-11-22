@@ -21,17 +21,17 @@ This script configures KDE/Plasma to use **one language for the user interface**
 ```bash
 set -e
 
-BASE_URL="https://raw.githubusercontent.com/pamagister/Digital-Security-Ops-Mastery/main/docs/linux"
+BASE_URL="https://raw.githubusercontent.com/pamagister/Digital-Security-Ops-Mastery/main/docs/linux/kde-language"
 
 mkdir -p "$HOME/.local/bin"
 
-curl -fL "$BASE_URL/scripts/set_kde_language.sh" -o "$HOME/.local/bin/set_kde_language.sh"
+curl -fL "$BASE_URL/set_kde_language.sh" -o "$HOME/.local/bin/set_kde_language.sh"
 chmod +x "$HOME/.local/bin/set_kde_language.sh"
 ```
 
 ### Manual installation
 
-1. Download [`set_kde_language.sh`](scripts/set_kde_language.sh) to `~/.local/bin/`.
+1. Download [`set_kde_language.sh`](set_kde_language.sh) to `~/.local/bin/`.
 2. Make the script executable:
 
    ```bash

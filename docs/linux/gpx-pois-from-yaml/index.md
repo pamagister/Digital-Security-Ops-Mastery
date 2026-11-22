@@ -13,7 +13,7 @@ The agent workflow is documented in [`tools/gpx_poi_from_yaml/SKILL.md`](https:/
 
 - An MCP client that supports local stdio MCP servers.
 - `uv` with `uvx` available.
-- `gpx-kml-converter` installed and on `PATH`. For installation and CLI details, see [GPX/KML files](gpx-kml.md).
+- `gpx-kml-converter` installed and on `PATH`. For installation and CLI details, see [GPX/KML files](../gpx-kml/index.md).
 - A YAML file containing place records with at least a `name`. The workflow uses `desc` as a description and an optional integer `rating` from 1 through 5.
 
 ## ⚙️ Configure the geocoding MCP server

@@ -27,12 +27,12 @@ command -v gpx-kml-converter >/dev/null || {
     exit 1
 }
 
-BASE_URL="https://raw.githubusercontent.com/pamagister/Digital-Security-Ops-Mastery/main/docs/linux"
+BASE_URL="https://raw.githubusercontent.com/pamagister/Digital-Security-Ops-Mastery/main/docs/linux/gpx-kml"
 
 mkdir -p "$HOME/.local/bin" "$HOME/.local/share/kservices5/ServiceMenus"
 
-curl -fL "$BASE_URL/scripts/process_gpx_kml.sh" -o "$HOME/.local/bin/process_gpx_kml.sh"
-curl -fL "$BASE_URL/scripts/process_gpx_kml.desktop" -o "$HOME/.local/share/kservices5/ServiceMenus/process_gpx_kml.desktop"
+curl -fL "$BASE_URL/process_gpx_kml.sh" -o "$HOME/.local/bin/process_gpx_kml.sh"
+curl -fL "$BASE_URL/process_gpx_kml.desktop" -o "$HOME/.local/share/kservices5/ServiceMenus/process_gpx_kml.desktop"
 
 sed -i "s|@HOME@|$HOME|g" "$HOME/.local/share/kservices5/ServiceMenus/process_gpx_kml.desktop"
 chmod +x "$HOME/.local/bin/process_gpx_kml.sh"
@@ -42,7 +42,7 @@ kbuildsycoca5
 ### Manual installation
 
 1. Install `pipx` and `konsole` via the package manager. Then install `gpx-kml-converter` with `pipx install gpx-kml-converter`. If `pipx` is not yet on the PATH, open a new terminal.
-2. Copy [`process_gpx_kml.sh`](scripts/process_gpx_kml.sh) to `~/.local/bin/` and [`process_gpx_kml.desktop`](scripts/process_gpx_kml.desktop) to `~/.local/share/kservices5/ServiceMenus/`. Create the destination directories if needed.
+2. Copy [`process_gpx_kml.sh`](process_gpx_kml.sh) to `~/.local/bin/` and [`process_gpx_kml.desktop`](process_gpx_kml.desktop) to `~/.local/share/kservices5/ServiceMenus/`. Create the destination directories if needed.
 3. Replace `@HOME@` in the desktop file with the full path to your home directory.
 4. Make the script executable:
 

@@ -26,13 +26,13 @@ This script allows you to mount, unmount, and configure automatic mounting of NA
 ```bash
 set -e
 
-BASE_URL="https://raw.githubusercontent.com/pamagister/Digital-Security-Ops-Mastery/main/docs/linux"
+BASE_URL="https://raw.githubusercontent.com/pamagister/Digital-Security-Ops-Mastery/main/docs/linux/nas-mount"
 
 mkdir -p "$HOME/.local/bin"
 
 sudo apt install -y cifs-utils
 
-curl -fL "$BASE_URL/scripts/mount_nas.sh" -o "$HOME/.local/bin/mount_nas.sh"
+curl -fL "$BASE_URL/mount_nas.sh" -o "$HOME/.local/bin/mount_nas.sh"
 chmod +x "$HOME/.local/bin/mount_nas.sh"
 ```
 
@@ -44,7 +44,7 @@ chmod +x "$HOME/.local/bin/mount_nas.sh"
    sudo apt install -y cifs-utils
    ```
 
-2. Download [`mount_nas.sh`](scripts/mount_nas.sh) to `~/.local/bin/`.
+2. Download [`mount_nas.sh`](mount_nas.sh) to `~/.local/bin/`.
 3. Make the script executable:
 
    ```bash
