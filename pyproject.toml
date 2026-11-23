@@ -1,6 +1,6 @@
 [project]
 name = "Digital-Security-Ops-Mastery"
-dynamic = ["version"]
+version = "0.0.0"
 description = "A modern hands-on guide for building secure, privacy-first PC and smartphone setups – from Linux automation and child-safe devices to Google-free digital independence."
 authors = [
     {name = "pamagister"}
@@ -30,6 +30,12 @@ test = [
     "pytest>=8.4.0",
     "pyyaml>=6.0",
 ]
+
+[tool.uv]
+# This repository is documentation, not an installable package. Without this,
+# `uv run` tries to build the project and setuptools' flat-layout discovery
+# fails on top-level directories such as site/ and temp/.
+package = false
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
